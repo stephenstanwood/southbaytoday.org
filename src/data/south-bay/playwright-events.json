@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-22T04:56:23.338Z",
+    "generatedAt": "2026-11-22T09:05:00.648Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 189,
+    "eventCount": 185,
     "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (10)",
+      "San Jose Jazz (9)",
       "Linden Tree Books (4)",
       "History San Jose (2)",
       "Montalvo Arts Center (5)",
@@ -14,14 +14,14 @@
       "ICA San José (3)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (1)",
-      "Guadalupe River Park Conservancy (6)",
+      "Guadalupe River Park Conservancy (5)",
       "Santana Row (6)",
       "City of Cupertino (37)",
       "Opera San José (6)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
       "SAP Center (12)",
-      "The Tech Interactive (13)",
+      "The Tech Interactive (11)",
       "Books Inc (8)",
       "San Jose Museum of Art (1)",
       "Peninsula Open Space Trust (2)"
@@ -67,8 +67,8 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 10,
-        "liveCount": 10,
+        "count": 9,
+        "liveCount": 9,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -187,8 +187,8 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 6,
-        "liveCount": 6,
+        "count": 5,
+        "liveCount": 5,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -273,8 +273,8 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 13,
-        "liveCount": 13,
+        "count": 11,
+        "liveCount": 11,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -326,23 +326,6 @@
     ]
   },
   "events": [
-    {
-      "id": "56e17290ddf8",
-      "title": "Sandra & Katrina Pacheco: Music of Amalia Rodrigues",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "SJZ Break Room",
-      "address": "",
-      "city": "san-jose",
-      "category": "music",
-      "cost": null,
-      "description": "Sandra and Katrina Pacheco carry the tradition of fado, Portugal's soulful song of longing and melancholy, to Bay Area audiences. For this Break Room set, they turn to the repertoire of Amalia Rodrigues, the legendary \"Queen of Fado.\"",
-      "url": "https://sanjosejazz.org/events/sandra-katrina-pacheco-music-of-amalia-rodrigues/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
     {
       "id": "ccb723ca3ba9",
       "title": "Noah & the Arkiteks",
@@ -790,10 +773,10 @@
       "kidFriendly": false
     },
     {
-      "id": "065fd8bc8501",
+      "id": "8f9d44aaa425",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
+      "date": "2026-11-22",
+      "displayDate": "Sun, Nov 22",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -810,10 +793,10 @@
       "kidFriendly": false
     },
     {
-      "id": "07d203d89536",
+      "id": "be06453dde85",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
+      "date": "2026-11-22",
+      "displayDate": "Sun, Nov 22",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -867,10 +850,10 @@
       "kidFriendly": true
     },
     {
-      "id": "a97bcb1f4ec9",
+      "id": "88792d469e11",
       "title": "Toddler Storytime",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
+      "date": "2026-11-22",
+      "displayDate": "Sun, Nov 22",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -882,30 +865,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "20f169faf651",
-      "title": "Volunteer in the Heritage Rose Garden!",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "8:30 AM",
-      "endTime": "11:30 AM",
-      "venue": "Rose Garden Shed",
-      "address": "",
-      "city": "san-jose",
-      "registration": "required",
-      "category": "outdoor",
-      "cost": null,
-      "description": "Help us revitalize the largest public rose collection in the Western Hemisphere! Tasks include weeding, deadheading/pruning, and seasonal planting. We suggest bringing: - A full water bottle - Thick work gloves Chaperones are required for those age 15 and younger. School groups or corporate teams must contact the Volunteer Coordinator at volunteer@grpg.org to schedule events. Register HERE Please note this event may cancel in the case of inclement weather. Restrooms are available at the Rotary PlayGarden starting at 10AM. We highly recommend using the restrooms prior to volunteering. Address for Parking: 438 Coleman Ave. Jose, CA 95110 Meeting Location: Rose Garden Shed (Refer to registration form for map) Time: 8:30 AM - 11:30 AM Recurring Dates: Every Saturday",
-      "attendanceNote": "Advance registration is required through Guadalupe River Park Conservancy. Meet at Rose Garden Shed; see the organizer's registration form for the meeting map. Chaperones are required for those age 15 and younger.",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-21"
-      }
     },
     {
       "id": "a51027e867ef",
@@ -1041,7 +1000,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-22T04:55:13.534Z"
+        "checkedAt": "2026-11-22T09:03:51.055Z"
       }
     },
     {
@@ -1064,7 +1023,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-22T04:55:13.534Z"
+        "checkedAt": "2026-11-22T09:03:51.057Z"
       }
     },
     {
@@ -1087,7 +1046,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-22T04:55:13.535Z"
+        "checkedAt": "2026-11-22T09:03:51.057Z"
       }
     },
     {
@@ -1110,7 +1069,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-22T04:55:13.535Z"
+        "checkedAt": "2026-11-22T09:03:51.058Z"
       }
     },
     {
@@ -1133,7 +1092,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-22T04:55:13.538Z"
+        "checkedAt": "2026-11-22T09:03:51.060Z"
       }
     },
     {
@@ -1156,7 +1115,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-22T04:55:13.538Z"
+        "checkedAt": "2026-11-22T09:03:51.061Z"
       }
     },
     {
@@ -1245,23 +1204,6 @@
       "kidFriendly": true
     },
     {
-      "id": "599ed394f0cf",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
       "id": "1330abdeba6b",
       "title": "Environmental Education Center Open House",
       "date": "2026-11-28",
@@ -1317,6 +1259,23 @@
       "title": "Environmental Education Center Open House",
       "date": "2026-12-19",
       "displayDate": "Sat, Dec 19",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "b5d979b924ba",
+      "title": "Environmental Education Center Open House",
+      "date": "2027-01-09",
+      "displayDate": "Sat, Jan 9",
       "time": "11:00 AM",
       "endTime": "03:00 PM",
       "venue": "McClellan Ranch Preserve",
@@ -1861,7 +1820,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
       "url": "https://www.operasj.org/event/doctor-atomic",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1878,7 +1837,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
       "url": "https://www.operasj.org/event/doctor-atomic-6",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1895,7 +1854,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
       "url": "https://www.operasj.org/event/doctor-atomic-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3040,23 +2999,6 @@
       "kidFriendly": false
     },
     {
-      "id": "5ea8b92a1c5c",
-      "title": "Sharks vs Kraken — Anime Night",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "Sharkie Anime Pennant Giveaway",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "8bea8765329d",
       "title": "Sharks vs Wild",
       "date": "2026-11-23",
@@ -3077,7 +3019,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.267Z"
       }
     },
     {
@@ -3101,7 +3043,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.268Z"
       }
     },
     {
@@ -3125,7 +3067,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.273Z"
       }
     },
     {
@@ -3166,7 +3108,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.274Z"
       }
     },
     {
@@ -3190,7 +3132,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.274Z"
       }
     },
     {
@@ -3214,7 +3156,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.274Z"
       }
     },
     {
@@ -3238,7 +3180,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.274Z"
       }
     },
     {
@@ -3262,7 +3204,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.274Z"
       }
     },
     {
@@ -3286,7 +3228,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.274Z"
       }
     },
     {
@@ -3310,7 +3252,31 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-2",
         "date": "2026-12-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-22T04:55:49.615Z"
+        "checkedAt": "2026-11-22T09:04:29.274Z"
+      }
+    },
+    {
+      "id": "7a3eca3a4a58",
+      "title": "San Jose Sea Lions vs. Boston Fleet",
+      "date": "2026-12-30",
+      "displayDate": "Wed, Dec 30",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-3",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-3",
+        "date": "2026-12-30",
+        "time": "7:00 PM",
+        "checkedAt": "2026-11-22T09:04:29.274Z"
       }
     },
     {
@@ -3521,10 +3487,10 @@
       }
     },
     {
-      "id": "0423bc75e72d",
+      "id": "ea42c37c66db",
       "title": "Hunger Games: Sunrise on the Reaping",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
+      "date": "2026-11-29",
+      "displayDate": "Sun, Nov 29",
       "time": "5:30PM",
       "endTime": null,
       "venue": "The Tech Interactive",
@@ -3539,15 +3505,15 @@
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.thetech.org/explore/upcoming-events/",
-        "date": "2026-11-21",
+        "date": "2026-11-29",
         "time": "5:30 PM"
       }
     },
     {
-      "id": "6766fe898f0a",
+      "id": "317f80ca6c39",
       "title": "Hunger Games: Sunrise on the Reaping",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
+      "date": "2026-11-29",
+      "displayDate": "Sun, Nov 29",
       "time": "8:15PM",
       "endTime": null,
       "venue": "The Tech Interactive",
@@ -3562,53 +3528,7 @@
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.thetech.org/explore/upcoming-events/",
-        "date": "2026-11-21",
-        "time": "8:15 PM"
-      }
-    },
-    {
-      "id": "1221875017f1",
-      "title": "Hunger Games: Sunrise on the Reaping",
-      "date": "2026-11-22",
-      "displayDate": "Sun, Nov 22",
-      "time": "5:30PM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Return to Panem for the 50th Hunger Games! In “The Hunger Games: Sunrise on the Reaping,” young Haymitch Abernathy faces a deadly fight for survival as the Capitol doubles the number of tributes. Experience the action, suspense, and rebellion on the largest dome screen in the Bay Area in our IMAX® Dome Theater, featuring stunning visuals and powerful sound.",
-      "url": "https://tickets.thetech.org/events/01a0f8a9-e4e2-59f2-90c5-8daebe40da6e",
-      "source": "The Tech Interactive",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.thetech.org/explore/upcoming-events/",
-        "date": "2026-11-22",
-        "time": "5:30 PM"
-      }
-    },
-    {
-      "id": "14581ea3d6e4",
-      "title": "Hunger Games: Sunrise on the Reaping",
-      "date": "2026-11-22",
-      "displayDate": "Sun, Nov 22",
-      "time": "8:15PM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Return to Panem for the 50th Hunger Games! In “The Hunger Games: Sunrise on the Reaping,” young Haymitch Abernathy faces a deadly fight for survival as the Capitol doubles the number of tributes. Experience the action, suspense, and rebellion on the largest dome screen in the Bay Area in our IMAX® Dome Theater, featuring stunning visuals and powerful sound.",
-      "url": "https://tickets.thetech.org/events/01a0f8a9-e4e2-59f2-90c5-8daebe40da6e",
-      "source": "The Tech Interactive",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.thetech.org/explore/upcoming-events/",
-        "date": "2026-11-22",
+        "date": "2026-11-29",
         "time": "8:15 PM"
       }
     },
