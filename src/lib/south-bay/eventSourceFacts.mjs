@@ -95,6 +95,33 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  {
+    // The Center for Steinbeck Studies confirms free admission and the room.
+    // https://www.sjsu.edu/steinbeck/events-and-news/news-upcoming-events.php
+    date: "2026-12-03",
+    url: "https://events.sjsu.edu/event/2026-fall-steinbeck-fellows-reading",
+    facts: {
+      cost: "free",
+      venue: "Dr. Martin Luther King, Jr. Library, Steinbeck Center (5th floor)",
+    },
+  },
+  {
+    // The concert producer sells tickets and publishes its admission ages.
+    // The same ticket URL links Hammer Theatre's retired listing to this one.
+    // https://feverup.com/m/661992
+    date: "2026-12-03",
+    url: "https://events.sjsu.edu/event/candlelight-tribute-to-juan-gabriel-on-strings",
+    aliasUrls: ["https://feverup.com/m/661992"],
+    facts: { category: "music", cost: "paid", url: "https://feverup.com/m/661992" },
+    appendAttendanceNote: "Ages 8 and up. Guests under 16 must be accompanied by an adult.",
+  },
+  {
+    // The Anderson Collection describes these dates as gallery sketching.
+    // https://anderson.stanford.edu/programs-exhibitions/
+    dateFrom: "2026-11-27", dateThrough: "2027-09-24",
+    url: "https://events.stanford.edu/event/anderson-friday-drop-in-drawing",
+    facts: { category: "arts" },
+  },
   // The museum's full program description supplies the speakers and subject
   // that were lost when the iCal description was truncated for display.
   {
@@ -702,6 +729,17 @@ const CORRECTIONS = [
     facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
     appendAttendanceNote: attendanceNote,
   })),
+  {
+    // Willow Glen reserves seats online and explicitly welcomes walk-ins
+    // if space is available. Preserve later full or closed notices.
+    date: "2026-11-28",
+    matches: event => event.registration === REGISTRATION_REQUIRED
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/68fc0358c313c23700ded895\/?$/.test(event.url || "")
+      && /\bregistration (?:is )?recommended\.\s+walk-ins (?:are )?welcome if space is available\b/i.test(event.description || "")
+      && !/\b(?:registration (?:is )?(?:now )?(?:closed|full|required)|no walk-ins)\b/i.test(event.description || ""),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+    appendAttendanceNote: "Online reservations are recommended. Walk-ins are welcome if space is available.",
+  },
   // These dated SJPL pages give conflicting signup instructions. The program
   // copy calls registration optional, while the signup panel labels it required.
   ...[
@@ -2255,19 +2293,21 @@ const CORRECTIONS = [
         || (ticketId && event.url === `https://tickets.thetech.org/events/${ticketId}`)),
     facts: { category, description, blurb },
   })),
-  {
-    // The museum confirms both dates and the screening. MPA certificate 55924
-    // gives the PG-13 advisory. Keep the event available to readers while
-    // excluding it from recommendations for young children.
-    // https://www.thetech.org/explore/upcoming-events/
-    // https://www.filmratings.com/search-results/?search=Sunrise+on+the+Reaping
-    dateFrom: "2026-11-21", dateThrough: "2026-11-22",
+  // The Tech's IMAX page identifies both film runs. The PG-13 advisory
+  // follows the film across its showtimes (MPA certificates 55924 and 56039).
+  // https://www.thetech.org/imax/
+  // https://www.filmratings.com/all-search-results/?mr=PG-13
+  ...[
+    ["2026-11-18", "2026-12-03", "Hunger Games: Sunrise on the Reaping", "01a0f8a9-e4e2-59f2-90c5-8daebe40da6e"],
+    ["2026-12-17", "2027-01-10", "Dune: Part Three", "3a7103f8-b895-1016-ff22-236b306b04af"],
+  ].map(([dateFrom, dateThrough, title, ticketId]) => ({
+    dateFrom, dateThrough,
     matches: event => event.source === "The Tech Interactive"
-      && event.title === "Hunger Games: Sunrise on the Reaping" && event.venue === "The Tech Interactive"
-      && event.url === "https://tickets.thetech.org/events/01a0f8a9-e4e2-59f2-90c5-8daebe40da6e",
+      && event.title === title && event.venue === "The Tech Interactive"
+      && event.url === `https://tickets.thetech.org/events/${ticketId}`,
     facts: { category: "arts", kidFriendly: false },
     appendAttendanceNote: "Film rated PG-13.",
-  },
+  })),
   {
     date: "2026-11-20",
     matches: event => event.source === "San Jose Public Library" && event.title === "Arts & Crafts Fun"

@@ -15,6 +15,42 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("verified IMAX film ratings follow new showtimes in the same run", () => {
+  for (const [date, title, ticketId] of [
+    ["2026-11-29", "Hunger Games: Sunrise on the Reaping", "01a0f8a9-e4e2-59f2-90c5-8daebe40da6e"],
+    ["2026-12-17", "Dune: Part Three", "3a7103f8-b895-1016-ff22-236b306b04af"],
+  ]) {
+    const event = {
+      date, title, time: "5:30 PM", category: "community", kidFriendly: true,
+      source: "The Tech Interactive", venue: "The Tech Interactive",
+      url: `https://tickets.thetech.org/events/${ticketId}`,
+    };
+    const fixed = applyVerifiedEventFacts(event);
+    assert.deepEqual(fixed, {
+      ...event, category: "arts", kidFriendly: false, attendanceNote: "Film rated PG-13.",
+    });
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const unrelated = { ...event, title: "Girl Scout Program" };
+    assert.deepEqual(applyVerifiedEventFacts(unrelated), unrelated);
+  }
+});
+
+test("Easy Tech Seniors retains conditional walk-ins without reopening a full class", () => {
+  const program = {
+    date: "2026-11-28",
+    url: "https://sjpl.bibliocommons.com/v2/events/68fc0358c313c23700ded895",
+    description: "Free. Class limited to 10 attendees. Registration Recommended. Walk-Ins welcome if space is available.",
+    registration: "required", registrationClosesBy: "2026-11-28T18:30:00.000Z",
+  };
+  const fixed = applyVerifiedEventFacts(program);
+  assert.equal(requiresAdvanceRegistration(fixed), false);
+  assert.equal(fixed.registrationClosesBy, null);
+  assert.match(fixed.attendanceNote, /walk-ins are welcome if space is available/i);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const full = { ...program, registration: "full" };
+  assert.deepEqual(applyVerifiedEventFacts(full), full);
+});
+
 test("Books Inc.'s November 24 author event uses the published book title and RSVP details", () => {
   const incoming = {
     date: "2026-11-24",
