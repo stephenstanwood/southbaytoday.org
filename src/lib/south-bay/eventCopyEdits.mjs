@@ -28,6 +28,7 @@ const SJPL_STORYTIME_TICKET_EDIT = [
 const SJPL_DESK_TICKET_COPY = "Tickets are available at the desk 30 minutes before the program starts. Everyone attending needs a ticket and must be present to get one.";
 const SJPL_TICKETS_AND_PARTICIPATION_EDIT = ["Tickets and Participation Free.", "Tickets and Participation: Free."];
 const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
+const SJPL_EASY_TECH_VOICE_ASSISTANT_COPY = "On November 28, learn to turn on and use Siri or Google Assistant. Practice checking the weather, setting timers, and making calls. You'll also learn to manage privacy settings and shortcuts.";
 // https://www.vexrobotics.com/v5/products/vexcode
 // Description normalization can split the already-correct spelling into "VE Xcode".
 const SJPL_VEXCODE_EDIT = [/\b(?:VEX\s*code|VE Xcode)\b/gi, "VEXcode"];
@@ -744,6 +745,10 @@ const EDITS = {
       ["Use of controls like muting and un-muting audio or video, how to see and use the chat function.", "Learn to mute and unmute audio or video and use the chat."],
       ["Create groups (family, emergency). Backup and sync safely.", "Create groups (family, emergency). Back up and sync safely."],
       ["How to activate and use voice assistants Siri or Google Assistant.", "Learn to activate and use Siri or Google Assistant."],
+      [
+        "November 28th - Using Siri or Google Assistant - Learn to activate and use Siri or Google Assistant. Practice common commands (weather, timers, calls). Manage privacy settings and shortcuts.",
+        SJPL_EASY_TECH_VOICE_ASSISTANT_COPY,
+      ],
       ["(no program in December). Free. Class limited to ", "There is no program in December. The class is free and limited to "],
       ["Registration Recommended. Walk-Ins welcome if space is available.", "Registration is recommended. Walk-ins are welcome if space is available."],
       ["and write basic sentences Lớp này sẽ", "and write basic sentences. Lớp này sẽ"],
@@ -1876,6 +1881,12 @@ const EDITS = {
       ["Join us at the Mitchell Park Community Center, as we celebrate Diwali! Enjoy fun activities for all ages including:", "Join us at the Mitchell Park Community Center as we celebrate Diwali! Enjoy fun activities for all ages:"],
       ["founded in 2016 by international Kathak artist, Farah Yasmeen Shaikh, exemplifies", "founded in 2016 by international Kathak artist Farah Yasmeen Shaikh, exemplifies"],
       ["children engage in problem solving, teamwork, self-confidence, and creativity!", "children practice problem solving and teamwork while developing self-confidence and creativity!"],
+      [
+        "participants will draw together with pencils for 5, 4, 3, 2, and 1 minute—and sometimes even 30 seconds.",
+        "participants will draw together with pencils for 5 minutes, then 4, 3, and 2 minutes, and finally 1 minute. Some rounds last just 30 seconds.",
+      ],
+      ["try different pencil pressure, movement, and speed", "vary their pencil pressure, movements, and speed"],
+      ["The timing will be repeated about three times.", "The group will repeat the sequence about three times."],
       [/Duration: (60|90) minutes$/g, "Duration: $1 minutes."],
       ["Note: Teens and Adults only. Use of", "Note: Teens and adults only. Use of"],
       ["and beyond. Keep on hand all", "and beyond. Keep them on hand all"],
@@ -1911,6 +1922,10 @@ const EDITS = {
         "Learn line dancing steps to international music with Sandy and Kent. You don't need a partner or any experience.",
       ],
       ["Watch dry ice turn solid to gas", "Watch dry ice turn from solid to gas"],
+      [
+        "Draw with pencils in timed rounds of 5, 4, 3, 2, and 1 minute, in a one-hour figure-drawing workshop.",
+        "Practice figure drawing with pencils in this one-hour workshop. Sketch for 5 minutes, then 4, 3, and 2 minutes, and finally 1 minute.",
+      ],
       [
         "Sit for guided sitting and releasing meditation with Phuong Pham, then join a group sharing and Q&A session.",
         "Join Phuong Pham for guided sitting and releasing meditation, followed by group sharing and Q&A.",
@@ -2461,6 +2476,12 @@ export function polishReviewedEventCopy(event) {
   if (next.source === "San Jose Public Library" && ["full", "closed"].includes(next.registration)
       && next.attendanceNote?.includes(signupNote)) {
     next.attendanceNote = next.attendanceNote.replace(signupNote, "").trim() || undefined;
+  }
+  // The series description lists every topic. Lead with the confirmed lesson for this occurrence.
+  if (next.source === "San Jose Public Library" && next.date === "2026-11-28"
+      && typeof next.description === "string" && next.description.includes(SJPL_EASY_TECH_VOICE_ASSISTANT_COPY)
+      && next.blurb === "Learn new tech skills in an interactive group session led by Malhar, a local high school student who helps seniors with technology.") {
+    next.blurb = "Practice using Siri or Google Assistant to check the weather, set timers, and make calls. Malhar, a local high school student, leads this group class for older adults.";
   }
   return next;
 }
