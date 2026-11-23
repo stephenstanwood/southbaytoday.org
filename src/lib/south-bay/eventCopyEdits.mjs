@@ -29,6 +29,10 @@ const SJPL_STORYTIME_TICKET_EDIT = [
 const SJPL_DESK_TICKET_COPY = "Tickets are available at the desk 30 minutes before the program starts. Everyone attending needs a ticket and must be present to get one.";
 const SJPL_TICKETS_AND_PARTICIPATION_EDIT = ["Tickets and Participation Free.", "Tickets and Participation: Free."];
 const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
+const SJPL_FIRST_COME_MATERIALS_EDIT = [
+  "This event is first-come, first-served. Materials are limited to",
+  "Space is available on a first-come, first-served basis. Materials are limited to",
+];
 const SJPL_EASY_TECH_VOICE_ASSISTANT_COPY = "On November 28, learn to turn on and use Siri or Google Assistant. Practice checking the weather, setting timers, and making calls. You'll also learn to manage privacy settings and shortcuts.";
 // https://www.vexrobotics.com/v5/products/vexcode
 // Description normalization can split the already-correct spelling into "VE Xcode".
@@ -167,6 +171,7 @@ const EDITS = {
       ["Tickets and participation Free.", "Tickets and participation are free."],
       SJPL_TICKETS_AND_PARTICIPATION_EDIT,
       ["on a first come, first basis.", "on a first-come, first-served basis."],
+      SJPL_FIRST_COME_MATERIALS_EDIT,
       // Attendance excerpts are extracted before description repairs run.
       // Keep the reviewed grammar here as well, without restoring old limits.
       ["first-come, first-served; capacities limited.", "first-come, first-served; capacity is limited."],
@@ -195,6 +200,15 @@ const EDITS = {
     ],
     description: [
       ["Participants must be ages 10 and up.", "Participants must be at least 10 years old."],
+      SJPL_FIRST_COME_MATERIALS_EDIT,
+      [
+        "Each week we focus on a different themed artwork or craft.",
+        "Each week features an art or craft project with a different theme.",
+      ],
+      [
+        /Drop in and join us every Monday from (\d{1,2}) PM-(\d{1,2}) PM for an evening of STEM-related family fun!/g,
+        "Drop in every Monday from $1 to $2 PM for family STEM activities.",
+      ],
       [
         "Participants can also use their session to read away their fines! Just inform your coach (open to youth only).",
         "If you'd like to use your reading session to reduce your library fines, tell your coach. This option is open to youth only.",
