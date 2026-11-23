@@ -1319,8 +1319,39 @@ const EDITS = {
         "Práctica para el examen escrito de manejo - Prepárate con materiales y preguntas de práctica para aprobar tu examen.",
         "Prepárate para el examen escrito de manejo con materiales y preguntas de práctica.",
       ],
+      ["It can also help them reach academic success.", "It can also help them succeed in school."],
+      [
+        "Presented by Jessica, a Certified Yoga Instructor.",
+        "Jessica, a certified yoga instructor, leads the class.",
+      ],
+      [
+        /Optional: Bring (\d+) yoga blocks and a small\/medium blanket or pillow for additional comfort and support\./g,
+        "For added comfort and support, you can bring $1 yoga blocks and a small or medium blanket or pillow.",
+      ],
+      ["Did you just clean out your room and ended up with", "Did you just clean out your room and end up with"],
+      [
+        "Come bring in your clean, gently-loved fandom merchandise to find them new homes and keep them out of landfills!",
+        "Bring your clean, gently used fandom merchandise to give it a new home and keep it out of landfills!",
+      ],
+      ["all materials must be rated PG-13 and under.", "all materials must be rated PG-13 or lower."],
+      ["an LGBTQ+ friendly space", "an LGBTQ+-friendly space"],
+      ["available to browse and checkout.", "available to browse and check out."],
+      ["Café Queer ¡La alegría queer estará presente", "¡La alegría queer estará presente"],
+      [
+        "We may cancel some meetings due to school/holiday breaks or volunteer unavailability.",
+        "We may cancel some meetings during school or holiday breaks, or if volunteers are unavailable.",
+      ],
+      [
+        /This program is for tweens and teens, ages (\d+-\d+)\. Held in Study Room (\d+)\./g,
+        "This program is for tweens and teens ages $1. We'll meet in Study Room $2.",
+      ],
+      [
+        /Please note our equipment can only accommodate (\d+) players at a time\./g,
+        "The equipment can accommodate up to $1 players at a time.",
+      ],
     ],
     blurb: [
+      ["an LGBTQ+ friendly space", "an LGBTQ+-friendly space"],
       [
         "Bring your questions on printing, Word, Excel, email setup, or tech security to volunteer tech mentors who offer advice and problem-solving.",
         "Bring your questions about printing, Word, Excel, email setup, or tech security to volunteer tech mentors.",
@@ -2305,6 +2336,10 @@ const EDITS = {
       [
         "An evening of choral music featuring performances from the SJSU Treble Choir, Spartan Glee Club, Vocal Jazz Ensemble, and two a cappella groups The Spartones and Spartan Stellas!",
         "The SJSU Treble Choir, Spartan Glee Club, and Vocal Jazz Ensemble perform alongside The Spartones and Spartan Stellas, two a cappella groups.",
+      ],
+      [
+        "the Saxophone Ensemble for a night of music, led by Professor Michael Hernandez.",
+        "the Saxophone Ensemble, led by Professor Michael Hernandez, for a night of music.",
       ],
     ],
     blurb: [
