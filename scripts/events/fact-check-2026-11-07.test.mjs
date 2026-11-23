@@ -103,20 +103,20 @@ const football = {
   source: "City Newsletter", description: "Fan Appreciation Game.",
 };
 
-test("an official TBA kickoff cannot be supplied by the ticket shop schema or a cached clock", async () => {
+test("Stanford's confirmed kickoff replaces the old ticket shop placeholder", async () => {
   const fixed = applyVerifiedEventFacts(football);
-  assert.equal(fixed.time, null);
-  assert.match(fixed.description, /Kickoff time is TBA/);
-  assert.equal(isEventPublishable(fixed), false);
+  assert.equal(fixed.time, "12:30 PM");
+  assert.equal(fixed.endTime, null);
+  assert.equal(fixed.url, "https://gostanford.com/fansgiving-at-stanford-football-vs-smu");
+  assert.equal(isEventPublishable(fixed), true);
   assert.equal(isEventTimeBackfillCandidate(fixed), false);
-  assert.equal(snapshotEvent(fixed).time, undefined, "the retained published URL cannot keep 7 PM");
-  const held = resolveRetired({ entries: [{ slug: "2026-11-28-stanford-football-vs-smu", event: football }] }, [], [], "2026-11-07");
-  assert.equal(held.orphans[0].event.time, undefined);
-  assert.match(held.orphans[0].event.description, /Kickoff time is TBA/);
+  assert.equal(snapshotEvent(fixed).time, "12:30 PM");
+  const retired = resolveRetired({ entries: [{ slug: "2026-11-28-stanford-football-vs-smu", event: football }] }, [], [], "2026-11-23");
+  assert.equal(retired.orphans[0].event.time, "12:30 PM");
   const events = [{ ...football }];
   await resolveEventBlurbs(events, { enabled: false });
-  assert.equal(isEventPublishable(events[0]), false);
-  assert.equal(events[0].time, null);
+  assert.equal(isEventPublishable(events[0]), true);
+  assert.equal(events[0].time, "12:30 PM");
   assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
   for (const other of [{ ...football, date: "2027-11-28" }, { ...football, url: football.url.replace("6ae10caa2652b89aac76ea31", "other-game") }]) {
     assert.deepEqual(applyVerifiedEventFacts(other), other);

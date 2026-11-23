@@ -15,6 +15,32 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("the December 3 Candlelight listing points to paid music tickets and preserves closures", () => {
+  const event = {
+    id: "sjsu-192b4de184cb13b2", date: "2026-12-03", title: "Candlelight - 90s Unplugged",
+    time: "8:45 PM", endTime: "9:45 PM", cost: null, category: "arts",
+    city: "san-jose", venue: "Hammer Theatre Center, Sobrato Auditorium",
+    url: "https://events.sjsu.edu/event/candlelight-90s-unplugged",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.url, "https://feverup.com/m/356802");
+  assert.equal(fixed.cost, "paid");
+  assert.equal(fixed.category, "music");
+  assert.equal(fixed.registration, "required");
+  assert.match(fixed.attendanceNote, /Ages 8 and up/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  assert.equal(applyVerifiedEventFacts({ ...event, registration: "closed" }).registration, "closed");
+  const otherDate = { ...event, date: "2026-12-04" };
+  assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+  const retired = {
+    ...event, id: "hammertheatre-9d6ddc1d809b8b31", title: "Fever presents Candlelight: 90s Unplugged",
+    venue: "Hammer Theatre Center", url: fixed.url,
+  };
+  const ledger = retireSlugs({}, [retired], [fixed], "2026-11-23");
+  const { redirects } = resolveRetired(ledger, [fixed], [], "2026-11-23");
+  assert.equal(redirects.get("2026-12-03-fever-presents-candlelight-90s-unplugged"), "2026-12-03-candlelight-90s-unplugged");
+});
+
 test("verified IMAX film ratings follow new showtimes in the same run", () => {
   for (const [date, title, ticketId] of [
     ["2026-11-29", "Hunger Games: Sunrise on the Reaping", "01a0f8a9-e4e2-59f2-90c5-8daebe40da6e"],

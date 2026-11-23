@@ -63,22 +63,22 @@ test("dated Stanford and Montalvo corrections survive cached publication without
   assert.deepEqual(events, corrected);
 });
 
-test("new SMU ticket alias cannot restore a placeholder kickoff through newsletter intake or stale backfill", async () => {
+test("the confirmed SMU kickoff survives newsletter intake and stale backfill", async () => {
   const incoming = fixture.incoming.find(event => /SMU/.test(event.title));
-  const [event] = fetchInboundEvents({ events: [incoming], today: "2026-11-15" });
+  const [event] = fetchInboundEvents({ events: [incoming], today: "2026-11-23" });
   Object.assign(event, applyVerifiedEventFacts(event));
   assert.equal(isEventTimeBackfillCandidate(event), false);
   await backfillVerifiedEventTimes([event], { backfill: async rows => { rows[0].time = "7:00 PM"; } });
   await resolveEventBlurbs([event], { enabled: false });
-  assert.equal(event.time, null);
+  assert.equal(event.time, "12:30 PM");
   assert.equal(event.endTime, null);
-  assert.equal(isEventPublishable(event), false);
+  assert.equal(isEventPublishable(event), true);
   const promotion = { ...event, time: "7:00 PM", url: "https://tickets.gostanford.com/events/69c4649c39baf6e77d7c9b7f/000000000000000000000000" };
-  assert.equal(applyVerifiedEventFacts(promotion).time, null, "rotating promotional aliases share the dated event hold");
+  assert.equal(applyVerifiedEventFacts(promotion).time, "12:30 PM");
   const previous = fixture.events.find(row => /SMU/.test(row.title));
-  const ledger = retireSlugs({ entries: [] }, [previous], [], "2026-11-15", fixture.checkedAt);
-  const retired = resolveRetired(ledger, [], [], "2026-11-15");
-  assert.equal(retired.orphans[0].event.time ?? null, null, "the retired leaf cannot repeat 7 PM");
+  const ledger = retireSlugs({ entries: [] }, [previous], [], "2026-11-23", fixture.checkedAt);
+  const retired = resolveRetired(ledger, [], [], "2026-11-23");
+  assert.equal(retired.orphans[0].event.time, "12:30 PM");
 });
 
 test("the Berkeley Big Game and campus-only workshop cannot reenter the public calendar", () => {

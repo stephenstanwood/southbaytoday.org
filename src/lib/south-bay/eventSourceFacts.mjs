@@ -160,6 +160,30 @@ const CORRECTIONS = [
     appendAttendanceNote: "Ages 8 and up. Guests under 16 must be accompanied by an adult.",
   },
   {
+    // Fever's dated ticket page confirms paid admission to the December 3 concert.
+    date: "2026-12-03",
+    url: "https://events.sjsu.edu/event/candlelight-90s-unplugged",
+    aliasUrls: ["https://feverup.com/m/356802"],
+    facts: {
+      url: "https://feverup.com/m/356802",
+      category: "music", cost: "paid", registration: REGISTRATION_REQUIRED,
+      description: "A string quartet performs acoustic arrangements of 1990s hits at Hammer Theatre Center.",
+      blurb: "Hear a string quartet play 1990s hits by candlelight at Hammer Theatre.",
+    },
+    appendAttendanceNote: "Ages 8 and up. An adult must accompany guests under 16.",
+  },
+  {
+    // The orchestra lists Campbell and San Mateo performances of its season finale.
+    // https://peninsulasymphony.org/the-maestros-may-2027
+    date: "2027-05-22",
+    url: "https://www.heritagetheatre.org/events/peninsula-symphony-orchestra-the-maestros",
+    facts: {
+      cost: "paid",
+      description: "Pianist Jon Nakamatsu joins Peninsula Symphony for its season finale, Mitchell Sardou Klein's last program as music director.",
+      blurb: "Hear pianist Jon Nakamatsu perform with Peninsula Symphony in Mitchell Sardou Klein's final program as music director.",
+    },
+  },
+  {
     // The museum invites all ages to sketch in the galleries.
     dateFrom: "2026-11-27", dateThrough: "2027-09-24",
     url: "https://events.stanford.edu/event/anderson-friday-drop-in-drawing",
@@ -1264,17 +1288,29 @@ const CORRECTIONS = [
     facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
     appendAttendanceNote: "Registration is recommended but not required.",
   },
-  // The organizer publishes two possible clocks and says the final kickoff
-  // will be announced after November 21. Neither alternative is confirmed.
-  // The promotional URL bypasses the older ticket-shop-only SMU hold below.
-  // Evidence: docs/qa/2026-11-17-0407z-fact-check.md.
   {
+    // Stanford Athletics confirmed 12:30 PM after the November 21 games.
+    // The university calendar still lists noon and the ticket feed used 7 PM.
+    // https://gostanford.com/2026-football-media-center
     date: "2026-11-28",
     url: "https://gostanford.com/fansgiving-at-stanford-football-vs-smu",
-    facts: {
-      time: null, endTime: null, attendanceStatus: "needs-confirmation",
+    aliasUrls: ["https://events.stanford.edu/event/stanford-football-vs-smu-senior-day-fan-appreciation"],
+    matches: (event) => /\bfootball\b.*\bSMU\b/i.test(event.title || "")
+      && /^https:\/\/tickets\.gostanford\.com\/events?\/(?:football-vs-smu-fauvdl|69c4649c39baf6e77d7c9b7f)(?:\/[a-f0-9]{24})?\/?(?:[?#]|$)/.test(event.url || ""),
+    facts: (event) => {
+      const priorKickoffNote = "Stanford lists 12 PM or 12:30 PM and will announce the official kickoff after November 21. Confirm the time before going.";
+      const remainingNote = event.attendanceNote?.replace(priorKickoffNote, "").trim();
+      const hadKickoffNote = event.attendanceNote?.includes(priorKickoffNote);
+      return {
+        url: "https://gostanford.com/fansgiving-at-stanford-football-vs-smu",
+        time: "12:30 PM", endTime: null, cost: "paid",
+        description: "Stanford hosts SMU at Stanford Stadium for Senior Day and its Fan Appreciation Game.",
+        blurb: "Watch Stanford take on SMU at Stanford Stadium as the Cardinal honors its seniors.",
+        ...(hadKickoffNote ? { attendanceNote: remainingNote || null } : {}),
+        ...(hadKickoffNote && !remainingNote && event.attendanceStatus === "needs-confirmation"
+          ? { attendanceStatus: null } : {}),
+      };
     },
-    appendAttendanceNote: "Stanford lists 12 PM or 12:30 PM and will announce the official kickoff after November 21. Confirm the time before going.",
   },
   // Keep mandatory admission terms in retained cards whose Localist copy
   // was shortened to an empty description. Later full/closed states win.
@@ -3015,20 +3051,6 @@ const CORRECTIONS = [
     date: "2026-11-17",
     url: "https://events.sjsu.edu/event/de-risking-for-startups-through-partnerships-hosted-by-emumba-x-silicon-valley-sbdc-x-aws",
     facts: { cost: "free", endTime: "8:00 PM" },
-  },
-  // Both team schedules still say TBA. The ticket shop's JSON-LD 7 PM
-  // placeholder is not an announced kickoff. Reverify the team schedule
-  // before releasing this dated hold; retained URLs must also lose the clock.
-  // Promotional links rotate their final id under the same event group.
-  {
-    date: "2026-11-28",
-    matches: (event) => /\bfootball\b.*\bSMU\b/i.test(event.title || "")
-      && /^https:\/\/tickets\.gostanford\.com\/events?\/(?:football-vs-smu-fauvdl|69c4649c39baf6e77d7c9b7f)(?:\/[a-f0-9]{24})?\/?(?:[?#]|$)/.test(event.url || ""),
-    facts: {
-      time: null, endTime: null,
-      description: "Stanford hosts SMU at Stanford Stadium on November 28. Kickoff time is TBA on Stanford's official football schedule; the ticket shop's structured clock is unconfirmed.",
-      blurb: "Stanford hosts SMU at Stanford Stadium on November 28; kickoff time is TBA.",
-    },
   },
   // The current venue page and its exact, rescheduled ticket record disagree.
   // Neither establishes a single confirmed clock. Keep the concert with a

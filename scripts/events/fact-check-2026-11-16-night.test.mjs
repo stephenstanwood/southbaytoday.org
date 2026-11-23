@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
-import { backfillVerifiedEventTimes, cleanTitle, fetchScuEvents, fetchStanfordEvents, inferCategory, isEventTimeBackfillCandidate } from "../generate-events.mjs";
+import { cleanTitle, fetchScuEvents, fetchStanfordEvents, inferCategory, isEventTimeBackfillCandidate } from "../generate-events.mjs";
 import { libraryEventDetails } from "../lib/library-event-details.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
@@ -11,18 +11,36 @@ import { resolveRetired, retireSlugs } from "../../src/lib/south-bay/eventSlugLe
 const fixture = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/fact-check-2026-11-16-night.json", import.meta.url)));
 const prior = id => structuredClone(fixture.events.find(e => e.id === id));
 
-test("FansGiving keeps both possible kickoffs out of the published start clock", async () => {
-  for (const time of ["12:00 PM", "12:30 PM", null]) {
-    const event = { ...prior("inbound-40dfe7b5b3daacd1"), time };
-    await resolveEventBlurbs([event], { enabled: false });
-    assert.equal(event.time, null);
-    assert.equal(event.endTime, null);
-    assert(requiresAttendanceConfirmation(event));
-    assert.match(event.attendanceNote, /12 PM or 12:30 PM/);
-    assert.match(event.attendanceNote, /after November 21/);
-    assert.equal(event.description, fixture.events.find(e => e.id === event.id).description);
-    assert.deepEqual(applyVerifiedEventFacts(event), event);
-  }
+const SMU_LOCALIST_URL = "https://events.stanford.edu/event/stanford-football-vs-smu-senior-day-fan-appreciation";
+const SMU_KICKOFF_NOTE = "Stanford lists 12 PM or 12:30 PM and will announce the official kickoff after November 21. Confirm the time before going.";
+
+test("the confirmed SMU kickoff replaces both the noon listing and the old time notice", async () => {
+  const event = {
+    ...prior("inbound-40dfe7b5b3daacd1"),
+    url: SMU_LOCALIST_URL,
+    time: "12:00 PM",
+    attendanceStatus: "needs-confirmation",
+    attendanceNote: SMU_KICKOFF_NOTE,
+  };
+  await resolveEventBlurbs([event], { enabled: false });
+  assert.equal(event.time, "12:30 PM");
+  assert.equal(event.endTime, null);
+  assert.equal(event.attendanceNote, null);
+  assert.equal(requiresAttendanceConfirmation(event), false);
+  assert.deepEqual(applyVerifiedEventFacts(event), event);
+});
+
+test("the confirmed SMU kickoff preserves other attendance conditions", () => {
+  const event = {
+    ...prior("inbound-40dfe7b5b3daacd1"),
+    attendanceStatus: "needs-confirmation",
+    attendanceNote: SMU_KICKOFF_NOTE + " Contact the venue to confirm accessible seating.",
+    registration: "full",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.attendanceNote, "Contact the venue to confirm accessible seating.");
+  assert(requiresAttendanceConfirmation(fixed));
+  assert.equal(fixed.registration, "full");
 });
 
 test("the kickoff correction is confined to the verified occurrence and source", () => {
@@ -33,35 +51,23 @@ test("the kickoff correction is confined to the verified occurrence and source",
   }
 });
 
-test("a cached kickoff cannot restore FansGiving's unconfirmed start", async () => {
-  const event = applyVerifiedEventFacts(prior("inbound-40dfe7b5b3daacd1"));
-  assert.equal(isEventTimeBackfillCandidate(event), false);
-  await backfillVerifiedEventTimes([event], { backfill: async rows => { rows[0].time = "12:30 PM"; } });
-  assert.equal(event.time, null);
-  assert(requiresAttendanceConfirmation(event));
-});
-
-test("the new SMU ticket alias cannot bypass the dated kickoff hold", () => {
-  const event = {
-    ...prior("inbound-40dfe7b5b3daacd1"),
-    title: "Stanford Football vs. SMU",
-    url: "https://tickets.gostanford.com/events/football-vs-smu-fauvdl/6aee4789c9f40aa050aa2976",
-    time: "12:00 PM",
-  };
-  const fixed = applyVerifiedEventFacts(event);
-  assert.equal(fixed.time, null);
-  assert.equal(isEventTimeBackfillCandidate(fixed), false);
-});
-
-test("withholding FansGiving preserves its old URL without its invented clock", () => {
+test("retired FansGiving and ticket-shop links resolve to the verified kickoff", () => {
   const before = prior("inbound-40dfe7b5b3daacd1");
-  const ledger = retireSlugs({ entries: [] }, [before], [], "2026-11-16", "2026-11-17T04:07:00Z");
-  const { orphans, redirects } = resolveRetired(ledger, [], [], "2026-11-16");
-  assert.equal(redirects.size, 0);
-  assert.equal(orphans.length, 1);
-  assert.equal(orphans[0].slug, "2026-11-28-fansgiving-stanford-football-vs-smu");
-  assert.equal(orphans[0].event.time, null);
-  assert.match(orphans[0].event.attendanceNote, /official kickoff after November 21/);
+  const live = applyVerifiedEventFacts({
+    ...before, id: "stanford-53632423836256-2026-11-28", url: SMU_LOCALIST_URL,
+    title: "Stanford Football vs SMU | Senior Day + Fan Appreciation",
+    time: "12:00 PM",
+  });
+  const ticketAlias = {
+    ...before, id: "old-tickets", title: "Stanford Football vs. SMU", time: "7:00 PM",
+    url: "https://tickets.gostanford.com/events/football-vs-smu-fauvdl/6aee4789c9f40aa050aa2976",
+  };
+  assert.equal(isEventTimeBackfillCandidate(live), false);
+  const ledger = retireSlugs({ entries: [] }, [before, ticketAlias], [], "2026-11-16", "2026-11-17T04:07:00Z");
+  const { orphans, redirects } = resolveRetired(ledger, [live], [], "2026-11-23");
+  assert.equal(orphans.length, 0);
+  assert.equal(redirects.get("2026-11-28-fansgiving-stanford-football-vs-smu"), "2026-11-28-stanford-football-vs-smu-senior-day-fan-appreciation");
+  assert.equal(redirects.get("2026-11-28-stanford-football-vs-smu"), "2026-11-28-stanford-football-vs-smu-senior-day-fan-appreciation");
 });
 
 test("Stanford reads mandatory prior registration and declared formats before shortening", async t => {
