@@ -95,6 +95,28 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The event's signup form opens one day earlier than the description says.
+  // https://sccl.bibliocommons.com/v2/events/6a80ab1bb2047800299313ca
+  {
+    date: "2026-11-28",
+    url: "https://sccl.bibliocommons.com/events/6a80ab1bb2047800299313ca",
+    aliasUrls: ["https://sccl.bibliocommons.com/v2/events/6a80ab1bb2047800299313ca"],
+    copyReplacements: [[
+      /\bYou may register for a 10-minute session online beginning two days before the event\b/i,
+      "Online registration for 10-minute sessions opens Wednesday, November 25 at 8:00 AM",
+    ]],
+  },
+  // The organizer names the plaza in the event body. The local chamber
+  // confirms free admission: https://business.losaltoschamber.org/events/details/holiday-tree-celebration-5987
+  {
+    date: "2026-12-04",
+    url: "https://downtownlosaltos.org/event/holiday-tree-celebration/",
+    facts: event => ({
+      ...(!event.venue || event.venue === "Downtown Los Altos" ? { venue: "Veterans Community Plaza" } : {}),
+      ...(!event.cost && !event.costNote ? { cost: "free" } : {}),
+      kidFriendly: true,
+    }),
+  },
   // The SCU Athletics ticket store lists paid admission for these Leavey
   // Center games. Its prices can change between now and tipoff or first serve.
   ...[

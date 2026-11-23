@@ -709,7 +709,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     stage: "growth",
     tagline: "Agentic AI automation platform for enterprise workflows. One of the original RPA companies, now reinventing itself for the AI-agent era.",
     color: "#FF6B00",
-    url: "https://www.automationanywhere.com",
+    // The main site's TLS certificate expired Nov. 23, 2026. Link to the company's documentation.
+    url: "https://docs.automationanywhere.com/",
     employeesNote: "~3,000 employees globally",
   },
   {

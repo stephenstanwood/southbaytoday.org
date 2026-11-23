@@ -15,6 +15,38 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("the November 28 reading session uses the library's resolved signup window", () => {
+  const staleCopy = "You may register for a 10-minute session online beginning two days before the event.";
+  const event = {
+    date: "2026-11-28", registration: "required", registrationClosesBy: "2026-11-28T22:30:00.000Z",
+    url: "https://sccl.bibliocommons.com/v2/events/6a80ab1bb2047800299313ca",
+    description: `${staleCopy} Reserve spots only for children who will participate.`,
+    attendanceNote: "Only 10 spots. " + staleCopy,
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  const verifiedCopy = "Online registration for 10-minute sessions opens Wednesday, November 25 at 8:00 AM.";
+  assert.deepEqual(fixed, {
+    ...event,
+    description: `${verifiedCopy} Reserve spots only for children who will participate.`,
+    attendanceNote: "Only 10 spots. " + verifiedCopy,
+  });
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const laterOccurrence = { ...event, date: "2026-12-05" };
+  assert.deepEqual(applyVerifiedEventFacts(laterOccurrence), laterOccurrence);
+});
+
+test("the Los Altos tree celebration uses the plaza and verified free admission", () => {
+  const event = {
+    date: "2026-12-04", venue: "Downtown Los Altos", cost: null, kidFriendly: false,
+    url: "https://downtownlosaltos.org/event/holiday-tree-celebration/",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.deepEqual(fixed, { ...event, venue: "Veterans Community Plaza", cost: "free", kidFriendly: true });
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const updatedListing = { ...event, venue: "Main Street", cost: "paid" };
+  assert.deepEqual(applyVerifiedEventFacts(updatedListing), { ...updatedListing, kidFriendly: true });
+});
+
 test("Santa Paws uses the organizer's park and photo donation for the dated event", () => {
   const event = {
     date: "2026-12-12", title: "Santa Paws hosted by Humane Society Silicon Valley",
