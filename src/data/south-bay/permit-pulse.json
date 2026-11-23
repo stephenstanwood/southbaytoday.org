@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-23T05:37:10.343Z",
+      "generatedAt": "2026-11-23T16:15:03.236Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 15 – Nov 22",
+      "dateRange": "Nov 16 – Nov 23",
       "stats": {
-        "total": 454,
-        "notable": 53,
-        "newUnits": 14,
-        "totalValuation": 49196962
+        "total": 538,
+        "notable": 55,
+        "newUnits": 15,
+        "totalValuation": 49962282
       },
       "permits": [
         {
@@ -99,6 +99,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-139434-RS",
+          "address": "3072 Delta Rd #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Preapproved ADU Site Specific J. Kretschmer Architect 748 Sq Ft ADU",
+          "valuation": 131588,
+          "units": 1,
+          "issueDate": "2026-11-20",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-126240-RS",
           "address": "779 Bird Av #2",
           "category": "residential-new",
@@ -120,18 +132,6 @@
           "valuation": 106432,
           "units": 1,
           "issueDate": "2026-11-17",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2025-141605-RS",
-          "address": "3216 Stephanie Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Unit 2 Garage Conversion to ADU",
-          "valuation": 87432,
-          "units": 1,
-          "issueDate": "2026-11-18",
           "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]

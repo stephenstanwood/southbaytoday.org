@@ -894,8 +894,17 @@ test("Thanksgiving corrections keep exact occurrences and later registration not
   const fixed = applyVerifiedEventFacts(row);
   assert.equal(fixed.url, "https://www.eventbrite.com/e/thanksgiving-feast-gathering-tickets-2004205079344");
   assert.equal(fixed.venue, "Our Lady of Refuge");
-  assert.equal(fixed.registration, "required");
+  assert.equal(fixed.registration, "full");
+  assert.match(fixed.attendanceNote, /sold out on November 23/);
+  assert.doesNotMatch(fixed.blurb, /register/i);
   assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const previousListing = {
+    ...fixed,
+    registration: "required",
+    attendanceNote: "Seating is limited to registered guests and available on a first-come, first-served basis.",
+    blurb: "Register for a Thanksgiving meal at Our Lady of Refuge in San Jose.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(previousListing), fixed);
   const closed = applyVerifiedEventFacts({ ...row, registration: "closed", attendanceNote: "Registration closed." });
   assert.equal(closed.registration, "closed");
   assert.match(closed.attendanceNote, /^Registration closed\./);

@@ -439,12 +439,16 @@ const CORRECTIONS = [
     }],
     ["Thanksgiving Feast Gathering with Our Lady of Refuge", "san-jose", /2165 Lucretia Ave/i, {
       url: "https://www.eventbrite.com/e/thanksgiving-feast-gathering-tickets-2004205079344",
-      venue: "Our Lady of Refuge", registration: REGISTRATION_REQUIRED,
-      attendanceNote: "Seating is limited to registered guests and available on a first-come, first-served basis.",
-      description: "Community Thanksgiving meal at Our Lady of Refuge. Register before attending. Seating is limited.",
-      blurb: "Register for a Thanksgiving meal at Our Lady of Refuge in San Jose.",
+      venue: "Our Lady of Refuge", registration: REGISTRATION_FULL,
+      // The organizer's Eventbrite page displayed "Sold out" on November 23.
+      attendanceNote: "Tickets were sold out on November 23. Check the ticket page for updates.",
+      copyReplacements: [[
+        /\bSeating is limited to registered guests and available on a first-come, first-served basis\.\s*/i, "",
+      ]],
+      description: "Our Lady of Refuge hosts a Thanksgiving meal for neighbors looking for somewhere to celebrate.",
+      blurb: "A community Thanksgiving meal at Our Lady of Refuge in San Jose.",
     }],
-  ].map(([title, city, address, { attendanceNote, ...facts }]) => ({
+  ].map(([title, city, address, { attendanceNote, copyReplacements, ...facts }]) => ({
     date: "2026-11-26",
     matches: event => event.source === "City Newsletter" && event.title === title && event.city === city
       && (address.test(event.address || "") || event.url === facts.url)
@@ -455,6 +459,7 @@ const CORRECTIONS = [
         ? { registration: event.registration } : {}),
     }),
     appendAttendanceNote: attendanceNote,
+    copyReplacements,
   })),
   {
     date: "2026-11-21",
