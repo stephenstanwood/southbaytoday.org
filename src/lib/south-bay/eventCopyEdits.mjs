@@ -1444,6 +1444,7 @@ const EDITS = {
       ["shocking, gruesome, and True stories of the second World War in", "shocking, gruesome, and true stories of the Second World War in"],
       ["Dodging strict nuns, Wanted posters, seasickness, altitude", "Dodging strict nuns, wanted posters, seasickness, altitude"],
       ["for ages 9+! Led by bookseller extraordinaire Lorilee, we hope to introduce", "for ages 9+! The club is led by bookseller extraordinaire Lorilee. We hope to introduce"],
+      ["We hope to introduce interested readers to amazing new books and the opportunity to talk about them in a fun, relaxed group setting.", "We aim to introduce readers to new books they can discuss together in a fun, relaxed setting."],
       ["Alexandra Ott, a fast paced adventure novel filled with puzzle solving, a hint of", "Alexandra Ott, a fast-paced adventure novel filled with puzzle-solving, a hint of"],
       ["Materials (paper, pens, etc) will be provided", "Materials (paper, pens, etc.) will be provided"],
       ["workshops led by a talented, published illustrators.", "workshops led by talented, published illustrators."],
@@ -1549,6 +1550,14 @@ const EDITS = {
       ],
       [/^(November \d{1,2}, \d{4}) Skip the cooking this Thanksgiving\./g, "$1. Skip the cooking this Thanksgiving."],
       ["December 12, 2026 Bring your pet", "December 12, 2026. Bring your pet"],
+      [
+        /^December 12, 2026\. Bring your pet to Park Valencia in Santana Row for a photo with Santa Claus on Saturday, December 12th from /g,
+        "Bring your pet for a photo with Santa Claus at Park Valencia in Santana Row on Saturday, December 12, 2026, from ",
+      ],
+      [
+        /Photos with your pet are a minimum donation of (\$\d+(?:\.\d{2})?)!/g,
+        "Photos with your pet require a donation of at least $1.",
+      ],
       ["of The Row Line Up to be announced", "of The Row lineup to be announced"],
       ["from 5:00–9:00 pm, for winter evenings", "from 5:00–9:00 pm for winter evenings"],
       ["Spirit of The Row Entertainment Line-Up:", "Spirit of The Row entertainment lineup:"],

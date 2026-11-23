@@ -1565,6 +1565,34 @@ test("Linden Tree storytime blurbs preserve book-title punctuation on refresh", 
   }
 });
 
+test("Santa Paws copy keeps the photo hours, registration and minimum donation on refresh", () => {
+  const description = "DECEMBER 12, 2026  Bring your pet to Park Valencia in Santana Row for a photo with Santa Claus on Saturday, December 12th from 10am to 2pm. All proceeds will benefit Humane Society Silicon Valley. Photos with your pet are a minimum donation of $10! Registration begins at 9:30am.";
+  const expected = "Bring your pet for a photo with Santa Claus at Park Valencia in Santana Row on Saturday, December 12, 2026, from 10 AM to 2 PM. All proceeds will benefit Humane Society Silicon Valley. Photos with your pet require a donation of at least $10. Registration begins at 9:30 AM.";
+  const event = {
+    source: "Santana Row",
+    description: polishDescription(description),
+    date: "2026-12-12",
+    time: "10:00 AM",
+    endTime: "2:00 PM",
+  };
+  const reviewed = polishReviewedEventCopy(event);
+  assert.deepEqual(reviewed, { ...event, description: expected });
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+
+  const updated = {
+    ...event,
+    description: event.description.replace("10 AM to 2 PM", "11 AM to 2 PM").replace("$10!", "$12.50!"),
+    time: "11:00 AM",
+  };
+  assert.deepEqual(polishReviewedEventCopy(updated), {
+    ...updated,
+    description: expected.replace("10 AM to 2 PM", "11 AM to 2 PM").replace("$10.", "$12.50."),
+  });
+
+  const differentSource = { ...event, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(differentSource), differentSource);
+});
+
 test("new source facts and copy replace old wording without an event-ID restore", () => {
   const source = {
     id: "c969bb78abcf", source: "Linden Tree Books",
