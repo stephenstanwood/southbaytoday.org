@@ -95,6 +95,58 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Downtown Campbell's festival page specifies free family admission and
+  // gives the intersection omitted from the City Newsletter listing.
+  {
+    date: "2026-12-05",
+    url: "https://www.downtowncampbell.com/event/carol-of-lights",
+    facts: event => ({
+      ...(!event.cost && !event.costNote ? { cost: "free" } : {}),
+      ...(!event.address || event.address === "Downtown Campbell"
+        ? { address: "E Campbell Ave and N 1st St, Campbell, CA 95008" } : {}),
+      kidFriendly: true,
+      description: "Downtown Campbell's free holiday festival features Santa visits, craft tables, a petting zoo, and community performances.",
+      blurb: "Visit Santa, make a craft, and catch community performances at this free Downtown Campbell holiday festival.",
+    }),
+  },
+  // The Toy Program posts a different map for each day's neighborhood route.
+  ...["2026-12-12", "2026-12-13"].map(date => ({
+    date,
+    url: "https://campbelltoyprogram.com/santa",
+    facts: {
+      kidFriendly: true,
+      description: "Santa drives through Campbell neighborhoods with the Campbell Community Toy Program. The organizer's page has a map for each day.",
+      blurb: "Check the Toy Program's route maps to see where Santa will drive through Campbell.",
+    },
+  })),
+  {
+    // The team calls its second home game Game 3 of the best-of-three round.
+    // https://www.sjearthquakes.com/playoffs
+    date: "2026-12-02",
+    matches: event => event.id === "tm-Z7r9jZ1AA7ffv"
+      && [
+        "Houston Dynamo at San Jose Earthquakes: Western Conference Round One (Home Game 2, If Necessary)",
+        "San Jose Earthquakes vs. Houston Dynamo FC – MLS Cup Playoffs Round One, Game 3 (if necessary)",
+      ].includes(event.title),
+    facts: {
+      title: "San Jose Earthquakes vs. Houston Dynamo FC – MLS Cup Playoffs Round One, Game 3 (if necessary)",
+      url: "https://www.tixr.com/groups/sjearthquakes/events/audi-mls-cup-playoffs-round-1-game-3-if-needed--213290",
+      description: "San Jose hosts Houston at PayPal Park if the best-of-three series goes to a third game.",
+      blurb: "The Earthquakes would host Houston Dynamo FC at PayPal Park if the series goes to Game 3.",
+      attendanceStatus: "needs-confirmation",
+    },
+    appendAttendanceNote: "This match only takes place if the series goes to a third game. Check the Earthquakes' playoff schedule before going.",
+  },
+  {
+    date: "2026-12-12",
+    matches: event => event.url === "https://www.sanjose.org/theaters/events/virtual-riot-blanke-far-home"
+      && /^Virtual Riot & Blanke [–-] Far From Home$/i.test(event.title || ""),
+    facts: {
+      title: "Virtual Riot & Blanke – Far From Home",
+      description: "Electronic music artists Virtual Riot and Blanke bring the Far From Home tour to San Jose Civic.",
+      blurb: "See Virtual Riot and Blanke perform at San Jose Civic on their Far From Home tour.",
+    },
+  },
   // The event's signup form opens one day earlier than the description says.
   // https://sccl.bibliocommons.com/v2/events/6a80ab1bb2047800299313ca
   {
@@ -2255,10 +2307,20 @@ const CORRECTIONS = [
       registration: REGISTRATION_REQUIRED,
     },
   },
-  // The venues and their ticket sellers agree on these exact showtimes.
+  // The venues and their ticket calendars confirm these exact showtimes.
+  // https://www.ticketmaster.com/the-ritz-tickets-san-jose/venue/342544
+  // https://improv.com/sanjose/comic/godfrey/
   // https://improv.com/sanjose/calendar/
   // https://broadwaysanjose.com/shows/the-bodyguard/
   ...[
+    {
+      date: "2027-01-30", time: "8:00 PM", venue: "The Ritz",
+      url: "https://www.ticketweb.com/event/kawaii-rave-the-ritz-tickets/14409774",
+    },
+    ...[["7:00 PM", "14893773"], ["9:30 PM", "14893783"]].map(([time, ticketId]) => ({
+      date: "2027-01-30", time, venue: "San Jose Improv",
+      url: `https://www.ticketweb.com/event/godfrey-san-jose-improv-tickets/${ticketId}`,
+    })),
     {
       date: "2027-01-31", time: "6:00 PM", venue: "San Jose Improv",
       url: "https://www.ticketweb.com/event/eric-eaton-san-jose-improv-tickets/15025873",

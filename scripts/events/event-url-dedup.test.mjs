@@ -87,6 +87,27 @@ test("timed-entry copies with a shared booking page leave room for later Ticketm
   assert.equal(kept.at(-1), later);
 });
 
+test("the Ticketmaster cap preserves the three verified January 30 shows", () => {
+  const earlier = Array.from({ length: 200 }, (_, index) => ({
+    source: "Ticketmaster", date: "2027-01-29", time: "7:30 PM", venue: `Venue ${index}`,
+    url: `https://example.com/event/${index}`,
+  }));
+  const shows = [
+    ["Kawaii Rave", "8:00 PM", "The Ritz", "kawaii-rave-the-ritz-tickets/14409774"],
+    ["Godfrey", "7:00 PM", "San Jose Improv", "godfrey-san-jose-improv-tickets/14893773"],
+    ["Godfrey", "9:30 PM", "San Jose Improv", "godfrey-san-jose-improv-tickets/14893783"],
+  ].map(([title, time, venue, path]) => ({
+    title, time, venue, source: "Ticketmaster", date: "2027-01-30", city: "san-jose",
+    url: `https://www.ticketweb.com/event/${path}`,
+  }));
+
+  assert.deepEqual(capUpcomingEventSources([...earlier, ...shows]), earlier);
+  const verified = shows.map(applyVerifiedEventFacts);
+  const changed = applyVerifiedEventFacts({ ...shows[2], time: "10:00 PM" });
+  assert.equal(changed.occurrenceEvidence, undefined);
+  assert.deepEqual(capUpcomingEventSources([...earlier, ...verified, changed]), [...earlier, ...verified]);
+});
+
 test("the ticket cap preserves both verified Mojo Brookzz showtimes at San Jose Civic", () => {
   const earlier = Array.from({ length: 200 }, (_, i) => ({
     source: "Ticketmaster", date: "2027-02-04", time: "7:30 PM", venue: `Venue ${i}`,
