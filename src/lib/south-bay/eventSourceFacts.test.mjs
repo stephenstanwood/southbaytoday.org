@@ -153,6 +153,27 @@ test("Books Inc.'s November 24 author event uses the published book title and RS
   assert.deepEqual(applyVerifiedEventFacts(anotherDate), anotherDate);
 });
 
+test("the Los Altos museum housing-policy talk is listed under Education", () => {
+  const incoming = {
+    title: "A Local History of Housing",
+    date: "2027-01-20",
+    url: "https://www.losaltoshistory.org/events/a-local-history-of-housing/",
+    source: "Los Altos History Museum",
+    category: "arts",
+    venue: null,
+    registration: "required",
+  };
+
+  const corrected = applyVerifiedEventFacts(incoming);
+  assert.equal(corrected.category, "education");
+  assert.equal(corrected.venue, null);
+  assert.equal(corrected.registration, "required");
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+
+  const exhibit = { ...incoming, title: "The Road I Call Home", url: "https://www.losaltoshistory.org/exhibit/the-road-i-call-home/" };
+  assert.deepEqual(applyVerifiedEventFacts(exhibit), exhibit);
+});
+
 test("Almaden STEaM keeps this session's ticket pickup and leaves its topic open", () => {
   const event = {
     date: "2026-11-24",

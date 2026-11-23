@@ -171,12 +171,13 @@ const CORRECTIONS = [
     url: "https://events.stanford.edu/event/office-for-military-affiliated-communities-coffee-donuts",
     facts: { category: "community", venue: "Old Union, 2nd Floor" },
   },
-  // The museum's full program description supplies the speakers and subject
-  // that were lost when the iCal description was truncated for display.
+  // The museum's occurrence page describes a housing-policy talk and names
+  // the speakers. The calendar feed supplies the generic museum category.
   {
     date: "2027-01-20",
     url: "https://www.losaltoshistory.org/events/a-local-history-of-housing/",
     facts: {
+      category: "education",
       description: "Stanford urban studies lecturer Michael Kahan and The United Effort Organization discuss how housing policy shaped local communities and affects people looking for housing today.",
       blurb: "Hear Michael Kahan and The United Effort Organization discuss the local effects of housing policy.",
     },
