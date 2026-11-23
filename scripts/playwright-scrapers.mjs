@@ -1772,7 +1772,8 @@ export async function scrapeChildrensDiscoveryMuseum(page, { today = TODAY } = {
       description: r.description,
       source: "Children's Discovery Museum",
       category: "family",
-      cost: "paid",
+      // Celebration cards omit admission terms. Verify them per event.
+      cost: r.celebration ? null : "paid",
       kidFriendly: true,
     };
   }).filter(Boolean);

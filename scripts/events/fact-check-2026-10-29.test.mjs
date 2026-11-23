@@ -41,11 +41,13 @@ test("museum event clocks come from their own schedules and unknown clocks survi
     assert.equal(actual.time, time);
     assert.equal(actual.endTime, endTime);
     assert.equal(actual.date, date);
-    assert.equal(actual.cost, null, "opening hours do not establish admission");
     assert.doesNotMatch(actual.description, /start is the museum's weekend opening time/);
     if (title.startsWith("Menorahs & Miracles")) {
+      assert.equal(actual.cost, "paid", "the museum links to paid tickets for December 6");
       assert.match(actual.description, /Yavneh Day School choir at 11 AM/);
       assert.match(actual.blurb, /noon menorah lighting/);
+    } else {
+      assert.equal(actual.cost, null, "opening hours do not establish admission");
     }
     if (url) assert.equal(actual.url, url);
     else {

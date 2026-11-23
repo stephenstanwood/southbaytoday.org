@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
-import { scrapeChildrensDiscoveryMuseum } from "../playwright-scrapers.mjs";
+import { normalizePlaywrightEvent, scrapeChildrensDiscoveryMuseum } from "../playwright-scrapers.mjs";
 import { parseCdmCelebrationDate } from "../lib/cdm-events.mjs";
 import { normalizeInboundEventPresentation } from "../lib/inbound-event-normalize.mjs";
 import { deduplicateEventUrls } from "../lib/event-url-dedup.mjs";
@@ -15,9 +15,9 @@ const capture = JSON.parse(readFileSync(new URL("../lib/fixtures/cdm-november-20
 test("the Mini calendar layout imports dated celebration articles alongside scheduled storytime", async () => {
   const origin = "https://www.cdm.org";
   const celebrations = [
-    ["Menorahs & Miracles", "Sunday, December 6", `${origin}/event/menorahs-miracles/`, "2026-12-06"],
-    ["El Día de los Tres Reyes Magos", "Saturday, January 9", `${origin}/event/el-dia-de-los-tres-reyes-magos/`, "2027-01-09"],
-    ["Lunar New Year", "Saturday, January 30", `${origin}/event/lunar-new-year/`, "2027-01-30"],
+    ["Menorahs & Miracles", "Sunday, December 6", `${origin}/event/menorahs-miracles/`, "2026-12-06", "paid"],
+    ["El Día de los Tres Reyes Magos", "Saturday, January 9", `${origin}/event/el-dia-de-los-tres-reyes-magos/`, "2027-01-09", null],
+    ["Lunar New Year", "Saturday, January 30", `${origin}/event/lunar-new-year/`, "2027-01-30", null],
   ];
   // The rendered calendar repeats each title in separate responsive headings.
   const document = {
@@ -48,8 +48,13 @@ test("the Mini calendar layout imports dated celebration articles alongside sche
   };
   const monday = await scrapeChildrensDiscoveryMuseum(page, { today: "2026-11-23" });
   assert.deepEqual(
-    monday.map(({ title, date, url, time }) => [title, date, url, time]),
-    celebrations.map(([title, , url, date]) => [title, date, url, null]),
+    monday.map(({ title, date, url, time, cost }) => [title, date, url, time, cost]),
+    celebrations.map(([title, , url, date]) => [title, date, url, null, null]),
+  );
+  const verified = monday.map(normalizePlaywrightEvent).map(applyVerifiedEventFacts);
+  assert.deepEqual(
+    verified.map(({ title, date, time, endTime, cost, kidFriendly }) => [title, date, time, endTime, cost, kidFriendly]),
+    celebrations.map(([title, , , date, cost]) => [title, date, "10:00 AM", "3:30 PM", cost, true]),
   );
   const wednesday = await scrapeChildrensDiscoveryMuseum(page, { today: "2026-11-25" });
   assert.deepEqual(

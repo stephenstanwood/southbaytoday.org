@@ -1967,7 +1967,8 @@ const CORRECTIONS = [
       blurb: "Ring in the new year at the Children's Discovery Museum with ball drops at noon, 1 PM and 2 PM.",
     },
   },
-  // The museum's current event page lists January 9 from 10 AM to 3:30 PM.
+  // The museum's January 9 detail confirms the hours. The old calendar
+  // snapshot assumed paid admission even though the card gives no price.
   // https://www.cdm.org/event/el-dia-de-los-tres-reyes-magos/
   // https://www.cdm.org/celebrate/
   {
@@ -1975,9 +1976,21 @@ const CORRECTIONS = [
     venue: /^Children's Discovery Museum(?: of San Jose)?(?:,|$)/i,
     facts: {
       url: "https://www.cdm.org/event/el-dia-de-los-tres-reyes-magos/",
-      time: "10:00 AM", endTime: "3:30 PM", kidFriendly: true,
+      time: "10:00 AM", endTime: "3:30 PM", cost: null, kidFriendly: true,
       description: "Celebrate Three Kings Day with singing, dance, hands-on art, a Three Kings meet-and-greet, and a Rosca de Reyes tasting.",
       blurb: "Celebrate Three Kings Day at the Children's Discovery Museum with live performances, hands-on art, and a Rosca de Reyes tasting.",
+    },
+  },
+  // The museum calendar shows the date. The event detail supplies the hours.
+  // https://www.cdm.org/event/lunar-new-year/
+  {
+    date: "2027-01-30", title: /^Lunar New Year$/,
+    venue: /^Children's Discovery Museum of San Jose(?:,|$)/i,
+    url: "https://www.cdm.org/event/lunar-new-year/",
+    facts: {
+      time: "10:00 AM", endTime: "3:30 PM", cost: null, kidFriendly: true,
+      description: "Children and families can explore Chinese and Vietnamese Lunar New Year traditions through live performances and hands-on activities.",
+      blurb: "Celebrate Lunar New Year with live performances and hands-on activities at the Children's Discovery Museum.",
     },
   },
   // The campus calendar supplies the free admission and exact occurrence.
@@ -4373,14 +4386,16 @@ const CORRECTIONS = [
     },
     copyReplacements: [[/\s*The newsletter gives no event time, so the start is the museum's weekend opening time\./g, ""]],
   },
-  // The museum's December 6 program now runs until 3:30 PM.
+  // The museum's December 6 family program runs until 3:30 PM.
+  // Its linked admission form is dated December 6 and charges for tickets.
+  // https://14945.blackbaudhosting.com/14945/page.aspx?pid=196&tab=2&txobjid=1afb913e-c86c-40b6-8dfa-87d0f9e29681
   {
     date: "2026-12-06",
     title: /^Menorahs & Miracles(?: Hanukkah Celebration)?$/i,
     venue: /^Children's Discovery Museum of San Jose(?:,|$)/i,
     url: "https://www.cdm.org/event/menorahs-miracles/",
     facts: {
-      time: "10:00 AM", endTime: "3:30 PM",
+      time: "10:00 AM", endTime: "3:30 PM", cost: "paid", kidFriendly: true,
       url: "https://www.cdm.org/event/menorahs-miracles/",
       description: "Play dreidel, hear the Yavneh Day School choir at 11 AM, and join a noon menorah lighting. Hanukkah storytimes follow in English, Hebrew, and Russian.",
       blurb: "Celebrate Hanukkah with dreidel games, a noon menorah lighting, and storytime in three languages.",

@@ -1028,13 +1028,16 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   {
     id: "stellar-cyber",
     name: "Stellar Cyber",
-    city: "Santa Clara",
+    // Current California office and press-release dateline are in San Jose.
+    // https://stellarcyber.ai/company/contact-us/
+    city: "San Jose",
     category: "security",
     stage: "growth",
-    tagline: "Open XDR security platform that ingests data from any security tool and correlates threats across the entire attack surface — one platform replacing five. $76M raised; used by MSSPs serving mid-market companies.",
+    tagline: "Open XDR security platform that combines data from endpoints, networks, identity systems, and cloud services for security teams and managed security providers.",
     color: "#0F766E",
-    url: "https://stellarcyber.ai",
-    employeesNote: "~200 employees",
+    // Use the public documentation while the company site's certificate is expired.
+    url: "https://docs.stellarcyber.ai/GettingStarted/Home.htm",
+    employeesNote: "",
   },
   {
     id: "openai",

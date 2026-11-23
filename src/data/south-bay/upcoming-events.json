@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-23T16:02:04.140Z",
-  "eventCount": 1526,
+  "eventCount": 1527,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -24863,11 +24863,11 @@
       "address": "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
       "city": "san-jose",
       "category": "family",
-      "cost": null,
+      "cost": "paid",
       "description": "Play dreidel, hear the Yavneh Day School choir at 11 AM, and join a noon menorah lighting. Hanukkah storytimes follow in English, Hebrew, and Russian.",
       "url": "https://www.cdm.org/event/menorahs-miracles/",
       "source": "City Newsletter",
-      "kidFriendly": false,
+      "kidFriendly": true,
       "blurb": "Celebrate Hanukkah with dreidel games, a noon menorah lighting, and storytime in three languages.",
       "audienceAge": "kids",
       "photoRef": "places/ChIJHyD5sa_Mj4ARURwnBwmTwTU/photos/AV-0GLdD_y7gkTd-FR098bnkqm-IGOsTxOecT__b5xxiismBNurXVWaFYhenjm2m_KR7OwdYGO2HjgrhTuERWmdCQoHKb5lw0LeT7Z8qjIe3tmov7tocEzCbIVeXEPQJ1dRPrfrtlnvjWTFxUm70ENIpGaFBPuxU18y61u6WzJ1i_UF3v1KMJDbkfoDNzqBamWdMhRcO9RrdVemNUr26NuQUCU8eUmNfpI6R7BbXhKc1FaGd4hDAKXVEFiE4Z2M5IPt0DPDGgpLmEO9KuxeY-dcJrqV9lG70yRj-tQDT7RcwT975VfT35C1spdXc88MPCsroUPYndt_CUFetWPtqZxLlH_cA6Rt2SVw-kPveeGfbkki1K1BrKKTT6KfBA8cpeXeb0xlvv-Pf5kobdwfCCX2FT_Hz2h3Wg7U",
@@ -38040,6 +38040,25 @@
       "audienceAge": "all",
       "blurb": "Catch a live performance of the play Mr. Burns at Bus Barn Theater in Los Altos.",
       "firstSeenAt": "2026-11-22T22:26:07.847Z"
+    },
+    {
+      "id": "a1b132bb06f9",
+      "title": "Lunar New Year",
+      "date": "2027-01-30",
+      "displayDate": "Sat, Jan 30",
+      "time": "10:00 AM",
+      "endTime": "3:30 PM",
+      "venue": "Children's Discovery Museum of San Jose",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": null,
+      "description": "Children and families can explore Chinese and Vietnamese Lunar New Year traditions through live performances and hands-on activities.",
+      "url": "https://www.cdm.org/event/lunar-new-year/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true,
+      "blurb": "Celebrate Lunar New Year with live performances and hands-on activities at the Children's Discovery Museum.",
+      "firstSeenAt": "2026-11-23T17:14:14.128Z"
     },
     {
       "id": "tm-rZ7HnEZ1A4ZP-S",
