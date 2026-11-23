@@ -17,7 +17,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
-import { resolveAroundTownMeetingSources, recoverAroundTownMeetingAgendas, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming } from "./lib/around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, recoverAroundTownMeetingAgendas, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming, hasUnsupportedRetailSpaceClaim } from "./lib/around-town-meetings.mjs";
 import { agendaTextForMeeting } from "./lib/digest-source.mjs";
 import { isAroundTownPermitCandidate, permitValuationForPrompt, hasUnsupportedZeroPermitValuation } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
@@ -188,6 +188,8 @@ A closed-session agenda does not establish what happened in the session or what 
 NEVER NAME STAFF CONTACTS: Legistar agendas include bureaucratic metadata like "Staff Contact: Jane Doe" or "Project Manager: John Smith" or "Sponsoring Department: …". These identify the city employee handling the paperwork, NOT the subject of the action. Never write "This follows the staff contact listing X", "named X as the new …", or treat a staff-contact name as the appointee/principal of the item. Omit these names entirely.
 
 MATCH THE SOURCE'S FRAMING — DO NOT NARROW: if a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement," "tax enforcement," or any specific subtype unless the agenda explicitly uses that word. Do not invent illustrative examples ("for immigration, tax, or other..."). Stick to the source's wording on sensitive framing.
+
+For land use, retain “commercial space” unless the source identifies the proposed use. Existing uses on the site do not describe the proposed space.
 
 DO NOT ASSERT THE BODY UNLESS THE AGENDA SUPPORTS IT: each "Body" label belongs only to its source record. Where a city portal verifier is available, the label has been checked against that record's agenda; otherwise upstream labels may be wrong. Never transfer a body or agenda item between records, even on the same date. If the agenda reads as an advisory recommendation TO the council, do not upgrade it to a council action. Name the body supported by that record, or write it body-neutrally ("Palo Alto is weighing …", "city staff recommended …").
 
@@ -393,6 +395,10 @@ async function gatherMeetingItems(meetingType) {
         }
         if (hasPastAgendaFutureFraming(item, sourceMeeting, today)) {
           console.warn(`  ⚠️  ${config.cityName}: dropped an old agenda framed as current or upcoming business`);
+          continue;
+        }
+        if (hasUnsupportedRetailSpaceClaim(item, sourceMeeting)) {
+          console.warn(`  ⚠️  ${config.cityName}: dropped a retail claim for unspecified commercial space`);
           continue;
         }
         const sourceUrl = source.sourceUrl;

@@ -114,7 +114,10 @@ const EQUIPMENT_ONLY_PATTERNS = /\bADD(?:ING)?\s+(?:A|AN|NEW)?\s*$|\b\d\s*[-\s]?
 // run the cafeteria inside someone else's building, so the campus name may be
 // absent or unfamiliar and the operator's name is the reliable tell.
 // "Guckenheimer@Supermicro" shipped as a coming-soon restaurant on 2026-08-25.
-const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|TESLA|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG|DATABRICKS|JOHNSON\s*&\s*JOHNSON|AURIS\s+HEALTH|SUPERMICRO|APPLIED\s+MATERIALS|LOCKHEED|WESTERN\s+DIGITAL|JUNIPER\s+NETWORKS)\b|\b(GUCKENHEIMER|BON\s+APP[EÉ]TIT\s+MANAGEMENT|COMPASS\s+GROUP|SODEXO|ARAMARK|EUREST|FLIK|CAFEBONAPPETIT)\b/i;
+// County record SR0886479 lists Pinterest's level-three micro kitchen at
+// 285 Sobrante Way, a Sunnyvale office building.
+// https://data.sccgov.org/resource/skd7-7ix3.json?record_id=SR0886479
+const CORPORATE_PATTERNS = /\b(PINTEREST|GOOGLE(PLEX)?|APPLE|TESLA|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG|DATABRICKS|JOHNSON\s*&\s*JOHNSON|AURIS\s+HEALTH|SUPERMICRO|APPLIED\s+MATERIALS|LOCKHEED|WESTERN\s+DIGITAL|JUNIPER\s+NETWORKS)\b|\b(GUCKENHEIMER|BON\s+APP[EÉ]TIT\s+MANAGEMENT|COMPASS\s+GROUP|SODEXO|ARAMARK|EUREST|FLIK|CAFEBONAPPETIT)\b/i;
 
 // Databricks Cityline office campus (200/250 W Washington Ave, Sunnyvale) —
 // internal food facilities filed under building-code placeholder names

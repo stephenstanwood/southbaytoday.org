@@ -96,6 +96,17 @@ export function hasUnsupportedNonDisclosureClaim(item, meeting) {
   return !NONDISCLOSURE_CLAIM.test(evidence);
 }
 
+const RETAIL_SPACE_CLAIM = /\b(?:retail|shop)\s+space\b/i;
+const RETAIL_SPACE_EVIDENCE = /\b(?:retail|shop)\s+(?:space|use)\b|\bcommercial\s*\/\s*retail\b/i;
+
+/** A proposed commercial space does not establish a shop or retail use. */
+export function hasUnsupportedRetailSpaceClaim(item, meeting) {
+  const claim = `${item?.headline || ""} ${item?.summary || ""}`;
+  if (!RETAIL_SPACE_CLAIM.test(claim)) return false;
+  const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`;
+  return /\bcommercial\s+space\b/i.test(evidence) && !RETAIL_SPACE_EVIDENCE.test(evidence);
+}
+
 // Task forces and planners need the same agenda/outcome guard as councils.
 const CIVIC_BODY = String.raw`(?:council|commission|committee|board|panel|planners?|task\s+force|hearing|city|zoning\s+administrator)`;
 const COMPLETED_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}\s+(?:also\s+)?(held|met|heard|covered|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b`, "gi");

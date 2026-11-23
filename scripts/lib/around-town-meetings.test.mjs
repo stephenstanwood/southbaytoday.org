@@ -1,6 +1,20 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveAroundTownMeetingSources, recoverAroundTownMeetingAgendas, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming, hasUnscopedMeetingCancellation } from "./around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, recoverAroundTownMeetingAgendas, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming, hasUnscopedMeetingCancellation, hasUnsupportedRetailSpaceClaim } from "./around-town-meetings.mjs";
+
+test("a proposed commercial space cannot become a shop based on an existing use", () => {
+  // Santa Clara Planning Commission, November 18, 2026, file 26-1093.
+  const meeting = {
+    fullAgendaText: "The proposal includes 14 townhomes and a duplex with commercial space. The existing site is an auto body shop.",
+  };
+  assert.equal(hasUnsupportedRetailSpaceClaim({ headline: "Townhomes and a duplex with shop space proposed" }, meeting), true);
+  assert.equal(hasUnsupportedRetailSpaceClaim({ summary: "The duplex includes retail space." }, meeting), true);
+  assert.equal(hasUnsupportedRetailSpaceClaim({ headline: "Townhomes and a duplex with commercial space proposed" }, meeting), false);
+  assert.equal(hasUnsupportedRetailSpaceClaim({ headline: "Townhomes and a duplex with retail space proposed" }, {
+    ...meeting,
+    fullAgendaText: meeting.fullAgendaText + " The application specifies ground-floor retail use.",
+  }), false);
+});
 
 test("old agenda headlines cannot omit is to imply a still-pending hearing", () => {
   const meeting = { city: "Sunnyvale", source: "ingest", excerpt: "Presentation on recent changes to SB 9." };

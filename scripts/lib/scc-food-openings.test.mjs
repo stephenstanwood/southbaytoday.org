@@ -437,6 +437,12 @@ test("an existing restaurant's kitchen upgrade is not a coming opening", () => {
 
 test("corporate cafeterias stay out while real public venues survive", () => {
   assert.equal(shouldSkip({
+    business_name: "RTI - PINTEREST EL SOBRANTE  L3 MK",
+    site_location: "285 SOBRANTE WY., SUNNYVALE, CA 94086",
+    city: "SUNNYVALE",
+    record_id: "SR0886479",
+  }), true);
+  assert.equal(shouldSkip({
     business_name: "TESLA HANOVER CAFE",
     site_location: "3000 HANOVER ST, PALO ALTO",
     city: "PALO ALTO",
