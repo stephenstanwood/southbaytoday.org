@@ -1734,6 +1734,34 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Systems (Herndon, VA), and Sante (New York); a broader search only
   // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
   // all already entered.
+  // Note on the Nov 11-22 2026 sweep: BrightAI is the one in-coverage round.
+  // Near-misses recorded so the next cycle doesn't re-verify them: Postround's
+  // week-of-Nov-15 Series A list and AlleyWatch's 11/23 weekly report carry
+  // no other Santa Clara County company (SirenOpt is San Leandro, Galvanize
+  // Therapeutics is Redwood City, Everful is Elk Grove; Genesis AI, Model ML,
+  // Dreamteam, Humyn Labs, LanceDB, Knit Health, compute-desk.com, Unsiloed
+  // AI, August AI, and Sequel.io are San Francisco or New York). Palo Alto
+  // Networks' $4.5B purchase of Applied Compute (Nov 18) is an acquisition,
+  // not a funding round.
+  // BrightAI's Nov 18 Business Wire release datelines "PALO ALTO, Calif." and
+  // describes a new 25,000-square-foot Palo Alto headquarters. The release
+  // names no round letter, and the $750M valuation comes only from an
+  // anonymous source in press coverage, so the card uses neither. Total raised
+  // ($184M) is the company's own figure.
+  // Release mirror: https://www.01net.it/brightai-announces-97-million-investment-to-scale-physical-ai-across-the-worlds-essential-services/
+  {
+    id: "brightai-2026",
+    name: "BrightAI",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Venture Round",
+    amount: "$97M",
+    date: "2026-11-18",
+    tagline:
+      "Palo Alto's BrightAI raised $97M led by Smith Point Capital for Stateful, its platform of sensors, robots, drones and field software that watches essential infrastructure equipment for trouble so crews visit when something actually needs fixing. GE Vernova, already a customer, joined the round with Cobalt Capital, Marlinspike Partners and Zero Infinity Partners; Khosla Ventures, Inspired Capital and Upfront Ventures returned. Total funding is now $184M, and the company is opening offices in Europe and Asia alongside its new 25,000-square-foot Palo Alto headquarters.",
+    color: "#0ea5e9",
+    url: "https://www.bright.ai",
+  },
   // PuppyGraph's own Nov 10 post says the round was "led by Particle Future
   // with participation from defy.vc" (some coverage says co-led; follow the
   // company). Its site footer and contact page list 1978 Garzoni Pl, Santa
