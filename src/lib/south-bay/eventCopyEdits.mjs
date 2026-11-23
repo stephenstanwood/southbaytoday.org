@@ -1586,6 +1586,10 @@ const EDITS = {
       [/\b(Natalie Ramskov)$/g, "$1."],
     ],
     blurb: [
+      [
+        "Pose with your pet for a photo with Santa Claus at Park Valencia, with proceeds benefiting Humane Society Silicon Valley.",
+        "Pose for a photo with your pet and Santa Claus at Park Valencia. Proceeds benefit Humane Society Silicon Valley.",
+      ],
       ["Browse booths of local artists, crafters, designers, and makers at the street fair on Santana Row,", "Browse booths run by local artists, crafters, designers, and makers at the Santana Row street fair,"],
       ["Shop Black Friday savings at Santana Row, where the early 7:00 AM start gives you a head start on the stores.", "Shop at Santana Row on Black Friday. The event starts at 7:00 AM."],
       ["Shop Black Friday deals at Santana Row, where the description promises exclusive savings for shoppers starting early in the morning.", "Shop Black Friday deals at Santana Row, including early in-store savings at Hoka."],
@@ -1598,6 +1602,12 @@ const EDITS = {
       [/\bfrom (\d{1,2}(?::\d{2})?)\s*[-–]\s*(\d{1,2}(?::\d{2})? PM)\b/g, "from $1 to $2"],
       ["Join us Friday, October 30th for", "Join us Friday, October 30th, for"],
       [/^Date: Sunday, November 29th, 2026;? Time: 6:00 p\.m\.;? Place: Downtown Los Altos, California\.?(?= |$)/g, "On Sunday, November 29, 2026, the parade starts at 6:00 p.m. in downtown Los Altos, California."],
+    ],
+    blurb: [
+      [
+        "Join the Los Altos Village Association at Veterans Community Plaza, at Main and State Streets, for the Holiday Tree Celebration on a Friday evening.",
+        "Join the Los Altos Village Association for the Holiday Tree Celebration on Friday evening at Veterans Community Plaza (Main and State Streets).",
+      ],
     ],
   },
   "Heritage Theatre": {
@@ -2001,8 +2011,21 @@ const EDITS = {
         /Supplies will be provided but you can bring your own art journal or favorite supplies Sign-up online ([A-Z][a-z]+ \d{1,2}, \d{4}) at/g,
         "Supplies will be provided, but you can bring your own art journal or favorite supplies. Online registration opens $1, at",
       ],
+      [
+        /(\b(?:Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day, (?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2})(?= at \d)/g,
+        "$1,",
+      ],
+      ["You may sign up in groups of four, or as individuals.", "You may sign up in groups of four or individually."],
+      [
+        "Bring your unfinished artwork, sketchbook or journal and your curiosity.",
+        "Bring your curiosity along with your unfinished artwork, sketchbook, or journal.",
+      ],
     ],
     blurb: [
+      [
+        "Read aloud to a friendly dog or cat at the library, bringing a book from home or borrowing one from the Children's Room.",
+        "Read aloud to a friendly dog or cat at the library. Bring a book from home or borrow one from the Children's Room.",
+      ],
       [
         /Bring your (\d+-to-\d+-year-old) to rotate through three stations that practice fine motor skills, with no registration required\./g,
         "Bring your $1 to practice fine motor skills at three activity stations. No registration required.",
