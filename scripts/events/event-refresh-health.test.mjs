@@ -6,6 +6,12 @@ import {
   inspectMiniEventRefresh,
   inspectMiniRefreshState,
 } from "./event-refresh-health.mjs";
+import {
+  buildSourceHealth,
+  carryForwardTransientCriticalSources,
+  eventsForSourceResult,
+  sourceRegressionProblems,
+} from "../lib/event-source-health.mjs";
 
 const NOW = new Date("2026-07-20T05:00:00.000Z");
 const REQUIRED = [
@@ -121,6 +127,55 @@ test("still flags a critical Ticketmaster failure in the generated output", () =
   const health = inspectEventRefreshOutput({ data, now: NOW });
   assert.equal(health.ok, false);
   assert.ok(health.problems.some((problem) => /fetchTicketmasterEvents is error: 429/.test(problem)));
+});
+
+test("Ticketmaster fallback compares published coverage and keeps the last live baseline", () => {
+  const today = "2026-07-19";
+  const upcoming = "2026-08-01";
+  const source = { id: "fetchTicketmasterEvents", label: "Ticketmaster", critical: true };
+  const cached = Array.from({ length: 168 }, (_, i) => (
+    { id: `tm-${i}`, source: source.label, date: upcoming }
+  ));
+  const previous = {
+    generatedAt: "2026-07-19T12:00:00.000Z",
+    events: [...cached, { id: "expired", source: source.label, date: "2026-07-18" }],
+    sourceHealth: [{ ...source, status: "ok", count: 752, dateCounts: { [upcoming]: 752 } }],
+  };
+  const failure = { status: "rejected", reason: new DOMException("The operation was aborted due to timeout", "TimeoutError") };
+  const [fallback] = carryForwardTransientCriticalSources([source], [failure], previous, { today });
+  const [health] = buildSourceHealth([source], [fallback]);
+  assert.deepEqual(eventsForSourceResult(fallback), cached);
+  assert.deepEqual(health, {
+    ...source, status: "fallback", count: 0, dateCounts: {}, error: failure.reason.message,
+    retainedCount: 168, retainedDateCounts: { [upcoming]: 168 }, retainedFrom: previous.generatedAt,
+    lastLiveDateCounts: { [upcoming]: 752 },
+  });
+
+  const baseline = { today, previousEvents: previous.events, previousSourceHealth: previous.sourceHealth };
+  assert.deepEqual(sourceRegressionProblems({ ...baseline, nextSourceHealth: [health] }), []);
+  const trimmed = { ...fallback, retained: { ...fallback.retained, events: cached.slice(0, 40) } };
+  assert.deepEqual(sourceRegressionProblems({
+    ...baseline, nextSourceHealth: buildSourceHealth([source], [trimmed]),
+  }), ["Ticketmaster retained only 40 of 168 still-upcoming cached listings (24%)"]);
+
+  const data = healthyOutput();
+  data.events = cached;
+  data.eventCount = cached.length;
+  data.sourceHealth = data.sourceHealth.map((item) => item.id === source.id ? health : item);
+  assert.equal(inspectEventRefreshOutput({ data, now: NOW }).ok, true);
+
+  const repeated = carryForwardTransientCriticalSources([source], [failure], data, { today });
+  const repeatedHealth = buildSourceHealth([source], repeated);
+  assert.deepEqual(repeatedHealth, [health]);
+  const partialLive = buildSourceHealth([source], [{ status: "fulfilled", value: cached }]);
+  assert.deepEqual(sourceRegressionProblems({
+    today, previousEvents: cached, previousSourceHealth: repeatedHealth, nextSourceHealth: partialLive,
+  }), ["Ticketmaster retained only 168 of 752 still-upcoming source records (22%)"]);
+
+  const expired = carryForwardTransientCriticalSources([source], [failure], data, { today: "2026-08-02" });
+  assert.deepEqual(expired, [failure]);
+  data.sourceHealth = data.sourceHealth.map((item) => item.id === source.id ? { ...health, retainedCount: 0 } : item);
+  assert.equal(inspectEventRefreshOutput({ data, now: NOW }).ok, false);
 });
 
 test("pages when the output has no inputSnapshots array at all", () => {

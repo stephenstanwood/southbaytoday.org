@@ -159,10 +159,13 @@ alone would miss that ordering regression.
   network failures, rate limits, and 5xx responses with bounded backoff before
   strict mode fails. Permanent 4xx responses fail immediately.
 - If a critical adapter still fails on a transient status after retries, the
-  refresh reuses that source's previous rows when available and continues
-  without paging. Optional adapters that 429 are absorbed unless many fail at
-  once; the heartbeat matches that tolerance so a single Heritage Theatre rate
-  limit cannot keep Discord red.
+  refresh reuses that source's previously published future listings when
+  available and records `status: "fallback"` with the failed fetch and the
+  retained snapshot's timestamp. Fallback coverage is measured against the
+  eligible published listings. The next live fetch is checked against the last
+  live date counts, even after several fallbacks. A critical source with zero
+  usable listings still blocks. Optional adapters that 429 are absorbed unless
+  many fail at once, and the heartbeat uses the same tolerance.
 - Gamble Garden explicitly opts into the same carry-forward policy. Its
   October 29 response body terminated after headers arrived, dropping 31
   future listings. Keep errors visible to source policy in every caller,

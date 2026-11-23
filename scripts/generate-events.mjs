@@ -7124,8 +7124,7 @@ async function fetchTicketmasterEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Ticketmaster: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
+    throw err;
   }
 }
 
@@ -11320,32 +11319,16 @@ async function main() {
       }
     }),
   );
-  let results = settled;
-  const carriedForward = carryForwardTransientCriticalSources(
-    sources,
-    results,
-    prevRun?.events,
-  );
-  results = retainFailedOptionalSources(sources, carriedForward.results, prevRun, { today: todayPT() });
-  for (const [index, result] of results.entries()) {
-    if (result.retained) console.warn(
-      `⚠️  ${sources[index].label}: retained ${result.retained.events.length} future events from ${result.retained.from}; live source is still failed`,
-    );
-  }
-  if (carriedForward.carried.length > 0) {
-    for (const item of carriedForward.carried) {
-      console.warn(
-        `⚠️  ${item.label}: using ${item.count} cached events after transient failure (${item.error})`,
-      );
-    }
-  }
-
+  const today = todayPT();
+  const withFallback = carryForwardTransientCriticalSources(sources, settled, prevRun, { today });
+  const results = retainFailedOptionalSources(sources, withFallback, prevRun, { today });
   const sourceHealth = buildSourceHealth(sources, results);
-  for (const item of carriedForward.carried) {
-    const entry = sourceHealth.find((source) => source.id === item.id);
-    if (!entry) continue;
-    entry.carriedForward = true;
-    entry.carryForwardReason = item.error;
+  for (const source of sourceHealth) {
+    if (source.status === "fallback") {
+      console.warn(`⚠️  ${source.label}: using ${source.retainedCount} cached future events from ${source.retainedFrom} after transient failure (${source.error})`);
+    } else if (source.retainedCount) {
+      console.warn(`⚠️  ${source.label}: retained ${source.retainedCount} future events from ${source.retainedFrom}; live source is still failed`);
+    }
   }
   const { blocking, tolerated, toleranceExceeded } = sourceProblems(sourceHealth);
 
@@ -11385,8 +11368,9 @@ async function main() {
 
   const sourceRegressions = sourceRegressionProblems({
     previousSourceHealth: prevRun?.sourceHealth,
+    previousEvents: prevRun?.events,
     nextSourceHealth: sourceHealth,
-    today: todayPT(),
+    today,
   });
   if (sourceRegressions.length > 0) {
     const detail = sourceRegressions.join("; ");
@@ -11570,7 +11554,6 @@ async function main() {
   // Filter: must have date and city and title, must be today or future, must be public, not cancelled
   // Also skip zero-duration university calendar markers (e.g. "5:00 PM – 5:00 PM")
   const uniSources = new Set(["Stanford Events", "Santa Clara University", "SJSU Events"]);
-  const today = todayPT();
   // Cap non-sports events to 180 days out; sports schedules can go further
   const maxFuture = new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   const valid = allEvents.filter(
