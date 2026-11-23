@@ -35,6 +35,7 @@ export function polishCivicCopy(text, { cityId } = {}) {
   return typeof text === "string"
     ? polishCivicModifiers(text, { cityId }).replace(FULL_DATE_IN_PROSE, "$1,").replace(SQUARE_FOOT_MODIFIER, "$1-square-foot ")
       .replace(/\bA Oct\. (?=\d{1,2}\b)/g, "An Oct. ")
+      .replace(/\bwith up to (\d+(?:\.\d+)?%) for construction contingency(?=\.|$)/g, "with a construction contingency of up to $1")
       .replace("Hangul Day/Korean National Foundation Day", "Hangul Day / Korean National Foundation Day")
       .replace("take part: in-person, online, and written public comment", "take part: in person, online, and through written public comment")
       .replace("The source for the November 2, 2026, Campbell City Council meeting is a video transcript, so this describes what the transcript shows was before the Council.",

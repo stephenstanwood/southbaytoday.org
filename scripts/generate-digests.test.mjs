@@ -209,6 +209,10 @@ test("refreshed Campbell digest keeps the reviewed transcript and fence wording"
 test("refreshed council summaries keep their reviewed agenda wording", () => {
   const examples = [
     [
+      "The agenda listed a $417,400 contract with ELECCO of Milpitas to replace the Police Department's backup generator, with up to 15% for construction contingency.",
+      "The agenda listed a $417,400 contract with ELECCO of Milpitas to replace the Police Department's backup generator, with a construction contingency of up to 15%.",
+    ],
+    [
       "Also listed were several council-sponsored community events seeking approval to spend city funds and accept donations, and a proposal to establish the La Avenida Cultural District.",
       "The agenda also listed a proposal to establish the La Avenida Cultural District and requests to spend city funds and accept donations for several council-sponsored community events.",
     ],
