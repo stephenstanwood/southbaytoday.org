@@ -1448,6 +1448,16 @@ const EDITS = {
       ["Materials (paper, pens, etc) will be provided", "Materials (paper, pens, etc.) will be provided"],
       ["workshops led by a talented, published illustrators.", "workshops led by talented, published illustrators."],
     ],
+    blurb: [
+      [
+        "Hear author Claire Wrenn Bobrow read her new picture book, Party Pony!, about a pony who has grown tired of parties.",
+        "Hear author Claire Wrenn Bobrow read her new picture book \"Party Pony!\" and find out why the pony has grown tired of parties.",
+      ],
+      [
+        "Hear debut author Sahar Shams read her festive picture book, What Does Santa Want for Christmas?, at a Sunday storytime.",
+        "At Sunday storytime, Sahar Shams reads her festive debut picture book \"What Does Santa Want for Christmas?\"",
+      ],
+    ],
   },
   "Kepler's Books": {
     description: [

@@ -1542,6 +1542,28 @@ test("cache hits receive the same final repair without model generation", async 
   }
 });
 
+test("Linden Tree storytime blurbs preserve book-title punctuation on refresh", () => {
+  const cases = [
+    [
+      "Hear author Claire Wrenn Bobrow read her new picture book, Party Pony!, about a pony who has grown tired of parties.",
+      "Hear author Claire Wrenn Bobrow read her new picture book \"Party Pony!\" and find out why the pony has grown tired of parties.",
+    ],
+    [
+      "Hear debut author Sahar Shams read her festive picture book, What Does Santa Want for Christmas?, at a Sunday storytime.",
+      "At Sunday storytime, Sahar Shams reads her festive debut picture book \"What Does Santa Want for Christmas?\"",
+    ],
+  ];
+  for (const [before, blurb] of cases) {
+    const event = { source: "Linden Tree Books", blurb: before };
+    const reviewed = { ...event, blurb };
+    assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+    assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+
+    const otherPublisher = { ...event, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+  }
+});
+
 test("new source facts and copy replace old wording without an event-ID restore", () => {
   const source = {
     id: "c969bb78abcf", source: "Linden Tree Books",
