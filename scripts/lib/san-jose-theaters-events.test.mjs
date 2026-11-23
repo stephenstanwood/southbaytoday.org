@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
+import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 import {
   assertIcalCalendar,
   fetchSanJoseTheatersEvents,
@@ -8,6 +9,7 @@ import {
 import {
   SAN_JOSE_THEATERS_LISTINGS_URL,
   VALLEY_CHRISTIAN_CHRISTMAS,
+  applyValleyChristianChristmasProgram,
   isTheaterListing,
   parsePerformanceLines,
   parseTheaterEventPage,
@@ -176,6 +178,61 @@ async function runWith(routes, options) {
     globalThis.fetch = original;
   }
 }
+
+test("verified Christmas programs survive blurb resolution without changing the performances", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-23T23:00:00Z") });
+  const item = listing({
+    title: "Christmas at the California",
+    slug: "christmas-california",
+    start: "2026-12-07",
+    end: "2026-12-10",
+    venue: "California Theatre",
+  });
+  const { events } = await runWith({
+    [SAN_JOSE_THEATERS_LISTINGS_URL]: JSON.stringify([item]),
+    [VALLEY_CHRISTIAN_CHRISTMAS.venueUrl]: detailPage({
+      focus: "December 7–10, 2026",
+      venue: item.venue,
+      street: "345 South 1st Street",
+      copy: "<p>The Conservatory of the Arts welcomes you to Christmas at the California.</p>",
+    }),
+  });
+  const programs = [
+    ["sanjosetheaters-29fb9a2b36a0a574", "2026-12-07", "6:00 PM", "Joyfully Adore"],
+    ["sanjosetheaters-e612fad939373834", "2026-12-08", "7:00 PM", "Proclaim His Glory"],
+    ["sanjosetheaters-dea4be9aada6ba3e", "2026-12-09", "6:00 PM", "The Promised King"],
+    ["sanjosetheaters-ce949e6801a735fa", "2026-12-10", "7:00 PM", "BEHOLD! A Conservatory Christmas Finale"],
+  ];
+  assert.equal(events.length, programs.length);
+
+  const enriched = events.map((event) => applyValleyChristianChristmasProgram({
+    ...event, blurb: "Hear seasonal music at California Theatre.",
+  }));
+  const stats = await resolveEventBlurbs(enriched, { enabled: false });
+  assert.equal(stats.preexisting, programs.length);
+
+  for (const [index, [id, date, time, program]] of programs.entries()) {
+    const { description, blurb, ...occurrence } = enriched[index];
+    assert.equal(occurrence.id, id);
+    assert.equal(occurrence.date, date);
+    assert.equal(occurrence.time, time);
+    assert.equal(occurrence.url, VALLEY_CHRISTIAN_CHRISTMAS.programUrl);
+    const { description: _description, ...originalOccurrence } = events[index];
+    assert.deepEqual(occurrence, originalOccurrence);
+    assert.ok(description.includes(program), description);
+    assert.ok(blurb.includes(program), blurb);
+  }
+
+  for (const change of [
+    { date: "2027-12-07" },
+    { time: "8:00 PM" },
+    { url: VALLEY_CHRISTIAN_CHRISTMAS.venueUrl },
+    { description: "This event has been postponed." },
+  ]) {
+    const unrelated = { ...events[0], ...change };
+    assert.equal(applyValleyChristianChristmasProgram(unrelated), unrelated);
+  }
+});
 
 test("a detail timeout preserves only previously verified performances still listed by the venue", async () => {
   const date = dayPT(5);

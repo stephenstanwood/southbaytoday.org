@@ -184,6 +184,7 @@ import {
   restoreWayvConcert,
   theaterCategoryFromSource,
   theaterPerformances,
+  applyValleyChristianChristmasProgram,
 } from "./lib/san-jose-theaters-events.mjs";
 
 /** Ticketmaster Discovery is bursty; honor Retry-After longer than the default. */
@@ -11539,6 +11540,8 @@ async function main() {
   // November 8 position. Date corrections must use the verified occurrence.
   allEvents.forEach((event) => {
     Object.assign(event, applyVerifiedEventFacts(event));
+    // A detail timeout can carry a previously published row into this pass.
+    Object.assign(event, applyValleyChristianChristmasProgram(event));
   });
 
   // Sanitize time field: clear values that aren't a clock time (e.g. "SATURDAY, APRIL 25, 2026"

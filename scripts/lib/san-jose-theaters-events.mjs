@@ -42,13 +42,36 @@ export const SAN_JOSE_THEATER_ADDRESSES = Object.freeze({
   "Montgomery Theater": "271 South Market Street, San Jose, CA 95113",
 });
 
-// The venue lists this four-night run without clocks. The presenter publishes
-// each concert's start time, including the two 6 PM performances.
+// The venue uses one description for the four-night run. The presenter
+// publishes a separate program and start time for each performance.
 export const VALLEY_CHRISTIAN_CHRISTMAS = Object.freeze({
   venueUrl: "https://www.sanjose.org/theaters/events/christmas-california",
   programUrl: "https://www.vcs.net/community/news-events/post-details/~board/conservatory/post/christmas-at-the-california-2026",
   checkedAt: "2026-11-23T21:18:26.000Z",
 });
+
+const VALLEY_CHRISTIAN_CHRISTMAS_PERFORMANCES = [
+  { date: "2026-12-07", time: "6:00 PM", program: "Joyfully Adore" },
+  { date: "2026-12-08", time: "7:00 PM", program: "Proclaim His Glory" },
+  { date: "2026-12-09", time: "6:00 PM", program: "The Promised King" },
+  { date: "2026-12-10", time: "7:00 PM", program: "BEHOLD! A Conservatory Christmas Finale" },
+];
+
+export function applyValleyChristianChristmasProgram(event) {
+  if (event.source !== "San Jose Theaters" || event.url !== VALLEY_CHRISTIAN_CHRISTMAS.programUrl
+      || event.venue !== "California Theatre" || event.title !== "Christmas at the California"
+      || isEventExplicitlyInactive(event)) return event;
+
+  const performance = VALLEY_CHRISTIAN_CHRISTMAS_PERFORMANCES.find(({ date, time }) =>
+    event.date === date && event.time === time);
+  if (!performance) return event;
+
+  return {
+    ...event,
+    description: `Valley Christian Schools students perform “${performance.program}” at California Theatre as part of the school's four-night Christmas concert series.`,
+    blurb: `Hear Valley Christian Schools students perform “${performance.program}” at California Theatre.`,
+  };
+}
 
 // Visit San Jose republished its 8 PM listing under a new URL on November 21.
 // The artist and official ticket seller both list the February 6 show at 7:30 PM.
@@ -416,12 +439,7 @@ export function theaterPerformances(item, detail) {
       && range.start === "2026-12-07" && range.end === "2026-12-10"
       && !isEventExplicitlyInactive({ title: item.title, description: stripHtml(detail.descriptionHtml) })) {
     return {
-      performances: [
-        { date: "2026-12-07", time: "6:00 PM" },
-        { date: "2026-12-08", time: "7:00 PM" },
-        { date: "2026-12-09", time: "6:00 PM" },
-        { date: "2026-12-10", time: "7:00 PM" },
-      ],
+      performances: VALLEY_CHRISTIAN_CHRISTMAS_PERFORMANCES.map(({ date, time }) => ({ date, time })),
       skip: null,
       verifiedSource: {
         url: VALLEY_CHRISTIAN_CHRISTMAS.programUrl,
