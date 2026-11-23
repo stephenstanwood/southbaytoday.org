@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-23T21:59:18.566Z",
+    "generatedAt": "2026-11-23T23:33:35.261Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 185,
+    "eventCount": 189,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (9)",
@@ -16,12 +16,12 @@
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (4)",
       "Santana Row (6)",
-      "City of Cupertino (37)",
+      "City of Cupertino (38)",
       "Opera San José (6)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
       "SAP Center (12)",
-      "The Tech Interactive (11)",
+      "The Tech Interactive (14)",
       "Books Inc (8)",
       "San Jose Museum of Art (1)",
       "Peninsula Open Space Trust (2)"
@@ -209,8 +209,8 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 37,
-        "liveCount": 37,
+        "count": 38,
+        "liveCount": 38,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -273,8 +273,8 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 11,
-        "liveCount": 11,
+        "count": 15,
+        "liveCount": 15,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -990,7 +990,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-23T21:58:04.197Z"
+        "checkedAt": "2026-11-23T23:32:30.431Z"
       }
     },
     {
@@ -1013,7 +1013,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-23T21:58:04.198Z"
+        "checkedAt": "2026-11-23T23:32:30.431Z"
       }
     },
     {
@@ -1036,7 +1036,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-23T21:58:04.198Z"
+        "checkedAt": "2026-11-23T23:32:30.431Z"
       }
     },
     {
@@ -1059,7 +1059,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-23T21:58:04.198Z"
+        "checkedAt": "2026-11-23T23:32:30.431Z"
       }
     },
     {
@@ -1082,7 +1082,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-23T21:58:04.200Z"
+        "checkedAt": "2026-11-23T23:32:30.432Z"
       }
     },
     {
@@ -1105,7 +1105,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-23T21:58:04.200Z"
+        "checkedAt": "2026-11-23T23:32:30.432Z"
       }
     },
     {
@@ -1328,6 +1328,23 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/Breakfast-with-Santa/Breakfast-with-Santa-Event",
       "source": "City of Cupertino",
       "kidFriendly": true
+    },
+    {
+      "id": "876645a8717d",
+      "title": "City Council Swearing-In Ceremony",
+      "date": "2026-12-10",
+      "displayDate": "Thu, Dec 10",
+      "time": "06:30 PM",
+      "endTime": "07:30 PM",
+      "venue": "Cupertino Community Hall",
+      "address": "Cupertino Community Hall, 10350 Torre Avenue, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "The City of Cupertino cordially invites you to the City Council Swearing-In Ceremony. Join us as we say farewell to outgoing councilmembers and welcome incoming councilmembers. The event will also include the election of the Mayor and Vice Mayor. Light food and refreshments will be served. Event Details: Date: Thursday, December 10, 2026 Time: Doors open at 6:30 p.m., event start at 7 p.m. Location: Cupertino Community Hall, 10350 Torre Avenue",
+      "url": "https://www.cupertino.gov/Events-directory/City-Council-Swearing-In-Ceremony",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "a2b447b7251a",
@@ -3009,7 +3026,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.212Z"
+        "checkedAt": "2026-11-23T23:33:01.054Z"
       }
     },
     {
@@ -3033,7 +3050,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.212Z"
+        "checkedAt": "2026-11-23T23:33:01.055Z"
       }
     },
     {
@@ -3057,7 +3074,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.214Z"
+        "checkedAt": "2026-11-23T23:33:01.056Z"
       }
     },
     {
@@ -3098,7 +3115,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.214Z"
+        "checkedAt": "2026-11-23T23:33:01.056Z"
       }
     },
     {
@@ -3122,7 +3139,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.214Z"
+        "checkedAt": "2026-11-23T23:33:01.056Z"
       }
     },
     {
@@ -3146,7 +3163,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.214Z"
+        "checkedAt": "2026-11-23T23:33:01.056Z"
       }
     },
     {
@@ -3170,7 +3187,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.214Z"
+        "checkedAt": "2026-11-23T23:33:01.056Z"
       }
     },
     {
@@ -3194,7 +3211,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.214Z"
+        "checkedAt": "2026-11-23T23:33:01.056Z"
       }
     },
     {
@@ -3218,7 +3235,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.214Z"
+        "checkedAt": "2026-11-23T23:33:01.056Z"
       }
     },
     {
@@ -3242,7 +3259,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-2",
         "date": "2026-12-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.214Z"
+        "checkedAt": "2026-11-23T23:33:01.056Z"
       }
     },
     {
@@ -3266,7 +3283,30 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-3",
         "date": "2026-12-30",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-23T21:58:38.214Z"
+        "checkedAt": "2026-11-23T23:33:01.056Z"
+      }
+    },
+    {
+      "id": "de5bf1dd9ed6",
+      "title": "Flavor Lab: Festive Feast (Winter Wonderlab)",
+      "date": "2026-11-28",
+      "displayDate": "Sat, Nov 28",
+      "time": "2:00PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Thanksgiving leftovers? We’re putting a whole new spin on the holiday feast! Gather your friends and family for a bite-sized culinary adventure, in sphere form! Using the science of molecular gastronomy, your group will transform holiday-inspired flavors into colorful edible spheres that burst with flavor! Mix, experiment, and create a holiday feast that’s as much science as it is delicious fun.",
+      "url": "https://tickets.thetech.org/events/d2567d46-4aba-bfde-d010-c74081002811",
+      "source": "The Tech Interactive",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.thetech.org/explore/upcoming-events/",
+        "date": "2026-11-28",
+        "time": "2:00 PM"
       }
     },
     {
@@ -3304,7 +3344,7 @@
       "city": "san-jose",
       "category": "education",
       "cost": "paid",
-      "description": "Hands-on robotics experience at The Tech Interactive where Girl Scouts explore how robots work, design and build their own creations, and learn STEM skills like sensors, problem-solving, and coding.Daisy: Learn about different robots, then brainstorm, design, and build their own robot. Brownie: Explore robot types and how robots use sensors, then design and build their own. Junior: Learn how robots work, write simple algorithms, and code a real robot. Tickets include full-day admission to The Tech Interactive, the Cities of the Future IMAX film, the relevant badge(s), and a Tech fun patch.",
+      "description": "Hands-on robotics experience at The Tech Interactive where Girl Scouts explore how robots work, design and build their own creations, and learn STEM skills like sensors, problem-solving, and coding. Tickets include full-day admission to The Tech Interactive, the Cities of the Future IMAX film, the relevant badge(s), and a Tech fun patch.",
       "url": "https://tickets.thetech.org/events/019b8ba0-58ad-e7fc-e6f7-40b458a7c9e3",
       "source": "The Tech Interactive",
       "kidFriendly": true,
@@ -3336,6 +3376,29 @@
         "sourceUrl": "https://www.thetech.org/explore/upcoming-events/",
         "date": "2026-12-17",
         "time": "4:30 PM"
+      }
+    },
+    {
+      "id": "3743cdb4166a",
+      "title": "DIY Snow Globes (Winter Wonderlab)",
+      "date": "2026-12-19",
+      "displayDate": "Sat, Dec 19",
+      "time": "2:00PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Don’t just dream of a winter wonderland, create your own. Bring a little snow to San Jose with this hands-on holiday workshop! Combine chemistry and creativity to design your very own winter wonderland in a jar. Build a miniature snowy scene, add your own frosty finishing touches, and discover the science behind the swirling snow. Best of all, you'll take home a one-of-a-kind snow globe to enjoy all season long! Price: $10 members, $15 non-members General Admission not included, but required for entry. Workshop ticket required for anyone entering.",
+      "url": "https://tickets.thetech.org/events/01a1bdd1-4d1f-1c8c-9ed0-69944820e7c4",
+      "source": "The Tech Interactive",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.thetech.org/explore/upcoming-events/",
+        "date": "2026-12-19",
+        "time": "2:00 PM"
       }
     },
     {
@@ -3473,6 +3536,29 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.thetech.org/explore/upcoming-events/",
         "date": "2027-01-24",
+        "time": "2:00 PM"
+      }
+    },
+    {
+      "id": "c57dcc0e0036",
+      "title": "Flavor Lab: Festive Feast (Winter Wonderlab)",
+      "date": "2026-11-29",
+      "displayDate": "Sun, Nov 29",
+      "time": "2:00PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Thanksgiving leftovers? We’re putting a whole new spin on the holiday feast! Gather your friends and family for a bite-sized culinary adventure, in sphere form! Using the science of molecular gastronomy, your group will transform holiday-inspired flavors into colorful edible spheres that burst with flavor! Mix, experiment, and create a holiday feast that’s as much science as it is delicious fun.",
+      "url": "https://tickets.thetech.org/events/d2567d46-4aba-bfde-d010-c74081002811",
+      "source": "The Tech Interactive",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.thetech.org/explore/upcoming-events/",
+        "date": "2026-11-29",
         "time": "2:00 PM"
       }
     },
