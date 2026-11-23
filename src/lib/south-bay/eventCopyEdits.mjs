@@ -2265,6 +2265,14 @@ const EDITS = {
     ],
     description: [
       [
+        "Holiday festivities begin in Historic Saratoga Village with Candy Cane Village, part of the kickoff to the holiday season.",
+        "Candy Cane Village opens the holiday festivities in Historic Saratoga Village.",
+      ],
+      [
+        "Annual holiday tree lighting in Blaney Plaza, part of the holiday festivities in Historic Saratoga Village.",
+        "The annual tree lighting takes place at Blaney Plaza during Historic Saratoga Village's holiday festivities.",
+      ],
+      [
         "NUMU is seeking volunteers for its community table at the Magical Memories event, helping with set-up, breakdown, and craft management.",
         "New Museum Los Gatos is seeking volunteers to set up, run, and take down its community craft table at Magical Memories.",
       ],
