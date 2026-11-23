@@ -27,7 +27,7 @@ import { loadEnvLocal } from "./lib/env.mjs";
 import { classifyLibCalLocation } from "./lib/libcal-location.mjs";
 import { isClockTime, normalizeClockTime } from "./lib/clock-time.mjs";
 import { libraryEventDetails } from "./lib/library-event-details.mjs";
-import { parseCdmOccurrenceDate } from "./lib/cdm-events.mjs";
+import { parseCdmCelebrationDate, parseCdmOccurrenceDate } from "./lib/cdm-events.mjs";
 import { normalizeGuadalupeEvent } from "./lib/guadalupe-events.mjs";
 import { parseBooksIncEvents } from "./lib/booksinc-events.mjs";
 import {
@@ -1739,20 +1739,37 @@ export async function scrapeChildrensDiscoveryMuseum(page, { today = TODAY } = {
       const time = lines[i + 1] && /\d{1,2}(:\d{2})?\s*(am|pm)/i.test(lines[i + 1]) ? lines[i + 1] : null;
       out.push({ title, date, time, type });
     }
+
+    // The celebration list uses a separate card layout with two title
+    // headings per article and no program label.
+    for (const card of document.querySelectorAll('article[id^="event_article_"]')) {
+      const link = card.querySelector(".entry-title a");
+      out.push({
+        celebration: true,
+        title: link?.textContent?.trim(),
+        date: card.querySelector(".ecs-eventDate")?.textContent?.trim(),
+        description: card.querySelector(".ecs-excerpt")?.textContent?.trim(),
+        url: link?.href,
+      });
+    }
     return out;
   });
 
   return raw.map((r) => {
-    const date = parseCdmOccurrenceDate(r.date, today);
-    if (!date || date < today || !isUsefulTitle(r.title)) return null;
+    const date = r.celebration
+      ? parseCdmCelebrationDate(r.date, today)
+      : parseCdmOccurrenceDate(r.date, today);
+    if (!date || !isUsefulTitle(r.title)) return null;
+    if (r.celebration && !/^https:\/\/www\.cdm\.org\/event\/[^/?#]+/i.test(r.url || "")) return null;
     return {
       title: r.title,
       date,
       ...clockRangeFromText(r.time),
-      venue: "Children's Discovery Museum",
+      venue: r.celebration ? "Children's Discovery Museum of San Jose" : "Children's Discovery Museum",
       address: "180 Woz Way, San Jose, CA 95110",
       city: "san-jose",
-      url: "https://www.cdm.org/calendar/",
+      url: r.celebration ? r.url : "https://www.cdm.org/calendar/",
+      description: r.description,
       source: "Children's Discovery Museum",
       category: "family",
       cost: "paid",
