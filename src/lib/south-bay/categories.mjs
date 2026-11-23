@@ -47,7 +47,7 @@ export function canonicalCategory(raw) {
     case "nature":     return "outdoor";
     case "family":     return "events";
     case "community":  return "events";
-    case "education":  return "arts";
+    case "education":  return "events";
     case "technology": return "arts";
     case "volunteer":  return "events";
     case "meetings":   return "events";

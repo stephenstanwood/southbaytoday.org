@@ -15,6 +15,46 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Santa Paws uses the organizer's park and photo donation for the dated event", () => {
+  const event = {
+    date: "2026-12-12", title: "Santa Paws hosted by Humane Society Silicon Valley",
+    venue: "Santana Row", city: "san-jose", cost: null, source: "Santana Row",
+    url: "https://santanarow.com/event/santa-paws/",
+    description: "Bring your pet to Park Valencia. Photos are a minimum donation of $10! Registration begins at 9:30am.",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.deepEqual(corrected, {
+    ...event, venue: "Park Valencia, Santana Row", cost: "low",
+    costNote: "$10 minimum donation for a photo",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  const reviewedCopy = { ...event, description: "Bring your pet to Park Valencia. Photos require a donation of at least $10." };
+  assert.equal(applyVerifiedEventFacts(reviewedCopy).cost, "low");
+  for (const donation of ["$15", "$10.50"]) {
+    const revisedPrice = { ...event, description: "Bring your pet to Park Valencia. Photos are a minimum donation of " + donation + "." };
+    assert.equal(applyVerifiedEventFacts(revisedPrice).cost, null);
+  }
+  const publisherPrice = { ...event, cost: "paid", costNote: "From $30" };
+  assert.equal(applyVerifiedEventFacts(publisherPrice).costNote, "From $30");
+  const differentDate = { ...event, date: "2027-12-12" };
+  assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
+});
+
+test("the verified Earthquakes Playoff Game 1 is paid without assuming a price", () => {
+  const event = {
+    date: "2026-11-24",
+    cost: null,
+    url: "https://www.tixr.com/groups/sjearthquakes/events/audi-mls-cup-playoffs-round-1-game-1-212863",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.deepEqual(fixed, { ...event, cost: "paid" });
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const otherDate = { ...event, date: "2026-12-02" };
+  assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+  const explicitPrice = { ...event, cost: "low", costNote: "$20" };
+  assert.deepEqual(applyVerifiedEventFacts(explicitPrice), explicitPrice);
+});
+
 test("the December 3 Candlelight listing points to paid music tickets and preserves closures", () => {
   const event = {
     id: "sjsu-192b4de184cb13b2", date: "2026-12-03", title: "Candlelight - 90s Unplugged",

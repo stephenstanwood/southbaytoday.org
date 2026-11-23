@@ -7,6 +7,7 @@ import assert from "node:assert/strict";
 import { parseHour, fallbackBlurb, isMealVenueCandidate, scoreCandidates, buildCandidatePool } from "../../pages/api/plan-day.ts";
 import { cleanDisplayCopy, cleanDisplayName } from "./displayText.mjs";
 import { canonicalizeCard } from "./canonicalizeCard.mjs";
+import { canonicalCategory } from "./categories.mjs";
 import { mealOpenForService } from "./mealService.mjs";
 import {
   audienceBreadthPenalty,
@@ -42,6 +43,11 @@ test("September 6 library constraints hold in the real planner pool", () => {
     if (kids) assert.equal(pool.some((c) => c.id === "event:cbdd438d7fbe"), false,
       "Adults audience cannot enter a kids plan");
   }
+});
+
+test("education events use the general event category on day-plan cards", () => {
+  assert.equal(canonicalCategory("education"), "events");
+  assert.equal(canonicalCategory("arts"), "arts");
 });
 
 test("parseHour: AM/PM", () => {

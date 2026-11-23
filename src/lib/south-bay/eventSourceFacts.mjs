@@ -1375,6 +1375,31 @@ const CORRECTIONS = [
     }),
     copyReplacements: [[/\s+(?:on the|for every) second Saturday of every month\b/gi, ""]],
   },
+  // The dated Santa Paws detail page locates the fundraiser inside Park
+  // Valencia and sets a minimum donation for the photo. Day-of registration
+  // opens before the event, so the advance reservation badge does not apply.
+  {
+    date: "2026-12-12",
+    matches: event => event.source === "Santana Row"
+      && event.url === "https://santanarow.com/event/santa-paws/"
+      && event.title === "Santa Paws hosted by Humane Society Silicon Valley"
+      && event.city === "san-jose",
+    facts: event => ({
+      ...(event.venue === "Santana Row" && /\bPark Valencia\b/i.test(event.description || "")
+        ? { venue: "Park Valencia, Santana Row" } : {}),
+      ...(event.cost == null && !event.costNote
+        && /\b(?:minimum donation of|donation of at least)\s+\$10(?:\.00)?(?!\d|\.\d)(?=[.!?\s]|$)/i.test(event.description || "")
+        ? { cost: "low", costNote: "$10 minimum donation for a photo" } : {}),
+    }),
+  },
+  // The Earthquakes link to their paid Game 1 ticket sale, which the
+  // newsletter's calendar record left unpriced. Ticket prices can change.
+  {
+    date: "2026-11-24",
+    url: "https://www.tixr.com/groups/sjearthquakes/events/audi-mls-cup-playoffs-round-1-game-1-212863",
+    aliasUrls: ["https://www.tixr.com/groups/sjearthquakes/events/audi-mls-cup-playoffs-rd-1-gm-1-earthquakes-vs-houston-dynamo-fc-212863"],
+    facts: event => event.cost == null && !event.costNote ? { cost: "paid" } : {},
+  },
   // Santana Row's December 13 detail page gives free spectator admission;
   // reserving a space to display a vehicle is a separate action.
   {
