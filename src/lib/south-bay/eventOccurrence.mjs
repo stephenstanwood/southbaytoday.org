@@ -168,6 +168,12 @@ export function nonEventOfferNotice(event) {
       && /^https:\/\/(?:www\.)?santanarow\.com\/event\/thanksgiving-on-the-row\/?$/i.test(event.url || "")) {
     return "Santana Row’s Thanksgiving guide lists separate dining specials. Hours and reservations vary by restaurant.";
   }
+  // The Black Friday guide lists several stores' offers. Only Hoka advertises
+  // the 7 AM–10 PM hours that the scraper used for the whole listing.
+  if (event?.source === "Santana Row" && event.date === "2026-11-27"
+      && /^https:\/\/(?:www\.)?santanarow\.com\/event\/on-your-mark-get-set-shop-black-friday\/?$/i.test(event.url || "")) {
+    return "Santana Row’s Black Friday guide lists offers from individual shops. Hours and terms vary by store.";
+  }
   return null;
 }
 

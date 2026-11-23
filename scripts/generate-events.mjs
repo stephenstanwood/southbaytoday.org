@@ -9021,7 +9021,7 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
           address: addr,
           city,
           ...(locality ? { locality } : {}),
-          category: inferCategory(item.title, desc, "", venue),
+          category: (pageUrl === MHP_CALENDAR_URL ? item.category : undefined) ?? inferCategory(item.title, desc, "", venue),
           cost: squarespaceCost(item.title, eventText),
           description: desc,
           url: fullUrl,

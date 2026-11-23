@@ -69,6 +69,25 @@ test("Santana Row’s Thanksgiving dining guide retires without restaurant-speci
   assert.match(event.description, /Hours and reservations vary by restaurant/);
 });
 
+test("Santana Row’s Black Friday guide retires without Hoka’s store hours", () => {
+  const guide = ev({
+    title: "On Your Mark, Get Set, Shop Black Friday", date: "2026-11-27",
+    time: "7:00 AM", endTime: "10:00 PM", venue: "Santana Row", source: "Santana Row",
+    url: "https://santanarow.com/event/on-your-mark-get-set-shop-black-friday/",
+  });
+  assert.equal(isEventPublishable(guide), false);
+  assert.equal(isEventPublishable({ ...guide, date: "2027-11-26" }), true);
+  assert.equal(isEventPublishable({ ...guide, url: "https://santanarow.com/event/a-store-event/" }), true);
+
+  const ledger = retireSlugs({ entries: [] }, [guide], [], "2026-11-23");
+  const { orphans: [retired] } = resolveRetired(ledger, [], [], "2026-11-23");
+  assert.equal(retired.slug, "2026-11-27-on-your-mark-get-set-shop-black-friday");
+  assert.equal(retired.event.url, guide.url);
+  assert.equal(retired.event.time, undefined);
+  assert.equal(retired.event.endTime, undefined);
+  assert.match(retired.event.description, /Hours and terms vary by store/);
+});
+
 test("retired museum event pages cannot publish newsletter wrappers or an unconfirmed demonstration time", () => {
   const demo = ev({
     title: "Robotics Demonstration with Team Quixilver", date: "2026-12-13",

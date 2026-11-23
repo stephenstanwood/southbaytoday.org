@@ -63,3 +63,32 @@ test("MHP fetch and parser failures remain failures rather than successful empty
   await assert.rejects(fetchMhpItems({ fetchImpl: async () => new Response("Denied", { status: 403 }) }), /HTTP 403/);
   await assert.rejects(fetchMhpItems({ fetchImpl: async () => new Response("<p>Challenge</p>") }), /not recognized/);
 });
+
+test("Mercadito's dated headings identify a community grocery distribution", async (t) => {
+  const mercaditoUrl = `${MHP_CALENDAR_URL}/mercadito-november-25`;
+  const mercaditoDetail = detail
+    .replaceAll("Fiesta Navideña", "Mercadito")
+    .replace("2026-12-12T17:30:00", "2026-11-25T12:00:00")
+    .replace("2026-12-12T21:30:00", "2026-11-25T14:00:00")
+    .replace("<p>A free live concert and posada for all ages.</p>",
+      "<h1>Free food distribution</h1><h1>Walk-up | En persona de 12-2 PM</h1><h2>Line starts at 11 AM</h2>");
+  const mercaditoCalendar = calendar.replace(url, mercaditoUrl).replace("Fiesta Navideña", "Mercadito")
+    .replace('datetime="2026-12-12"', 'datetime="2026-11-25"');
+  t.mock.method(globalThis, "fetch", async (requested) => {
+    if (requested === MHP_CALENDAR_URL) return new Response(mercaditoCalendar);
+    assert.equal(requested, mercaditoUrl);
+    return new Response(mercaditoDetail);
+  });
+
+  const [event] = await fetchMexicanHeritagePlazaEvents({ now: new Date("2026-11-23T12:00:00Z") });
+  assert.equal(event.title, "Mercadito");
+  assert.equal(event.category, "community");
+  assert.equal(event.cost, "free");
+  assert.equal(event.time, "12:00 PM");
+  assert.equal(event.endTime, "2:00 PM");
+  assert.equal(event.description, "Pick up free groceries at this walk-up distribution. The line starts at 11 AM.");
+
+  const withoutQueue = parseMhpDetail(mercaditoDetail.replace("<h2>Line starts at 11 AM</h2>", ""),
+    { title: "Mercadito", date: "2026-11-25", url: mercaditoUrl });
+  assert.equal(withoutQueue.excerpt, "Pick up free groceries at this walk-up distribution.");
+});

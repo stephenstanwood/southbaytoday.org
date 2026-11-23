@@ -46,11 +46,21 @@ export function parseMhpDetail(html, listing) {
   // different event. Image-only programs keep empty copy, never borrowed text.
   // Omit embeds, styles, navigation, tags and the site footer.
   const body = elements(content, "div", "sqs-html-content").map(([, text]) => text).join(" ");
+  const programText = stripHtml(body);
+  // The venue's name contains "Arts", but the dated Mercadito pages identify
+  // a walk-up grocery distribution in their bilingual event headings.
+  const walkUpDistribution = listing.title === "Mercadito"
+    && /\bfree food distribution\s+walk[- ]up\b/i.test(programText);
+  const queueNote = /\bline starts at 11\s*am\b/i.test(programText) ? " The line starts at 11 AM." : "";
   return {
     title: stripHtml(title), fullUrl: listing.url,
     startDate: Date.parse(event.startDate),
     ...(event.endDate ? { endDate: Date.parse(event.endDate) } : {}),
     location: { addressTitle: event.location.name }, body,
+    ...(walkUpDistribution ? {
+      category: "community",
+      excerpt: "Pick up free groceries at this walk-up distribution." + queueNote,
+    } : {}),
   };
 }
 
