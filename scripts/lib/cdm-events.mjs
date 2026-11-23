@@ -1,4 +1,4 @@
-import { isoDateParts } from "./dates.mjs";
+import { addIsoDays, isoDateParts } from "./dates.mjs";
 
 const WEEKDAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
@@ -43,4 +43,19 @@ export function parseCdmOccurrenceDate(rawDate, today) {
     return null;
   }
   return date >= today ? date : null;
+}
+
+export function parseCdmCelebrationDate(rawDate, today) {
+  const label = String(rawDate || "").replace(/\s+/g, " ").trim();
+  const dated = DATED.exec(label);
+  if (!dated) return null;
+
+  const date = parseCdmOccurrenceDate(label, today);
+  if (date || dated[4] || !dated[1]) return date;
+
+  // Upcoming celebration cards omit the year even across New Year's Day.
+  // Require the printed weekday to agree and stay within the feed's horizon.
+  const nextYear = Number(String(today).slice(0, 4)) + 1;
+  const nextDate = parseCdmOccurrenceDate(`${label}, ${nextYear}`, today);
+  return nextDate && nextDate <= addIsoDays(today, 180) ? nextDate : null;
 }

@@ -553,6 +553,29 @@ freshness, access-error and still-future-row guards on every run; a later
 populated calendar, parser error or lost future coverage requires a fresh
 source check. This dated disposition is not an empty-season allowlist.
 
+## November 23: Children's Discovery Museum celebration cards
+
+This was parser drift. The 8:05 a.m. PT Mini snapshot (`8d50021d`) recorded
+the third consecutive zero. A scoped run using the normal Mini browser returned
+HTTP 200 and showed three cards under [Upcoming Celebrations](https://www.cdm.org/calendar/).
+The importer returned zero because it expected a program label before the title.
+The prior Toddler Storytime row expired on November 22. The program runs
+Wednesday through Sunday, so Monday had no storytime occurrence.
+
+The importer now reads each celebration article's title, date label and
+official event link. A yearless card can cross January 1 when its printed
+weekday agrees and the date is inside the 180-day event horizon. Explicit past
+dates stay expired. The calendar and the organizer's structured event date
+agree on January 9, 2027 for El Día de los Tres Reyes Magos. The detail page's
+body separately mentions January 10. Use January 9.
+
+The dated cards do not supply start times. The normal event refresh still
+requires a verified clock for one-day events. Previously verified facts and
+City Newsletter coverage provide the published clocks for Menorahs & Miracles
+and El Día de los Tres Reyes Magos. Noon Year's Eve remains covered by
+City Newsletter. The scoped Mini detail probe received HTTP 403 from the
+Menorahs & Miracles link. The importer reads the calendar cards alone.
+
 ## Other refresh safeguards
 
 - Inbound events arrive as one Vercel Blob shard per intake email (866 as of

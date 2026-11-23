@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { runInNewContext } from "node:vm";
+import { scrapeChildrensDiscoveryMuseum } from "../playwright-scrapers.mjs";
+import { parseCdmCelebrationDate } from "../lib/cdm-events.mjs";
 import { normalizeInboundEventPresentation } from "../lib/inbound-event-normalize.mjs";
 import { deduplicateEventUrls } from "../lib/event-url-dedup.mjs";
 import { compareDuplicateAuthority } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
@@ -8,6 +11,63 @@ import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFact
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
 const capture = JSON.parse(readFileSync(new URL("../lib/fixtures/cdm-november-2026.json", import.meta.url)));
+
+test("the Mini calendar layout imports dated celebration articles alongside scheduled storytime", async () => {
+  const origin = "https://www.cdm.org";
+  const celebrations = [
+    ["Menorahs & Miracles", "Sunday, December 6", `${origin}/event/menorahs-miracles/`, "2026-12-06"],
+    ["El Día de los Tres Reyes Magos", "Saturday, January 9", `${origin}/event/el-dia-de-los-tres-reyes-magos/`, "2027-01-09"],
+    ["Lunar New Year", "Saturday, January 30", `${origin}/event/lunar-new-year/`, "2027-01-30"],
+  ];
+  // The rendered calendar repeats each title in separate responsive headings.
+  const document = {
+    body: {
+      innerText: [
+        "Ongoing", "Toddler Storytime", "Every Wednesday through Sunday", "11:30 am in the Wonder Cabinet",
+        "Upcoming Celebrations",
+        ...celebrations.flatMap(([title, date]) => [title, title, date, "Discover"]),
+      ].join("\n"),
+    },
+    querySelectorAll(selector) {
+      assert.equal(selector, 'article[id^="event_article_"]');
+      return celebrations.map(([title, date, url]) => ({
+        querySelector(selector) {
+          return {
+            ".entry-title a": { textContent: title, href: url },
+            ".ecs-eventDate": { textContent: date },
+          }[selector];
+        },
+      }));
+    },
+  };
+  const page = {
+    setExtraHTTPHeaders: async () => {},
+    goto: async url => assert.equal(url, `${origin}/calendar/`),
+    waitForTimeout: async () => {},
+    evaluate: read => structuredClone(runInNewContext(`(${read})()`, { document })),
+  };
+  const monday = await scrapeChildrensDiscoveryMuseum(page, { today: "2026-11-23" });
+  assert.deepEqual(
+    monday.map(({ title, date, url, time }) => [title, date, url, time]),
+    celebrations.map(([title, , url, date]) => [title, date, url, null]),
+  );
+  const wednesday = await scrapeChildrensDiscoveryMuseum(page, { today: "2026-11-25" });
+  assert.deepEqual(
+    wednesday.filter(row => row.title === "Toddler Storytime").map(row => [row.date, row.time]),
+    [["2026-11-25", "11:30 am"]],
+  );
+});
+
+test("yearless celebration rollover requires a matching weekday within the event horizon", () => {
+  const today = "2026-11-23";
+  for (const label of [
+    "January 9", "Sunday, January 9", "Friday, January 9, 2026",
+    "Saturday, October 9", "Every Wednesday through Sunday",
+  ]) {
+    assert.equal(parseCdmCelebrationDate(label, today), null, label);
+  }
+  assert.equal(parseCdmCelebrationDate("Saturday, January 9, 2027", today), "2027-01-09");
+});
 
 test("Diwali intake uses the celebration's clocks, keeping its first performance separate", async () => {
   const before = structuredClone(capture);
