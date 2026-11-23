@@ -67,7 +67,8 @@ function refreshDataCheckout() {
 function publish() {
   // Start from origin/main (the shared checkout may hold other jobs' generated
   // data, which the preflight merges or refuses).
-  preflightNewsletterCheckout({ repoRoot, log });
+  // The shared helpers stamp their own lines; console.log keeps them single.
+  preflightNewsletterCheckout({ repoRoot, log: console.log });
   const dataHead = refreshDataCheckout();
   log(`camp-finder-data at ${dataHead}`);
 
@@ -89,7 +90,7 @@ function publish() {
   // --only keeps anything else staged in the shared checkout out of this commit.
   run("git", ["commit", "--only", "--quiet", "-m", message, "--", ...FILES]);
   log(`committed: ${message}`);
-  pushGeneratedDataCheckout({ repoRoot, log });
+  pushGeneratedDataCheckout({ repoRoot, log: console.log });
 }
 
 function main() {
