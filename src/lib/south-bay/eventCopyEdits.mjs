@@ -210,6 +210,10 @@ const EDITS = {
       ],
       [/Glow ?Forge: Create a custom engraved object\./g, "Glowforge: Create a custom engraved object."],
       [
+        "Object should follow similar guidelines to the Custom Keychain Program. Complexity of request is at the discretion of the librarian.",
+        "Follow guidelines similar to those for the Custom Keychain Program. The librarian decides how complex a request can be.",
+      ],
+      [
         /Free\. No registration required\. 11\/23 - Magnet Mazes\.?$/g,
         "Admission is free. Registration is not required. The November 23 activity is Magnet Mazes.",
       ],
@@ -937,6 +941,10 @@ const EDITS = {
       ["Other accommodations can be made available with request.", "Other accommodations can be made available upon request."],
       ["3D print quality and time needed to complete prints is not guaranteed.", "3D print quality and the time needed to complete prints are not guaranteed."],
       ["printed as a. Png.", "printed as a PNG file."],
+      [
+        /Poster Printing: All prints must be assembled on a ([^.\r\n]+) canvas and printed as a PNG file\./g,
+        "Poster Printing: Set up your design on a $1 canvas and save it as a PNG file.",
+      ],
       ["There are scrap material and thread available but", "Scrap material and thread are available, but"],
       ["An iron and ironing board is also available.", "An iron and ironing board are also available."],
       ["If your bring your own printout", "If you bring your own printout"],
