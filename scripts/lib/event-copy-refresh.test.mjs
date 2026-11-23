@@ -216,6 +216,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-23-library-crafts-and-stem.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-23-registration-and-hours.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-23-dates-and-blurbs.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-23-library-listings.json", import.meta.url))));
 
 test("SCU concert copy distinguishes the performances and removes the title echo", () => {
   const cases = [
@@ -361,13 +362,18 @@ test("Campbell's full Dungeons and Dragons session directs readers to future ses
 });
 
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
-  // A later audit can refine the same complete text. Follow only its captured
-  // before/after pair, preserving the earlier audit's original evidence.
+  // Use later captured copy for the same publisher and field. Some copy
+  // changes also apply to earlier occurrences with different surrounding text.
   let reviewed = row.reviewed;
   for (const later of audits.slice(auditIndex + 1)) {
     const revision = later.cases.find(candidate => candidate.source === row.source
       && candidate.field === row.field && candidate.refreshed === reviewed);
     if (revision) reviewed = revision.reviewed;
+    for (const phrase of later.priorPhraseEdits ?? []) {
+      if (phrase.source === row.source && phrase.field === row.field) {
+        reviewed = reviewed.replaceAll(phrase.before, phrase.after);
+      }
+    }
   }
   return { ...row, reviewed };
 }));
@@ -756,7 +762,7 @@ test("November 10 afternoon copy repairs preserve publisher scope and revised so
       category: "education", registration: "required", url: "https://example.org/updated",
     };
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) });
+    assert.deepEqual(next, { ...original, [row.field]: revise(latestReviewedCopy(row)) });
     assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
     assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
     assert.deepEqual(polishReviewedEventCopy(next), next);

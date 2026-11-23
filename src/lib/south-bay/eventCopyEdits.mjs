@@ -153,6 +153,7 @@ const EDITS = {
       ["(ELL) for Low-Intermediate/Inglés Para Intermedio Bajo (ELL)", "(ELL) for Low-Intermediate / Inglés de nivel intermedio bajo (ELL)"],
       ["One-On-One Tech Help (English or Tiếng Việt)", "One-on-One Tech Help (English or Tiếng Việt)"],
       ["Wacky Wednesdays: Coffee Filter Turkey craft", "Wacky Wednesdays: Coffee Filter Turkey Craft"],
+      [/^Cambrian Pokemon Club$/g, "Cambrian Pokémon Club"],
     ],
     attendanceNote: [
       SJPL_STORYTIME_TICKET_EDIT,
@@ -218,6 +219,10 @@ const EDITS = {
         "Children of all ages and their parents or caregivers are welcome. After storytime, children will learn to make a simple craft to take home. The program is free. No registration is required.",
       ],
       ["the TeenHQ Maker Space!", "the TeenHQ MakerSpace!"],
+      [
+        "Please note that each device requires time to set up, use, and complete whatever task you're wanting to use the space for. Be sure that you have enough time in your schedule to attend the program. Not all tasks may be completed before the end of the program and you may need to return to get your completed items or pause your task and restart at another studio session.",
+        "Allow enough time to set up the equipment and work on your project. If your work takes longer than one studio session, you may need to come back to pick up a finished item or continue the project at another session.",
+      ],
       [
         /Poster Printer, Glow ?Forge, Sewing & Serger Machines, Cricut, Button Press, and miscellaneous craft supplies\./g,
         "a poster printer, a Glowforge laser cutter, sewing machines and sergers, a Cricut, a button press, and assorted craft supplies.",
@@ -435,6 +440,10 @@ const EDITS = {
       ["The Heartfulness Institute each Saturday.", "The Heartfulness Institute, each Saturday."],
       ["Heartfulness certified instructor", "Heartfulness-certified instructor"],
       ["all NEW participants", "all new participants"],
+      [
+        "Please note that all new participants will need to complete the Exercise Waiver in order to be able to participate. The Exercise Waiver must be completed before your first day of participation. Exercise Waivers will be provided at each meeting.",
+        "New participants must complete the Exercise Waiver before their first day in the program. Waivers are available at each meeting.",
+      ],
       ["pen marks, etc; Book cover cleaning", "pen marks, etc.; Book cover cleaning"],
       [/(\d+ min) Meet & greet (\d+ min) Yoga and Pranayama (\([^)]*\)) (\d+ min) posture change break (\d+ min) Heartfulness Relaxation & Meditation (\([^)]*\)) This program/g, "$1: Meet & greet; $2: Yoga and Pranayama $3; $4: posture change break; $5: Heartfulness Relaxation & Meditation $6. This program"],
       [". *Drop-ins are accepted.", ". Drop-ins are accepted."],
@@ -1167,6 +1176,31 @@ const EDITS = {
       ["will be not accepted for print.", "will not be accepted for printing."],
       ["o un guardian.", "o un guardián."],
       ["the free Stop Motion app in advance.", "the free Stop Motion Studio app in advance."],
+      ["simple stop motion animations using small toys and paper", "simple stop-motion animations using small toys and paper"],
+      ["The theme of all five classes in November is Thanksgiving/Fall:", "The theme of all five classes in November is Thanksgiving and fall."],
+      ["Thanksgiving/Autumn props and characters", "Thanksgiving and autumn props and characters"],
+      [/(November \d{1,2}(?: and \d{1,2})?) - (?=Introduction to Stop-Motion Animation|Creating the Thanksgiving Story|Filming the Movie|Finishing the Movie)/g, "$1: "],
+      [
+        /There will be a variety of play-based, manipulative-based math puzzles and games for students in grades K\s*-\s*(\d+) and their parents or caregivers\./g,
+        "Students in grades K-$1 and their parents or caregivers can try hands-on math puzzles and games.",
+      ],
+      [
+        /The festival will be open for (\d+) hours?, during which time kids will get to explore the festival at their own pace, choosing where they want to go and for how long they want to do each activity\./g,
+        "During the $1-hour festival, kids can explore at their own pace, choosing which activities to try and how long to spend on each.",
+      ],
+      [
+        "Our English Language Learners (ELL) Conversation Club offers a respectful environment for adult learners of English to practice their English-speaking & conversation skills used in everyday settings. All levels of English-speaking skills are welcome!",
+        "Our English Language Learners (ELL) Conversation Club gives adults a respectful setting to practice everyday English conversation. All skill levels are welcome.",
+      ],
+      ["such as laptops, smartphones, e-readers, etc.", "such as laptops, smartphones, and e-readers."],
+      ["Duplo bricks are also available for our younger friends.", "DUPLO bricks are also available for younger children."],
+      [
+        "Your own body makes the artwork in this classic Thanksgiving craft! Transform your hand into a turkey, then decorate to make a card where you can share the things you're grateful for.",
+        "Use your hand to make a turkey in this classic Thanksgiving craft. Decorate your card and share what you're grateful for.",
+      ],
+      ["Please check the website event listing for possible date cancellations and library holidays.", "Check the event listing for cancellations and library holidays."],
+      [/(\d{1,2}\/\d{1,2}) - Straw Airplane Challenge\.?$/g, "$1: Straw Airplane Challenge."],
+      ["playing Pokemon, trading cards", "playing Pokémon, trading cards"],
       ["by David Talbot No registration needed.", "by David Talbot. No registration is needed."],
       [/\bAR Trepreneur(?=: Teen Craft Fair\b| (?:entrepreneur )?program\b)/g, "ARTrepreneur"],
       ["featured at this Fair have complete the ARTrepreneur", "featured at this fair have completed the ARTrepreneur"],
@@ -1402,7 +1436,7 @@ const EDITS = {
         "Make projects in the TeenHQ Maker Space, with 3D printers, a Glowforge, sewing machines, a Cricut and a button press for middle and high schoolers.",
         "Middle and high schoolers can make projects in the TeenHQ Maker Space using 3D printers, a Glowforge, sewing machines, a Cricut, and a button press.",
       ],
-      ["in the TeenHQ Maker Space using", "in the TeenHQ MakerSpace using"],
+      ["the TeenHQ Maker Space", "the TeenHQ MakerSpace"],
       [
         "Try hands-on STEM activities during Thanksgiving break, from Buzz Off to hovercrafts to stop motion animation, for ages 8-12, free and drop-in.",
         "Kids ages 8-12 can drop in for free STEM activities over Thanksgiving break, including Buzz Off, hovercrafts, and stop-motion animation.",
@@ -1428,9 +1462,11 @@ const EDITS = {
       ["Sip tea and biscuits while chatting with neighbors at this monthly library meetup, bring your own cup.", "Have tea and biscuits while chatting with neighbors at this monthly library meetup; bring your own cup."],
       ["Sip an English-style tea service", "Enjoy an English-style tea service"],
       [/\bApple pencils\b/g, "Apple Pencils"],
-      ["a huge collection of Lego and Duplo bricks", "a huge collection of LEGO and Duplo bricks"],
+      [/a huge collection of (?:Lego|LEGO) and Duplo bricks/g, "a huge collection of LEGO and DUPLO bricks"],
       [/\bziploc bag\b/g, "Ziploc bag"],
       ["a librarian-issued Lego Challenge.", "a librarian-issued LEGO Challenge."],
+      ["short stop motion animations with the Stop Motion Studio app", "short stop-motion animations with the Stop Motion Studio app"],
+      ["Trade Pokemon cards", "Trade Pokémon cards"],
       ["from a SJPL Works Business Librarian", "from an SJPL Works business librarian"],
       ["Hong Kong style Mahjong", "Hong Kong-style Mahjong"],
       ["Pair up with a teen reading coach for one-on-one practice as a grades TK-5 reading buddy.", "Students in grades TK-5 can pair up with a teen reading coach for one-on-one reading practice."],
@@ -1749,6 +1785,15 @@ const EDITS = {
         /Kids (\d+) years and older, apply your building skills and imaginations to have fun with LEGOs! Kids younger than (\d+) years, come enjoy our Duplos \(larger version of standard LEGOs\)\./gi,
         "Kids ages $1 and up can build with LEGO bricks. Kids younger than $2 can build with larger DUPLO bricks.",
       ],
+      [
+        "Parents, grandparents and caregivers of children younger than ten years of age need to stay in the room with their kid(s).",
+        "Parents, grandparents, and caregivers of children under ten must stay in the room with them.",
+      ],
+      [
+        "This story time features lots of movement, singing, and action and is geared for very young toddlers who can no longer sit in laps!",
+        "This storytime features singing and movement for very young toddlers who are ready to get up and move.",
+      ],
+      ["can build with larger Duplo bricks.", "can build with larger DUPLO bricks."],
       // The publisher spells the Stargirl author's name Spinelli.
       ["Stargirl by Jerry Spinellli", "Stargirl by Jerry Spinelli"],
       [
@@ -2032,7 +2077,11 @@ const EDITS = {
       ],
       ["Grab your guitar, ukulele, or voice and perform for a welcoming crowd of fellow musicians.", "Sing or play an instrument for a welcoming crowd of fellow musicians."],
       ["Sing songs, play fingerplays, and share rhymes", "Sing songs, do fingerplays, and share rhymes"],
-      ["Build with LEGOs or Duplos and show off your creations", "Build with LEGO or DUPLO bricks and show off your creations"],
+      [/Build with (?:Legos|LEGOs) or Duplos\b/g, "Build with LEGO or DUPLO bricks"],
+      [
+        "Sing, move, and hear stories with your 1-to-2-year-old at Cupertino Library, in a storytime built for toddlers too active for laps.",
+        "Toddlers ages 1 to 2 can sing, move, and listen to stories at Cupertino Library.",
+      ],
       ["Bring a torn stuffed animal, missing button, or worn patch and mend it together with fellow sewers.", "Bring a damaged stuffed animal or clothing that needs a button or patch, and mend it with others."],
       [
         "Read aloud to a patient, furry listener and build reading confidence, in a program for kids who have finished grades K-5.",
