@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
-import { CAMPS } from "../../data/south-bay/camps-data";
-import { openCampLastDatesForCity } from "./cityCamps";
+import { CAMPS } from "./campFinder";
+import { campsForCity } from "./cityCamps";
 import {
   getCityPageData,
   selectOpenNowCandidates,
@@ -56,19 +56,11 @@ test("open-now candidates: only this city, minus unavailable places, trimmed to 
   assert.deepEqual(selectOpenNowCandidates(byCity, "saratoga"), []);
 });
 
-test("camp last dates: one entry per open camp, the last session's end date", () => {
-  const sanJose = CAMPS.filter((c) => c.cityId === "san-jose");
-  const preseason = openCampLastDatesForCity("san-jose", "2026-01-01");
-  assert.equal(preseason.length, sanJose.length);
-  for (const [i, camp] of sanJose.entries()) {
-    const last = camp.weeks.length ? camp.weeks.map((w) => w.endDate).sort().at(-1) : null;
-    assert.equal(preseason[i], last);
-  }
-  // Only undated (year-round) programs outlast every dated session.
-  assert.deepEqual(
-    openCampLastDatesForCity("san-jose", "2099-01-01"),
-    sanJose.filter((c) => c.weeks.length === 0).map(() => null),
-  );
+test("camps pointer: the city's sourced programs and the page that lists them", () => {
+  const sunnyvale = CAMPS.programs.filter((p) => p.citySlug === "sunnyvale").length;
+  assert.ok(sunnyvale > 0);
+  assert.deepEqual(campsForCity("sunnyvale"), { count: sunnyvale, href: "/camps/city/sunnyvale" });
+  assert.equal(campsForCity("no-such-city"), null);
 });
 
 test("city page data serializes to island props without losing anything", () => {

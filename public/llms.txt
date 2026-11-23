@@ -13,6 +13,7 @@ The canonical site is https://southbaytoday.org. The publication covers Campbell
 - [Next 14 days JSON](https://southbaytoday.org/api/south-bay/upcoming-events-near): Smaller machine-readable event feed.
 - [Local government](https://southbaytoday.org/gov): Plain-English city council coverage with links to official agendas and minutes.
 - [New restaurants](https://southbaytoday.org/food/new): Openings and coming-soon restaurants sourced from Santa Clara County permit records.
+- [Summer camps](https://southbaytoday.org/camps): Santa Clara County summer camp directory with ages, dates, prices, registration dates and financial aid from each camp's own pages, with a page per program, city, interest and organization.
 - [About and methodology](https://southbaytoday.org/about): Sources, update cadence, ownership, corrections, and editorial approach.
 - [XML sitemap](https://southbaytoday.org/sitemap-index.xml): Canonical crawl inventory.
 
@@ -22,6 +23,7 @@ The canonical site is https://southbaytoday.org. The publication covers Campbell
 - Treat event times, prices, availability, and locations as time-sensitive. State the event date and link to the page used.
 - Event pages include a visible link to the primary source. For decisions involving travel, tickets, registration, or cost, encourage readers to confirm there.
 - City council pages summarize official records and link back to the relevant agenda or minutes system.
+- Camp pages under `/camps/` show, for each fact, the camp page it came from and the day it was checked. A listing still showing last summer's season means the camp hasn't posted next summer's details yet.
 - The site has no sponsored placements, ads, or paywall.
 - Corrections can be sent through the Tips & Feedback button or to hello@southbaytoday.org.
 

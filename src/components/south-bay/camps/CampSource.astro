@@ -1,0 +1,27 @@
+---
+// "From ymcasv.org (PDF) · checked Nov 23, 2026": where one fact on a camp
+// page came from. Renders nothing when the record names no source.
+import { fullDate } from "../../../lib/south-bay/campFormat";
+
+interface Props {
+  source: { url: string; checked: string } | null;
+}
+
+const { source } = Astro.props;
+let host = "";
+if (source) {
+  try {
+    host = new URL(source.url).hostname.replace(/^www\./, "");
+  } catch {
+    host = "the camp's page";
+  }
+}
+const pdf = source ? /\.pdf($|[?#])/i.test(source.url) : false;
+---
+
+{source && (
+  <span class="camps-source">
+    From <a href={source.url} target="_blank" rel="noopener nofollow">{host}{pdf ? " (PDF)" : ""}</a>
+    {" · "}checked {fullDate(source.checked)}
+  </span>
+)}

@@ -1,795 +1,557 @@
-import { useState, useMemo } from "react";
-import {
-  CAMPS,
-  SUMMER_WEEKS,
-  SHORT_WEEK_NUM,
-  DATA_VERIFIED_AT,
-  type Camp,
-  type CampType,
-  type CampWeek,
-} from "../../../data/south-bay/camps-data";
+import { useEffect, useMemo, useRef, useState } from "react";
+import indexJson from "../../../data/south-bay/camp-finder-index.json";
 import PageHero from "../PageHero";
 import { useTodayPT } from "../../../lib/south-bay/useTodayPT";
+import {
+  CITY_PAGE_MIN,
+  OPERATOR_PAGE_MIN,
+  TOPIC_LABELS,
+  TOPIC_PAGE_MIN,
+  formatAges,
+  formatPriceRange,
+  formatRegistration,
+  formatSessions,
+  fullDate,
+  runsDuringWeek,
+  type PricePer,
+} from "../../../lib/south-bay/campFormat";
 
 // ---------------------------------------------------------------------------
-// Constants
+// The /camps directory. Its list is camp-finder-index.json, the slim side of
+// the sourced camp records (scripts/sync-camp-finder.mjs); each card links to
+// the program's own static page, where every fact shows its source.
 // ---------------------------------------------------------------------------
 
-// Where the summer stands on a Pacific date (the camps run here, and
-// cityCamps.ts reads the same boundary in Pacific time).
-interface Season {
-  todayIso: string;
-  /** Weeks that haven't ended, so the week picker and planner never offer a
-   *  week you can't attend. Once every week is past (summer's over) this falls
-   *  back to the full set so the planner never renders an empty week list. */
-  weeks: ReadonlyArray<(typeof SUMMER_WEEKS)[number]>;
-  /** At least one summer week is still ahead. Once summer's fully over we stop
-   *  hiding finished camps so the tab keeps showing the full lineup off-season
-   *  (mirrors the `weeks` fallback). */
-  active: boolean;
+interface Row {
+  id: string;
+  name: string;
+  op: number;
+  city: string;
+  season: number;
+  topics: string[];
+  ages?: [number, number];
+  grades?: boolean;
+  sessions?: Array<[string, string]>;
+  price?: [number, number, PricePer];
+  aid?: boolean;
+  overnight?: boolean;
+  opens?: string;
+  deadline?: string;
 }
 
-function seasonOn(todayIso: string): Season {
-  const upcoming = SUMMER_WEEKS.filter((w) => w.endDate >= todayIso);
+interface CampIndex {
+  checkedThrough: string | null;
+  latestSeason: number;
+  weeks: Array<{ start: string; end: string; label: string }>;
+  operators: Array<{ slug: string; name: string }>;
+  cities: Array<{ slug: string; name: string }>;
+  stillToCheck: Array<{ name: string; city: string; url: string }>;
+  programs: Row[];
+}
+
+const INDEX = indexJson as unknown as CampIndex;
+const LATEST = INDEX.latestSeason;
+const CITY_NAME = new Map(INDEX.cities.map((c) => [c.slug, c.name]));
+const PAGE = 24;
+
+const isPosted = (row: Row) => row.season === LATEST && !!row.sessions?.length && !!row.price;
+
+// Next summer's posted programs first, then next summer's not-yet-posted, then
+// last summer's. Inside each tier: soonest first (the default, which also
+// keeps one camp's many sites from bunching up), lowest price, or A to Z.
+const tier = (row: Row) => (row.season === LATEST ? (isPosted(row) ? 0 : 1) : 2);
+const byName = (a: Row, b: Row) => a.name.localeCompare(b.name) || a.city.localeCompare(b.city);
+const firstStart = (row: Row) => row.sessions?.[0]?.[0] ?? "9999";
+const SORTS = {
+  soonest: { label: "Soonest first", compare: (a: Row, b: Row) => tier(a) - tier(b) || firstStart(a).localeCompare(firstStart(b)) || byName(a, b) },
+  price: {
+    label: "Lowest price",
+    compare: (a: Row, b: Row) =>
+      tier(a) - tier(b) || (a.price?.[0] ?? Infinity) - (b.price?.[0] ?? Infinity) || byName(a, b),
+  },
+  name: { label: "A to Z", compare: (a: Row, b: Row) => tier(a) - tier(b) || byName(a, b) },
+} as const;
+type SortKey = keyof typeof SORTS;
+const SORTED: Record<SortKey, Row[]> = {
+  soonest: [...INDEX.programs].sort(SORTS.soonest.compare),
+  price: [...INDEX.programs].sort(SORTS.price.compare),
+  name: [...INDEX.programs].sort(SORTS.name.compare),
+};
+
+function countBy<T extends string>(keys: (row: Row) => T[]): Map<T, number> {
+  const counts = new Map<T, number>();
+  for (const row of INDEX.programs) for (const k of keys(row)) counts.set(k, (counts.get(k) ?? 0) + 1);
+  return counts;
+}
+const CITY_COUNTS = countBy((r) => [r.city]);
+const TOPIC_COUNTS = countBy((r) => r.topics);
+const OPERATOR_COUNTS = countBy((r) => [INDEX.operators[r.op].slug]);
+const TOPICS_PRESENT = Object.keys(TOPIC_LABELS).filter((t) => TOPIC_COUNTS.has(t));
+
+interface Filters {
+  q: string;
+  city: string;
+  topic: string;
+  age: string;
+  week: string;
+  aid: boolean;
+  posted: boolean;
+  overnight: boolean;
+  sort: SortKey;
+}
+
+const EMPTY: Filters = {
+  q: "",
+  city: "",
+  topic: "",
+  age: "",
+  week: "",
+  aid: false,
+  posted: false,
+  overnight: false,
+  sort: "soonest",
+};
+
+function readFilters(search: string): Filters {
+  const sp = new URLSearchParams(search);
+  const known = (value: string | null, ok: (v: string) => boolean) => (value && ok(value) ? value : "");
   return {
-    todayIso,
-    weeks: upcoming.length > 0 ? upcoming : SUMMER_WEEKS,
-    active: upcoming.length > 0,
+    q: sp.get("q") ?? "",
+    city: known(sp.get("city"), (v) => CITY_NAME.has(v)),
+    topic: known(sp.get("topic"), (v) => TOPIC_COUNTS.has(v)),
+    age: known(sp.get("age"), (v) => /^\d{1,2}$/.test(v)),
+    week: known(sp.get("week"), (v) => INDEX.weeks.some((w) => w.start === v)),
+    aid: sp.get("aid") === "1",
+    posted: sp.get("posted") === "1",
+    overnight: sp.get("overnight") === "1",
+    sort: (known(sp.get("sort"), (v) => v in SORTS) || "soonest") as SortKey,
   };
 }
 
-const TYPE_FILTERS: { id: CampType | "all"; label: string }[] = [
-  { id: "all",       label: "All"       },
-  { id: "general",   label: "General"   },
-  { id: "sports",    label: "Sports"    },
-  { id: "arts",      label: "Arts"      },
-  { id: "stem",      label: "STEM"      },
-  { id: "nature",    label: "Nature"    },
-  { id: "specialty", label: "Specialty" },
-  { id: "academic",  label: "Academic"  },
-];
-
-const ALL_ORG_TYPES: { id: string; label: string }[] = [
-  { id: "all",        label: "All"              },
-  { id: "city",       label: "City Programs"    },
-  { id: "nonprofit",  label: "Nonprofits"       },
-  { id: "private",    label: "Private"          },
-  { id: "university", label: "College Programs" },
-];
-
-// Singular operator label for a card's kicker line ("SAN JOSE · CITY-RUN").
-const ORG_CARD_LABEL: Record<Camp["orgType"], string> = {
-  city:       "City-run",
-  nonprofit:  "Nonprofit",
-  private:    "Private",
-  university: "College",
-};
-
-const PRICE_TIERS: { id: string; label: string }[] = [
-  { id: "all",     label: "All"             },
-  { id: "budget",  label: "Budget (<$250)"  },
-  { id: "mid",     label: "Mid ($250–$400)" },
-  { id: "premium", label: "Premium ($400+)" },
-];
-
-const ALL_CITIES = Array.from(new Set(CAMPS.map((c) => c.cityId))).sort();
-
-function getCityLabel(cityId: string): string {
-  if (cityId === "multi") return "Multi-city";
-  return CAMPS.find((c) => c.cityId === cityId)?.cityName ?? cityId;
+function writeFilters(f: Filters): string {
+  const sp = new URLSearchParams();
+  if (f.q.trim()) sp.set("q", f.q.trim());
+  if (f.city) sp.set("city", f.city);
+  if (f.topic) sp.set("topic", f.topic);
+  if (f.age) sp.set("age", f.age);
+  if (f.week) sp.set("week", f.week);
+  if (f.aid) sp.set("aid", "1");
+  if (f.posted) sp.set("posted", "1");
+  if (f.overnight) sp.set("overnight", "1");
+  if (f.sort !== "soonest") sp.set("sort", f.sort);
+  const s = sp.toString();
+  return s ? `?${s}` : "";
 }
 
-// Camp has a given week number
-function campHasWeek(camp: Camp, weekNum: number): boolean {
-  return camp.weeks.some((w) => w.weekNum === weekNum);
+// Everything but the week, so the week strip can count each week under the
+// reader's other choices.
+function matchesExceptWeek(row: Row, f: Filters, words: string[]): boolean {
+  if (f.city && row.city !== f.city) return false;
+  if (f.topic && !row.topics.includes(f.topic)) return false;
+  if (f.aid && !row.aid) return false;
+  if (f.posted && !(row.season === LATEST && row.sessions?.length)) return false;
+  if (f.overnight && !row.overnight) return false;
+  if (f.age) {
+    const age = Number(f.age);
+    if (!row.ages || row.grades || age < row.ages[0] || age > row.ages[1]) return false;
+  }
+  if (words.length) {
+    const haystack = [
+      row.name,
+      INDEX.operators[row.op].name,
+      CITY_NAME.get(row.city) ?? row.city,
+      ...row.topics.map((t) => TOPIC_LABELS[t] ?? t),
+    ]
+      .join(" ")
+      .normalize("NFKD")
+      .replace(/[̀-ͯ]/g, "")
+      .toLowerCase();
+    if (!words.every((w) => haystack.includes(w))) return false;
+  }
+  return true;
 }
 
-// Camp still has at least one session a kid could attend. Camps with no dated
-// weeks (year-round / undated programs) are always considered current.
-function campHasUpcomingWeek(camp: Camp, todayIso: string): boolean {
-  if (camp.weeks.length === 0) return true;
-  return camp.weeks.some((w) => w.endDate >= todayIso);
-}
-
-// Sessions a parent can still register for. During an active season the week
-// picker and planner already hide finished weeks, so the card footer should
-// match — count only upcoming weeks, not the all-time total. Once the season is
-// over (no upcoming weeks) fall back to the full count so the card isn't blank.
-function sessionCount(camp: Camp, todayIso: string): number {
-  const upcoming = camp.weeks.filter((w) => w.endDate >= todayIso).length;
-  return upcoming > 0 ? upcoming : camp.weeks.length;
-}
-
-// Get camp week data for a specific week number
-function getCampWeek(camp: Camp, weekNum: number): CampWeek | undefined {
-  return camp.weeks.find((w) => w.weekNum === weekNum);
-}
-
-// Price range label for a camp
-function priceRange(camp: Camp): string {
-  const prices = camp.weeks
-    .map((w) => w.residentPrice)
-    .filter((p): p is number => p !== null);
-  if (!prices.length) return "Contact for pricing";
-  const min = Math.min(...prices);
-  const max = Math.max(...prices);
-  return min === max ? `$${min}/wk` : `$${min}–$${max}/wk`;
-}
-
-// Weeks label: "Wks 1–8" or similar
-function weeksLabel(camp: Camp): string {
-  const nums = camp.weeks.map((w) => w.weekNum).sort((a, b) => a - b);
-  if (!nums.length) return "";
-  if (nums.length === 1) return `Wk ${nums[0]}`;
-  return `Wks ${nums[0]}–${nums[nums.length - 1]}`;
-}
-
-// Price tier helper
-function priceTier(camp: Camp): "budget" | "mid" | "premium" {
-  const prices = camp.weeks.map((w) => w.residentPrice).filter((p): p is number => p !== null);
-  if (!prices.length) return "mid";
-  const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
-  if (avg < 250) return "budget";
-  if (avg <= 400) return "mid";
-  return "premium";
+function searchWords(q: string): string[] {
+  return q
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean);
 }
 
 // ---------------------------------------------------------------------------
-// Camp card (Browse mode)
+// Card
 // ---------------------------------------------------------------------------
 
-function CampCard({ camp, season, featured = false }: { camp: Camp; season: Season; featured?: boolean }) {
-  const usefulLocations = camp.locations.filter(
-    (loc) => !loc.toLowerCase().startsWith("various")
-  );
-  const typeLabel = TYPE_FILTERS.find((t) => t.id === camp.type)?.label ?? camp.type;
-  const price = priceRange(camp);
-  // NBSP before each "·" keeps a wrapped line from starting with a separator.
-  const locationLabel = usefulLocations.slice(0, 2).join("\u00a0· ");
-  const sessions = sessionCount(camp, season.todayIso);
+function CampCard({ row, todayIso }: { row: Row; todayIso: string }) {
+  const operator = INDEX.operators[row.op];
+  const latest = row.season === LATEST;
+  const price = formatPriceRange(row.price);
+  const registration = latest ? formatRegistration(row.opens, row.deadline, todayIso) : null;
 
   return (
-    <article className={`camps-card${featured ? " camps-card--featured" : ""}`}>
+    <article className="camps-card">
       <header className="camps-card-head">
         <div className="camps-card-kicker">
-          {camp.cityName}
-          <span className="camps-card-sep">{"\u00a0· "}</span>
-          {ORG_CARD_LABEL[camp.orgType] ?? camp.orgType}
+          {CITY_NAME.get(row.city)}
+          <span className="camps-card-sep">{" · "}</span>
+          {operator.name}
         </div>
-        <span className="camps-type" data-type={camp.type}>{typeLabel}</span>
+        {!latest && <span className="camps-season">{row.season} details</span>}
       </header>
 
-      <h3 className="camps-card-title">{camp.name}</h3>
-      <p className="camps-card-copy">{camp.description}</p>
+      <h3 className="camps-card-title">
+        <a className="camps-card-link" href={`/camps/${row.id}`}>{row.name}</a>
+      </h3>
 
       <dl className="camps-facts">
         <div>
           <dt>Ages</dt>
-          <dd>{camp.ageMin}–{camp.ageMax}</dd>
+          <dd>{row.ages ? formatAges(row.ages, row.grades).replace(/^Ages? /, "") : "Not stated"}</dd>
         </div>
         <div>
-          <dt>Weeks</dt>
-          <dd>{weeksLabel(camp)}</dd>
+          <dt>{latest ? "Dates" : `${row.season} dates`}</dt>
+          <dd>{row.sessions?.length ? formatSessions(row.sessions, row.season) : "Not posted yet"}</dd>
         </div>
         <div>
-          <dt>{season.active ? "Price" : "2026 price"}</dt>
-          <dd className={price.startsWith("$") ? "camps-fact-price" : undefined}>{price}</dd>
+          <dt>{latest ? "Price" : `${row.season} price`}</dt>
+          <dd className={price ? "camps-fact-price" : undefined}>{price ?? "Not posted yet"}</dd>
         </div>
         <div>
-          <dt>Hours</dt>
-          <dd>{camp.hours}</dd>
+          <dt>Financial aid</dt>
+          <dd>{row.aid ? "Yes" : "Not stated"}</dd>
         </div>
       </dl>
 
-      {locationLabel && (
-        <p className="camps-card-where">
-          <span className="camps-card-label">Where</span>
-          {locationLabel}
-        </p>
-      )}
-
-      {camp.tags.length > 0 && (
-        <ul className="camps-card-tags" aria-label="Highlights">
-          {camp.tags.slice(0, 4).map((tag) => (
-            <li key={tag}>{tag}</li>
+      {(row.topics.length > 0 || row.overnight) && (
+        <ul className="camps-card-tags" aria-label="Interests">
+          {row.topics.map((t) => (
+            <li key={t} className="camps-type" data-type={t}>{TOPIC_LABELS[t] ?? t}</li>
           ))}
+          {row.overnight && <li className="camps-type" data-type="overnight">Overnight</li>}
         </ul>
       )}
 
-      {camp.priceNote && <p className="camps-card-note">{camp.priceNote}</p>}
-
-      <footer className="camps-card-footer">
-        {!camp.priceNote && (
-          <span className="camps-card-sessions">
-            {sessions} session{sessions !== 1 ? "s" : ""}{" "}
-            {season.active ? "listed" : "in 2026"}
-          </span>
-        )}
-        <a
-          className="sb-btn camps-card-cta"
-          href={camp.registerUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {/* Off-season the last session is already past, so "Register" points at
-              a page with nothing to register for. The operator's page is still
-              the right destination — it's where next year's dates go up first —
-              but the label has to say so. */}
-          {season.active ? "Register" : "Program page"}
-          <span aria-hidden="true">↗</span>
-        </a>
-      </footer>
+      {registration && <p className="camps-card-note">{registration}</p>}
     </article>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Browse mode
+// Directory
 // ---------------------------------------------------------------------------
 
-function BrowseMode({ season }: { season: Season }) {
-  const [cityFilter, setCityFilter] = useState<string>("all");
-  const [typeFilter, setTypeFilter] = useState<CampType | "all">("all");
-  const [orgTypeFilter, setOrgTypeFilter] = useState<string>("all");
-  const [priceTierFilter, setPriceTierFilter] = useState<string>("all");
-  const [ageFilter, setAgeFilter] = useState<string>("");
-  const [weekFilter, setWeekFilter] = useState<number | "all">("all");
-  const [query, setQuery] = useState<string>("");
-  const [showAll, setShowAll] = useState(false);
+function Directory({ todayIso }: { todayIso: string }) {
+  const [filters, setFilters] = useState<Filters>(EMPTY);
+  const [shown, setShown] = useState(PAGE);
+  const fromUrl = useRef(false);
 
-  const featured = useMemo(
-    () =>
-      CAMPS.filter(
-        (camp) => camp.featured && (!season.active || campHasUpcomingWeek(camp, season.todayIso)),
-      ).slice(0, 3),
-    [season],
-  );
-  const featuredIds = useMemo(() => new Set(featured.map((camp) => camp.id)), [featured]);
+  // Deep links (/camps?city=sunnyvale&topic=stem) apply after mount, so the
+  // first render matches the build's HTML.
+  useEffect(() => {
+    const next = readFilters(window.location.search);
+    if (writeFilters(next)) {
+      fromUrl.current = true;
+      setFilters(next);
+    }
+  }, []);
 
-  const hasFilters =
-    cityFilter !== "all" ||
-    typeFilter !== "all" ||
-    orgTypeFilter !== "all" ||
-    priceTierFilter !== "all" ||
-    ageFilter !== "" ||
-    weekFilter !== "all" ||
-    query.trim() !== "";
+  // Keep the address bar in step, so a filtered list can be shared.
+  useEffect(() => {
+    if (fromUrl.current) {
+      fromUrl.current = false;
+      return;
+    }
+    const query = writeFilters(filters);
+    if (query !== window.location.search) {
+      window.history.replaceState(window.history.state, "", `${window.location.pathname}${query}`);
+    }
+  }, [filters]);
 
-  const clearFilters = () => {
-    setCityFilter("all");
-    setTypeFilter("all");
-    setOrgTypeFilter("all");
-    setPriceTierFilter("all");
-    setAgeFilter("");
-    setWeekFilter("all");
-    setQuery("");
-    setShowAll(false);
+  const set = <K extends keyof Filters>(key: K, value: Filters[K]) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
+    setShown(PAGE);
   };
+  const hasFilters = writeFilters({ ...filters, sort: "soonest" }) !== "";
+  const words = useMemo(() => searchWords(filters.q), [filters.q]);
 
-  const filtered = useMemo(() => {
-    const age = ageFilter === "" ? null : parseInt(ageFilter);
-    const q = query.trim().toLowerCase();
-    const results = CAMPS.filter((camp) => {
-      if (!hasFilters && featuredIds.has(camp.id)) return false;
-      // Hide camps whose every session has already ended (until summer's over,
-      // when we fall back to showing the full lineup).
-      if (season.active && !campHasUpcomingWeek(camp, season.todayIso)) return false;
-      if (cityFilter !== "all" && camp.cityId !== cityFilter) return false;
-      if (typeFilter !== "all" && camp.type !== typeFilter) return false;
-      if (orgTypeFilter !== "all" && camp.orgType !== orgTypeFilter) return false;
-      if (priceTierFilter !== "all" && priceTier(camp) !== priceTierFilter) return false;
-      if (age !== null && Number.isFinite(age) && (camp.ageMin > age || camp.ageMax < age)) return false;
-      if (weekFilter !== "all" && !campHasWeek(camp, weekFilter)) return false;
-      if (q) {
-        const haystack = [
-          camp.name,
-          camp.cityName,
-          camp.description,
-          camp.orgType,
-          camp.type,
-          ...camp.tags,
-          ...camp.locations,
-        ].join(" ").toLowerCase();
-        if (!haystack.includes(q)) return false;
-      }
-      return true;
-    });
-    return [...results].sort((a, b) => {
-      if (a.featured && !b.featured) return -1;
-      if (!a.featured && b.featured) return 1;
-      return a.cityName.localeCompare(b.cityName) || a.name.localeCompare(b.name);
-    });
-  }, [cityFilter, typeFilter, orgTypeFilter, priceTierFilter, ageFilter, weekFilter, query, hasFilters, featuredIds, season]);
-  const visible = hasFilters || showAll ? filtered : filtered.slice(0, 10);
-  const hiddenCount = filtered.length - visible.length;
-  // Total of camps still browsable (excludes ones whose every session ended).
-  const currentCampsCount = useMemo(
-    () => CAMPS.filter((camp) => !season.active || campHasUpcomingWeek(camp, season.todayIso)).length,
-    [season],
+  const base = useMemo(
+    () => SORTED[filters.sort].filter((row) => matchesExceptWeek(row, filters, words)),
+    [filters, words],
   );
-  const shownTotal = hasFilters ? filtered.length : currentCampsCount;
+  const week = INDEX.weeks.find((w) => w.start === filters.week);
+  const results = useMemo(
+    () => (week ? base.filter((row) => row.season === LATEST && runsDuringWeek(row.sessions, week.start, week.end)) : base),
+    [base, week],
+  );
+  const weekCounts = useMemo(
+    () =>
+      INDEX.weeks.map((w) => base.filter((row) => row.season === LATEST && runsDuringWeek(row.sessions, w.start, w.end)).length),
+    [base],
+  );
+  const visible = results.slice(0, shown);
 
   return (
-    <div className="camps-directory">
-      {featured.length > 0 && (
-        <section className="camps-featured" aria-labelledby="camps-featured-title">
-          <div className="camps-section-head">
-            <div>
-              <div className="sb-eyebrow camps-kicker">Start here</div>
-              <h2 id="camps-featured-title">Strong first picks</h2>
-            </div>
-            <p>
-              {season.active
-                ? "Broad programs with clear dates, reliable registration links, and enough weeks to anchor a summer plan."
-                : "Broad programs with clear dates and reliable registration links. Shortlist these first when next summer's schedules go up."}
-            </p>
+    <section className="camps-browse" aria-labelledby="camps-browse-title">
+      <div className="camps-section-head">
+        <div>
+          <div className="sb-eyebrow camps-kicker">Directory</div>
+          <h2 id="camps-browse-title">Find a camp</h2>
+        </div>
+        <p>Pick an age and a week to see what runs then. Each camp's page shows where every detail came from.</p>
+      </div>
+
+      <div className="camps-toolbar">
+        <label className="camps-field camps-field--search">
+          <span>Search</span>
+          <input
+            type="search"
+            placeholder="Camp, activity or city"
+            value={filters.q}
+            onChange={(e) => set("q", e.target.value)}
+          />
+        </label>
+
+        <label className="camps-field">
+          <span>Age</span>
+          <input
+            type="number"
+            inputMode="numeric"
+            min={3}
+            max={18}
+            placeholder="Any"
+            value={filters.age}
+            onChange={(e) => set("age", e.target.value.replace(/\D/g, "").slice(0, 2))}
+          />
+        </label>
+
+        <label className="camps-field">
+          <span>City</span>
+          <select value={filters.city} onChange={(e) => set("city", e.target.value)}>
+            <option value="">All cities</option>
+            {INDEX.cities.map((c) => (
+              <option key={c.slug} value={c.slug}>{c.name}</option>
+            ))}
+          </select>
+        </label>
+
+        <label className="camps-field">
+          <span>Interest</span>
+          <select value={filters.topic} onChange={(e) => set("topic", e.target.value)}>
+            <option value="">Any interest</option>
+            {TOPICS_PRESENT.map((t) => (
+              <option key={t} value={t}>{TOPIC_LABELS[t]}</option>
+            ))}
+          </select>
+        </label>
+
+        <label className="camps-field">
+          <span>Sort</span>
+          <select value={filters.sort} onChange={(e) => set("sort", e.target.value as SortKey)}>
+            {(Object.keys(SORTS) as SortKey[]).map((k) => (
+              <option key={k} value={k}>{SORTS[k].label}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="camps-toggles" role="group" aria-label="Only show">
+        <button type="button" className="sb-chip camps-toggle" aria-pressed={filters.aid} onClick={() => set("aid", !filters.aid)}>
+          Financial aid
+        </button>
+        <button type="button" className="sb-chip camps-toggle" aria-pressed={filters.posted} onClick={() => set("posted", !filters.posted)}>
+          {LATEST} dates posted
+        </button>
+        <button
+          type="button"
+          className="sb-chip camps-toggle"
+          aria-pressed={filters.overnight}
+          onClick={() => set("overnight", !filters.overnight)}
+        >
+          Overnight
+        </button>
+      </div>
+
+      {INDEX.weeks.length > 0 && (
+        <div className="camps-weeks">
+          <div className="camps-weeks-head">
+            <span className="camps-weeks-label">Week of summer {LATEST}</span>
+            {week && (
+              <button type="button" className="camps-weeks-clear" onClick={() => set("week", "")}>
+                Any week
+              </button>
+            )}
           </div>
-          <div className="camps-feature-grid">
-            {featured.map((camp) => (
-              <CampCard key={camp.id} camp={camp} season={season} featured />
+          <div className="camps-weeks-strip" role="group" aria-label={`Weeks of summer ${LATEST}`}>
+            {INDEX.weeks.map((w, i) => (
+              <button
+                key={w.start}
+                type="button"
+                className="camps-weekchip"
+                aria-pressed={filters.week === w.start}
+                aria-label={`${w.label}: ${weekCounts[i]} program${weekCounts[i] === 1 ? "" : "s"}`}
+                onClick={() => set("week", filters.week === w.start ? "" : w.start)}
+              >
+                <span className="camps-weekchip-dates">{w.label}</span>
+                <span className="camps-weekchip-count">{weekCounts[i]}</span>
+              </button>
             ))}
           </div>
-        </section>
+        </div>
       )}
 
-      <section className="camps-browse" aria-labelledby="camps-browse-title">
-        <div className="camps-section-head">
-          <div>
-            <div className="sb-eyebrow camps-kicker">Directory</div>
-            <h2 id="camps-browse-title">Browse the full camp list</h2>
-          </div>
-          <p>Use one or two filters when you need them. Otherwise the directory stays out of your way.</p>
-        </div>
-
-        <div className="camps-toolbar">
-          <label className="camps-field camps-field--search">
-            <span>Search</span>
-            <input
-              type="search"
-              placeholder="Camp name, city, tag"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </label>
-
-          <label className="camps-field">
-            <span>City</span>
-            <select value={cityFilter} onChange={(e) => setCityFilter(e.target.value)}>
-              <option value="all">All cities</option>
-              {ALL_CITIES.map((cityId) => (
-                <option key={cityId} value={cityId}>{getCityLabel(cityId)}</option>
-              ))}
-            </select>
-          </label>
-
-          {season.active && (
-            <label className="camps-field">
-              <span>Week</span>
-              <select
-                value={weekFilter === "all" ? "all" : String(weekFilter)}
-                onChange={(e) => setWeekFilter(e.target.value === "all" ? "all" : parseInt(e.target.value))}
-              >
-                <option value="all">All weeks</option>
-                {season.weeks.map((sw) => (
-                  <option key={sw.weekNum} value={sw.weekNum}>
-                    Week {sw.weekNum} · {sw.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-
-          <label className="camps-field">
-            <span>Age</span>
-            <input
-              type="number"
-              inputMode="numeric"
-              min={4}
-              max={17}
-              placeholder="Any"
-              value={ageFilter}
-              onChange={(e) => setAgeFilter(e.target.value)}
-            />
-          </label>
-
-          <label className="camps-field">
-            <span>Focus</span>
-            <select
-              value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value as CampType | "all")}
-            >
-              {TYPE_FILTERS.map((f) => (
-                <option key={f.id} value={f.id}>{f.label}</option>
-              ))}
-            </select>
-          </label>
-
-          <label className="camps-field">
-            <span>Operator</span>
-            <select value={orgTypeFilter} onChange={(e) => setOrgTypeFilter(e.target.value)}>
-              {ALL_ORG_TYPES.map((f) => (
-                <option key={f.id} value={f.id}>{f.label}</option>
-              ))}
-            </select>
-          </label>
-
-          <label className="camps-field">
-            <span>Price</span>
-            <select value={priceTierFilter} onChange={(e) => setPriceTierFilter(e.target.value)}>
-              {PRICE_TIERS.map((f) => (
-                <option key={f.id} value={f.id}>{f.label}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-
-        {season.active && season.weeks.some((w) => w.weekNum === SHORT_WEEK_NUM) && (
-          <p className="camps-toolbar-note">
-            * Week {SHORT_WEEK_NUM} is a short week: no camp Fri Jul 3 (July 4th observed).
-          </p>
-        )}
-
-        <div className="camps-results-head">
-          <span aria-live="polite">
-            Showing <strong>{visible.length}</strong> of <strong>{shownTotal}</strong> program{shownTotal !== 1 ? "s" : ""}
-          </span>
-          {hasFilters && (
-            <button type="button" className="sb-btn sb-btn--quiet" onClick={clearFilters}>
-              Clear filters
-            </button>
-          )}
-        </div>
-
-        {filtered.length === 0 ? (
-          <div className="sb-empty camps-empty">
-            <h3 className="sb-empty-title">No camps match those filters</h3>
-            <p className="sb-empty-sub">Try clearing one field or searching by city instead.</p>
-          </div>
-        ) : (
-          <div className="camps-grid">
-            {visible.map((camp) => (
-              <CampCard key={camp.id} camp={camp} season={season} />
-            ))}
-          </div>
-        )}
-        {!hasFilters && hiddenCount > 0 && (
-          <button type="button" className="sb-btn camps-show-more" onClick={() => setShowAll(true)}>
-            Show all {currentCampsCount} programs
+      <div className="camps-results-head">
+        <span aria-live="polite">
+          {results.length === 0
+            ? "No programs match"
+            : visible.length < results.length
+              ? <>Showing <strong>{visible.length}</strong> of <strong>{results.length}</strong> programs</>
+              : <><strong>{results.length}</strong> program{results.length === 1 ? "" : "s"}</>}
+          {week ? ` running ${week.label}` : ""}
+        </span>
+        {hasFilters && (
+          <button
+            type="button"
+            className="sb-btn sb-btn--quiet"
+            onClick={() => {
+              setFilters({ ...EMPTY, sort: filters.sort });
+              setShown(PAGE);
+            }}
+          >
+            Clear filters
           </button>
         )}
-      </section>
-    </div>
+      </div>
+
+      {results.length === 0 ? (
+        <div className="sb-empty camps-empty">
+          <h3 className="sb-empty-title">No camps match all of those</h3>
+          <p className="sb-empty-sub">Try removing a filter or picking another week.</p>
+        </div>
+      ) : (
+        <div className="camps-grid">
+          {visible.map((row) => (
+            <CampCard key={row.id} row={row} todayIso={todayIso} />
+          ))}
+        </div>
+      )}
+
+      {visible.length < results.length && (
+        <button type="button" className="sb-btn camps-show-more" onClick={() => setShown((n) => n + PAGE)}>
+          Show {Math.min(PAGE, results.length - visible.length)} more
+        </button>
+      )}
+    </section>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Summer Builder mode
+// Browse links, camps still to check, and where the details come from
 // ---------------------------------------------------------------------------
 
-interface BuilderSuggestion {
-  weekNum: number;
-  weekLabel: string;
-  options: Array<{ camp: Camp; week: CampWeek }>;
-}
-
-function SummerBuilderMode({ season }: { season: Season }) {
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [childAges, setChildAges] = useState<string[]>([""]);
-  const [selectedWeeks, setSelectedWeeks] = useState<Set<number>>(new Set());
-
-  const toggleWeek = (weekNum: number) => {
-    setSelectedWeeks((prev) => {
-      const next = new Set(prev);
-      if (next.has(weekNum)) next.delete(weekNum);
-      else next.add(weekNum);
-      return next;
-    });
-  };
-
-  const addChild = () => setChildAges((prev) => [...prev, ""]);
-  const updateChild = (idx: number, val: string) => {
-    setChildAges((prev) => prev.map((v, i) => (i === idx ? val : v)));
-  };
-  const removeChild = (idx: number) => {
-    setChildAges((prev) => prev.filter((_, i) => i !== idx));
-  };
-
-  const parsedAges = childAges
-    .map((a) => (a !== "" ? parseInt(a) : null))
-    .filter((a): a is number => a !== null && a >= 4 && a <= 17);
-
-  const allAgesValid = parsedAges.length > 0 && parsedAges.length === childAges.filter((a) => a !== "").length;
-
-  const suggestions = useMemo((): BuilderSuggestion[] => {
-    if (parsedAges.length === 0) return [];
-    const sorted = Array.from(selectedWeeks).sort((a, b) => a - b);
-    return sorted.map((weekNum) => {
-      // Camp must work for ALL entered ages
-      const matchingCamps = CAMPS.filter((camp) =>
-        parsedAges.every((age) => age >= camp.ageMin && age <= camp.ageMax) &&
-        campHasWeek(camp, weekNum)
-      );
-      const options = matchingCamps
-        .map((camp) => ({ camp, week: getCampWeek(camp, weekNum)! }))
-        .sort((a, b) => {
-          const pa = a.week.residentPrice ?? 9999;
-          const pb = b.week.residentPrice ?? 9999;
-          if (pa !== pb) return pa - pb;
-          return a.camp.cityName.localeCompare(b.camp.cityName);
-        })
-        .slice(0, 3);
-      return { weekNum, weekLabel: SUMMER_WEEKS.find((sw) => sw.weekNum === weekNum)?.label ?? `Week ${weekNum}`, options };
-    });
-  }, [parsedAges.join(","), selectedWeeks]);
-
-  const suggestedPlan = useMemo(() => {
-    return suggestions
-      .filter((s) => s.options.length > 0)
-      .map((s) => ({ ...s.options[0], weekNum: s.weekNum, weekLabel: s.weekLabel }));
-  }, [suggestions]);
-
-  const totalCost = useMemo(() => {
-    return suggestedPlan.reduce((sum, item) => {
-      return sum + (item.week.residentPrice ?? 0);
-    }, 0);
-  }, [suggestedPlan]);
-
-  // Mix-it-up suggestion: if 3+ weeks all same type, suggest mixing
-  const mixItUpSuggestion = useMemo(() => {
-    if (suggestedPlan.length < 3) return null;
-    const types = suggestedPlan.map((item) => item.camp.type);
-    const firstType = types[0];
-    if (types.every((t) => t === firstType)) {
-      const otherTypes: CampType[] = ["general", "sports", "arts", "stem", "nature", "specialty", "academic"];
-      const alternatives = otherTypes.filter((t) => t !== firstType);
-      const suggestion = alternatives[0];
-      return { dominantType: firstType, suggestedType: suggestion };
-    }
-    return null;
-  }, [suggestedPlan]);
-
-  const handleReset = () => {
-    setStep(1);
-    setChildAges([""]);
-    setSelectedWeeks(new Set());
-  };
-
-  // Step 1: Age(s)
-  if (step === 1) {
-    return (
-      <div className="camps-builder-start">
-        <div className="camps-builder-emoji" aria-hidden="true">🏕️</div>
-        <h2 className="camps-builder-title">Build your child's summer</h2>
-        <p className="camps-builder-lede">
-          Tell us your children's ages and which weeks you need coverage, and we'll put together a suggested camp plan with estimated costs.
-        </p>
-
-        <fieldset className="camps-builder-ages">
-          <legend className="camps-builder-label">Children's ages</legend>
-          <div className="camps-builder-age-list">
-            {childAges.map((age, idx) => (
-              <div key={idx} className="camps-builder-age-row">
-                <input
-                  className="camps-builder-age-input"
-                  type="number"
-                  inputMode="numeric"
-                  min={4}
-                  max={17}
-                  placeholder="Age (4–17)"
-                  aria-label={`Child ${idx + 1} age`}
-                  value={age}
-                  onChange={(e) => updateChild(idx, e.target.value)}
-                />
-                {childAges.length > 1 && (
-                  <button
-                    type="button"
-                    className="camps-builder-remove"
-                    onClick={() => removeChild(idx)}
-                    aria-label={`Remove child ${idx + 1}`}
-                  >
-                    ✕
-                  </button>
-                )}
-              </div>
-            ))}
-            <button type="button" className="camps-builder-add" onClick={addChild}>
-              + Add another child
-            </button>
-          </div>
-          {parsedAges.length > 1 && (
-            <p className="camps-builder-hint">
-              Will show camps that work for all {parsedAges.length} ages simultaneously.
-            </p>
-          )}
-        </fieldset>
-
-        <button
-          type="button"
-          className="sb-btn sb-btn--primary camps-builder-cta"
-          onClick={() => allAgesValid && setStep(2)}
-          disabled={!allAgesValid}
-        >
-          Next: Pick your weeks →
-        </button>
-      </div>
-    );
-  }
-
-  // Step 2: Week selection
-  if (step === 2) {
-    const ageLabel = parsedAges.length === 1
-      ? `Age ${parsedAges[0]}`
-      : `Ages ${parsedAges.join(", ")}`;
-    const allWeeksSelected = season.weeks.every((sw) => selectedWeeks.has(sw.weekNum));
-
-    return (
-      <div>
-        <div className="camps-builder-bar">
-          <button type="button" className="camps-builder-back" onClick={() => setStep(1)}>
-            ← Back
-          </button>
-          <span className="camps-builder-agetag">{ageLabel}</span>
-        </div>
-        <h2 className="camps-builder-title">Which weeks need coverage?</h2>
-        <p className="camps-builder-lede">
-          Select the weeks you need a camp for.
-          {season.active && season.weeks.some((w) => w.weekNum === SHORT_WEEK_NUM) &&
-            ` Week ${SHORT_WEEK_NUM} is a short week (Fri Jul 3 is the observed July 4th holiday).`}
-        </p>
-        <button
-          type="button"
-          className={`camps-builder-selectall${allWeeksSelected ? " is-active" : ""}`}
-          onClick={() => {
-            const allNums = season.weeks.map(sw => sw.weekNum);
-            const allSelected = allNums.every(n => selectedWeeks.has(n));
-            setSelectedWeeks(allSelected ? new Set() : new Set(allNums));
-          }}
-        >
-          {allWeeksSelected ? "Clear all" : `Select all ${season.weeks.length} weeks`}
-        </button>
-
-        <div className="camps-week-grid">
-          {season.weeks.map((sw) => {
-            const selected = selectedWeeks.has(sw.weekNum);
-            return (
-              <button
-                type="button"
-                key={sw.weekNum}
-                className={`camps-week${selected ? " is-selected" : ""}`}
-                aria-pressed={selected}
-                onClick={() => toggleWeek(sw.weekNum)}
-              >
-                <span className="camps-week-num">Week {sw.weekNum}</span>
-                <span className="camps-week-dates">{sw.label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        <button
-          type="button"
-          className="sb-btn sb-btn--primary camps-builder-cta"
-          onClick={() => selectedWeeks.size > 0 && setStep(3)}
-          disabled={selectedWeeks.size === 0}
-        >
-          See my plan ({selectedWeeks.size} week{selectedWeeks.size !== 1 ? "s" : ""}) →
-        </button>
-      </div>
-    );
-  }
-
-  // Step 3: Results
-  const weeksWithNoCamps = suggestions.filter((s) => s.options.length === 0);
-  const ageLabel = parsedAges.length === 1
-    ? `Age ${parsedAges[0]}`
-    : `Ages ${parsedAges.join(", ")}`;
-
+function BrowseLinks() {
+  const cities = INDEX.cities.filter((c) => (CITY_COUNTS.get(c.slug) ?? 0) >= CITY_PAGE_MIN);
+  const topics = TOPICS_PRESENT.filter((t) => (TOPIC_COUNTS.get(t) ?? 0) >= TOPIC_PAGE_MIN);
+  const operators = INDEX.operators.filter((o) => (OPERATOR_COUNTS.get(o.slug) ?? 0) >= OPERATOR_PAGE_MIN);
   return (
-    <div>
-      <div className="camps-builder-bar">
-        <button type="button" className="camps-builder-back" onClick={() => setStep(2)}>
-          ← Back
-        </button>
-        <h2 className="camps-builder-title camps-builder-title--inline">Your Summer Plan</h2>
-        <span className="camps-builder-agetag camps-builder-agetag--end">{ageLabel}</span>
+    <section className="camps-browse" aria-labelledby="camps-links-title">
+      <div className="camps-section-head">
+        <div>
+          <div className="sb-eyebrow camps-kicker">Browse</div>
+          <h2 id="camps-links-title">Camps by city, interest and organization</h2>
+        </div>
       </div>
-
-      {/* Suggested plan summary */}
-      {suggestedPlan.length > 0 && (
-        <div className="camps-plan">
-          <div className="camps-plan-label">Suggested plan · Lowest cost</div>
-          <ul className="camps-plan-list">
-            {suggestedPlan.map((item) => (
-              <li key={item.weekNum} className="camps-plan-row">
-                <span className="camps-plan-wk">Wk {item.weekNum}</span>
-                <span className="camps-plan-name">{item.camp.name}</span>
-                <span className="camps-plan-price">
-                  {item.week.residentPrice !== null ? `$${item.week.residentPrice}` : "—"}
-                </span>
+      <div className="camps-links">
+        <nav className="camps-links-group" aria-label="Camps by city">
+          <h3>By city</h3>
+          <ul>
+            {cities.map((c) => (
+              <li key={c.slug}>
+                <a href={`/camps/city/${c.slug}`}>{c.name}</a> <span>{CITY_COUNTS.get(c.slug)}</span>
               </li>
             ))}
           </ul>
-          <div className="camps-plan-total">
-            <span>Estimated total</span>
-            <span>${totalCost}</span>
-          </div>
-          <p className="camps-plan-note">
-            Resident prices shown. Verify all prices at each program's website.
-          </p>
-        </div>
-      )}
-
-      {/* Mix it up suggestion */}
-      {mixItUpSuggestion && (
-        <div className="camps-plan-tip">
-          💡 Your plan is all <strong>{mixItUpSuggestion.dominantType}</strong> camps. Consider mixing in a <strong>{mixItUpSuggestion.suggestedType}</strong> week for variety.
-        </div>
-      )}
-
-      {/* Week-by-week options */}
-      {suggestions.map((suggestion) => (
-        <div key={suggestion.weekNum} className="camps-plan-week">
-          <div className="camps-plan-week-head">
-            <span className="camps-plan-week-badge">Week {suggestion.weekNum}</span>
-            <span className="camps-plan-week-dates">{suggestion.weekLabel}</span>
-            {suggestion.options.length === 0 && (
-              <span className="camps-plan-week-none">No matches found</span>
-            )}
-          </div>
-
-          {suggestion.options.length === 0 ? (
-            <p className="camps-plan-week-empty">
-              No camps found for {ageLabel} in week {suggestion.weekNum}. Try checking individual city websites.
-            </p>
-          ) : (
-            <div className="camps-plan-options">
-              {suggestion.options.map((opt, idx) => {
-                const isTop = idx === 0;
-                return (
-                  <div key={opt.camp.id} className={`camps-option${isTop ? " is-top" : ""}`}>
-                    {isTop && <span className="camps-option-badge">Best pick</span>}
-                    <div className="camps-option-body">
-                      <div className="camps-option-name">{opt.camp.name}</div>
-                      <div className="camps-option-meta">
-                        {opt.camp.cityName}{"\u00a0· "}Ages {opt.camp.ageMin}–{opt.camp.ageMax}{"\u00a0· "}{opt.camp.hours}
-                      </div>
-                    </div>
-                    <div className="camps-option-price">
-                      <strong>
-                        {opt.week.residentPrice !== null ? `$${opt.week.residentPrice}` : "Contact"}
-                      </strong>
-                      <span>resident</span>
-                    </div>
-                    {isTop && (
-                      <a
-                        className="sb-btn camps-option-cta"
-                        href={opt.camp.registerUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Register <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      ))}
-
-      {weeksWithNoCamps.length > 0 && (
-        <div className="camps-plan-warn">
-          Some weeks have no matching camps in our database. Check individual city recreation sites for the latest listings.
-        </div>
-      )}
-
-      <div className="camps-builder-actions">
-        <button type="button" className="sb-btn sb-btn--quiet" onClick={handleReset}>
-          Start over
-        </button>
+        </nav>
+        <nav className="camps-links-group" aria-label="Camps by interest">
+          <h3>By interest</h3>
+          <ul>
+            {topics.map((t) => (
+              <li key={t}>
+                <a href={`/camps/topic/${t}`}>{TOPIC_LABELS[t]}</a> <span>{TOPIC_COUNTS.get(t)}</span>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <nav className="camps-links-group" aria-label="Camps by organization">
+          <h3>By organization</h3>
+          <ul>
+            {operators.map((o) => (
+              <li key={o.slug}>
+                <a href={`/camps/operator/${o.slug}`}>{o.name}</a> <span>{OPERATOR_COUNTS.get(o.slug)}</span>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
-    </div>
+    </section>
+  );
+}
+
+function StillToCheck() {
+  if (!INDEX.stillToCheck.length) return null;
+  return (
+    <section className="camps-browse" aria-labelledby="camps-check-title">
+      <div className="camps-section-head">
+        <div>
+          <div className="sb-eyebrow camps-kicker">Also worth a look</div>
+          <h2 id="camps-check-title">More camps to check</h2>
+        </div>
+        <p>We listed these last summer and haven't gathered their {LATEST} details yet. Their own pages will have the latest.</p>
+      </div>
+      <ul className="camps-check-list">
+        {INDEX.stillToCheck.map((c) => (
+          <li key={c.url + c.name}>
+            <a href={c.url} target="_blank" rel="noopener noreferrer">
+              {c.name}
+              <span aria-hidden="true"> ↗</span>
+            </a>
+            <span className="camps-check-city">{c.city}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// Opens the site's Tips & Feedback panel (ReaderWidget) on a correction; until
+// that island has hydrated, an email does the same job.
+function openFeedback(type: "correction" | "feedback" = "correction") {
+  const w = window as Window & { __sbtFeedbackReady?: boolean };
+  if (w.__sbtFeedbackReady) {
+    window.dispatchEvent(new CustomEvent("sbt:feedback", { detail: { type } }));
+  } else {
+    window.location.href = "mailto:hello@southbaytoday.org?subject=Summer%20camp%20listing";
+  }
+}
+
+function Method() {
+  return (
+    <section className="camps-method" aria-labelledby="camps-method-title">
+      <h2 id="camps-method-title">Where these details come from</h2>
+      <p>
+        Each listing comes from the camp's own website: the ages, dates, prices, registration dates and financial aid it
+        posts, with a link to the page each one came from and the day we checked it. Camps post next summer's details
+        from December through February, so a listing that still shows {LATEST - 1} means the camp hasn't posted {LATEST} yet.
+      </p>
+      <p>
+        Something out of date, or a camp we're missing?{" "}
+        <button type="button" className="camps-method-link" data-feedback="correction" onClick={() => openFeedback("correction")}>
+          Tell us
+        </button>
+        .
+      </p>
+    </section>
   );
 }
 
@@ -800,75 +562,22 @@ function SummerBuilderMode({ season }: { season: Season }) {
 export default function CampsView({ buildDayPt }: { buildDayPt?: string }) {
   // The build's day while hydrating, then the reader's (useTodayPT).
   const todayIso = useTodayPT(buildDayPt);
-  const season = useMemo(() => seasonOn(todayIso), [todayIso]);
-  // The week-by-week planner only means anything while there are weeks left to
-  // cover. Once the last 2026 session ends it would walk a parent through
-  // picking expired weeks, so off-season the tab is the directory alone.
-  const [mode, setMode] = useState<"browse" | "builder">("browse");
-
-  const verifiedDisplay = new Date(DATA_VERIFIED_AT + "T00:00:00").toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
 
   return (
     <div className="camps-view">
       <PageHero
-        eyebrow={season.active ? "South Bay / Summer 2026" : "South Bay / Planning Ahead"}
+        eyebrow={`South Bay / Summer ${LATEST}`}
         title="Summer Camps"
-        description={
-          season.active
-            ? "A calmer guide to city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay. Every listing links back to the operator's registration page."
-            : "Summer 2026 has wrapped. Start next year's plan here: city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay, each linked to the operator's own page, where new dates and registration go up first."
-        }
-        note={`Links verified ${verifiedDisplay}`}
+        description={`Ages, dates, prices and financial aid for summer camps across Santa Clara County, taken from each camp's own pages and linked back to them. We add more as camps post their ${LATEST} details.`}
+        note={INDEX.checkedThrough ? `Checked through ${fullDate(INDEX.checkedThrough)}` : undefined}
         accent="#B45309"
       />
-
-      {season.active && (
-        <div className="camps-mode-switch" role="tablist" aria-label="Camp view">
-          <button
-            type="button"
-            id="camps-tab-browse"
-            role="tab"
-            onClick={() => setMode("browse")}
-            className={mode === "browse" ? "is-active" : ""}
-            aria-selected={mode === "browse"}
-            aria-controls="camps-panel-browse"
-          >
-            Directory
-          </button>
-          <button
-            type="button"
-            id="camps-tab-builder"
-            role="tab"
-            onClick={() => setMode("builder")}
-            className={mode === "builder" ? "is-active" : ""}
-            aria-selected={mode === "builder"}
-            aria-controls="camps-panel-builder"
-          >
-            Plan Weeks
-          </button>
-        </div>
-      )}
-
-      {!season.active || mode === "browse" ? (
-        // Off-season there is no tablist above, so the panel is a plain region —
-        // pointing aria-labelledby at a button that isn't rendered would leave
-        // the directory unlabeled for screen readers.
-        <div
-          id="camps-panel-browse"
-          role={season.active ? "tabpanel" : undefined}
-          aria-labelledby={season.active ? "camps-tab-browse" : undefined}
-        >
-          <BrowseMode season={season} />
-        </div>
-      ) : (
-        <section id="camps-panel-builder" role="tabpanel" aria-labelledby="camps-tab-builder" className="camps-builder-wrap">
-          <SummerBuilderMode season={season} />
-        </section>
-      )}
+      <div className="camps-directory">
+        <Directory todayIso={todayIso} />
+        <BrowseLinks />
+        <StillToCheck />
+        <Method />
+      </div>
     </div>
   );
 }

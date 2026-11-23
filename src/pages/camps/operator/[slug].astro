@@ -1,0 +1,62 @@
+---
+// "YMCA of Silicon Valley summer camps": one organization's sourced programs,
+// grouped by city.
+import CalendarShell from "../../../layouts/CalendarShell.astro";
+import CampRows from "../../../components/south-bay/camps/CampRows.astro";
+import {
+  LATEST_SEASON,
+  OPERATOR_PAGES,
+  ageSpan,
+  cityHref,
+  postedSentence,
+  groupByCity,
+  type Group,
+} from "../../../lib/south-bay/campFinder";
+
+export function getStaticPaths() {
+  return OPERATOR_PAGES.map((operator) => ({ params: { slug: operator.slug }, props: { operator } }));
+}
+
+const { operator } = Astro.props as { operator: Group };
+const groups = groupByCity(operator.programs);
+const ages = ageSpan(operator.programs);
+const cityNames = groups.map((g) => g.name);
+const cityList =
+  cityNames.length <= 2 ? cityNames.join(" and ") : `${cityNames.slice(0, -1).join(", ")} and ${cityNames.at(-1)}`;
+
+const title = `${operator.name} summer camps (${LATEST_SEASON}) — South Bay Today`;
+const description =
+  `${operator.programs.length} ${operator.name} summer camp programs in ${cityList}: ages, dates, prices and ` +
+  `financial aid from its own pages.`;
+---
+
+<CalendarShell title={title} description={description} activeTab="camps">
+  <div class="camps-page">
+    <nav class="camps-crumbs" aria-label="Breadcrumb">
+      <a href="/camps">Summer camps</a>
+      <span aria-hidden="true">/</span>
+      <span>{operator.name}</span>
+    </nav>
+
+    <h1>{operator.name} summer camps</h1>
+    <p class="camps-page-sub">
+      {operator.programs.length} programs in {cityList}{ages ? `, ${ages.toLowerCase()}` : ""}, each taken from
+      {" "}{operator.name}'s own pages.
+      {postedSentence(operator.programs)}
+    </p>
+
+    {groups.length > 1 && (
+      <ul class="camps-jump" aria-label="Cities">
+        {groups.map((g) => <li><a href={`#city-${g.slug}`}>{g.name}</a></li>)}
+      </ul>
+    )}
+
+    {groups.map((g) => (
+      <section class="camps-group" id={`city-${g.slug}`} aria-label={g.name}>
+        <h2><a href={cityHref(g.slug)}>{g.name}</a></h2>
+        <p class="camps-group-meta">{g.programs.length} program{g.programs.length === 1 ? "" : "s"}</p>
+        <CampRows programs={g.programs} />
+      </section>
+    ))}
+  </div>
+</CalendarShell>

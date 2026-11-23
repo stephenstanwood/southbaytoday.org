@@ -1,0 +1,76 @@
+---
+// "Summer camps in <City>": every sourced camp program in one city, grouped by
+// the organization that runs it. The crawlable answer to "summer camps in
+// Sunnyvale"; the /camps directory does the filtering.
+import CalendarShell from "../../../layouts/CalendarShell.astro";
+import CampRows from "../../../components/south-bay/camps/CampRows.astro";
+import {
+  CITY_PAGES,
+  LATEST_SEASON,
+  ageSpan,
+  postedSentence,
+  groupByOperator,
+  operatorHref,
+  type Group,
+} from "../../../lib/south-bay/campFinder";
+import { TOPIC_LABELS } from "../../../lib/south-bay/campFormat";
+
+export function getStaticPaths() {
+  return CITY_PAGES.map((city) => ({ params: { slug: city.slug }, props: { city } }));
+}
+
+const { city } = Astro.props as { city: Group };
+const groups = groupByOperator(city.programs);
+const topics = Object.keys(TOPIC_LABELS).filter((t) => city.programs.some((p) => p.topics.includes(t)));
+const otherCities = CITY_PAGES.filter((c) => c.slug !== city.slug);
+
+const title = `Summer camps in ${city.name} (${LATEST_SEASON}) — South Bay Today`;
+const description =
+  `${city.programs.length} summer camp programs in ${city.name}: ages, dates, prices and financial aid from each ` +
+  `camp's own pages, with links to register.`;
+---
+
+<CalendarShell title={title} description={description} activeTab="camps">
+  <div class="camps-page">
+    <nav class="camps-crumbs" aria-label="Breadcrumb">
+      <a href="/camps">Summer camps</a>
+      <span aria-hidden="true">/</span>
+      <span>{city.name}</span>
+    </nav>
+
+    <h1>Summer camps in {city.name}</h1>
+    <p class="camps-page-sub">
+      {city.programs.length} programs from {groups.length} {groups.length === 1 ? "organization" : "camps and organizations"},
+      each taken from the camp's own pages.
+      {postedSentence(city.programs)}
+    </p>
+
+    <ul class="camps-jump" aria-label="Narrow these camps">
+      <li><a href={`/camps?city=${city.slug}`}>Filter by age or week</a></li>
+      {topics.map((t) => (
+        <li><a href={`/camps?city=${city.slug}&topic=${t}`}>{TOPIC_LABELS[t]}</a></li>
+      ))}
+    </ul>
+
+    {groups.map((g) => {
+      const href = operatorHref(g.slug);
+      const ages = ageSpan(g.programs);
+      return (
+        <section class="camps-group" aria-label={g.name}>
+          <h2>{href ? <a href={href}>{g.name}</a> : g.name}</h2>
+          <p class="camps-group-meta">
+            {g.programs.length} program{g.programs.length === 1 ? "" : "s"}{ages ? ` · ${ages}` : ""}
+          </p>
+          <CampRows programs={g.programs} />
+        </section>
+      );
+    })}
+
+    <nav class="camps-group" aria-label="Camps in other cities">
+      <h2>Camps in other cities</h2>
+      <ul class="camps-jump">
+        {otherCities.map((c) => <li><a href={`/camps/city/${c.slug}`}>{c.name}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</CalendarShell>

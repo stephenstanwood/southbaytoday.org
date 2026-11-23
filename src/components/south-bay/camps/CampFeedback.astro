@@ -1,0 +1,24 @@
+---
+// "Tell us" on the static camp pages. Opens the site's Tips & Feedback panel
+// on a correction once that island has hydrated (ReaderWidget listens for
+// `sbt:feedback`); until then, and without JavaScript, it is an email link.
+// `data-feedback` is also what the Ventures presence check looks for.
+// The script comes first so no whitespace lands between the link and the
+// punctuation that follows it.
+interface Props {
+  subject: string;
+  label?: string;
+}
+
+const { subject, label = "Tell us" } = Astro.props;
+const href = `mailto:hello@southbaytoday.org?subject=${encodeURIComponent(subject)}`;
+---
+
+<script is:inline>
+  document.addEventListener("click", function (e) {
+    var link = e.target && e.target.closest ? e.target.closest("[data-feedback]") : null;
+    if (!link || !window.__sbtFeedbackReady) return;
+    e.preventDefault();
+    window.dispatchEvent(new CustomEvent("sbt:feedback", { detail: { type: link.getAttribute("data-feedback") } }));
+  });
+</script><a href={href} data-feedback="correction">{label}</a>
