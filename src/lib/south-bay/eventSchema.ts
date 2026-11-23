@@ -5,6 +5,7 @@
 // "paid"), and location carries exactly the venue / address / city we
 // actually have.
 import { parseClockTime } from "./calendarLink";
+import { VIRTUAL_WORD } from "./eventFilters.mjs";
 import { normalizeAbsoluteHttpUrl, normalizeImageUrl } from "./httpUrl.mjs";
 
 const SITE = "https://southbaytoday.org";
@@ -122,7 +123,7 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
   // event is never "mixed" — the flag means online-only by construction.
   const attendanceText = [e.title, e.venue, e.address].filter(Boolean).join(" ");
   const flaggedVirtual = e.virtual === true;
-  const isOnline = flaggedVirtual || /\b(?:online|virtual|zoom)\b/i.test(attendanceText);
+  const isOnline = flaggedVirtual || VIRTUAL_WORD.test(attendanceText) || /\b(?:online|zoom)\b/i.test(attendanceText);
   const isMixed = !flaggedVirtual && isOnline && /\b(?:hybrid|in[ -]person)\b/i.test(attendanceText);
 
   const schema: Record<string, unknown> = {

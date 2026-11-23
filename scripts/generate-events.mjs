@@ -90,6 +90,7 @@ import {
   REGISTRATION_NONE,
   REGISTRATION_REQUIRED,
   VIRTUAL_EVENT_PATTERNS,
+  VIRTUAL_WORD,
   declaredRegistrationAvailability,
   hasOutOfAreaDestination,
   needsBiblioWaitlistCheck,
@@ -172,6 +173,7 @@ import {
 import {
   SAN_JOSE_THEATERS_LISTINGS_URL,
   SAN_JOSE_THEATER_ADDRESSES,
+  VALLEY_CHRISTIAN_CHRISTMAS,
   listingDateRange,
   listingOverlapsWindow,
   listingSkipReason,
@@ -714,7 +716,7 @@ function looksLikeEmbedCode(text) {
 }
 
 const VIRTUAL_PATTERNS = [
-  /\bvirtual\b/i,
+  VIRTUAL_WORD,
   /\bvia zoom\b/i,
   /\bon zoom\b/i,
   /\bzoom link\b/i,
@@ -9996,11 +9998,13 @@ async function fetchSanJoseTheatersEvents({ previousEvents = readJsonFile(OUT_PA
             const listedDates = dates.length ? dates : start === end ? [start] : [];
             const retained = previousEvents.filter((event) => {
               const evidence = event.occurrenceEvidence;
-              return event.source === "San Jose Theaters" && event.url === url
+              const sameListing = event.url === url || (url === VALLEY_CHRISTIAN_CHRISTMAS.venueUrl
+                && event.url === VALLEY_CHRISTIAN_CHRISTMAS.programUrl);
+              return event.source === "San Jose Theaters" && sameListing
                 && event.venue === item.venue && listedDates.includes(event.date)
                 && event.date >= today && event.date <= horizon
                 && event.time && !isEventExplicitlyInactive(event)
-                && evidence?.kind === "first-party-occurrence-page" && evidence.sourceUrl === url
+                && evidence?.kind === "first-party-occurrence-page" && evidence.sourceUrl === event.url
                 && evidence.date === event.date && evidence.time === event.time
                 && Number.isFinite(Date.parse(evidence.checkedAt));
             });
@@ -10021,7 +10025,7 @@ async function fetchSanJoseTheatersEvents({ previousEvents = readJsonFile(OUT_PA
           listingVenue: item.venue,
           description: copy,
         });
-        const { performances, skip } = venue
+        const { performances, skip, verifiedSource } = venue
           ? theaterPerformances(item, detail)
           : { performances: [], skip: "venue is not one of the four theaters" };
         if (skip) {
@@ -10029,6 +10033,7 @@ async function fetchSanJoseTheatersEvents({ previousEvents = readJsonFile(OUT_PA
           continue;
         }
 
+        const eventUrl = verifiedSource?.url ?? url;
         const description = truncate(stripBareUrls(copy));
         const categories = stripHtml(item.categories || "");
         const kidFriendly = /\bKids\s*&\s*Family\b/i.test(categories)
@@ -10050,17 +10055,17 @@ async function fetchSanJoseTheatersEvents({ previousEvents = readJsonFile(OUT_PA
             }),
             cost: "paid",
             description,
-            url,
+            url: eventUrl,
             source: "San Jose Theaters",
             ...(detail.image ? { image: detail.image } : {}),
             occurrenceEvidence: {
               kind: "first-party-occurrence-page",
-              sourceUrl: url,
+              sourceUrl: eventUrl,
               date,
               // One production page can list a matinee and an evening show.
               // Deduplication needs the sourced clock to keep both sessions.
               time,
-              checkedAt,
+              checkedAt: verifiedSource?.checkedAt ?? checkedAt,
             },
             kidFriendly,
           });

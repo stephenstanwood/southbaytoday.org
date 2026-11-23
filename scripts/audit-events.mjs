@@ -29,7 +29,7 @@ import {
   MEETING_TITLE_PATTERNS,
   BORDER_VENUE_ALLOWLIST,
 } from "./social/lib/content-rules.mjs";
-import { LOCAL_DEPARTURE_TRIP } from "../src/lib/south-bay/eventFilters.mjs";
+import { LOCAL_DEPARTURE_TRIP, VIRTUAL_WORD } from "../src/lib/south-bay/eventFilters.mjs";
 import { cityForFixedVenue } from "./lib/event-city.mjs";
 import {
   eventBlurbCacheKey,
@@ -106,7 +106,8 @@ export function classify(event) {
     }
     // Soft: description says "virtual" but title doesn't — could be dual-format.
     if (!virtualHit && (event.description || "")) {
-      if (/\b(join us online|join online|virtual(ly)?|livestream)\b/i.test(event.description)) {
+      if (VIRTUAL_WORD.test(event.description)
+          || /\b(join us online|join online|virtually|livestream)\b/i.test(event.description)) {
         virtualHit = { severity: "soft", re: /description mention/, where: "description" };
       }
     }

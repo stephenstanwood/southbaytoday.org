@@ -25,6 +25,10 @@
 // This campus showcase presents archaeology fieldwork.
 export const ARCHAEOLOGY_STUDENT_SHOWCASE = /^archaeology\s+student\s+showcase\b/i;
 
+// Virtual Riot is a performer's name. Standalone online-format cues still apply.
+export const VIRTUAL_TITLE_PREFIX = /^virtual(?!\s+riot\b)[:\s-]/i;
+export const VIRTUAL_WORD = /\bvirtual\b(?!\s+riot\b)/i;
+
 /**
  * Patterns that match virtual/online/livestream events by title or
  * description. Matched case-insensitively. A positive match means the event
@@ -33,7 +37,7 @@ export const ARCHAEOLOGY_STUDENT_SHOWCASE = /^archaeology\s+student\s+showcase\b
 export const VIRTUAL_EVENT_PATTERNS = [
   // Title prefixes
   /^online[:\s-]/i,
-  /^virtual[:\s-]/i,
+  VIRTUAL_TITLE_PREFIX,
   /^\[online\]/i,
   /^\[virtual\]/i,
   /\((?:online|virtual)\)/i,

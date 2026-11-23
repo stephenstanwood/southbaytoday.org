@@ -212,6 +212,20 @@ test("an unflagged in-person event is unaffected by the virtual field", () => {
   assert.equal((schema?.location as Record<string, unknown>)["@type"], "Place");
 });
 
+test("Virtual Riot's concert metadata names the physical venue", () => {
+  const event = {
+    title: "Virtual Riot & Blanke – Far From Home",
+    date: "2026-12-12",
+    time: "8:00 PM",
+    venue: "San Jose Civic",
+    cityName: "San José",
+  };
+  const schema = eventToSchema(event);
+  assert.equal(schema?.eventAttendanceMode, "https://schema.org/OfflineEventAttendanceMode");
+  assert.equal((schema?.location as Record<string, unknown>).name, "San Jose Civic");
+  assert.equal(eventToSchema({ ...event, virtual: true })?.eventAttendanceMode, "https://schema.org/OnlineEventAttendanceMode");
+});
+
 test("eventToSchema rejects records without a real title and ISO date", () => {
   assert.equal(eventToSchema({ title: "", date: "2026-07-19" }), null);
   assert.equal(eventToSchema({ title: "Open House", date: "July 19" }), null);

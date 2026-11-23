@@ -9,9 +9,10 @@
 //   - scripts/social/lib/post-gen-review.mjs
 //   - scripts/generate-events.mjs (for the normalization step at the tail)
 //
-// TypeScript counterparts (src/pages/api/plan-day.ts, src/lib/south-bay/*)
-// keep their own inline copies for now — update both when adding a rule.
+// The virtual title prefix and word patterns also serve the calendar filters.
 // ---------------------------------------------------------------------------
+
+import { VIRTUAL_TITLE_PREFIX, VIRTUAL_WORD } from "../../../src/lib/south-bay/eventFilters.mjs";
 
 // 11 in-area cities + curated out-of-area slugs used for hand-picked POIs and
 // regional events (santa-cruz day-trip landmarks, santa-clara-county events).
@@ -92,7 +93,7 @@ export const NON_US_COUNTRIES = [
 // tonight-pick).
 export const VIRTUAL_TITLE_SIGNALS = [
   /^online[:\s-]/i,
-  /^virtual[:\s-]/i,
+  VIRTUAL_TITLE_PREFIX,
   /^\[online\]/i,
   /^\[virtual\]/i,
   /\((?:online|virtual)\)/i,
@@ -109,7 +110,8 @@ export const VIRTUAL_ADDRESS_SIGNALS = [
 // upstream). Broader than the title/address scans above — looks at the whole
 // slot text.
 export const VIRTUAL_SIGNALS = [
-  /\bvirtual(ly)?\b/i,
+  VIRTUAL_WORD,
+  /\bvirtually\b/i,
   /\bonline\b/i,
   /\bzoom\b/i,
   /\blivestream/i,

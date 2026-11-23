@@ -7,6 +7,7 @@ import {
 } from "../generate-events.mjs";
 import {
   SAN_JOSE_THEATERS_LISTINGS_URL,
+  VALLEY_CHRISTIAN_CHRISTMAS,
   isTheaterListing,
   parsePerformanceLines,
   parseTheaterEventPage,
@@ -19,6 +20,41 @@ import {
   sourceProblems,
   sourceRegressionProblems,
 } from "./event-source-health.mjs";
+
+test("the 2026 California Theatre Christmas run uses the presenter's verified starts", () => {
+  const listing = {
+    title: "Christmas at the California",
+    link: "/theaters/events/christmas-california",
+    venue: "California Theatre",
+    start_date: "12/7/2026",
+    end_date: "12/10/2026",
+  };
+  const detail = {
+    whereVenue: "California Theatre",
+    descriptionHtml: "<p>Monday, December 7 - Joyfully Adore</p>",
+    whenTimes: [],
+  };
+  assert.deepEqual(theaterPerformances(listing, detail), {
+    performances: [
+      { date: "2026-12-07", time: "6:00 PM" },
+      { date: "2026-12-08", time: "7:00 PM" },
+      { date: "2026-12-09", time: "6:00 PM" },
+      { date: "2026-12-10", time: "7:00 PM" },
+    ],
+    skip: null,
+    verifiedSource: {
+      url: VALLEY_CHRISTIAN_CHRISTMAS.programUrl,
+      checkedAt: VALLEY_CHRISTIAN_CHRISTMAS.checkedAt,
+    },
+  });
+  assert.equal(theaterPerformances({ ...listing, start_date: "12/8/2026" }, detail).performances.length, 0);
+  assert.equal(theaterPerformances(listing, { ...detail, whereVenue: "Montgomery Theater" }).performances.length, 0);
+  assert.equal(theaterPerformances({ ...listing, title: "Cancelled: Christmas at the California" }, detail).performances.length, 0);
+  assert.equal(theaterPerformances(listing, { ...detail, descriptionHtml: "<p>This event has been postponed.</p>" }).performances.length, 0);
+  assert.deepEqual(theaterPerformances(listing, {
+    ...detail, descriptionHtml: "<p>December 7, 2026 @ 8:00 PM</p>",
+  }).performances, [{ date: "2026-12-07", time: "8:00 PM" }]);
+});
 
 // sanjosetheaters.org folded into sanjose.org (Visit San Jose) in September
 // 2026. The old All-in-One Event Calendar iCal export started answering HTTP

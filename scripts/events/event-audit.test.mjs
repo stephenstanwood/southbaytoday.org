@@ -2,8 +2,31 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { generateKeyPairSync } from "node:crypto";
 import { classify } from "../audit-events.mjs";
-import { fetchMeetupEvents } from "../generate-events.mjs";
+import { fetchMeetupEvents, isPublicEvent } from "../generate-events.mjs";
 import { resolveEventCity } from "../lib/event-city.mjs";
+import { VIRTUAL_SIGNALS, VIRTUAL_TITLE_SIGNALS } from "../social/lib/content-rules.mjs";
+import { isVirtualEvent } from "../../src/lib/south-bay/eventFilters.mjs";
+
+test("Virtual Riot at San Jose Civic is an in-person concert", () => {
+  const event = {
+    title: "Virtual Riot & Blanke – Far From Home",
+    description: "Virtual Riot and Blanke perform at San Jose Civic.",
+    city: "san-jose",
+    venue: "San Jose Civic",
+    address: "135 West San Carlos Street, San Jose, CA 95113",
+    source: "San Jose Theaters",
+  };
+  assert.equal(isPublicEvent(event.title, event.source, event.description, event.venue), true);
+  assert.equal(isVirtualEvent(event), false);
+  assert.equal(VIRTUAL_TITLE_SIGNALS.some((pattern) => pattern.test(event.title)), false);
+  assert.equal(VIRTUAL_SIGNALS.some((pattern) => pattern.test(event.description)), false);
+  assert.deepEqual(classify(event), []);
+
+  const online = "Virtual Riot livestream";
+  assert.equal(isPublicEvent(online, event.source, "", "Online"), false);
+  assert.equal(isVirtualEvent(online), true);
+  assert.equal(isVirtualEvent("Virtual Workshop"), true);
+});
 
 test("regional Santa Cruz events pass geography while mislabeled campus events fail", () => {
   const event = {
