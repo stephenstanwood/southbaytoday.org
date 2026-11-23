@@ -494,6 +494,8 @@ test("dated library events follow the organizer's program type and audience", ()
   const game = {
     date: "2026-11-22",
     url: "https://sjpl.bibliocommons.com/events/6aa4453c65abe8002a78720c",
+    title: "Game On at the Library",
+    venue: "Joyce Ellington Library",
     source: "San Jose Public Library",
     category: "education",
     description: "Play board games at the Joyce Ellington Branch every Sunday at 1:00 p.m.",
@@ -511,13 +513,46 @@ test("dated library events follow the organizer's program type and audience", ()
     url: "https://sjpl.bibliocommons.com/v2/events/6ab6f84dda318a10e636d249",
     category: "arts",
   };
-  assert.deepEqual(applyVerifiedEventFacts(game), { ...game, category: "family" });
+  const nextGame = { ...game, date: "2026-11-29", url: "https://sjpl.bibliocommons.com/v2/events/6aa4453c65abe8002a78720d" };
+  for (const event of [game, nextGame]) {
+    assert.deepEqual(applyVerifiedEventFacts(event), { ...event, category: "family" });
+  }
+  const otherBranch = { ...nextGame, venue: "Hillview Library" };
+  assert.deepEqual(applyVerifiedEventFacts(otherBranch), otherBranch);
+  const cafe = {
+    date: "2026-11-29", url: "https://sjpl.bibliocommons.com/events/6ad13dbcfee2d21deb239013",
+    category: "education",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(cafe), { ...cafe, category: "community" });
   assert.deepEqual(applyVerifiedEventFacts(storytime), { ...storytime, audienceAge: "kids" });
   assert.deepEqual(applyVerifiedEventFacts(craftFair), { ...craftFair, category: "market" });
   const newProgram = { ...game, description: "Learn to design your own video game." };
   assert.deepEqual(applyVerifiedEventFacts(newProgram), newProgram);
   const newAudience = { ...storytime, description: "Open to all ages." };
   assert.deepEqual(applyVerifiedEventFacts(newAudience), newAudience);
+});
+
+test("the Chorale and museum ticket corrections keep dates and current availability", () => {
+  const concert = {
+    date: "2026-12-13", time: "4:00 PM",
+    url: "https://events.scu.edu/center-for-spirituality-and-faith/event/517221-santa-clara-chorale-concert",
+  };
+  const fixed = applyVerifiedEventFacts(concert);
+  assert.deepEqual(fixed, {
+    ...concert, url: "https://www.scc.org/december-peace-on-earth.html",
+    cost: "paid", costNote: "Adult tickets from $30", registration: "required",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  assert.equal(applyVerifiedEventFacts({ ...concert, registration: "full" }).registration, "full");
+  const unrelatedDate = { ...concert, date: "2026-12-14" };
+  assert.deepEqual(applyVerifiedEventFacts(unrelatedDate), unrelatedDate);
+
+  const tasting = { date: "2026-12-05", url: "https://www.jamsj.org/upcoming-events/kampai2026" };
+  const ticketedTasting = applyVerifiedEventFacts(tasting);
+  assert.equal(ticketedTasting.cost, "paid");
+  assert.equal(ticketedTasting.costNote, "$115 general; $100 for JAMsj or Yu-Ai Kai members");
+  assert.equal(ticketedTasting.registration, "required");
+  assert.equal(applyVerifiedEventFacts({ ...tasting, registration: "closed" }).registration, "closed");
 });
 
 test("conflicting SJPL signup instructions are disclosed without a reservation badge", () => {

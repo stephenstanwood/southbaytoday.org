@@ -95,6 +95,28 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The Chorale's concert and box-office pages confirm both performances
+  // and the $30 regular adult ticket omitted by the university calendar.
+  // https://app.arts-people.com/?show=349982
+  ...[
+    ["2026-12-11", "517215"],
+    ["2026-12-13", "517221"],
+  ].map(([date, eventId]) => ({
+    date,
+    url: "https://www.scc.org/december-peace-on-earth.html",
+    aliasUrls: [`https://events.scu.edu/center-for-spirituality-and-faith/event/${eventId}-santa-clara-chorale-concert`],
+    facts: {
+      url: "https://www.scc.org/december-peace-on-earth.html",
+      cost: "paid", costNote: "Adult tickets from $30", registration: REGISTRATION_REQUIRED,
+    },
+  })),
+  {
+    // This edition is an open gathering for reading, crafts, and conversation.
+    date: "2026-11-29",
+    url: "https://sjpl.bibliocommons.com/events/6ad13dbcfee2d21deb239013",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6ad13dbcfee2d21deb239013"],
+    facts: { category: "community" },
+  },
   {
     // The museum's volunteer signup lists three shifts for ages 16 and older.
     date: "2026-12-13",
@@ -511,15 +533,6 @@ const CORRECTIONS = [
       blurb: "Discuss Catholic social teaching on poverty with Christopher Tirres at St. Clare Parish Hall.",
     },
     appendAttendanceNote: "The organizer asks attendees to register in advance.",
-  },
-  // SJPL lists the Joyce Ellington board-game session as Games & Family
-  // Entertainment.
-  {
-    date: "2026-11-22",
-    matches: event => event.source === "San Jose Public Library"
-      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6aa4453c65abe8002a78720c\/?$/.test(event.url || "")
-      && /\bboard games?\b/i.test(event.description || ""),
-    facts: { category: "family" },
   },
   // The Cupertino storytime is for children ages 0–5. The district's
   // "Kids: Family Events" tag refers to children and their caregivers.
@@ -2137,6 +2150,9 @@ const CORRECTIONS = [
     aliasUrls: ["https://www.jamsj.org/upcoming-events/kampai2026"],
     facts: {
       url: "https://www.jamsj.org/upcoming-events/kampai2026",
+      // The museum's linked ticket form lists general and member prices.
+      costNote: "$115 general; $100 for JAMsj or Yu-Ai Kai members",
+      registration: REGISTRATION_REQUIRED,
       category: "food", cost: "paid", audienceAge: "adult", kidFriendly: false,
     },
     appendAttendanceNote: "Ages 21 and up. Tickets required. Space is limited.",
@@ -6991,6 +7007,13 @@ export function applyVerifiedEventFacts(event) {
     };
   }
   const sjplId = /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/([a-f0-9]+)\/?(?:[?#].*)?$/.exec(event?.url || "")?.[1];
+  // SJPL lists this recurring Joyce Ellington series as family entertainment.
+  // https://sjpl.bibliocommons.com/v2/events/6aa4453c65abe8002a78720d
+  if (sjplId && event.source === "San Jose Public Library" && event.venue === "Joyce Ellington Library"
+      && event.title === "Game On at the Library" && /\bboard games?\b/i.test(event.description || "")
+      && event.category !== "family") {
+    event = { ...event, category: "family" };
+  }
   // Willow Glen repeats the conflicting clocks in each occurrence's own text.
   // Require both current instructions and preserve the other entry conditions.
   // https://sjpl.bibliocommons.com/v2/events/691fb8c1dff9d93e00d10dc8
