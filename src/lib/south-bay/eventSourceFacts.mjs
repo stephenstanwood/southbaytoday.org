@@ -113,12 +113,14 @@ const CORRECTIONS = [
   {
     // The chorus confirms the December 12 Mission concert. Its ticket form
     // lists the standard ticket tiers and November 23 single-concert sale date.
-    // https://pwchorus.org/
+    // The chorus also lists the concert from 1 to 3 PM on its mentorship schedule.
+    // https://pwchorus.org/get-involved/mentorship/
     date: "2026-12-12",
     url: "https://pwchorus.ticketspice.com/pwc-2026-2027-season",
     aliasUrls: ["https://events.scu.edu/center-for-spirituality-and-faith/event/517224-peninsula-womens-chorus-concert"],
     facts: {
       url: "https://pwchorus.ticketspice.com/pwc-2026-2027-season",
+      endTime: "3:00 PM",
       cost: "paid", costNote: "$39 general, $59 premium, $10 young audience", registration: REGISTRATION_REQUIRED,
     },
     appendAttendanceNote: "Single-concert ticket sales open November 23.",
@@ -5468,6 +5470,10 @@ const CORRECTIONS = [
     ["2026-10-24", "68fc0358c313c23700ded894", "Registration is recommended. Walk-ins are welcome if space is available; the class is limited to 10 attendees."],
     ["2026-10-22", "6a83721e4cb69d003e216ef0", "Registration is encouraged but not required."],
     ["2026-11-05", "6a83721e4cb69d003e216ef2", "Registration is encouraged but not required."],
+    ["2026-11-24", "6a83713669166f088b92df7c", "Advance signup is optional. The library recommends it."],
+    ["2026-11-28", "6a3f10c0f56bd86e00b95e6e", "Advance signup is optional."],
+    ["2026-11-29", "6a88a8afb2047800299484a4", "Advance signup is optional."],
+    ["2026-11-29", "6a3f10cc4407827f8aa7ada3", "Advance signup is optional."],
   ].map(([date, sourceId, attendanceNote]) => ({
     date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
     aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${sourceId}`],

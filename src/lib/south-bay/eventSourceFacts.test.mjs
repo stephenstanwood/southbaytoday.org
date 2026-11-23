@@ -555,7 +555,7 @@ test("the Chorale and museum ticket corrections keep dates and current availabil
   assert.equal(applyVerifiedEventFacts({ ...tasting, registration: "closed" }).registration, "closed");
 });
 
-test("the December 12 Peninsula Women's Chorus concert links to the box office", () => {
+test("the December 12 Peninsula Women's Chorus concert keeps the published finish and box office", () => {
   const concert = {
     date: "2026-12-12",
     time: "1:00 PM",
@@ -565,6 +565,7 @@ test("the December 12 Peninsula Women's Chorus concert links to the box office",
   const fixed = {
     ...concert,
     url: "https://pwchorus.ticketspice.com/pwc-2026-2027-season",
+    endTime: "3:00 PM",
     cost: "paid",
     costNote: "$39 general, $59 premium, $10 young audience",
     registration: "required",
@@ -3638,6 +3639,10 @@ test("verified library walk-ins survive optional form deadlines without losing c
     ["2026-10-24", "6a87354c46e4c80031cbd152", "Teen Entrepreneurs & Small Business Skills", /20 participants; preregistered teens receive priority/],
     ["2026-10-24", "68fc0358c313c23700ded894", "Easy Tech Seniors", /if space is available;.*10 attendees/],
     ["2026-10-22", "6a83721e4cb69d003e216ef0", "Chess Club for Kids", /encouraged but not required/],
+    ["2026-11-24", "6a83713669166f088b92df7c", "Origami for Kids", /Advance signup is optional\. The library recommends it\./],
+    ["2026-11-28", "6a3f10c0f56bd86e00b95e6e", "Language and Culture Swap", /Advance signup is optional\./],
+    ["2026-11-29", "6a88a8afb2047800299484a4", "Basic English Level 0", /Advance signup is optional\./],
+    ["2026-11-29", "6a3f10cc4407827f8aa7ada3", "Basic English Level 1", /Advance signup is optional\./],
   ]) {
     for (const registration of ["required", "full", "closed"]) {
       const raw = {
