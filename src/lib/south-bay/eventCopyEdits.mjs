@@ -18,6 +18,7 @@ const SJPL_READING_SESSION_EDITS = [
     /Pre-registration not required\. However, reading sessions are available on a first-come, first-served basis and the duration of reading sessions will be (\d+) minutes\./g,
     "No advance registration is required. Sessions last $1 minutes and are available on a first-come, first-served basis.",
   ],
+  ["provided there are no other participants).", "provided there are no other participants.)"],
 ];
 
 const SJPL_STORYTIME_TICKET_COPY = "Seating is first come, first served. The library hands out a limited number of tickets at the information desk 30 minutes before storytime.";
@@ -152,6 +153,10 @@ const EDITS = {
     attendanceNote: [
       SJPL_STORYTIME_TICKET_EDIT,
       [
+        /^· All participants will need a storytime ticket\. Tickets are limited and available at the Information Desk (\d+) minutes before the program\./g,
+        "All participants need a storytime ticket. The library hands out a limited number at the information desk $1 minutes before the program.",
+      ],
+      [
         "Tickets available at the desk 30 minutes before the program starts. All individuals (of any age) attending need a ticket and must be present to receive their ticket. " + SJPL_STORYTIME_TICKET_COPY,
         SJPL_STORYTIME_TICKET_COPY + " Everyone needs a ticket and must be present to get one.",
       ],
@@ -174,7 +179,6 @@ const EDITS = {
       ["BY APPOINTMENT ONLY One appointment per week per person.", "By appointment only. One appointment per week per person."],
       [/^BY APPOINTMENT ONLY$/g, "By appointment only."],
       ["15 minutes. (A little longer session may", "15 minutes. (A slightly longer session may"],
-      ["provided there are no other participants).", "provided there are no other participants.)"],
       ...SJPL_READING_SESSION_EDITS,
       ["Availability of Reading Buddies is on a first-come, first-served basis.", "Sessions are available on a first-come, first-served basis."],
       ["Drop ins permitted but priority is given", "Drop-ins are permitted, but priority is given"],
@@ -191,6 +195,20 @@ const EDITS = {
     ],
     description: [
       ["Participants must be ages 10 and up.", "Participants must be at least 10 years old."],
+      [
+        "Participants can also use their session to read away their fines! Just inform your coach (open to youth only).",
+        "If you'd like to use your reading session to reduce your library fines, tell your coach. This option is open to youth only.",
+      ],
+      [
+        "This program is geared for children of all ages and their parents/caregivers! Following the Storytime, kids will learn to make a simple and creative craft to take home! Free, no registration is required.",
+        "Children of all ages and their parents or caregivers are welcome. After storytime, children will learn to make a simple craft to take home. The program is free. No registration is required.",
+      ],
+      ["the TeenHQ Maker Space!", "the TeenHQ MakerSpace!"],
+      [
+        /Poster Printer, Glow ?Forge, Sewing & Serger Machines, Cricut, Button Press, and miscellaneous craft supplies\./g,
+        "a poster printer, a Glowforge laser cutter, sewing machines and sergers, a Cricut, a button press, and assorted craft supplies.",
+      ],
+      [/Glow ?Forge: Create a custom engraved object\./g, "Glowforge: Create a custom engraved object."],
       [
         /Free\. No registration required\. 11\/23 - Magnet Mazes\.?$/g,
         "Admission is free. Registration is not required. The November 23 activity is Magnet Mazes.",
@@ -1326,6 +1344,7 @@ const EDITS = {
         "Make projects in the TeenHQ Maker Space, with 3D printers, a Glowforge, sewing machines, a Cricut and a button press for middle and high schoolers.",
         "Middle and high schoolers can make projects in the TeenHQ Maker Space using 3D printers, a Glowforge, sewing machines, a Cricut, and a button press.",
       ],
+      ["in the TeenHQ Maker Space using", "in the TeenHQ MakerSpace using"],
       [
         "Try hands-on STEM activities during Thanksgiving break, from Buzz Off to hovercrafts to stop motion animation, for ages 8-12, free and drop-in.",
         "Kids ages 8-12 can drop in for free STEM activities over Thanksgiving break, including Buzz Off, hovercrafts, and stop-motion animation.",
@@ -1929,6 +1948,10 @@ const EDITS = {
       ["Walk in with your K-6 homework and get help from tutors; basic school supplies are provided as space allows.", "Students in grades K-6 can drop in for help from tutors as space allows. Basic school supplies are provided."],
       ["Make fake snow using simple science with Lynbrook High Wi STEM at Saratoga Library, with all ages welcome.", "Use simple science to make fake snow with Lynbrook High WiSTEM at Saratoga Library. All ages are welcome."],
       ["Race your team to assemble a puzzle fastest,", "Race with your team to assemble a puzzle the fastest,"],
+      [
+        "Team up with three friends to race through the same 500-piece jigsaw puzzle against other teams, then check out the puzzle swap.",
+        "Race to finish a 500-piece jigsaw puzzle, then browse the puzzle swap. Sign up on your own or with a group of four.",
+      ],
       ["to hear stories, music, and activities in the Orchard Room.", "to hear stories and music and take part in activities in the Orchard Room."],
       ["made for children 0-5 and their families.", "for children ages 0 to 5 and their families."],
       [
