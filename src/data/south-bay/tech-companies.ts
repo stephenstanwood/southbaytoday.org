@@ -677,24 +677,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     url: "https://figure.ai",
     employeesNote: "~400 employees",
   },
-  // NEO status per 1X's Apr 30 2026 release: full-scale production began at
-  // the Hayward factory; customer deliveries are promised for 2026, and no
-  // delivery had been confirmed as of Oct 13 2026 — keep it phrased as a promise.
-  // Price is from the Oct 27 2025 launch release.
-  // https://letsdatascience.com/news/1x-ships-neo-humanoid-robots-to-us-homes-774b7a74
-  // https://www.businesswire.com/news/home/20251027434628/en/1X-Launches-NEO-The-Robot-Redefining-Life-at-Home
-  {
-    id: "1x-technologies",
-    name: "1X Technologies",
-    city: "Palo Alto",
-    category: "robotics",
-    stage: "startup",
-    tagline: "Norwegian-founded humanoid robot company building NEO for home use and EVE for commercial deployments. NEO went into full-scale production at its Hayward factory in April 2026, priced at $20,000 or $499 a month, with first US home deliveries promised this year. Its global headquarters is in Palo Alto.",
-    color: "#E11D48",
-    url: "https://www.1x.tech",
-    // The factory announcement counts Hayward alone: https://www.1x.tech/discover/neo-factory
-    employeesNote: "200+ at its Hayward factory (Apr 2026)",
-  },
+  // 1X Technologies now lists San Carlos, in San Mateo County, as its base.
+  // https://www.1x.tech/about
   {
     id: "glean",
     name: "Glean",
