@@ -95,6 +95,27 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The SCU Athletics ticket store lists paid admission for these Leavey
+  // Center games. Its prices can change between now and tipoff or first serve.
+  ...[
+    ["2026-11-23", "486885-santa-clara-university-womens-volleyball-vs-san", "santa-clara-volleyball-vs-san-diego-1tnrm0"],
+    ["2026-11-25", "486880-santa-clara-university-womens-volleyball-vs-denver", "santa-clara-volleyball-vs-denver-yy1j84"],
+    ["2026-11-28", "525213-santa-clara-university-mens-basketball-vs-utah", "santa-clara-mens-basketball-vs-utah-tech-l93udr"],
+    ["2026-12-02", "525212-santa-clara-university-mens-basketball-vs-fresno", "santa-clara-mens-basketball-vs-fresno-state-0shd8h"],
+    ["2026-12-03", "525253-santa-clara-university-womens-basketball-vs-san", "santa-clara-womens-basketball-vs-san-diego-state-5agcuo"],
+  ].map(([date, calendarPath, ticketPath]) => {
+    const url = `https://scubroncos.scu.edu/events/${ticketPath}`;
+    return {
+      date,
+      url,
+      aliasUrls: [`https://events.scu.edu/bronco-athletics/event/${calendarPath}`],
+      facts: event => ({
+        url,
+        ...(!event.address ? { address: "500 El Camino Real, Santa Clara" } : {}),
+        ...(!event.cost && !event.costNote ? { cost: "paid" } : {}),
+      }),
+    };
+  }),
   // The Chorale's concert and box-office pages confirm both performances
   // and the $30 regular adult ticket omitted by the university calendar.
   // https://app.arts-people.com/?show=349982

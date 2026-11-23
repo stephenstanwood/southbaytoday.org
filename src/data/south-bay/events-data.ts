@@ -705,11 +705,12 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     venue: "San Jose streets (rotating routes)",
     category: "community",
     recurrence: "seasonal",
-    months: [4, 5, 10, 11],
+    // The organizer publishes dates and routes for each event.
+    // https://www.vivacallesj.org/past-events
     cost: "free",
     kidFriendly: true,
     description:
-      "In spring and fall, miles of San Jose streets temporarily close to cars and open to walkers, cyclists, skaters, and dancers.",
+      "On select Sundays, San José temporarily closes miles of streets to cars for walking, biking, skating, and activities along the route.",
     url: "https://www.vivacallesj.org",
     emoji: "🚲",
     featured: true,

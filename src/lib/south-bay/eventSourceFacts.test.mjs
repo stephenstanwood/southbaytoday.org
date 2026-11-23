@@ -248,6 +248,29 @@ test("Saratoga holiday dates retain the city's hours and direct occurrence links
   }
 });
 
+test("SCU home games with official ticket pages retain their paid admission on refresh", () => {
+  const incoming = {
+    title: "Santa Clara University Women's Volleyball vs San Diego",
+    date: "2026-11-23",
+    url: "https://events.scu.edu/bronco-athletics/event/486885-santa-clara-university-womens-volleyball-vs-san",
+    cost: "",
+    address: "",
+  };
+  const fixed = {
+    ...incoming,
+    url: "https://scubroncos.scu.edu/events/santa-clara-volleyball-vs-san-diego-1tnrm0",
+    cost: "paid",
+    address: "500 El Camino Real, Santa Clara",
+  };
+
+  assert.deepEqual(applyVerifiedEventFacts(incoming), fixed);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const newSourceFacts = { ...incoming, cost: "low", costNote: "$10", address: "Verified venue entrance" };
+  assert.deepEqual(applyVerifiedEventFacts(newSourceFacts), { ...newSourceFacts, url: fixed.url });
+  const otherDate = { ...incoming, date: "2026-11-24" };
+  assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
 test("the Los Altos museum housing-policy talk is listed under Education", () => {
   const incoming = {
     title: "A Local History of Housing",
