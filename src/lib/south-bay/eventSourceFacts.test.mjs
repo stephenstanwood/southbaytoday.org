@@ -324,6 +324,22 @@ test("the Los Altos museum housing-policy talk is listed under Education", () =>
   assert.deepEqual(applyVerifiedEventFacts(exhibit), exhibit);
 });
 
+test("the rescheduled Alviso Math Festival keeps the library's full title", () => {
+  const incoming = {
+    id: "sjpl-6b048c2795b0491ca004827b",
+    date: "2026-11-29",
+    title: "Math Festival",
+    url: "https://sjpl.bibliocommons.com/events/6b048c2795b0491ca004827b",
+  };
+
+  const corrected = { ...incoming, title: "Math Festival at Alviso" };
+  assert.deepEqual(applyVerifiedEventFacts(incoming), corrected);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+
+  const otherFestival = { ...incoming, id: "different-library-festival" };
+  assert.deepEqual(applyVerifiedEventFacts(otherFestival), otherFestival);
+});
+
 test("Almaden STEaM keeps this session's ticket pickup and leaves its topic open", () => {
   const event = {
     date: "2026-11-24",

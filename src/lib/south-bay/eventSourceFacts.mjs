@@ -95,6 +95,13 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // SJPL's rescheduled November 29 occurrence uses the full program title.
+  // https://sjpl.bibliocommons.com/events/6b048c2795b0491ca004827b
+  {
+    date: "2026-11-29",
+    matches: event => event.id === "sjpl-6b048c2795b0491ca004827b" && event.title === "Math Festival",
+    facts: { title: "Math Festival at Alviso" },
+  },
   // Downtown Campbell's festival page specifies free family admission and
   // gives the intersection omitted from the City Newsletter listing.
   {
