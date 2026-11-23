@@ -47,3 +47,15 @@ test("the republished 8 PM WayV listing keeps the artist time and discloses the 
   const updated = { ...republished, time: "7:30 PM" };
   assert.deepEqual(restoreWayvConcert([formerListing, updated], "2026-11-21"), [updated]);
 });
+
+test("preserves the prior WayV time conflict when the venue refresh fails", () => {
+  const previousEvents = restoreWayvConcert([formerListing], today);
+  const [restored] = restoreWayvConcert([], today, { previousEvents });
+  assert.equal(restored.time, "7:30 PM");
+  assert.equal(restored.attendanceStatus, "needs-confirmation");
+  assert.equal(restored.attendanceNote, previousEvents[0].attendanceNote);
+
+  const updated = { ...formerListing, time: "7:30 PM" };
+  assert.deepEqual(restoreWayvConcert([updated], today, { previousEvents }), [updated]);
+  assert.equal(restoreWayvConcert([], today)[0].attendanceStatus, undefined);
+});

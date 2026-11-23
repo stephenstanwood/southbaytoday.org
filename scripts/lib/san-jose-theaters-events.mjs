@@ -50,8 +50,9 @@ const WAYV_OLD_URL = "https://www.sanjose.org/theaters/events/2026-27-wayv-conce
 const WAYV_REPUBLISHED_URL = `${WAYV_OLD_URL}-0`;
 const WAYV_DATE = "2027-02-06";
 const WAYV_VENUE = "San Jose Civic";
+const WAYV_ID = "sanjosetheaters-c176ca6a57bad2e7";
 
-export function restoreWayvConcert(events, today) {
+export function restoreWayvConcert(events, today, { previousEvents = [] } = {}) {
   if (today > WAYV_DATE) return events;
 
   const isVenueListing = (event) => [WAYV_OLD_URL, WAYV_REPUBLISHED_URL].includes(event.url);
@@ -66,9 +67,12 @@ export function restoreWayvConcert(events, today) {
   }
 
   const time = "7:30 PM";
-  const venueTimeDiffers = events.some(isOldListing);
+  // A failed theater fetch cannot resolve the previously verified conflict.
+  const venueTimeDiffers = events.some(isOldListing)
+    || previousEvents.some((event) => event.id === WAYV_ID && event.date === WAYV_DATE
+      && event.attendanceStatus === "needs-confirmation");
   return [...events.filter((event) => !isWayvConcert(event)), {
-    id: "sanjosetheaters-c176ca6a57bad2e7",
+    id: WAYV_ID,
     title: "2026-27 WayV Concert Tour [Born This Way] In USA",
     date: WAYV_DATE,
     displayDate: "Sat, Feb 6",

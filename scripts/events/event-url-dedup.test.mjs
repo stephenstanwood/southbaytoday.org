@@ -102,6 +102,24 @@ test("the ticket cap preserves both verified Mojo Brookzz showtimes at San Jose 
   assert.equal(applyVerifiedEventFacts({ ...changedTime, occurrenceEvidence: undefined }).occurrenceEvidence, undefined);
 });
 
+test("the Ticketmaster cap keeps both separately ticketed Bodyguard shows", () => {
+  const earlier = Array.from({ length: 200 }, (_, i) => ({
+    source: "Ticketmaster", date: "2027-02-05", time: "7:30 PM", venue: `Venue ${i}`,
+    url: `https://example.com/event/${i}`,
+  }));
+  const shows = [["2:00 PM", "1C00651FC9B56977"], ["7:30 PM", "1C00651FC9BB6997"]]
+    .map(([time, ticketId], index) => applyVerifiedEventFacts({
+      id: `bodyguard-${index}`, title: "The Bodyguard (Touring)", city: "san-jose",
+      category: "arts", source: "Ticketmaster", date: "2027-02-06", time,
+      venue: "San Jose Center for the Performing Arts",
+      url: `https://www.ticketmaster.com/the-bodyguard-touring-san-jose-california-02-06-2027/event/${ticketId}`,
+    }));
+  assert.deepEqual(capUpcomingEventSources([...earlier, ...shows]), [...earlier, ...shows]);
+  const changed = applyVerifiedEventFacts({ ...shows[0], time: "3:00 PM", occurrenceEvidence: undefined });
+  assert.equal(changed.occurrenceEvidence, undefined);
+  assert.deepEqual(capUpcomingEventSources([...earlier, changed]), earlier);
+});
+
 test("Stanford ticket promotions cannot supply a start time for an individual game", () => {
   const event = { date: "2027-02-19", time: null, url: "https://tickets.gostanford.com/p/cardinal-friday" };
   assert.equal(isEventTimeBackfillCandidate(event), false);

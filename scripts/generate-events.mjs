@@ -11449,7 +11449,11 @@ async function main() {
     if (!sourceNames.includes(event.source)) sourceNames.push(event.source);
   }
 
-  const eventsWithWayv = restoreWayvConcert(allEvents, todayPT());
+  const theaterSourceFailed = sourceHealth.some((row) =>
+    row.id === "fetchSanJoseTheatersEvents" && row.status === "error");
+  const eventsWithWayv = restoreWayvConcert(allEvents, today, {
+    previousEvents: theaterSourceFailed ? prevRun?.events : undefined,
+  });
   if (eventsWithWayv !== allEvents) {
     allEvents.length = 0;
     allEvents.push(...eventsWithWayv);

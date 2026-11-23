@@ -2238,9 +2238,31 @@ const CORRECTIONS = [
       occurrenceEvidence: { kind: "first-party-occurrence-page", sourceUrl: event.url, date: event.date, time: event.time },
     } : {},
   },
-  // The two Improv booking pages and Broadway's dated performance schedule
-  // confirm showtimes that fell beyond Ticketmaster's ordinary refresh cap.
+  {
+    // The museum lists paid tickets and separates check-in from painting.
+    date: "2026-12-04",
+    url: "https://www.tritonmuseum.org/courses/create-with-the-curator-paint-night-at-the-triton",
+    aliasUrls: [
+      "https://www.eventbrite.com/e/create-with-the-curator-paint-night-at-the-triton-tickets-2004685415041",
+      "https://www.eventbrite.com/e/create-with-the-curator-paint-night-at-the-triton-tickets-2004685415041?aff=oddtdtcreator",
+    ],
+    facts: {
+      url: "https://www.tritonmuseum.org/courses/create-with-the-curator-paint-night-at-the-triton",
+      venue: "Triton Museum of Art",
+      address: "1505 Warburton Avenue, Santa Clara, CA 95050",
+      cost: "paid",
+      costNote: "$40–$50",
+      registration: REGISTRATION_REQUIRED,
+    },
+  },
+  // The venues and their ticket sellers agree on these exact showtimes.
+  // https://improv.com/sanjose/calendar/
+  // https://broadwaysanjose.com/shows/the-bodyguard/
   ...[
+    {
+      date: "2027-01-31", time: "6:00 PM", venue: "San Jose Improv",
+      url: "https://www.ticketweb.com/event/eric-eaton-san-jose-improv-tickets/15025873",
+    },
     {
       date: "2027-02-03", time: "8:00 PM", venue: "San Jose Improv",
       url: "https://www.ticketweb.com/event/los-resolvedores-en-espaol-san-jose-improv-tickets/14268594",
@@ -2249,11 +2271,24 @@ const CORRECTIONS = [
       date: "2027-02-04", time: "8:00 PM", venue: "San Jose Improv",
       url: "https://www.ticketweb.com/event/shawn-chidiac-laughing-in-translation-san-jose-improv-tickets/14839683",
     },
-    {
-      date: "2027-02-04", time: "7:30 PM", venue: "San Jose Center for the Performing Arts",
-      url: "https://www.ticketmaster.com/the-bodyguard-touring-san-jose-california-02-04-2027/event/1C00651FC9AA693C",
-      appendAttendanceNote: "Closed captioning is listed for this performance. Recommended for ages 13 and up.",
-    },
+    ...[
+      ["02", "7:30 PM", "1C00651FC9A068FC"],
+      ["03", "7:30 PM", "1C00651FC9A6691B"],
+      ["04", "7:30 PM", "1C00651FC9AA693C"],
+      ["05", "7:30 PM", "1C00651FC9B06956"],
+      ["06", "2:00 PM", "1C00651FC9B56977"],
+      ["06", "7:30 PM", "1C00651FC9BB6997"],
+      ["07", "1:00 PM", "1C00651FC9C069B8"],
+      ["07", "6:30 PM", "1C00651FC9C669CE"],
+    ].map(([day, time, ticketId]) => ({
+      date: `2027-02-${day}`,
+      time,
+      venue: "San Jose Center for the Performing Arts",
+      url: `https://www.ticketmaster.com/the-bodyguard-touring-san-jose-california-02-${day}-2027/event/${ticketId}`,
+      appendAttendanceNote: day === "04"
+        ? "Closed captioning is listed for this performance. Recommended for ages 13 and up."
+        : "Recommended for ages 13 and up.",
+    })),
   ].map(({ date, time, venue, url, appendAttendanceNote }) => ({
     date,
     matches: event => event.source === "Ticketmaster" && event.venue === venue

@@ -5312,3 +5312,18 @@ test("Stanford farm shifts retain advance signup and waiver requirements", () =>
   assert.equal(applyVerifiedEventFacts({ ...event, registration: "full" }).registration, "full");
   assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
 });
+
+test("the dated Triton paint workshop uses the museum's paid enrollment details", () => {
+  const event = {
+    date: "2026-12-04", venue: "Inside the Triton Museum of Art", cost: null,
+    url: "https://www.eventbrite.com/e/create-with-the-curator-paint-night-at-the-triton-tickets-2004685415041?aff=oddtdtcreator",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.venue, "Triton Museum of Art");
+  assert.equal(corrected.cost, "paid");
+  assert.equal(corrected.costNote, "$40–$50");
+  assert.equal(corrected.registration, "required");
+  assert.match(corrected.url, /^https:\/\/www\.tritonmuseum\.org\/courses\//);
+  const differentDate = { ...event, date: "2026-12-05" };
+  assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
+});
