@@ -555,6 +555,28 @@ test("the Chorale and museum ticket corrections keep dates and current availabil
   assert.equal(applyVerifiedEventFacts({ ...tasting, registration: "closed" }).registration, "closed");
 });
 
+test("the December 12 Peninsula Women's Chorus concert links to the box office", () => {
+  const concert = {
+    date: "2026-12-12",
+    time: "1:00 PM",
+    url: "https://events.scu.edu/center-for-spirituality-and-faith/event/517224-peninsula-womens-chorus-concert",
+    cost: "",
+  };
+  const fixed = {
+    ...concert,
+    url: "https://pwchorus.ticketspice.com/pwc-2026-2027-season",
+    cost: "paid",
+    costNote: "$39 general, $59 premium, $10 young audience",
+    registration: "required",
+    attendanceNote: "Single-concert ticket sales open November 23.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(concert), fixed);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  assert.equal(applyVerifiedEventFacts({ ...concert, registration: "full" }).registration, "full");
+  const otherPerformance = { ...concert, date: "2026-12-11", url: fixed.url };
+  assert.deepEqual(applyVerifiedEventFacts(otherPerformance), otherPerformance);
+});
+
 test("conflicting SJPL signup instructions are disclosed without a reservation badge", () => {
   const source = "https://sjpl.bibliocommons.com";
   for (const [path, description, venue] of [

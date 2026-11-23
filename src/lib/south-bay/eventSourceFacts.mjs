@@ -111,6 +111,19 @@ const CORRECTIONS = [
     },
   })),
   {
+    // The chorus confirms the December 12 Mission concert. Its ticket form
+    // lists the standard ticket tiers and November 23 single-concert sale date.
+    // https://pwchorus.org/
+    date: "2026-12-12",
+    url: "https://pwchorus.ticketspice.com/pwc-2026-2027-season",
+    aliasUrls: ["https://events.scu.edu/center-for-spirituality-and-faith/event/517224-peninsula-womens-chorus-concert"],
+    facts: {
+      url: "https://pwchorus.ticketspice.com/pwc-2026-2027-season",
+      cost: "paid", costNote: "$39 general, $59 premium, $10 young audience", registration: REGISTRATION_REQUIRED,
+    },
+    appendAttendanceNote: "Single-concert ticket sales open November 23.",
+  },
+  {
     // This edition is an open gathering for reading, crafts, and conversation.
     date: "2026-11-29",
     url: "https://sjpl.bibliocommons.com/events/6ad13dbcfee2d21deb239013",
