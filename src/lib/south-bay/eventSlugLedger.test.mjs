@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
+import { isEventPublishable } from "./eventOccurrence.mjs";
 import { findSuccessor, liveSlugs, resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 
 const TODAY = "2026-09-18";
@@ -45,6 +46,27 @@ test("a retired TBA game cannot keep advertising the extractor's invented kickof
   assert.equal(orphans[0].event.time, undefined, "sanitize an already committed retired snapshot too");
   assert.equal(orphans[0].event.endTime, undefined);
   assert.equal(oldLedger.entries[0].event.time, "7:00 PM", "do not mutate the input ledger");
+});
+
+test("Santana Row’s Thanksgiving dining guide retires without restaurant-specific hours", () => {
+  const guide = ev({
+    id: "6e4bf7d9e134", title: "Thanksgiving on the Row", date: "2026-11-26",
+    time: "10:30 AM", endTime: "8:00 PM", venue: "Santana Row", source: "Santana Row",
+    url: "https://santanarow.com/event/thanksgiving-on-the-row/",
+  });
+  assert.equal(isEventPublishable(guide), false);
+  assert.equal(isEventPublishable({ ...guide, date: "2027-11-25" }), true);
+  assert.equal(isEventPublishable({ ...guide, url: "https://santanarow.com/event/another-event/" }), true);
+
+  const ledger = retireSlugs({ entries: [] }, [guide], [], "2026-11-23");
+  const { orphans } = resolveRetired(ledger, [], [], "2026-11-23");
+  assert.equal(orphans.length, 1);
+  const [{ slug, event }] = orphans;
+  assert.equal(slug, "2026-11-26-thanksgiving-on-the-row");
+  assert.equal(event.url, guide.url);
+  assert.equal(event.time, undefined);
+  assert.equal(event.endTime, undefined);
+  assert.match(event.description, /Hours and reservations vary by restaurant/);
 });
 
 test("retired museum event pages cannot publish newsletter wrappers or an unconfirmed demonstration time", () => {

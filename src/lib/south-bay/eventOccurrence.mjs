@@ -162,6 +162,12 @@ export function nonEventOfferNotice(event) {
       && /^Buy or Renew In-Person\b/i.test(String(event?.title || ""))) {
     return "This is a membership promotion offering vouchers for a separate activity, not a scheduled event.";
   }
+  // Santana Row lists separate Thanksgiving meals with different hours.
+  // The scraper picked up Suspiro's hours as the schedule for the whole page.
+  if (event?.source === "Santana Row" && event.date === "2026-11-26"
+      && /^https:\/\/(?:www\.)?santanarow\.com\/event\/thanksgiving-on-the-row\/?$/i.test(event.url || "")) {
+    return "Santana Row’s Thanksgiving guide lists separate dining specials. Hours and reservations vary by restaurant.";
+  }
   return null;
 }
 
