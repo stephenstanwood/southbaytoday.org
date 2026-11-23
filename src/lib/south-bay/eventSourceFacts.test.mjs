@@ -52,6 +52,45 @@ test("TeenHQ uses the linked poster dimensions on raw and normalized studio copy
   }
 });
 
+test("TeenHQ removes the series signup instructions only for the November 25 session without booking", () => {
+  const event = {
+    source: "San Jose Public Library",
+    title: "TeenHQ MakerSpace Studio",
+    date: "2026-11-25",
+    url: "https://sjpl.bibliocommons.com/v2/events/6927797a0886c5530056c25b",
+    attendanceNote: "Advance registration is recommended. Walk-ins can take unclaimed spots at 4:30 PM.",
+  };
+  for (const arrival of [
+    "If not all claimed registration spots have arrived by 4:30PM, they will be given to those waiting.",
+    "If registered participants have not arrived by 4:30 PM, their spots will be given to those waiting.",
+  ]) {
+    const raw = {
+      ...event,
+      description: [
+        "Up to 5 teens can use the equipment.",
+        "Pre-registration is recommended to reserve your spot.",
+        arrival,
+        "The program is free for grades 6–12.",
+        "Pre-registration will start 1 week before the start of the program.",
+        "Registration closes 1 hour before the start of the program.",
+        "Drop-ins will be accepted if not all registration slots are filled and if not all registered individuals arrive by 4:30 PM.",
+        "The area is wheelchair accessible from the Children's Room elevator.",
+      ].join(" "),
+    };
+    const fixed = applyVerifiedEventFacts(raw);
+    assert.equal(fixed.description, "Up to 5 teens can use the equipment. The program is free for grades 6–12. The area is wheelchair accessible from the Children's Room elevator.");
+    assert.equal(fixed.attendanceNote, "The event page has no signup link. Space is limited to five teens. Check with TeenHQ for availability.");
+    assert.equal(requiresAttendanceConfirmation(fixed), true);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const later = { ...raw, date: "2026-12-02" };
+    assert.deepEqual(applyVerifiedEventFacts(later), later);
+    for (const registration of ["required", "full", "closed"]) {
+      const booking = { ...raw, registration };
+      assert.deepEqual(applyVerifiedEventFacts(booking), booking);
+    }
+  }
+});
+
 test("Hillview's Saturday Fun stays open to all ages when the library says so", () => {
   const event = {
     title: "Saturday Fun: Arts, Crafts, and More", source: "San Jose Public Library",
@@ -348,12 +387,7 @@ test("Edenvale STEM sessions keep the day's activity and mandatory sign-in", () 
   }
 });
 
-test("upcoming library listings preserve walk-in priority and in-person signup", () => {
-  const studio = applyVerifiedEventFacts({
-    date: "2026-11-25",
-    url: "https://sjpl.bibliocommons.com/events/6927797a0886c5530056c25b",
-  });
-  assert.match(studio.attendanceNote, /Advance registration is recommended\. Walk-ins can take unclaimed spots at 4:30 PM/);
+test("the Cupertino library listing preserves in-person signup", () => {
   const reading = applyVerifiedEventFacts({
     date: "2026-12-14", registration: "required",
     url: "https://sccl.bibliocommons.com/v2/events/693b7d1394297d36009f8651",

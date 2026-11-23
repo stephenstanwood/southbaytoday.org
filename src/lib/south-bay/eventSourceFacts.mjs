@@ -2207,12 +2207,19 @@ const CORRECTIONS = [
     facts: { blurb },
     appendAttendanceNote: "Space is limited. Everyone must sign in at the information desk starting 30 minutes before the program.",
   })),
-  // King Library releases unclaimed MakerSpace reservations at 4:30 PM.
+  // This occurrence has no signup control or registration provider in the
+  // library's listing. Only suppress the series copy while no booking is set.
   {
     date: "2026-11-25",
-    url: "https://sjpl.bibliocommons.com/events/6927797a0886c5530056c25b",
-    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6927797a0886c5530056c25b"],
-    appendAttendanceNote: "Advance registration is recommended. Walk-ins can take unclaimed spots at 4:30 PM.",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6927797a0886c5530056c25b\/?$/.test(event.url || "")
+      && (!event.registration || event.registration === REGISTRATION_NONE),
+    facts: { attendanceStatus: "needs-confirmation" },
+    appendAttendanceNote: "The event page has no signup link. Space is limited to five teens. Check with TeenHQ for availability.",
+    copyReplacements: [
+      [/\s*Pre-registration is recommended to reserve your spot\.\s*If (?:registered participants have not arrived|not all claimed registration spots have arrived) by 4:30\s*PM,[^.]*\./i, ""],
+      [/\s*Pre-registration will start 1 week before the start of the program\.[\s\S]*?Drop-ins will be accepted if not all registration slots are filled and if not all registered individuals arrive by 4:30\s*PM\./i, ""],
+      [/Advance registration is recommended\. Walk-ins can take unclaimed spots at 4:30 PM\.\s*/i, ""],
+    ],
   },
   // The two Cupertino pages give the same in-person signup and availability contact.
   ...[
