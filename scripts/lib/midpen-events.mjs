@@ -33,6 +33,7 @@
  */
 
 import { isEventExplicitlyInactive } from "../../src/lib/south-bay/eventOccurrence.mjs";
+import { parseDatePT } from "./dates.mjs";
 
 /** Strip tags/entities from one Views cell. */
 export function midpenText(value) {
@@ -186,6 +187,33 @@ export function midpenVolunteerUrl(event) {
   return null;
 }
 
+// Midpen's guided activity pages give the closing date and local time in the
+// reservation sentence, independently of the event date and the opening time.
+function guidedReservationDeadline(body, eventDate) {
+  if (!eventDate) return null;
+  const deadline = midpenText(body).match(/\breservations? (?:are|is) required and will be accepted on or after\b.{0,100}?\band close ([A-Za-z]+\.? \d{1,2})(?:,? (\d{4}))? at (\d{1,2}(?::\d{2})?\s*[ap]\.?\s*m\.?)(?!\w)/i);
+  if (!deadline) return null;
+
+  const [, monthDay, sourceYear, rawClock] = deadline;
+  const eventYear = Number(eventDate.slice(0, 4));
+  let date = midpenIsoDate(`${monthDay} ${sourceYear || eventYear}`);
+  if (!sourceYear && date?.slice(5, 7) === "12" && eventDate.slice(5, 7) === "01") {
+    date = midpenIsoDate(`${monthDay} ${eventYear - 1}`);
+  }
+  const clock = midpenClockTime(rawClock);
+  if (!date || date > eventDate || !clock) return null;
+
+  const [hour, minute, period] = clock.split(/[: ]/);
+  const hour24 = String(Number(hour) % 12 + (period === "PM" ? 12 : 0)).padStart(2, "0");
+  const closes = parseDatePT(`${date}T${hour24}:${minute}`);
+  if (!closes) return null;
+
+  return {
+    registrationClosesBy: closes.toISOString(),
+    attendanceNote: `Reservations close ${monthDay} at ${clock.replace(":00 ", " ")} PT.`,
+  };
+}
+
 /** Pull optional activity copy, trailhead, times and live volunteer capacity. */
 export function parseMidpenDetail(html) {
   const text = String(html || "")
@@ -211,6 +239,10 @@ export function parseMidpenDetail(html) {
   const meetingPlace = volunteerAddress
     || (meetMatch ? meetMatch[1].replace(/\n/g, " ").trim() : null);
 
+  const dateMarkup = String(html || "").match(/event-page__event-date--start[^>]*>([^<]+)</i);
+  const eventDate = dateMarkup ? midpenIsoDate(midpenText(dateMarkup[1])) : null;
+  const guidedDeadline = guidedReservationDeadline(body, eventDate);
+
   // Eligibility and registration deadlines live outside Description. Keep
   // them as attendance terms rather than turning waiver text into the blurb.
   const requirements = [...String(html || "").matchAll(/<tr\b[^>]*class=["'][^"']*\brequirement\b[^"']*["'][^>]*>([\s\S]*?)<\/tr>/gi)]
@@ -224,6 +256,7 @@ export function parseMidpenDetail(html) {
     minimumAge ? `Ages ${minimumAge}.` : null,
     minorTerms,
     deadline ? `${deadline}.` : null,
+    guidedDeadline?.attendanceNote,
     gate ? `Meet at gate ${gate}, not the main lot.` : null,
   ].filter(Boolean);
 
@@ -255,7 +288,6 @@ export function parseMidpenDetail(html) {
     .filter((line) => !meetingHaystack.includes(line.slice(0, 60).toLowerCase()))
     .sort((a, b) => b.length - a.length)[0] || null;
 
-  const dateMarkup = String(html || "").match(/event-page__event-date--start[^>]*>([^<]+)</i);
   const titleMarkup = String(html || "").match(/<h1\b[^>]*class="[^"]*card__title[^"]*"[^>]*>([\s\S]*?)<\/h1>/i);
   // Volunteer occurrence URLs redirect to Galaxy Digital. Its own heading
   // and single-date table must confirm the occurrence too; a registration
@@ -271,11 +303,11 @@ export function parseMidpenDetail(html) {
   return {
     title,
     inactive: isEventExplicitlyInactive({ title }),
-    date: dateMarkup ? midpenIsoDate(midpenText(dateMarkup[1]))
-      : volunteerTitle && volunteerDate ? midpenIsoDate(volunteerDate[1]) : null,
+    date: eventDate ?? (volunteerTitle && volunteerDate ? midpenIsoDate(volunteerDate[1]) : null),
     description: paragraph?.replace(/\s+([.,;!?])/g, "$1") || null,
     meetingPlace,
     attendanceNote: attendanceNotes.length ? attendanceNotes.join(" ") : null,
+    registrationClosesBy: guidedDeadline?.registrationClosesBy ?? null,
     startTime: rangeMatch ? midpenClockTime(rangeMatch[1]) : null,
     endTime: rangeMatch ? midpenClockTime(rangeMatch[2]) : null,
     registration: parseMidpenVolunteerAvailability(html)
@@ -304,10 +336,12 @@ export function recheckMidpenEvent(html, event, today) {
     ? midpenVolunteerRegistration(detail, event) : detail.registration;
   return {
     ...event,
-    ...(registration ? { registration } : {}),
+    ...(registration || event.registrationClosesBy ? { registration } : {}),
     ...(detail.endTime ? { endTime: detail.endTime } : {}),
     ...(detail.meetingPlace ? { address: midpenTrailhead(detail.meetingPlace) } : {}),
-    ...(detail.attendanceNote ? { attendanceNote: detail.attendanceNote } : {}),
+    ...(detail.attendanceNote || event.registrationClosesBy ? { attendanceNote: detail.attendanceNote } : {}),
+    ...(detail.registrationClosesBy || event.registrationClosesBy
+      ? { registrationClosesBy: detail.registrationClosesBy } : {}),
   };
 }
 

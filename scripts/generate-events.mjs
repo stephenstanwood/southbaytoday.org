@@ -10651,7 +10651,10 @@ async function fetchMidpenEvents() {
       const isVolunteer = row.type === "Volunteer Project";
       // A failed detail fetch cannot erase previously verified access terms.
       const prior = previous.get(id);
-      const attendanceNote = detail.attendanceNote || (detailFailed ? prior?.attendanceNote : null);
+      let access = detailFailed ? prior : detail;
+      if (detail.registrationClosesBy && detail.date !== row.date) access = null;
+      const registration = isVolunteer ? midpenVolunteerRegistration(detail, prior) : access?.registration;
+      const { attendanceNote, registrationClosesBy } = access ?? {};
       const descriptionParts = [detail.description];
       if (row.miles) descriptionParts.push(`Approximately ${row.miles} miles.`);
       const description = truncate(
@@ -10686,10 +10689,9 @@ async function fetchMidpenEvents() {
         // The district's volunteer portal reports remaining spots separately
         // from its generic signup instructions. Missing capacity still keeps
         // the required-registration gate; it never turns a project into a walk-up.
-        ...(detail.registration || isVolunteer
-          ? { registration: isVolunteer ? midpenVolunteerRegistration(detail, previous.get(id)) : detail.registration }
-          : {}),
+        ...(registration ? { registration } : {}),
         ...(attendanceNote ? { attendanceNote } : {}),
+        ...(registrationClosesBy ? { registrationClosesBy } : {}),
         kidFriendly: /\b(kid|child|family|families|youth|teen|all ages|junior)\b/i.test(
           `${title} ${description}`,
         ),

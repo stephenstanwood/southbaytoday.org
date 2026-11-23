@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isRegistrationClosedForDay } from "../../src/lib/south-bay/eventFilters.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 
 import {
@@ -16,6 +17,7 @@ import {
   parseMidpenDetail,
   parseMidpenListPage,
   parseMidpenVolunteerAvailability,
+  recheckMidpenEvent,
   midpenVolunteerRegistration,
   midpenVolunteerUrl,
 } from "./midpen-events.mjs";
@@ -167,6 +169,38 @@ test("guided activity detail preserves a required reservation", () => {
   const html = DETAIL.replace("</body>", "<p>Reservations are required and open two weeks before the activity.</p></body>");
   assert.equal(parseMidpenDetail(html).registration, "required");
   assert.equal(parseMidpenDetail(DETAIL).registration, null);
+});
+
+test("guided registration uses the published closing clock and keeps it on a recheck", () => {
+  const html = `
+    <h1 class="card__title">Full Moon on Black Mountain</h1>
+    <div class="event-page__event-date--start">Tuesday, November 24, 2026</div>
+    <p>3:00 pm - 7:30 pm</p>
+    <p>Reservations are required and will be accepted on or after November 10 at
+    12:00 p.m. (Noon) and close November 23 at 2:00 p.m.</p>`;
+  const event = {
+    title: "Full Moon on Black Mountain", source: "Midpen Open Space",
+    date: "2026-11-24", time: "3:00 PM",
+  };
+
+  const refreshed = recheckMidpenEvent(html, event, "2026-11-23");
+  assert.equal(refreshed.registration, "required");
+  assert.equal(refreshed.registrationClosesBy, "2026-11-23T22:00:00.000Z");
+  assert.equal(refreshed.attendanceNote, "Reservations close November 23 at 2 PM PT.");
+  assert.equal(isRegistrationClosedForDay(refreshed, "2026-11-23"), false);
+  assert.equal(isRegistrationClosedForDay(refreshed), true);
+
+  const nextYear = html.replace("Tuesday, November 24, 2026", "Friday, January 1, 2027")
+    .replace("close November 23", "close December 31");
+  assert.equal(parseMidpenDetail(nextYear).registrationClosesBy, "2026-12-31T22:00:00.000Z");
+  assert.equal(parseMidpenDetail(html.replace("close November 23", "close November 25")).registrationClosesBy, null);
+  assert.equal(parseMidpenDetail(html.replace("close November 23", "close November 31")).registrationClosesBy, null);
+
+  const undated = html.replace(" and close November 23 at 2:00 p.m.", "");
+  const updated = recheckMidpenEvent(undated, refreshed, "2026-11-23");
+  assert.equal(updated.registration, "required");
+  assert.equal(updated.registrationClosesBy, null);
+  assert.equal(updated.attendanceNote, null);
 });
 
 test("the organizer's canceled project heading overrides a stale calendar listing", () => {
