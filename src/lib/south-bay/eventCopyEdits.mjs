@@ -1595,6 +1595,7 @@ const EDITS = {
   },
   "Los Altos Village Association": {
     description: [
+      [/\bfrom (\d{1,2}(?::\d{2})?)\s*[-–]\s*(\d{1,2}(?::\d{2})? PM)\b/g, "from $1 to $2"],
       ["Join us Friday, October 30th for", "Join us Friday, October 30th, for"],
       [/^Date: Sunday, November 29th, 2026;? Time: 6:00 p\.m\.;? Place: Downtown Los Altos, California\.?(?= |$)/g, "On Sunday, November 29, 2026, the parade starts at 6:00 p.m. in downtown Los Altos, California."],
     ],
@@ -1670,6 +1671,12 @@ const EDITS = {
     ],
     description: [
       ...SCCLD_OPEN_MIC_EDITS,
+      ["Looking for community resources or not sure where to start?", "Need help finding community resources?"],
+      [
+        "Please only reserve spots for the children participating (not adults) and provide the child's name in the registration with parents' email information.",
+        "Reserve spots only for children who will participate. When you register, provide each child's name and a parent's email address.",
+      ],
+      [/\bfrom (\d{1,2}(?::\d{2})?) pm – (\d{1,2}(?::\d{2})?) pm\b/g, "from $1 to $2 p.m."],
       [
         /Calling all non-walking babies ages (\d+-\d+) months for a special storytime featuring American Sign Language along with songs and stories and fun!/g,
         "Non-walking babies ages $1 months can join a storytime with American Sign Language, songs, and stories.",
