@@ -153,6 +153,35 @@ test("Books Inc.'s November 24 author event uses the published book title and RS
   assert.deepEqual(applyVerifiedEventFacts(anotherDate), anotherDate);
 });
 
+test("Saratoga holiday dates retain the city's hours and direct occurrence links", () => {
+  const appearances = [
+    {
+      eid: 2686, title: "Candy Cane Village", time: "3:00 PM", venue: "Historic Saratoga Village",
+      verified: {
+        endTime: "5:00 PM", venue: "Saratoga Chamber of Commerce",
+        address: "14460 Big Basin Way, Saratoga, CA 95070", cost: "free", kidFriendly: true,
+      },
+    },
+    {
+      eid: 2698, title: "Annual Holiday Tree Lighting", time: "5:30 PM", venue: "Blaney Plaza",
+      verified: { endTime: "6:30 PM" },
+    },
+  ];
+
+  for (const { eid, title, time, venue, verified } of appearances) {
+    const url = `https://www.saratoga.ca.us/Calendar.aspx?EID=${eid}`;
+    const event = {
+      date: "2026-11-27", title, time, venue, endTime: null, cost: null,
+      url: `${url}&month=11&year=2026&day=5&calType=0`,
+    };
+    const corrected = applyVerifiedEventFacts(event);
+    assert.deepEqual(corrected, { ...event, ...verified, url });
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    const otherDate = { ...event, date: "2026-11-28" };
+    assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+  }
+});
+
 test("the Los Altos museum housing-policy talk is listed under Education", () => {
   const incoming = {
     title: "A Local History of Housing",

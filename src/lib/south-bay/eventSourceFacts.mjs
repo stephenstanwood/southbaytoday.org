@@ -2640,6 +2640,30 @@ const CORRECTIONS = [
       venue: "Saratoga Library", address: "13650 Saratoga Ave, Saratoga, CA 95070", endTime: "4:00 PM",
     },
   },
+  // The city's occurrence pages give the full schedules. The newsletter URLs
+  // with calendar-view parameters open the calendar grid instead.
+  {
+    date: "2026-11-27",
+    url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2686",
+    aliasUrls: ["https://www.saratoga.ca.us/Calendar.aspx?EID=2686&month=11&year=2026&day=5&calType=0"],
+    facts: {
+      url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2686",
+      venue: "Saratoga Chamber of Commerce",
+      address: "14460 Big Basin Way, Saratoga, CA 95070",
+      endTime: "5:00 PM",
+      cost: "free",
+      kidFriendly: true,
+    },
+  },
+  {
+    date: "2026-11-27",
+    url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2698",
+    aliasUrls: ["https://www.saratoga.ca.us/Calendar.aspx?EID=2698&month=11&year=2026&day=5&calType=0"],
+    facts: {
+      url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2698",
+      endTime: "6:30 PM",
+    },
+  },
   // The organizer lists 6–9 PM, with ticket check-in from 5 PM.
   // https://members.saratogachamber.org/events/details/saratoga-s-holiday-wine-experience-10853
   {
