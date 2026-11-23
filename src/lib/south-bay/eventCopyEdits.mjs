@@ -2871,6 +2871,25 @@ export function polishReviewedEventCopy(event) {
       "Registration for this series is closed.",
     );
   }
+  // This series' invitation to register can remain in the source after the session fills.
+  if (next.source === "Santa Clara County Library" && next.title === "Tween Dungeons and Dragons"
+      && next.registration === "full") {
+    if (typeof next.description === "string") {
+      next.description = next.description.replace(
+        /^Please see contact information to receive information on registration and future Tween Dungeons and Dragons sessions\./,
+        "See the event's contact information for details on future Tween Dungeons and Dragons sessions.",
+      ).replace(
+        /Join our quest for valor! Kids ages (\d+-\d+) are invited to register for our Winter Session of Tween Dungeons and Dragons\. Our Winter Session is designed for players already familiar with the basics of the game\./,
+        "The winter session is for kids ages $1 who already know the basics of the game.",
+      );
+    }
+    if (typeof next.blurb === "string") {
+      next.blurb = next.blurb.replace(
+        /^Play Dungeons and Dragons with other kids ages (\d+-\d+) in the library's Winter Session, with registration handled through the listed contact\.$/,
+        "The library's winter Dungeons and Dragons session is for kids ages $1.",
+      );
+    }
+  }
   // The series description lists every topic. Lead with the confirmed lesson for this occurrence.
   if (next.source === "San Jose Public Library" && next.date === "2026-11-28"
       && typeof next.description === "string" && next.description.includes(SJPL_EASY_TECH_VOICE_ASSISTANT_COPY)

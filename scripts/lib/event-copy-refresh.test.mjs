@@ -338,6 +338,28 @@ test("library signup advice follows availability and keeps waitlist instructions
   }
   assert.equal(polishReviewedEventCopy({ source, registration: "required", attendanceNote: refreshed }).attendanceNote, reviewed);
 });
+test("Campbell's full Dungeons and Dragons session directs readers to future sessions", () => {
+  const { event, copy } = JSON.parse(readFileSync(
+    new URL("./fixtures/reviewed-tween-dungeons-and-dragons.json", import.meta.url),
+  ));
+  const refreshed = { ...event, description: polishDescription(event.description) };
+  const reviewed = { ...refreshed, ...copy };
+
+  assert.deepEqual(polishReviewedEventCopy(refreshed), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+
+  const reopened = { ...refreshed, registration: "required" };
+  const otherPublisher = { ...refreshed, source: "Different publisher" };
+  const newerCopy = {
+    ...refreshed,
+    description: "The library has posted new registration details for future sessions.",
+    blurb: "The group plays Dungeons and Dragons at Campbell Library.",
+  };
+  for (const untouched of [reopened, otherPublisher, newerCopy]) {
+    assert.deepEqual(polishReviewedEventCopy(untouched), untouched);
+  }
+});
+
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
