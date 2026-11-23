@@ -1402,6 +1402,22 @@ const EDITS = {
         "connect and find/lend support to other parents in the Rose Garden and Downtown San Jose area.",
         "connect with other parents in the Rose Garden and Downtown San Jose area and support one another.",
       ],
+      [
+        "Come and practice speaking English with a friendly group in the library. We will practice vocabulary for everyday activities, listening skills, reading skills, and speaking skills.",
+        "Practice everyday English vocabulary, listening, reading, and speaking with a friendly group at the library.",
+      ],
+      [
+        "Our reading buddy will listen to children and help them build confidence in their ability to read. The reading buddy will ask questions about the books to help children understand what they read. Children will enjoy one-on-one interaction with Grant,",
+        "The reading buddy will listen as children read, help them build confidence, and ask questions about the books to help them understand what they read. Children will enjoy one-on-one interaction with Grant,",
+      ],
+      [
+        "Would you like to learn how to create an email, to search the internet, to create and edit Microsoft Word documents, to do online job searching or to complete online job applications? Increase your digital literacy today.",
+        "Would you like to learn how to use email, search the internet, create and edit Microsoft Word documents, look for jobs online, or fill out online job applications?",
+      ],
+      [
+        "Our tech mentors can guide you in learning a variety of computer skills that enable you to better use the library's public computers and to benefit from the library's freely available online resources, including ebooks! Don't worry about not having a computer; iPads will be available for in-library use during the mentoring session.",
+        "Tech mentors can show you how to use the library's public computers and free online resources, including ebooks. iPads are available to use in the library during the session.",
+      ],
     ],
     blurb: [
       ["an LGBTQ+ friendly space", "an LGBTQ+-friendly space"],
@@ -1488,6 +1504,11 @@ const EDITS = {
       ["Bring assigned homework to the Children's Room and work through it with volunteer coach Delaney, open to kindergarten through 5th grade.", "Students in kindergarten through 5th grade can bring assigned homework to the Children's Room and work through it with volunteer coach Delaney."],
       ["Sing songs, rhymes, and finger plays with your whole family, mixed ages welcome, in an early literacy session built around movement.", "Enjoy songs, rhymes, fingerplays, and movement with the whole family in this early literacy session. All ages are welcome."],
       ["Watch The Peanuts Movie on a library screening", "Watch The Peanuts Movie at a library screening"],
+      [
+        "Crochet at Tully Library with a volunteer on hand to teach beginners, and use the tools and supplies provided.",
+        "Crochet at Tully Library. Tools and supplies are provided, and a volunteer can help beginners.",
+      ],
+      ["Make a winter trees craft at the library", "Make a craft featuring winter trees at the library"],
     ],
   },
   "Linden Tree Books": {
@@ -2262,6 +2283,7 @@ const EDITS = {
       ["Many local affiliates of PBS have broadcast the film but national PBS, however, has refused", "Many local affiliates of PBS have broadcast the film, but national PBS has refused"],
       ["Charles Rangel (D-NY.),", "Charles Rangel (D-NY),"],
       ["Danièle Archambault, Ph. D. (Linguistics)", "Danièle Archambault, Ph.D. (Linguistics)"],
+      ["Appointments are limited to a single two-hour appointment per week per person.", "Each person can book one two-hour appointment per week."],
     ],
     blurb: [
       [
@@ -2369,6 +2391,10 @@ const EDITS = {
       ["Columbia Neighborhood Center Gym, no registration needed.", "Columbia Neighborhood Center Gym. No registration needed."],
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
       ["Hear violinist Rolando Morejón Reyes lead an ensemble tied to Buena Vista Social Club through Cuban rhythms.", "Hear Cuban rhythms as violinist Rolando Morejón Reyes leads an ensemble with ties to the Buena Vista Social Club."],
+      [
+        "Paint a winter-themed piece in a guided workshop at the Triton, with materials and up to two glasses of wine included for ages 21+.",
+        "This guided winter-themed painting workshop at the Triton is for adults ages 21 and up. Materials and up to two glasses of wine are included.",
+      ],
     ],
     description: [
       [
@@ -2528,6 +2554,7 @@ const EDITS = {
         "Dance at Kawaii Rave at The Ritz, a 21-and-over night where ticket holders must show valid ID at the door.",
         "Dance at The Ritz's Kawaii Rave, a 21-and-up event that requires valid ID at the door.",
       ],
+      ["when The Emo Night Tour stops through on Thursday night.", "when The Emo Night Tour comes to town Thursday night."],
     ],
   },
   "Mountain Winery": {
