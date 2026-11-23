@@ -1,10 +1,11 @@
 ---
 import SignalShell from "../layouts/SignalShell.astro";
+import { CAMPS, LATEST_SEASON } from "../lib/south-bay/campFinder";
 ---
 
 <SignalShell
-  title="Summer Camps — South Bay Today"
-  description="Compare South Bay summer camp programs by age and 2026 price, then check each operator for next season's dates and registration."
+  title={`Summer Camps ${LATEST_SEASON} in Santa Clara County — South Bay Today`}
+  description={`Compare ${CAMPS.counts.programs} summer camp programs across Santa Clara County by age, week, price and financial aid, each taken from the camp's own pages.`}
   initialTab="camps"
   ogImage="https://southbaytoday.org/og/og-camps.jpg"
 />

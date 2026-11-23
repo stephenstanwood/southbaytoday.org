@@ -1,9 +1,15 @@
 // ---------------------------------------------------------------------------
-// South Bay Today — Summer Camp Data 2026
+// South Bay Today — Summer Camp Data 2026 (the hand-made list, retiring)
 // ---------------------------------------------------------------------------
+// Since 2026-11-23 /camps is built from the sourced Camp Finder records
+// (scripts/sync-camp-finder.mjs → camp-finder.json). This file now only feeds
+// the "More camps to check" list on /camps: the camps here that the sourced
+// data doesn't cover yet. Each drops off by itself once the data covers its
+// website; delete the file when that list is empty. Don't add new camps here:
+// they belong in camp-finder-data.
+//
 // Every URL and program name in this file was verified against the operator's
-// current website on DATA_VERIFIED_AT. If you spot a broken link or out-of-date
-// price, please update the entry and bump DATA_VERIFIED_AT.
+// current website on DATA_VERIFIED_AT.
 
 export type CampType = "general" | "sports" | "arts" | "stem" | "nature" | "specialty" | "academic";
 

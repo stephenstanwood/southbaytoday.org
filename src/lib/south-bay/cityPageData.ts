@@ -15,14 +15,14 @@
 // Keep this module deterministic: it runs once at build time, and its output
 // feeds the server render, the hydration props, and the open-now endpoint.
 // Anything that depends on the reader's clock or on randomness (is the
-// meeting tonight, which places are open now, which camps are still running)
+// meeting tonight, which places are open now)
 // stays in CityPage and runs after mount.
 
 import upcomingMeetingsJson from "../../data/south-bay/upcoming-meetings.json";
 import digestsJson from "../../data/south-bay/digests.json";
 import openNowCandidatesJson from "../../data/south-bay/open-now-candidates.json";
 import { isPlaceTemporarilyUnavailable } from "./placeAvailability.mjs";
-import { openCampLastDatesForCity } from "./cityCamps";
+import { campsForCity, type CityCamps } from "./cityCamps";
 
 // ── Types (what CityPage receives) ──
 
@@ -61,8 +61,8 @@ export type OpenNowCandidate = {
 export type CityPageData = {
   nextMeeting: CityMeeting | null;
   digest: CityDigest | null;
-  /** See openCampLastDatesForCity: one entry per camp still open at build time. */
-  campLastDates: Array<string | null>;
+  /** The city's sourced summer camp programs (see campsForCity), or null. */
+  camps: CityCamps;
 };
 
 // ── Raw file shapes (only the fields read here) ──
@@ -151,7 +151,7 @@ export function getCityPageData(cityId: string, _cityName: string): CityPageData
   return {
     nextMeeting: meetingFor(cityId),
     digest: digestFor(cityId),
-    campLastDates: openCampLastDatesForCity(cityId),
+    camps: campsForCity(cityId),
   };
 }
 

@@ -1,0 +1,25 @@
+---
+// A plain list of camp programs for the static camp pages: each name links to
+// its /camps/<id> page, with ages, dates and price on the line below.
+import { LATEST_SEASON, programLine, type Program } from "../../../lib/south-bay/campFinder";
+
+interface Props {
+  programs: Program[];
+  /** add the organization to each line (city and interest pages group by city) */
+  showOperator?: boolean;
+  /** add the city to each line */
+  showCity?: boolean;
+}
+
+const { programs, showOperator = false, showCity = false } = Astro.props;
+---
+
+<ul class="camps-rows">
+  {programs.map((p) => (
+    <li>
+      <a href={`/camps/${p.id}`}>{p.name}</a>
+      {p.season !== LATEST_SEASON && <span class="camps-season">{p.season} details</span>}
+      <p>{[showOperator ? p.operator : null, showCity ? p.city : null, programLine(p)].filter(Boolean).join(" · ")}</p>
+    </li>
+  ))}
+</ul>

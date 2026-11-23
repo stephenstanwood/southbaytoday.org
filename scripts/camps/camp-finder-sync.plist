@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Refresh /camps from the Camp Finder records (scripts/camps/
+  scheduled-camp-finder-sync.mjs): pull the private camp-finder-data repo,
+  rewrite the two snapshot files, push them to origin/main. 2:40 AM puts
+  overnight data in front of morning readers; 12:40 PM carries the
+  operator's morning batches. The :55 slots retry after lock contention and
+  are no-ops once the data is published.
+
+  Node runs as a child of /bin/zsh, never as the launchd program itself
+  (see default-plans-refresh.plist: after `brew upgrade node` a direct launch
+  is SIGKILLed with "Launch Constraint Violation").
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>org.southbaytoday.camp-finder-sync</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/zsh</string>
+        <string>-f</string>
+        <string>-c</string>
+        <string>/opt/homebrew/bin/node /Users/stephenstanwood/Projects/southbaytoday.org/scripts/camps/scheduled-camp-finder-sync.mjs; exit $?</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- git finds gh (its GitHub credential helper) on this PATH. -->
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>2</integer>
+            <key>Minute</key>
+            <integer>40</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>2</integer>
+            <key>Minute</key>
+            <integer>55</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>12</integer>
+            <key>Minute</key>
+            <integer>40</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>12</integer>
+            <key>Minute</key>
+            <integer>55</integer>
+        </dict>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/Users/stephenstanwood/Library/Logs/camp-finder-sync.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/stephenstanwood/Library/Logs/camp-finder-sync.log</string>
+</dict>
+</plist>

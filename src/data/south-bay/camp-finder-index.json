@@ -1,0 +1,13467 @@
+{
+ "schema": 1,
+ "checkedThrough": "2026-11-23",
+ "latestSeason": 2027,
+ "weeks": [
+  {
+   "start": "2027-05-31",
+   "end": "2027-06-04",
+   "label": "May 31–Jun 4"
+  },
+  {
+   "start": "2027-06-07",
+   "end": "2027-06-11",
+   "label": "Jun 7–11"
+  },
+  {
+   "start": "2027-06-14",
+   "end": "2027-06-18",
+   "label": "Jun 14–18"
+  },
+  {
+   "start": "2027-06-21",
+   "end": "2027-06-25",
+   "label": "Jun 21–25"
+  },
+  {
+   "start": "2027-06-28",
+   "end": "2027-07-02",
+   "label": "Jun 28–Jul 2"
+  },
+  {
+   "start": "2027-07-05",
+   "end": "2027-07-09",
+   "label": "Jul 5–9"
+  },
+  {
+   "start": "2027-07-12",
+   "end": "2027-07-16",
+   "label": "Jul 12–16"
+  },
+  {
+   "start": "2027-07-19",
+   "end": "2027-07-23",
+   "label": "Jul 19–23"
+  },
+  {
+   "start": "2027-07-26",
+   "end": "2027-07-30",
+   "label": "Jul 26–30"
+  },
+  {
+   "start": "2027-08-02",
+   "end": "2027-08-06",
+   "label": "Aug 2–6"
+  },
+  {
+   "start": "2027-08-09",
+   "end": "2027-08-13",
+   "label": "Aug 9–13"
+  }
+ ],
+ "operators": [
+  {
+   "slug": "acme-education-group",
+   "name": "Acme Education Group"
+  },
+  {
+   "slug": "athena-academy",
+   "name": "Athena Academy"
+  },
+  {
+   "slug": "barca-academy-us",
+   "name": "Barça Academy US"
+  },
+  {
+   "slug": "camp-galileo",
+   "name": "Camp Galileo"
+  },
+  {
+   "slug": "chabad-israeli-sv",
+   "name": "Chabad Israeli SV"
+  },
+  {
+   "slug": "club-scikidz-silicon-valley",
+   "name": "Club SciKidz Silicon Valley"
+  },
+  {
+   "slug": "community-school-of-music-and-arts",
+   "name": "Community School of Music and Arts"
+  },
+  {
+   "slug": "happy-hollow-park-zoo-city-of-san-jose",
+   "name": "Happy Hollow Park & Zoo (City of San José)"
+  },
+  {
+   "slug": "hidden-villa",
+   "name": "Hidden Villa"
+  },
+  {
+   "slug": "india-community-center",
+   "name": "India Community Center"
+  },
+  {
+   "slug": "integem",
+   "name": "Integem"
+  },
+  {
+   "slug": "los-gatos-swim-racquet-club",
+   "name": "Los Gatos Swim & Racquet Club"
+  },
+  {
+   "slug": "new-museum-los-gatos-and-lgs-recreation",
+   "name": "New Museum Los Gatos and LGS Recreation"
+  },
+  {
+   "slug": "oshman-family-jcc",
+   "name": "Oshman Family JCC"
+  },
+  {
+   "slug": "paly-theatre",
+   "name": "Paly Theatre"
+  },
+  {
+   "slug": "pinewood-school",
+   "name": "Pinewood School"
+  },
+  {
+   "slug": "player-one-performance",
+   "name": "Player One Performance"
+  },
+  {
+   "slug": "san-jose-museum-of-art",
+   "name": "San José Museum of Art"
+  },
+  {
+   "slug": "san-jose-state-volleyball-and-us-sports-camps",
+   "name": "San José State Volleyball and US Sports Camps"
+  },
+  {
+   "slug": "stanford-athletics-and-us-sports-camps",
+   "name": "Stanford Athletics and US Sports Camps"
+  },
+  {
+   "slug": "stanford-jazz-workshop",
+   "name": "Stanford Jazz Workshop"
+  },
+  {
+   "slug": "stanford-men-s-soccer",
+   "name": "Stanford Men’s Soccer"
+  },
+  {
+   "slug": "star-kids-academy",
+   "name": "Star Kids Academy"
+  },
+  {
+   "slug": "stem4kids",
+   "name": "STEM4Kids"
+  },
+  {
+   "slug": "steve-kate-s-camp",
+   "name": "Steve & Kate's Camp"
+  },
+  {
+   "slug": "the-harker-school",
+   "name": "The Harker School"
+  },
+  {
+   "slug": "the-tech-interactive",
+   "name": "The Tech Interactive"
+  },
+  {
+   "slug": "ymca-of-silicon-valley",
+   "name": "YMCA of Silicon Valley"
+  }
+ ],
+ "cities": [
+  {
+   "slug": "campbell",
+   "name": "Campbell"
+  },
+  {
+   "slug": "cupertino",
+   "name": "Cupertino"
+  },
+  {
+   "slug": "los-altos",
+   "name": "Los Altos"
+  },
+  {
+   "slug": "los-altos-hills",
+   "name": "Los Altos Hills"
+  },
+  {
+   "slug": "los-gatos",
+   "name": "Los Gatos"
+  },
+  {
+   "slug": "milpitas",
+   "name": "Milpitas"
+  },
+  {
+   "slug": "morgan-hill",
+   "name": "Morgan Hill"
+  },
+  {
+   "slug": "mountain-view",
+   "name": "Mountain View"
+  },
+  {
+   "slug": "palo-alto",
+   "name": "Palo Alto"
+  },
+  {
+   "slug": "san-jose",
+   "name": "San José"
+  },
+  {
+   "slug": "santa-clara",
+   "name": "Santa Clara"
+  },
+  {
+   "slug": "saratoga",
+   "name": "Saratoga"
+  },
+  {
+   "slug": "stanford",
+   "name": "Stanford"
+  },
+  {
+   "slug": "sunnyvale",
+   "name": "Sunnyvale"
+  }
+ ],
+ "stillToCheck": [
+  {
+   "name": "Camp Cardinal at Stanford",
+   "city": "Stanford / Palo Alto",
+   "url": "https://rec.stanford.edu/play/youth-programs/camp-cardinal"
+  },
+  {
+   "name": "Camp CMT (Children's Musical Theater SJ)",
+   "city": "San José",
+   "url": "https://www.cmtsj.org/campcmt/"
+  },
+  {
+   "name": "Camp Golden Arrow (Milpitas)",
+   "city": "Milpitas",
+   "url": "https://www.milpitas.gov/448/Activity-Guide-Registration"
+  },
+  {
+   "name": "Camp San Jose",
+   "city": "San José",
+   "url": "https://anc.apm.activecommunities.com/sanjoseparksandrec/home"
+  },
+  {
+   "name": "Camp Shalom at APJCC",
+   "city": "Los Gatos",
+   "url": "https://apjcc.org/summer/"
+  },
+  {
+   "name": "Camp Winnemucca (Milpitas)",
+   "city": "Milpitas",
+   "url": "https://www.milpitas.gov/448/Activity-Guide-Registration"
+  },
+  {
+   "name": "Campbell Day Camp",
+   "city": "Campbell",
+   "url": "https://www.campbellca.gov/331/Camps"
+  },
+  {
+   "name": "Code Ninjas South Bay",
+   "city": "Multi-city",
+   "url": "https://www.codeninjas.com/locations"
+  },
+  {
+   "name": "Cupertino Summer Camps",
+   "city": "Cupertino",
+   "url": "https://www.cupertino.gov/camps"
+  },
+  {
+   "name": "CYS String Ensembles Day Camp",
+   "city": "Cupertino",
+   "url": "https://www.cys.org"
+  },
+  {
+   "name": "De Anza College Academy",
+   "city": "Cupertino",
+   "url": "https://www.deanza.edu/academy/"
+  },
+  {
+   "name": "Enjoy! Summer Camps (Palo Alto)",
+   "city": "Palo Alto",
+   "url": "https://www.paloalto.gov/Departments/Community-Services/Activities-Programs/Enjoy/Summer-Camps"
+  },
+  {
+   "name": "Golden State Sports Academy",
+   "city": "Multi-city",
+   "url": "https://gssportsacademy.com/campsclinics/"
+  },
+  {
+   "name": "iD Tech Day Camp at Stanford",
+   "city": "Stanford / Palo Alto",
+   "url": "https://www.idtech.com"
+  },
+  {
+   "name": "Lego Engineering Camp (Engineering For Kids)",
+   "city": "Multi-city",
+   "url": "https://www.engineeringforkids.com"
+  },
+  {
+   "name": "LGS Summer Camps (Los Gatos-Saratoga)",
+   "city": "Los Gatos / Saratoga",
+   "url": "https://losgatos.perfectmind.com/22167/Clients/BookMe4?widgetId=fdd7404c-01ad-4422-a2fd-241ded98c6eb"
+  },
+  {
+   "name": "Mad Science Camp",
+   "city": "Multi-city",
+   "url": "https://thebayarea.madscience.org"
+  },
+  {
+   "name": "Marsh-In Summer Camp",
+   "city": "Alviso / Fremont NWR",
+   "url": "https://sfbayws.org/2026/04/14/marsh-in-summer-camp-2026-applications-open/"
+  },
+  {
+   "name": "Mountain View Summer Camps",
+   "city": "Mountain View",
+   "url": "https://www.mountainview.gov/our-city/departments/community-services/recreation/register-for-classes"
+  },
+  {
+   "name": "Palo Alto Junior Museum & Zoo Summer Camp",
+   "city": "Palo Alto",
+   "url": "https://www.paloaltozoo.org/Programs/Summer-Camps"
+  },
+  {
+   "name": "Peninsula Youth Theatre Summer Camps",
+   "city": "Mountain View",
+   "url": "https://campscui.active.com/orgs/PeninsulaYouthTheatre"
+  },
+  {
+   "name": "Redwood Grove Camps (Los Altos)",
+   "city": "Los Altos",
+   "url": "https://www.losaltosca.gov/321/Camps-Classes"
+  },
+  {
+   "name": "San Jose Earthquakes Soccer Camps",
+   "city": "San José",
+   "url": "https://www.sjearthquakes.com/camps"
+  },
+  {
+   "name": "Santa Clara Day Camp",
+   "city": "Santa Clara",
+   "url": "https://apm.activecommunities.com/santaclara/Home"
+  },
+  {
+   "name": "Sunnyvale Summer Camps",
+   "city": "Sunnyvale",
+   "url": "https://www.sunnyvale.ca.gov/recreation-and-community/classes-and-activities/camps"
+  },
+  {
+   "name": "The Little Gym Summer Camp (SJ South)",
+   "city": "San José",
+   "url": "https://www.thelittlegym.com/california-san-jose-south/camps/"
+  },
+  {
+   "name": "Western Ballet Summer Intensive",
+   "city": "Mountain View",
+   "url": "https://westernballet.org/summerintensive/"
+  }
+ ],
+ "programs": [
+  {
+   "id": "3d-arts-morgan-hill-ca",
+   "name": "3D Arts",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "3d-design-and-printing-workshop-campbell-ca",
+   "name": "3D Design and Printing Workshop",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "3d-design-and-printing-workshop-cupertino-ca",
+   "name": "3D Design and Printing Workshop",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "3d-design-and-printing-workshop-mountain-view-ca",
+   "name": "3D Design and Printing Workshop",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "3d-printing-and-cooking-milpitas-ca",
+   "name": "3D Printing and Cooking",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "culinary"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-04"
+  },
+  {
+   "id": "acme-summer-camp-palo-alto-ca",
+   "name": "Acme Summer Camp",
+   "op": 0,
+   "city": "palo-alto",
+   "season": 2027,
+   "topics": [
+    "academic",
+    "general"
+   ]
+  },
+  {
+   "id": "action-attraction-mountain-view-ca",
+   "name": "Action Attraction",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "action-attraction-sunnyvale-ca",
+   "name": "Action Attraction",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "action-attraction-west-valley-elementary-school-sunnyvale-ca-ages-12-15",
+   "name": "Action Attraction",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "advanced-two-week-session-stanford-ca",
+   "name": "Advanced Two-Week Session",
+   "op": 20,
+   "city": "stanford",
+   "season": 2027,
+   "topics": [
+    "music"
+   ],
+   "ages": [
+    14,
+    18
+   ],
+   "sessions": [
+    [
+     "2027-07-18",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    365000,
+    365000,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "adventure-morgan-hill-ca",
+   "name": "Adventure",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ],
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    29900,
+    39600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "adventure-san-jose-ca",
+   "name": "Adventure",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "general",
+    "adventure"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    33300,
+    44800,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "adventure-saratoga-ca",
+   "name": "Adventure",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    32900,
+    44900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "ai-agent-and-app-studio-music-and-athletics-milpitas-ca",
+   "name": "AI Agent and App Studio, Music and Athletics",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports",
+    "music"
+   ],
+   "ages": [
+    10,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-18"
+  },
+  {
+   "id": "all-sports-camp-los-altos-hills-ca",
+   "name": "All-Sports Camp",
+   "op": 15,
+   "city": "los-altos-hills",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2026-06-01",
+     "2026-06-05"
+    ]
+   ],
+   "price": [
+    60000,
+    60000,
+    "week"
+   ]
+  },
+  {
+   "id": "anibots-cupertino-ca",
+   "name": "Anibots",
+   "op": 22,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    39975,
+    66625,
+    "week"
+   ]
+  },
+  {
+   "id": "animal-encounters-morgan-hill-ca",
+   "name": "Animal Encounters",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "animals"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "animal-encounters-mountain-view-ca",
+   "name": "Animal Encounters",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "animals"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "animal-encounters-sunnyvale-ca",
+   "name": "Animal Encounters",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "animals"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "archery-san-jose-ca",
+   "name": "Archery",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    44000,
+    48100,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "archery-saratoga-ca",
+   "name": "Archery",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    9,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    58900,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "aroma-artistry-chess-and-sports-milpitas-ca",
+   "name": "Aroma Artistry, Chess and Sports",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-16"
+  },
+  {
+   "id": "around-the-world-photography-and-makers-market-milpitas-ca",
+   "name": "Around the World, Photography and Makers Market",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-16"
+  },
+  {
+   "id": "art-camp-sketch-paint-cupertino-ca",
+   "name": "Art Camp: Sketch & Paint",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    5,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "art-camp-sketch-paint-san-jose-ca",
+   "name": "Art Camp: Sketch & Paint",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    5,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "attraction-adventure-san-jose-ca",
+   "name": "Attraction Adventure",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    47300,
+    52500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "aviation-sports-and-music-milpitas-ca",
+   "name": "Aviation, Sports and Music",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports",
+    "music"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-18"
+  },
+  {
+   "id": "badminton-101-san-jose-ca",
+   "name": "Badminton 101",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    36700,
+    39400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "basketball-tournament-hoover-middle-school-san-jose-ca",
+   "name": "Basketball (Tournament)",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    45800,
+    50000,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "basketball-tournament-san-jose-ca",
+   "name": "Basketball (Tournament)",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "basketball-tournament-saratoga-ca",
+   "name": "Basketball (Tournament)",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "battlebots-cupertino-ca",
+   "name": "Battlebots",
+   "op": 22,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    39975,
+    66625,
+    "week"
+   ]
+  },
+  {
+   "id": "beats-lab-morgan-hill-ca",
+   "name": "Beats Lab",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "music"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "beats-lab-san-jose-ca",
+   "name": "Beats Lab",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "music"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "boys-basketball-skills-and-competition-camp-los-altos-hills-ca",
+   "name": "Boys Basketball Skills and Competition Camp",
+   "op": 15,
+   "city": "los-altos-hills",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    50000,
+    50000,
+    "week"
+   ]
+  },
+  {
+   "id": "cadet-steam-powered-zoo-san-jose-ca",
+   "name": "Cadet Steam-Powered Zoo",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "stem"
+   ],
+   "ages": [
+    9,
+    10
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-08-03",
+     "2026-08-05"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "cadet-vets-san-jose-ca",
+   "name": "Cadet Vets",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "stem"
+   ],
+   "ages": [
+    9,
+    10
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-19"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "cadet-wild-rides-san-jose-ca",
+   "name": "Cadet Wild Rides",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "stem"
+   ],
+   "ages": [
+    9,
+    10
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-03"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "cadet-zoology-mythology-san-jose-ca",
+   "name": "Cadet Zoology Mythology",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "arts"
+   ],
+   "ages": [
+    9,
+    10
+   ],
+   "sessions": [
+    [
+     "2026-06-01",
+     "2026-06-05"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "camp-at-the-tech-interactive-san-jose-ca",
+   "name": "CAMP at The Tech Interactive",
+   "op": 26,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts"
+   ],
+   "ages": [
+    7,
+    12
+   ]
+  },
+  {
+   "id": "camp-confidence-palo-alto-ca",
+   "name": "Camp Confidence",
+   "op": 1,
+   "city": "palo-alto",
+   "season": 2027,
+   "topics": [
+    "academic",
+    "special-needs"
+   ],
+   "ages": [
+    6,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    75000,
+    75000,
+    "week"
+   ]
+  },
+  {
+   "id": "camp-create-diy-hoover-middle-school-san-jose-ca",
+   "name": "Camp Create DIY",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    45800,
+    50000,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "camp-create-diy-san-jose-ca",
+   "name": "Camp Create DIY",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "camp-creativity-little-makers-edition-los-altos-ca",
+   "name": "Camp Creativity: Little Makers Edition",
+   "op": 15,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "stem",
+    "arts"
+   ],
+   "ages": [
+    5,
+    7
+   ],
+   "sessions": [
+    [
+     "2026-06-01",
+     "2026-06-05"
+    ]
+   ],
+   "price": [
+    65000,
+    65000,
+    "week"
+   ]
+  },
+  {
+   "id": "camp-galileo-cupertino-ca",
+   "name": "Camp Galileo",
+   "op": 3,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "adventure"
+   ],
+   "ages": [
+    5,
+    16
+   ],
+   "aid": true,
+   "opens": "2026-11-30"
+  },
+  {
+   "id": "camp-galileo-los-altos-ca",
+   "name": "Camp Galileo",
+   "op": 3,
+   "city": "los-altos",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "adventure"
+   ],
+   "ages": [
+    5,
+    16
+   ],
+   "aid": true,
+   "opens": "2026-11-30"
+  },
+  {
+   "id": "camp-galileo-palo-alto-ca",
+   "name": "Camp Galileo",
+   "op": 3,
+   "city": "palo-alto",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "adventure"
+   ],
+   "ages": [
+    5,
+    16
+   ],
+   "aid": true,
+   "opens": "2026-11-30"
+  },
+  {
+   "id": "camp-galileo-san-jose-ca",
+   "name": "Camp Galileo",
+   "op": 3,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "adventure"
+   ],
+   "ages": [
+    5,
+    16
+   ],
+   "aid": true,
+   "opens": "2026-11-30"
+  },
+  {
+   "id": "camp-galileo-santa-clara-ca",
+   "name": "Camp Galileo",
+   "op": 3,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "adventure"
+   ],
+   "ages": [
+    5,
+    16
+   ],
+   "aid": true,
+   "opens": "2026-11-30"
+  },
+  {
+   "id": "camp-galileo-saratoga-ca",
+   "name": "Camp Galileo",
+   "op": 3,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "adventure"
+   ],
+   "ages": [
+    5,
+    16
+   ],
+   "aid": true,
+   "opens": "2026-11-30"
+  },
+  {
+   "id": "camp-galileo-sunnyvale-ca",
+   "name": "Camp Galileo",
+   "op": 3,
+   "city": "sunnyvale",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "adventure"
+   ],
+   "ages": [
+    5,
+    16
+   ],
+   "aid": true,
+   "opens": "2026-11-30"
+  },
+  {
+   "id": "camp-integem-registration-cupertino-san-jose-sunnyvale-cupertino-ca",
+   "name": "Camp Integem Registration – Cupertino/San Jose/Sunnyvale",
+   "op": 10,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts"
+   ],
+   "ages": [
+    6,
+    18
+   ]
+  },
+  {
+   "id": "camp-recess-saratoga-ca",
+   "name": "Camp Recess",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "campers-in-leadership-training-cilt-los-altos-hills-ca",
+   "name": "Campers in Leadership Training (CILT)",
+   "op": 8,
+   "city": "los-altos-hills",
+   "season": 2027,
+   "topics": [
+    "nature",
+    "adventure"
+   ],
+   "ages": [
+    16,
+    17
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    100000,
+    100000,
+    "session"
+   ],
+   "aid": true,
+   "overnight": true,
+   "opens": "2027-01-16"
+  },
+  {
+   "id": "can-you-catch-em-all-san-jose-ca",
+   "name": "Can You Catch ’Em All?",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    43200,
+    47200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "carbots-cupertino-ca",
+   "name": "Carbots",
+   "op": 22,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    39975,
+    66625,
+    "week"
+   ]
+  },
+  {
+   "id": "center-stage-mountain-view-ca",
+   "name": "Center Stage",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    52200,
+    55500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "center-stage-san-jose-ca",
+   "name": "Center Stage",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    46700,
+    50900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "chemistry-morgan-hill-ca",
+   "name": "Chemistry",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "chess-camp-fresh-beginner-or-entry-level-milpitas-ca",
+   "name": "Chess camp-Fresh, beginner or entry level",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    5,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ],
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    42900,
+    42900,
+    "week"
+   ]
+  },
+  {
+   "id": "chess-camp-intermediate-advance-level-milpitas-ca",
+   "name": "Chess camp-Intermediate/Advance level",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    5,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ],
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    42900,
+    42900,
+    "week"
+   ]
+  },
+  {
+   "id": "chocolate-making-los-altos-ca",
+   "name": "Chocolate Making",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "culinary"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    52200,
+    55500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "clay-creations-sunnyvale-ca",
+   "name": "Clay Creations",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "code-a-story-public-speaking-and-athletics-milpitas-ca",
+   "name": "Code a Story, Public Speaking and Athletics",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports",
+    "academic"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-04"
+  },
+  {
+   "id": "college-bound-sunnyvale-ca",
+   "name": "College Bound",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "academic"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "college-prep-leadership-and-cooking-milpitas-ca",
+   "name": "College Prep, Leadership and Cooking",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "culinary",
+    "academic"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-02"
+  },
+  {
+   "id": "cookie-making-saratoga-ca",
+   "name": "Cookie Making",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "culinary"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    44800,
+    48600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "cooking-101-around-the-world-san-jose-ca",
+   "name": "Cooking 101 Around The World",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "culinary"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    39500,
+    40600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "cooking-101-saratoga-ca",
+   "name": "Cooking 101",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "culinary"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    35800,
+    38500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "cooking-101-sunnyvale-ca",
+   "name": "Cooking 101",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "culinary"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    44800,
+    48600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "cooking-and-textile-arts-milpitas-ca",
+   "name": "Cooking and Textile Arts",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts",
+    "culinary"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-05-28"
+  },
+  {
+   "id": "cooking-around-the-world-and-yoga-milpitas-ca",
+   "name": "Cooking, Around the World and Yoga",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "culinary",
+    "sports"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-23"
+  },
+  {
+   "id": "cooking-game-development-and-game-maker-milpitas-ca",
+   "name": "Cooking, Game Development and Game Maker",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "culinary"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-30"
+  },
+  {
+   "id": "craft-corner-los-altos-ca",
+   "name": "Craft Corner",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    52200,
+    55500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "cupertino-summer-camp-cupertino-ca",
+   "name": "Cupertino Summer Camp",
+   "op": 24,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "general",
+    "arts",
+    "stem",
+    "sports"
+   ],
+   "ages": [
+    4,
+    12
+   ]
+  },
+  {
+   "id": "dance-los-altos-ca",
+   "name": "Dance",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    34900,
+    37900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "dance-sunnyvale-ca",
+   "name": "Dance",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "day-camp-los-altos-hills-ca",
+   "name": "Day Camp",
+   "op": 8,
+   "city": "los-altos-hills",
+   "season": 2027,
+   "topics": [
+    "nature",
+    "animals",
+    "swim",
+    "arts"
+   ],
+   "ages": [
+    5,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ]
+   ],
+   "price": [
+    86500,
+    86500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2027-01-16"
+  },
+  {
+   "id": "digital-art-and-animation-mountain-view-ca",
+   "name": "Digital Art and Animation",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "digital-art-and-animation-santa-clara-ca",
+   "name": "Digital Art and Animation",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "digital-art-and-animation-saratoga-ca",
+   "name": "Digital Art and Animation",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "drama-and-art-milpitas-ca",
+   "name": "Drama and Art",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-25"
+  },
+  {
+   "id": "drama-prop-making-art-and-sports-milpitas-ca",
+   "name": "Drama & Prop Making Art and Sports",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts",
+    "sports"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-09"
+  },
+  {
+   "id": "ecobots-cupertino-ca",
+   "name": "Ecobots",
+   "op": 22,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    39975,
+    66625,
+    "week"
+   ]
+  },
+  {
+   "id": "emergency-medicine-campbell-ca",
+   "name": "Emergency Medicine",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "emergency-medicine-cupertino-ca",
+   "name": "Emergency Medicine",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "emergency-medicine-mountain-view-ca",
+   "name": "Emergency Medicine",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "emergency-medicine-santa-clara-ca",
+   "name": "Emergency Medicine",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "emergency-medicine-saratoga-ca",
+   "name": "Emergency Medicine",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "emergency-vet-campbell-ca",
+   "name": "Emergency Vet",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "emergency-vet-cupertino-ca",
+   "name": "Emergency Vet",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "emergency-vet-mountain-view-ca",
+   "name": "Emergency Vet",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "emergency-vet-santa-clara-ca",
+   "name": "Emergency Vet",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "emergency-vet-saratoga-ca",
+   "name": "Emergency Vet",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "engineering-brick-model-building-amusement-park-mania-los-altos-ca",
+   "name": "Engineering – Brick Model Building: Amusement Park Mania",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    52200,
+    55500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "engineering-brick-model-building-mining-crafting-w-roblox-los-altos-ca",
+   "name": "Engineering – Brick Model Building: Mining & Crafting w/ Roblox",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    52200,
+    55500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "engineering-brick-model-building-pocket-brick-monsters-sunnyvale-ca",
+   "name": "Engineering – Brick Model Building: Pocket Brick Monsters",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    52200,
+    55500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "engineering-mining-crafting-morgan-hill-ca",
+   "name": "Engineering - Mining & Crafting",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "equestrian-mountain-view-ca",
+   "name": "Equestrian",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "animals"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    91300,
+    96900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "equestrian-saratoga-ca",
+   "name": "Equestrian",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "sports"
+   ],
+   "ages": [
+    9,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    73000,
+    77500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "equestrian-sunnyvale-ca",
+   "name": "Equestrian",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "animals"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    91300,
+    96900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "executive-functioning-skills-for-success-los-altos-hills-ca",
+   "name": "Executive Functioning: Skills for Success",
+   "op": 15,
+   "city": "los-altos-hills",
+   "season": 2026,
+   "topics": [
+    "academic"
+   ],
+   "ages": [
+    12,
+    17
+   ],
+   "sessions": [
+    [
+     "2026-08-10",
+     "2026-08-10"
+    ]
+   ],
+   "price": [
+    20000,
+    20000,
+    "week"
+   ]
+  },
+  {
+   "id": "exploring-the-baylands-mountain-view-ca",
+   "name": "Exploring the Baylands",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "nature"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "exploring-the-baylands-sunnyvale-ca",
+   "name": "Exploring the Baylands",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "nature"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "fairy-garden-morgan-hill-ca",
+   "name": "Fairy Garden",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "arts",
+    "nature"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "fc-barcelona-soccer-camp-morgan-hill-ca",
+   "name": "FC Barcelona Soccer Camp",
+   "op": 2,
+   "city": "morgan-hill",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    17
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    54900,
+    69900,
+    "week"
+   ]
+  },
+  {
+   "id": "fc-barcelona-soccer-camp-sunnyvale-ca",
+   "name": "FC Barcelona Soccer Camp",
+   "op": 2,
+   "city": "sunnyvale",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    17
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    59900,
+    69900,
+    "week"
+   ]
+  },
+  {
+   "id": "film-making-animation-sports-logical-reasoning-and-gk-milpitas-ca",
+   "name": "Film Making /Animation, Sports, Logical Reasoning and Gk",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts",
+    "sports",
+    "academic"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-09"
+  },
+  {
+   "id": "flag-football-san-jose-ca",
+   "name": "Flag Football",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "folklorico-dance-101-san-jose-ca",
+   "name": "Folklorico Dance 101",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    50000,
+    54300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "folklorico-dance-101-saratoga-ca",
+   "name": "Folklorico Dance 101",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "forensic-detective-campbell-ca",
+   "name": "Forensic Detective",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "forensic-detective-mountain-view-ca",
+   "name": "Forensic Detective",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "forensic-detective-santa-clara-ca",
+   "name": "Forensic Detective",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "forensic-detective-saratoga-ca",
+   "name": "Forensic Detective",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "game-changers-public-speaking-and-sports-milpitas-ca",
+   "name": "Game Changers, Public Speaking and Sports",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports",
+    "academic"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-11"
+  },
+  {
+   "id": "game-makers-scratch-cupertino-ca",
+   "name": "Game Makers: Scratch",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "game-makers-scratch-san-jose-ca",
+   "name": "Game Makers: Scratch",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "game-show-sunnyvale-ca",
+   "name": "Game Show",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    65500,
+    68200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "gamescape-creators-san-jose-ca",
+   "name": "GameScape Creators",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    34600,
+    37800,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "get-up-dance-san-jose-ca",
+   "name": "Get Up & Dance",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    46700,
+    50900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "giant-steps-day-camp-stanford-ca",
+   "name": "Giant Steps Day Camp",
+   "op": 20,
+   "city": "stanford",
+   "season": 2027,
+   "topics": [
+    "music"
+   ],
+   "ages": [
+    10,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    107500,
+    107500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "giant-steps-two-week-session-stanford-ca",
+   "name": "Giant Steps Two-Week Session",
+   "op": 20,
+   "city": "stanford",
+   "season": 2027,
+   "topics": [
+    "music"
+   ],
+   "ages": [
+    12,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-11",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    280000,
+    412500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "golf-san-jose-ca",
+   "name": "Golf",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "gymnastics-morgan-hill-ca",
+   "name": "Gymnastics",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    36700,
+    40200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "gymnastics-saratoga-ca",
+   "name": "Gymnastics",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    58900,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "hip-hop-dance-morgan-hill-ca",
+   "name": "Hip Hop Dance",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "hip-hop-dance-san-jose-ca",
+   "name": "Hip Hop Dance",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "icc-bollywood-with-amit-and-hiren-bollywood-dhamaka-camp-milpitas-ca",
+   "name": "ICC Bollywood with Amit and Hiren- Bollywood Dhamaka Camp",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-09"
+  },
+  {
+   "id": "icc-bollywood-with-amit-and-hiren-milpitas-ca",
+   "name": "ICC Bollywood with Amit and Hiren",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-16"
+  },
+  {
+   "id": "icc-main-center-preschool-summer-camps-milpitas-ca",
+   "name": "ICC Main Center Preschool Summer Camps",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    3,
+    5
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ],
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-01"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    23900,
+    28900,
+    "week"
+   ]
+  },
+  {
+   "id": "ice-cream-mountain-view-ca",
+   "name": "Ice Cream",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "culinary"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "ice-skating-101-hoover-middle-school-san-jose-ca",
+   "name": "Ice Skating 101",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    50000,
+    54300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "ice-skating-101-mountain-view-ca",
+   "name": "Ice Skating 101",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    52200,
+    55500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "ice-skating-101-san-jose-ca",
+   "name": "Ice Skating 101",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    44500,
+    48600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "ice-skating-101-saratoga-ca",
+   "name": "Ice Skating 101",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    55200,
+    55500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "ice-skating-101-sunnyvale-ca",
+   "name": "Ice Skating 101",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    52200,
+    55500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "indian-classical-dance-henna-knitting-crochet-milpitas-ca",
+   "name": "Indian Classical Dance + Henna/ Knitting/ Crochet",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-02"
+  },
+  {
+   "id": "intro-to-robotics-cupertino-ca",
+   "name": "Intro to Robotics",
+   "op": 22,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ]
+   ],
+   "price": [
+    39975,
+    66625,
+    "week"
+   ]
+  },
+  {
+   "id": "jazz-camp-stanford-ca",
+   "name": "Jazz Camp",
+   "op": 20,
+   "city": "stanford",
+   "season": 2027,
+   "topics": [
+    "music"
+   ],
+   "ages": [
+    12,
+    17
+   ],
+   "sessions": [
+    [
+     "2027-07-11",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-18",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    182500,
+    315000,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "jazz-camp-two-week-session-stanford-ca",
+   "name": "Jazz Camp Two-Week Session",
+   "op": 20,
+   "city": "stanford",
+   "season": 2027,
+   "topics": [
+    "music"
+   ],
+   "ages": [
+    12,
+    17
+   ],
+   "sessions": [
+    [
+     "2027-07-11",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    355000,
+    620000,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "jazz-institute-stanford-ca",
+   "name": "Jazz Institute",
+   "op": 20,
+   "city": "stanford",
+   "season": 2027,
+   "topics": [
+    "music"
+   ],
+   "ages": [
+    14,
+    18
+   ],
+   "sessions": [
+    [
+     "2027-07-25",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    192500,
+    325000,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "jr-detective-sunnyvale-ca",
+   "name": "Jr. Detective",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    44800,
+    48600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-ai-and-chat-bot-campbell-ca",
+   "name": "Junior AI and Chat Bot",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-ai-and-chat-bot-cupertino-ca",
+   "name": "Junior AI and Chat Bot",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-ai-and-chat-bot-saratoga-ca",
+   "name": "Junior AI and Chat Bot",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-eco-explorer-campbell-ca",
+   "name": "Junior Eco Explorer",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-eco-explorer-mountain-view-ca",
+   "name": "Junior Eco Explorer",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-eco-explorer-santa-clara-ca",
+   "name": "Junior Eco Explorer",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-elite-camp-stanford-ca",
+   "name": "Junior Elite Camp",
+   "op": 21,
+   "city": "stanford",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    10,
+    16
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-23"
+    ]
+   ],
+   "price": [
+    54500,
+    64500,
+    "week"
+   ]
+  },
+  {
+   "id": "junior-golfers-morgan-hill-ca",
+   "name": "Junior Golfers",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-physician-campbell-ca",
+   "name": "Junior Physician",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-physician-cupertino-ca",
+   "name": "Junior Physician",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-physician-mountain-view-ca",
+   "name": "Junior Physician",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-physician-santa-clara-ca",
+   "name": "Junior Physician",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-robot-engineer-campbell-ca",
+   "name": "Junior Robot Engineer",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    61900,
+    61900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-robot-engineer-cupertino-ca",
+   "name": "Junior Robot Engineer",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    61900,
+    61900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-robot-engineer-mountain-view-ca",
+   "name": "Junior Robot Engineer",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    61900,
+    61900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-robot-engineer-santa-clara-ca",
+   "name": "Junior Robot Engineer",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    61900,
+    61900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-robot-engineer-saratoga-ca",
+   "name": "Junior Robot Engineer",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    61900,
+    61900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-scientist-campbell-ca",
+   "name": "Junior Scientist",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-scientist-cupertino-ca",
+   "name": "Junior Scientist",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-scientist-mountain-view-ca",
+   "name": "Junior Scientist",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-scientist-santa-clara-ca",
+   "name": "Junior Scientist",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-scientist-saratoga-ca",
+   "name": "Junior Scientist",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-space-explorer-campbell-ca",
+   "name": "Junior Space Explorer",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-space-explorer-cupertino-ca",
+   "name": "Junior Space Explorer",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-space-explorer-mountain-view-ca",
+   "name": "Junior Space Explorer",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-space-explorer-santa-clara-ca",
+   "name": "Junior Space Explorer",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-veterinary-medicine-cupertino-ca",
+   "name": "Junior Veterinary Medicine",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    61900,
+    61900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-veterinary-medicine-mountain-view-ca",
+   "name": "Junior Veterinary Medicine",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    61900,
+    61900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-veterinary-medicine-santa-clara-ca",
+   "name": "Junior Veterinary Medicine",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    61900,
+    61900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-veterinary-medicine-saratoga-ca",
+   "name": "Junior Veterinary Medicine",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    61900,
+    61900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "junior-vets-san-jose-ca",
+   "name": "Junior Vets",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "stem"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2026-06-01",
+     "2026-06-05"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "junior-wild-rides-san-jose-ca",
+   "name": "Junior Wild Rides",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "stem"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-19"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "junior-zoology-mythology-san-jose-ca",
+   "name": "Junior Zoology Mythology",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "arts"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-03"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "jurassic-campbell-ca",
+   "name": "Jurassic",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    54900,
+    54900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "jurassic-saratoga-ca",
+   "name": "Jurassic",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    54900,
+    54900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "k-pop-stem-stars-cupertino-ca",
+   "name": "K-Pop STEM Stars",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "k-pop-stem-stars-mountain-view-ca",
+   "name": "K-Pop STEM Stars",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "k-pop-stem-stars-santa-clara-ca",
+   "name": "K-Pop STEM Stars",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "kayaking-sunnyvale-ca",
+   "name": "Kayaking",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    81100,
+    84100,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "kids-summer-art-camp-san-jose-ca",
+   "name": "Kids Summer Art Camp",
+   "op": 17,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    45000,
+    50000,
+    "week"
+   ],
+   "opens": "2027-02-10"
+  },
+  {
+   "id": "kindercamp-san-jose-ca",
+   "name": "KinderCamp",
+   "op": 25,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "academic",
+    "stem",
+    "arts",
+    "swim"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-07-02"
+    ],
+    [
+     "2026-06-22",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    184500,
+    472500,
+    "session"
+   ]
+  },
+  {
+   "id": "laser-tag-mini-golf-mountain-view-ca",
+   "name": "Laser Tag & Mini Golf",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    58700,
+    62700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "lego-2-0-robotics-meets-scratch-campbell-ca",
+   "name": "LEGO 2.0 Robotics Meets Scratch",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    54900,
+    54900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "lego-2-0-robotics-meets-scratch-mountain-view-ca",
+   "name": "LEGO 2.0 Robotics Meets Scratch",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    54900,
+    54900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "lego-2-0-robotics-meets-scratch-santa-clara-ca",
+   "name": "LEGO 2.0 Robotics Meets Scratch",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    54900,
+    54900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "lego-2-0-robotics-meets-scratch-saratoga-ca",
+   "name": "LEGO 2.0 Robotics Meets Scratch",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    54900,
+    54900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "lego-robotics-builders-cupertino-ca",
+   "name": "LEGO® Robotics: Builders",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "lego-robotics-builders-san-jose-ca",
+   "name": "LEGO® Robotics: Builders",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "lego-robotics-challengers-cupertino-ca",
+   "name": "LEGO® Robotics: Challengers",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "lego-robotics-challengers-san-jose-ca",
+   "name": "LEGO® Robotics: Challengers",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "life-in-los-gatos-art-camp-los-gatos-ca",
+   "name": "Life in Los Gatos Art Camp",
+   "op": 12,
+   "city": "los-gatos",
+   "season": 2026,
+   "topics": [
+    "arts",
+    "nature"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-19"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    40000,
+    40000,
+    "week"
+   ]
+  },
+  {
+   "id": "lil-chefs-los-altos-ca",
+   "name": "Lil’ Chefs",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "culinary"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    83200,
+    90800,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "lil-neighborhood-heroes-los-altos-ca",
+   "name": "Lil’ Neighborhood Heroes",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    75200,
+    82000,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "lil-sporters-los-altos-ca",
+   "name": "Lil’ Sporters",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    75200,
+    82000,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "lil-tinkers-los-altos-ca",
+   "name": "Lil’ Tinkers",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    83200,
+    90800,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-builders-academics-building-cupertino-ca",
+   "name": "Little Builders: Academics + Building",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "academic"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "little-builders-academics-building-san-jose-ca",
+   "name": "Little Builders: Academics + Building",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "academic"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "little-critters-dinosaur-roar-san-jose-ca",
+   "name": "Little Critters Dinosaur Roar",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "nature",
+    "stem"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-19"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "little-critters-zooperheroes-san-jose-ca",
+   "name": "Little Critters Zooperheroes",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "nature"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2026-06-01",
+     "2026-06-05"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-08-03",
+     "2026-08-05"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "little-engineer-campbell-ca",
+   "name": "Little Engineer",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-engineer-cupertino-ca",
+   "name": "Little Engineer",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-engineer-mountain-view-ca",
+   "name": "Little Engineer",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-engineer-santa-clara-ca",
+   "name": "Little Engineer",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-engineer-saratoga-ca",
+   "name": "Little Engineer",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-robot-engineer-campbell-ca",
+   "name": "Little Robot Engineer",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-robot-engineer-cupertino-ca",
+   "name": "Little Robot Engineer",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-robot-engineer-mountain-view-ca",
+   "name": "Little Robot Engineer",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-robot-engineer-santa-clara-ca",
+   "name": "Little Robot Engineer",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-robot-engineer-saratoga-ca",
+   "name": "Little Robot Engineer",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    57900,
+    57900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-scientist-campbell-ca",
+   "name": "Little Scientist",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-scientist-cupertino-ca",
+   "name": "Little Scientist",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-scientist-mountain-view-ca",
+   "name": "Little Scientist",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-scientist-saratoga-ca",
+   "name": "Little Scientist",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-space-explorer-campbell-ca",
+   "name": "Little Space Explorer",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-space-explorer-cupertino-ca",
+   "name": "Little Space Explorer",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-space-explorer-mountain-view-ca",
+   "name": "Little Space Explorer",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-space-explorer-santa-clara-ca",
+   "name": "Little Space Explorer",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-space-explorer-saratoga-ca",
+   "name": "Little Space Explorer",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-zoologist-mountain-view-ca",
+   "name": "Little Zoologist",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    54900,
+    54900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "little-zoologist-santa-clara-ca",
+   "name": "Little Zoologist",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    54900,
+    54900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "magic-camp-san-jose-ca",
+   "name": "Magic Camp",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    45800,
+    50000,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "magic-mystery-harry-potter-dance-and-gk-milpitas-ca",
+   "name": "Magic Mystery-harry Potter, Dance and Gk",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-08-06"
+  },
+  {
+   "id": "magic-mystery-music-and-sports-milpitas-ca",
+   "name": "Magic, Mystery, Music and Sports",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports",
+    "music"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-18"
+  },
+  {
+   "id": "makers-market-place-morgan-hill-ca",
+   "name": "Makers Market Place",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "makers-market-place-mountain-view-ca",
+   "name": "Makers Market Place",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    44800,
+    48600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "makers-market-place-sunnyvale-ca",
+   "name": "Makers Market Place",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    44800,
+    48600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "marine-biology-san-jose-ca",
+   "name": "Marine Biology",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "nature"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "martial-arts-mountain-view-ca",
+   "name": "Martial Arts",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    47000,
+    50100,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "martial-arts-sunnyvale-ca",
+   "name": "Martial Arts",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "martial-arts-vargas-elementary-school-mountain-view-ca-ages-9-11",
+   "name": "Martial Arts",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "master-minecraft-coder-campbell-ca",
+   "name": "Master Minecraft Coder",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "master-minecraft-coder-cupertino-ca",
+   "name": "Master Minecraft Coder",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "master-minecraft-coder-mountain-view-ca",
+   "name": "Master Minecraft Coder",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "master-minecraft-coder-santa-clara-ca",
+   "name": "Master Minecraft Coder",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "master-minecraft-coder-saratoga-ca",
+   "name": "Master Minecraft Coder",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "math-based-art-public-speaking-and-table-tennis-milpitas-ca",
+   "name": "Math Based Art, Public Speaking and Table Tennis",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts",
+    "sports",
+    "academic"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-16"
+  },
+  {
+   "id": "mini-dancers-los-altos-ca",
+   "name": "Mini Dancers",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    41600,
+    45400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "mini-medical-school-cupertino-ca",
+   "name": "Mini Medical School",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "mini-medical-school-mountain-view-ca",
+   "name": "Mini Medical School",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "mini-medical-school-santa-clara-ca",
+   "name": "Mini Medical School",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "musical-revue-los-altos-ca",
+   "name": "Musical Revue",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "music"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    44800,
+    48600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "musical-revue-saratoga-ca",
+   "name": "Musical Revue",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "music",
+    "arts"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "mystery-challenge-mountain-view-ca",
+   "name": "Mystery Challenge",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    65500,
+    68200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "mystery-challenge-sunnyvale-ca",
+   "name": "Mystery Challenge",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    65500,
+    68200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "mystery-logic-reasoning-and-slime-milpitas-ca",
+   "name": "Mystery, Logic Reasoning and Slime",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "academic"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-09"
+  },
+  {
+   "id": "neo-animaltronics-india-immersion-and-indian-sports-milpitas-ca",
+   "name": "Neo Animaltronics, India Immersion and Indian Sports",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-16"
+  },
+  {
+   "id": "neo-computer-vision-week-1-milpitas-ca",
+   "name": "Neo Computer Vision Week 1",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    10,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-09"
+  },
+  {
+   "id": "neo-computer-vision-week-2-milpitas-ca",
+   "name": "Neo Computer Vision Week 2",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    10,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-16"
+  },
+  {
+   "id": "neo-cosmobots-and-advanced-art-milpitas-ca",
+   "name": "Neo Cosmobots and Advanced Art",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-11"
+  },
+  {
+   "id": "neo-drone-heroes-cooking-and-balloon-art-milpitas-ca",
+   "name": "Neo Drone Heroes, Cooking and Balloon Art",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "culinary"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-16"
+  },
+  {
+   "id": "neo-smart-connections-music-and-yoga-milpitas-ca",
+   "name": "Neo Smart Connections, Music and Yoga",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports",
+    "music"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-25"
+  },
+  {
+   "id": "neo-tech-bootcamp-science-mixologists-and-kung-fu-milpitas-ca",
+   "name": "Neo Tech Bootcamp, Science Mixologists and Kung Fu",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-02"
+  },
+  {
+   "id": "nike-cross-country-camp-of-champions-at-stanford-university-stanford-ca",
+   "name": "Nike Cross Country Camp of Champions at Stanford University",
+   "op": 19,
+   "city": "stanford",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    12,
+    18
+   ],
+   "sessions": [
+    [
+     "2027-07-05",
+     "2027-07-08"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-15"
+    ]
+   ],
+   "price": [
+    4110,
+    89500,
+    "week"
+   ]
+  },
+  {
+   "id": "nike-track-field-camp-of-champions-at-stanford-university-stanford-ca",
+   "name": "Nike Track & Field Camp of Champions at Stanford University",
+   "op": 19,
+   "city": "stanford",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    12,
+    18
+   ],
+   "sessions": [
+    [
+     "2027-07-05",
+     "2027-07-08"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-15"
+    ]
+   ],
+   "price": [
+    4110,
+    89500,
+    "week"
+   ]
+  },
+  {
+   "id": "overnight-bay-to-sea-backpacking-los-altos-hills-ca",
+   "name": "Overnight: Bay to Sea Backpacking",
+   "op": 8,
+   "city": "los-altos-hills",
+   "season": 2027,
+   "topics": [
+    "nature",
+    "adventure"
+   ],
+   "ages": [
+    15,
+    17
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    235500,
+    235500,
+    "session"
+   ],
+   "aid": true,
+   "overnight": true,
+   "opens": "2027-01-16"
+  },
+  {
+   "id": "overnight-community-camp-4-5th-grade-los-altos-hills-ca",
+   "name": "Overnight: Community Camp – 4-5th Grade",
+   "op": 8,
+   "city": "los-altos-hills",
+   "season": 2027,
+   "topics": [
+    "nature",
+    "animals",
+    "swim"
+   ],
+   "ages": [
+    9,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-14"
+    ],
+    [
+     "2027-07-14",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    55000,
+    220000,
+    "session"
+   ],
+   "aid": true,
+   "overnight": true,
+   "opens": "2027-01-16"
+  },
+  {
+   "id": "overnight-community-camp-6-7th-grade-los-altos-hills-ca",
+   "name": "Overnight: Community Camp – 6-7th Grade",
+   "op": 8,
+   "city": "los-altos-hills",
+   "season": 2027,
+   "topics": [
+    "nature",
+    "animals",
+    "swim"
+   ],
+   "ages": [
+    11,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    110000,
+    220000,
+    "session"
+   ],
+   "aid": true,
+   "overnight": true,
+   "opens": "2027-01-16"
+  },
+  {
+   "id": "overnight-farm-wilderness-camp-8-10th-grade-los-altos-hills-ca",
+   "name": "Overnight: Farm & Wilderness Camp- 8-10th Grade",
+   "op": 8,
+   "city": "los-altos-hills",
+   "season": 2027,
+   "topics": [
+    "nature",
+    "adventure",
+    "animals"
+   ],
+   "ages": [
+    13,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    110000,
+    220000,
+    "session"
+   ],
+   "aid": true,
+   "overnight": true,
+   "opens": "2027-01-16"
+  },
+  {
+   "id": "p1p-day-camps-san-jose-ca",
+   "name": "P1P Day Camps",
+   "op": 16,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    47500,
+    55000,
+    "week"
+   ]
+  },
+  {
+   "id": "p1p-day-camps-saratoga-ca",
+   "name": "P1P Day Camps",
+   "op": 16,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    47500,
+    55000,
+    "week"
+   ]
+  },
+  {
+   "id": "painting-mountain-view-ca",
+   "name": "Painting",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    34900,
+    37900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "palo-alto-summer-camp-palo-alto-ca",
+   "name": "Palo Alto Summer Camp",
+   "op": 24,
+   "city": "palo-alto",
+   "season": 2027,
+   "topics": [
+    "general",
+    "arts",
+    "stem",
+    "sports"
+   ],
+   "ages": [
+    4,
+    12
+   ]
+  },
+  {
+   "id": "paly-theatre-summer-camp-palo-alto-ca",
+   "name": "Paly Theatre Summer Camp",
+   "op": 14,
+   "city": "palo-alto",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    75000,
+    75000,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "photography-history-sports-and-chess-milpitas-ca",
+   "name": "Photography, History, Sports and Chess",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts",
+    "sports",
+    "academic"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-25"
+  },
+  {
+   "id": "physics-athletics-stop-motion-animation-milpitas-ca",
+   "name": "Physics, Athletics, Stop Motion Animation",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "sports"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-08-06"
+  },
+  {
+   "id": "pickleball-hoover-middle-school-san-jose-ca",
+   "name": "Pickleball",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    45800,
+    50000,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "pickleball-morgan-hill-ca",
+   "name": "Pickleball",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    36700,
+    40200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "pickleball-san-jose-ca",
+   "name": "Pickleball",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "pickleball-saratoga-ca",
+   "name": "Pickleball",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    34900,
+    37900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "pickleball-sunnyvale-ca",
+   "name": "Pickleball",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "pinewood-summer-shooting-clinic-los-altos-hills-ca",
+   "name": "Pinewood Summer Shooting Clinic",
+   "op": 15,
+   "city": "los-altos-hills",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    9,
+    17
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-19"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    25000,
+    25000,
+    "week"
+   ]
+  },
+  {
+   "id": "places-we-go-mountain-view-ca",
+   "name": "Places We Go!",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "places-we-go-sunnyvale-ca",
+   "name": "Places We Go!",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    47000,
+    50100,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "pokemon-professors-campbell-ca",
+   "name": "Pokémon Professors",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "pokemon-professors-mountain-view-ca",
+   "name": "Pokémon Professors",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "pokemon-professors-saratoga-ca",
+   "name": "Pokémon Professors",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    55900,
+    55900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "python-coding-milpitas-ca",
+   "name": "Python Coding",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    10,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-08-06"
+  },
+  {
+   "id": "python-programming-cupertino-ca",
+   "name": "Python Programming",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "python-programming-san-jose-ca",
+   "name": "Python Programming",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "quest-morgan-hill-ca",
+   "name": "Quest",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    8
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ],
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    29400,
+    39900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "quest-mountain-view-ca",
+   "name": "Quest",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    8
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ],
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    33400,
+    45200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "quest-san-jose-ca",
+   "name": "Quest",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "general",
+    "adventure"
+   ],
+   "ages": [
+    6,
+    8
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    33700,
+    45200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "quest-saratoga-ca",
+   "name": "Quest",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    8
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    33400,
+    45200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "radio-building-sports-and-music-milpitas-ca",
+   "name": "Radio Building, Sports and Music",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports",
+    "music"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-30"
+  },
+  {
+   "id": "rediscover-the-joy-of-learning-los-altos-hills-ca",
+   "name": "Rediscover the Joy of Learning",
+   "op": 15,
+   "city": "los-altos-hills",
+   "season": 2026,
+   "topics": [
+    "academic",
+    "language"
+   ],
+   "ages": [
+    7,
+    10
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    65000,
+    65000,
+    "week"
+   ]
+  },
+  {
+   "id": "robot-gaming-1-0-cupertino-ca",
+   "name": "Robot Gaming 1.0",
+   "op": 22,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    39975,
+    66625,
+    "week"
+   ]
+  },
+  {
+   "id": "robot-gaming-2-0-cupertino-ca",
+   "name": "Robot Gaming 2.0",
+   "op": 22,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ]
+   ],
+   "price": [
+    39975,
+    66625,
+    "week"
+   ]
+  },
+  {
+   "id": "robotics-extravaganza-cupertino-ca",
+   "name": "Robotics Extravaganza",
+   "op": 22,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    39975,
+    66625,
+    "week"
+   ]
+  },
+  {
+   "id": "robotics-fabric-art-and-zumba-milpitas-ca",
+   "name": "Robotics, Fabric Art and Zumba",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-11"
+  },
+  {
+   "id": "robotics-lego-vex-battlebots-unleashed-campbell-ca",
+   "name": "Robotics: LEGO® & VEX BattleBots Unleashed!",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "robotics-lego-vex-battlebots-unleashed-cupertino-ca",
+   "name": "Robotics: LEGO® & VEX BattleBots Unleashed!",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "robotics-lego-vex-battlebots-unleashed-mountain-view-ca",
+   "name": "Robotics: LEGO® & VEX BattleBots Unleashed!",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "robotics-lego-vex-battlebots-unleashed-santa-clara-ca",
+   "name": "Robotics: LEGO® & VEX BattleBots Unleashed!",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "robotics-lego-vex-battlebots-unleashed-saratoga-ca",
+   "name": "Robotics: LEGO® & VEX BattleBots Unleashed!",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    11,
+    15
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "robotics-lego-vex-plorers-cupertino-ca",
+   "name": "Robotics: LEGO® & Vex-plorers!",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "robotics-lego-vex-plorers-mountain-view-ca",
+   "name": "Robotics: LEGO® & Vex-plorers!",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "robotics-lego-vex-plorers-santa-clara-ca",
+   "name": "Robotics: LEGO® & Vex-plorers!",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "robotics-lego-vex-plorers-saratoga-ca",
+   "name": "Robotics: LEGO® & Vex-plorers!",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    59900,
+    59900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "robotics-mixologists-science-lab-and-kung-fu-milpitas-ca",
+   "name": "Robotics, Mixologists Science Lab and Kung Fu",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-30"
+  },
+  {
+   "id": "robotics-sports-and-music-milpitas-ca",
+   "name": "Robotics, Sports and Music",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports",
+    "music"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-05-28"
+  },
+  {
+   "id": "science-wizard-pottery-and-sculpting-milpitas-ca",
+   "name": "Science Wizard, Pottery and Sculpting",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-18"
+  },
+  {
+   "id": "sculpture-and-pottery-sports-and-chess-milpitas-ca",
+   "name": "Sculpture and Pottery, Sports and Chess",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "arts",
+    "sports"
+   ],
+   "ages": [
+    6,
+    7
+   ],
+   "sessions": [
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-08-06"
+  },
+  {
+   "id": "sea-adventure-campbell-ca",
+   "name": "Sea Adventure",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "sea-adventure-mountain-view-ca",
+   "name": "Sea Adventure",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "sea-adventure-santa-clara-ca",
+   "name": "Sea Adventure",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "sing-and-dance-the-day-away-los-altos-ca",
+   "name": "Sing and Dance the Day Away",
+   "op": 15,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "arts",
+    "music"
+   ],
+   "ages": [
+    5,
+    8
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-19"
+    ]
+   ],
+   "price": [
+    65000,
+    65000,
+    "week"
+   ]
+  },
+  {
+   "id": "slime-lab-morgan-hill-ca",
+   "name": "Slime Lab",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    42800,
+    46600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "slime-lab-saratoga-ca",
+   "name": "Slime Lab",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "soccer-mountain-view-ca",
+   "name": "Soccer",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "soccer-sunnyvale-ca",
+   "name": "Soccer",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "soccer-tournament-hoover-middle-school-san-jose-ca",
+   "name": "Soccer (Tournament)",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    45800,
+    50000,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "soccer-tournament-san-jose-ca",
+   "name": "Soccer (Tournament)",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "soccer-tournament-saratoga-ca",
+   "name": "Soccer (Tournament)",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "solar-cooker-engineering-lab-music-and-sports-milpitas-ca",
+   "name": "Solar Cooker Engineering Lab, Music and Sports",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports",
+    "music"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-30"
+  },
+  {
+   "id": "space-adventure-sunnyvale-ca",
+   "name": "Space Adventure",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    44800,
+    48600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "spartan-volleyball-camp-san-jose-ca",
+   "name": "Spartan Volleyball Camp",
+   "op": 18,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    10,
+    18
+   ]
+  },
+  {
+   "id": "sports-and-leadership-camp-los-altos-ca",
+   "name": "Sports and Leadership Camp",
+   "op": 15,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    60000,
+    60000,
+    "week"
+   ]
+  },
+  {
+   "id": "sports-mania-saratoga-ca",
+   "name": "Sports Mania",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "sports-sunnyvale-ca",
+   "name": "Sports",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "stanford-swim-camp-stanford-ca",
+   "name": "Stanford Swim Camp",
+   "op": 19,
+   "city": "stanford",
+   "season": 2027,
+   "topics": [
+    "swim",
+    "sports"
+   ],
+   "ages": [
+    9,
+    17
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-17"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-24"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-01"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-08"
+    ]
+   ]
+  },
+  {
+   "id": "steam-around-the-world-in-five-days-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Around the World in Five Days (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-09"
+  },
+  {
+   "id": "steam-community-helpers-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Community Helpers (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-02"
+  },
+  {
+   "id": "steam-community-helpers-milpitas-ca",
+   "name": "STEAM: Community Helpers",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-02"
+  },
+  {
+   "id": "steam-farmyard-fun-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Farmyard Fun (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "nature",
+    "animals"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-23"
+  },
+  {
+   "id": "steam-jungle-safari-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Jungle Safari (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "nature",
+    "animals"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-11"
+  },
+  {
+   "id": "steam-little-engineers-and-builders-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Little Engineers and Builders (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-16"
+  },
+  {
+   "id": "steam-little-gardeners-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Little Gardeners (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "nature"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-08-06"
+  },
+  {
+   "id": "steam-little-master-chefs-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Little Master Chefs (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "culinary"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-25"
+  },
+  {
+   "id": "steam-little-master-chefs-milpitas-ca",
+   "name": "STEAM: Little Master Chefs",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "culinary"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-25"
+  },
+  {
+   "id": "steam-little-scientists-lab-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Little Scientists' Lab (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-18"
+  },
+  {
+   "id": "steam-outer-space-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Outer Space (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-05-28"
+  },
+  {
+   "id": "steam-powered-zoo-in-training-san-jose-ca",
+   "name": "Steam-Powered Zoo in Training",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "stem"
+   ],
+   "ages": [
+    11,
+    13
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "steam-prehistoric-planet-5-6-year-olds-milpitas-ca",
+   "name": "STEAM: Prehistoric Planet (5-6 Year Olds)",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "animals"
+   ],
+   "ages": [
+    5,
+    6
+   ],
+   "sessions": [
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-30"
+  },
+  {
+   "id": "studio-arts-saratoga-ca",
+   "name": "Studio Arts",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "studio-arts-sunnyvale-ca",
+   "name": "Studio Arts",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "summer-art-camps-mountain-view-ca",
+   "name": "Summer Art Camps",
+   "op": 6,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    5,
+    15
+   ]
+  },
+  {
+   "id": "summer-blast-camp-los-altos-ca",
+   "name": "Summer BLAST! Camp",
+   "op": 15,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "sports",
+    "arts",
+    "stem"
+   ],
+   "ages": [
+    6,
+    8
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-19"
+    ]
+   ],
+   "price": [
+    65000,
+    65000,
+    "week"
+   ]
+  },
+  {
+   "id": "summer-camp-2027-los-altos-ca",
+   "name": "קייטנת קיץ צהר - Summer Camp 2027",
+   "op": 4,
+   "city": "los-altos",
+   "season": 2027,
+   "topics": [
+    "general"
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    45000,
+    45000,
+    "week"
+   ]
+  },
+  {
+   "id": "summer-camp-los-gatos-ca",
+   "name": "Summer Camp",
+   "op": 11,
+   "city": "los-gatos",
+   "season": 2026,
+   "topics": [
+    "sports",
+    "swim",
+    "arts"
+   ],
+   "ages": [
+    5,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-19"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-03"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ],
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    45000,
+    60500,
+    "week"
+   ],
+   "opens": "2026-03-01"
+  },
+  {
+   "id": "summer-camp-plus-san-jose-ca",
+   "name": "Summer Camp Plus",
+   "op": 25,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "academic",
+    "stem",
+    "arts",
+    "swim"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-07-02"
+    ],
+    [
+     "2026-06-22",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    184500,
+    472500,
+    "session"
+   ]
+  },
+  {
+   "id": "summer-festival-of-learning-los-altos-ca",
+   "name": "Summer Festival of Learning",
+   "op": 15,
+   "city": "los-altos",
+   "season": 2027,
+   "topics": [
+    "academic",
+    "arts",
+    "stem",
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-06",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    372000,
+    372000,
+    "session"
+   ],
+   "opens": "2027-01-25"
+  },
+  {
+   "id": "summer-institute-middle-school-san-jose-ca",
+   "name": "Summer Institute Middle School",
+   "op": 25,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "academic",
+    "arts",
+    "sports",
+    "stem"
+   ],
+   "ages": [
+    11,
+    14
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    74000,
+    82000,
+    "session"
+   ]
+  },
+  {
+   "id": "summer-institute-upper-school-san-jose-ca",
+   "name": "Summer Institute Upper School",
+   "op": 25,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "academic",
+    "stem"
+   ],
+   "ages": [
+    11,
+    18
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    224500,
+    224500,
+    "session"
+   ]
+  },
+  {
+   "id": "swimming-101-san-jose-ca",
+   "name": "Swimming 101",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "swim"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    89900,
+    97800,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "swimming-mountain-view-ca",
+   "name": "Swimming",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "swim"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    105800,
+    112600,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "swimming-saratoga-ca",
+   "name": "Swimming",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "swim"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    117500,
+    125100,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "table-tennis-camp-afternoon-elite-advanced-level-milpitas-ca",
+   "name": "Table Tennis Camp Afternoon Elite/Advanced Level",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    60
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ],
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    42900,
+    42900,
+    "week"
+   ]
+  },
+  {
+   "id": "table-tennis-camp-beginners-intermediate-milpitas-ca",
+   "name": "Table Tennis Camp Beginners & Intermediate",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    5,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ],
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    42900,
+    42900,
+    "week"
+   ]
+  },
+  {
+   "id": "taekwondo-camp-milpitas-ca",
+   "name": "Taekwondo camp",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    5,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ],
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    42900,
+    42900,
+    "week"
+   ]
+  },
+  {
+   "id": "tayasim-palo-alto-ca",
+   "name": "Tayasim",
+   "op": 13,
+   "city": "palo-alto",
+   "season": 2026,
+   "topics": [
+    "general",
+    "language"
+   ],
+   "ages": [
+    4,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-07-10"
+    ],
+    [
+     "2026-06-15",
+     "2026-08-07"
+    ],
+    [
+     "2026-07-13",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    260600,
+    556500,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tba-cupertino-ca",
+   "name": "TBA",
+   "op": 22,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    39975,
+    66625,
+    "week"
+   ]
+  },
+  {
+   "id": "tech-essentials-and-cooking-milpitas-ca",
+   "name": "Tech Essentials and Cooking",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "culinary"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-02"
+  },
+  {
+   "id": "tech-essentials-yoga-and-music-milpitas-ca",
+   "name": "Tech Essentials, Yoga and Music",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports",
+    "music"
+   ],
+   "ages": [
+    8,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-25"
+  },
+  {
+   "id": "teen-art-camp-san-jose-ca",
+   "name": "Teen Art Camp",
+   "op": 17,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    12,
+    14
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-07-05",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ]
+   ],
+   "price": [
+    45000,
+    50000,
+    "week"
+   ],
+   "opens": "2027-02-10"
+  },
+  {
+   "id": "teen-morgan-hill-ca",
+   "name": "Teen",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ],
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    29900,
+    39600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "teen-san-jose-ca",
+   "name": "Teen",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "general",
+    "adventure"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ],
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ],
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ],
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    33300,
+    44800,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "teens-sunnyvale-ca",
+   "name": "Teens",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    34800,
+    37900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tennis-los-altos-ca",
+   "name": "Tennis",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tennis-saratoga-ca",
+   "name": "Tennis",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    47000,
+    50100,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tennis-sunnyvale-ca",
+   "name": "Tennis",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "textile-arts-and-makers-market-chemistry-and-yoga-milpitas-ca",
+   "name": "Textile Arts and Makers Market, Chemistry and Yoga",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts",
+    "sports"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-08-06"
+  },
+  {
+   "id": "the-green-lab-music-and-chess-milpitas-ca",
+   "name": "The Green Lab, Music and Chess",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "sports",
+    "music",
+    "nature"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-05-28"
+  },
+  {
+   "id": "the-print-lab-milpitas-ca",
+   "name": "The Print Lab",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "sessions": [
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-07-02"
+  },
+  {
+   "id": "thingamajig-hoover-middle-school-san-jose-ca",
+   "name": "Thingamajig",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    45800,
+    50000,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "thingamajig-los-altos-ca",
+   "name": "Thingamajig",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "thingamajig-san-jose-ca",
+   "name": "Thingamajig",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    42800,
+    46700,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "thingamajig-saratoga-ca",
+   "name": "Thingamajig",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "thingamajig-sunnyvale-ca",
+   "name": "Thingamajig",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    43600,
+    47300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "think-tank-sports-and-biology-milpitas-ca",
+   "name": "Think Tank, Sports and Biology",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-11"
+  },
+  {
+   "id": "tiny-animal-planet-morgan-hill-ca",
+   "name": "Tiny Animal Planet",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "nature"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    36000,
+    39500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-animal-planet-saratoga-ca",
+   "name": "Tiny Animal Planet",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "nature"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    49400,
+    53500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-artists-hoover-middle-school-san-jose-ca",
+   "name": "Tiny Artists",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    38900,
+    42800,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-artists-morgan-hill-ca",
+   "name": "Tiny Artists",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    45000,
+    48400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-artists-san-jose-ca",
+   "name": "Tiny Artists",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    45400,
+    48900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-artists-saratoga-ca",
+   "name": "Tiny Artists",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    39500,
+    42800,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-builders-morgan-hill-ca",
+   "name": "Tiny Builders",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    45000,
+    48400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-builders-san-jose-ca",
+   "name": "Tiny Builders",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    38900,
+    42800,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-chefs-morgan-hill-ca",
+   "name": "Tiny Chefs",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "culinary"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    45000,
+    48400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-chefs-san-jose-ca",
+   "name": "Tiny Chefs",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "culinary"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    48500,
+    52500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-chemists-san-jose-ca",
+   "name": "Tiny Chemists",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    45400,
+    48900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-community-heroes-san-jose-ca",
+   "name": "Tiny Community Heroes",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    36300,
+    39200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-dancers-hoover-middle-school-san-jose-ca",
+   "name": "Tiny Dancers",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    48500,
+    52500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-dancers-san-jose-ca",
+   "name": "Tiny Dancers",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    45400,
+    48900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-dancers-saratoga-ca",
+   "name": "Tiny Dancers",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    49400,
+    53500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-gardeners-morgan-hill-ca",
+   "name": "Tiny Gardeners",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "nature"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    45000,
+    48400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-gardeners-san-jose-ca",
+   "name": "Tiny Gardeners",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "nature"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    48500,
+    52500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-gardeners-saratoga-ca",
+   "name": "Tiny Gardeners",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "nature"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    39500,
+    42800,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-icky-sticky-fun-san-jose-ca",
+   "name": "Tiny Icky Sticky Fun",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    48500,
+    52500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-icky-sticky-fun-saratoga-ca",
+   "name": "Tiny Icky Sticky Fun",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    49400,
+    53500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-marine-biologists-san-jose-ca",
+   "name": "Tiny Marine Biologists",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "nature"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    45400,
+    48900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-paleontologists-san-jose-ca",
+   "name": "Tiny Paleontologists",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ]
+   ],
+   "price": [
+    45400,
+    48900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-scientists-morgan-hill-ca",
+   "name": "Tiny Scientists",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    45000,
+    48400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-scientists-saratoga-ca",
+   "name": "Tiny Scientists",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    49400,
+    53500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-sea-explorers-morgan-hill-ca",
+   "name": "Tiny Sea Explorers",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "nature"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    36000,
+    39500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-space-cadets-morgan-hill-ca",
+   "name": "Tiny Space Cadets",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    45000,
+    48400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-space-cadets-san-jose-ca",
+   "name": "Tiny Space Cadets",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    45400,
+    48900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-space-cadets-saratoga-ca",
+   "name": "Tiny Space Cadets",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-20",
+     "2026-07-24"
+    ]
+   ],
+   "price": [
+    49400,
+    53500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-storytellers-san-jose-ca",
+   "name": "Tiny Storytellers",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    36300,
+    39200,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-super-heroes-morgan-hill-ca",
+   "name": "Tiny Super Heroes",
+   "op": 27,
+   "city": "morgan-hill",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    45000,
+    48400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tiny-super-heroes-saratoga-ca",
+   "name": "Tiny Super Heroes",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    4,
+    5
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    49400,
+    53500,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "traditional-camp-palo-alto-ca",
+   "name": "Traditional Camp",
+   "op": 13,
+   "city": "palo-alto",
+   "season": 2026,
+   "topics": [
+    "general",
+    "adventure"
+   ],
+   "ages": [
+    4,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-07-10"
+    ],
+    [
+     "2026-06-15",
+     "2026-08-07"
+    ],
+    [
+     "2026-07-13",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    243000,
+    515800,
+    "session"
+   ],
+   "aid": true
+  },
+  {
+   "id": "tutored-art-camp-los-altos-ca",
+   "name": "Tutored Art Camp",
+   "op": 15,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    9,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-01",
+     "2026-06-05"
+    ],
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    60000,
+    60000,
+    "week"
+   ]
+  },
+  {
+   "id": "under-the-sea-sunnyvale-ca",
+   "name": "Under the Sea",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "nature"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-08-03",
+     "2026-08-07"
+    ]
+   ],
+   "price": [
+    44800,
+    48600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "vets-in-training-san-jose-ca",
+   "name": "Vets in Training",
+   "op": 7,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "animals",
+    "stem"
+   ],
+   "ages": [
+    11,
+    13
+   ],
+   "sessions": [
+    [
+     "2026-06-22",
+     "2026-06-26"
+    ],
+    [
+     "2026-06-29",
+     "2026-07-03"
+    ]
+   ],
+   "price": [
+    35550,
+    39500,
+    "week"
+   ],
+   "aid": true,
+   "opens": "2026-02-09"
+  },
+  {
+   "id": "vex-robotics-engineers-cupertino-ca",
+   "name": "VEX® Robotics: Engineers",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "vex-robotics-engineers-san-jose-ca",
+   "name": "VEX® Robotics: Engineers",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "vex-robotics-rookies-cupertino-ca",
+   "name": "VEX® Robotics: Rookies",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "vex-robotics-rookies-san-jose-ca",
+   "name": "VEX® Robotics: Rookies",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    7,
+    9
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "vibe-coding-and-textile-arts-milpitas-ca",
+   "name": "Vibe Coding and Textile Arts",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "arts"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-05-31",
+     "2027-06-04"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-05-28"
+  },
+  {
+   "id": "volleyball-san-jose-ca",
+   "name": "Volleyball",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    34300,
+    37400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "volleyball-saratoga-ca",
+   "name": "Volleyball",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    34900,
+    37900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "warts-school-of-magic-san-jose-ca",
+   "name": "Wart’s School of Magic",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-06",
+     "2026-07-10"
+    ]
+   ],
+   "price": [
+    50000,
+    54300,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "warts-school-of-magic-saratoga-ca",
+   "name": "Wart’s School of Magic",
+   "op": 27,
+   "city": "saratoga",
+   "season": 2026,
+   "topics": [
+    "arts"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    34900,
+    37900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "water-adventure-mountain-view-ca",
+   "name": "Water Adventure",
+   "op": 27,
+   "city": "mountain-view",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "water-adventure-sunnyvale-ca",
+   "name": "Water Adventure",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "adventure"
+   ],
+   "ages": [
+    12,
+    15
+   ],
+   "sessions": [
+    [
+     "2026-06-08",
+     "2026-06-12"
+    ]
+   ],
+   "price": [
+    58800,
+    62600,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "wizards-and-wands-sunnyvale-ca",
+   "name": "Wizards and Wands",
+   "op": 27,
+   "city": "sunnyvale",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ]
+   ],
+   "price": [
+    41800,
+    44400,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "world-exploration-kung-fu-and-solar-cooker-engineering-lab-milpitas-ca",
+   "name": "World Exploration, Kung Fu and Solar Cooker Engineering Lab",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "stem",
+    "sports"
+   ],
+   "ages": [
+    7,
+    8
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-04"
+  },
+  {
+   "id": "y-passport-los-altos-ca",
+   "name": "Y Passport",
+   "op": 27,
+   "city": "los-altos",
+   "season": 2026,
+   "topics": [
+    "general"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    34900,
+    37900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "y-world-of-sports-cupertino-ca",
+   "name": "Y World of Sports",
+   "op": 27,
+   "city": "cupertino",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-29",
+     "2026-07-02"
+    ]
+   ],
+   "price": [
+    34900,
+    37900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "y-world-of-sports-san-jose-ca",
+   "name": "Y World of Sports",
+   "op": 27,
+   "city": "san-jose",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    6,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-18"
+    ],
+    [
+     "2026-07-13",
+     "2026-07-17"
+    ]
+   ],
+   "price": [
+    36700,
+    50000,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-ceos-academics-business-cupertino-ca",
+   "name": "Young CEOs: Academics + Business",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "academic"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "young-ceos-academics-business-san-jose-ca",
+   "name": "Young CEOs: Academics + Business",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "academic"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "young-chefs-academics-cooking-cupertino-ca",
+   "name": "Young Chefs: Academics + Cooking",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "academic",
+    "culinary"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "young-chefs-academics-cooking-san-jose-ca",
+   "name": "Young Chefs: Academics + Cooking",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "academic",
+    "culinary"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "young-eco-explorer-campbell-ca",
+   "name": "Young Eco Explorer",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-eco-explorer-mountain-view-ca",
+   "name": "Young Eco Explorer",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-entrepreneurs-and-cooking-camp-milpitas-ca",
+   "name": "Young Entrepreneurs and Cooking Camp",
+   "op": 9,
+   "city": "milpitas",
+   "season": 2027,
+   "topics": [
+    "culinary",
+    "academic"
+   ],
+   "ages": [
+    9,
+    13
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ]
+   ],
+   "price": [
+    41900,
+    41900,
+    "week"
+   ],
+   "deadline": "2027-06-04"
+  },
+  {
+   "id": "young-scientist-campbell-ca",
+   "name": "Young Scientist",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-scientist-mountain-view-ca",
+   "name": "Young Scientist",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-scientist-santa-clara-ca",
+   "name": "Young Scientist",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-scientist-saratoga-ca",
+   "name": "Young Scientist",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    58900,
+    58900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-space-explorer-campbell-ca",
+   "name": "Young Space Explorer",
+   "op": 5,
+   "city": "campbell",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-space-explorer-cupertino-ca",
+   "name": "Young Space Explorer",
+   "op": 5,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-space-explorer-mountain-view-ca",
+   "name": "Young Space Explorer",
+   "op": 5,
+   "city": "mountain-view",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-space-explorer-santa-clara-ca",
+   "name": "Young Space Explorer",
+   "op": 5,
+   "city": "santa-clara",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-space-explorer-saratoga-ca",
+   "name": "Young Space Explorer",
+   "op": 5,
+   "city": "saratoga",
+   "season": 2027,
+   "topics": [
+    "stem"
+   ],
+   "ages": [
+    9,
+    11
+   ],
+   "sessions": [
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ]
+   ],
+   "price": [
+    56900,
+    56900,
+    "week"
+   ],
+   "aid": true
+  },
+  {
+   "id": "young-speakers-academics-speaking-cupertino-ca",
+   "name": "Young Speakers: Academics + Speaking",
+   "op": 23,
+   "city": "cupertino",
+   "season": 2027,
+   "topics": [
+    "academic"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "young-speakers-academics-speaking-san-jose-ca",
+   "name": "Young Speakers: Academics + Speaking",
+   "op": 23,
+   "city": "san-jose",
+   "season": 2027,
+   "topics": [
+    "academic"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "sessions": [
+    [
+     "2027-06-07",
+     "2027-06-11"
+    ],
+    [
+     "2027-06-14",
+     "2027-06-18"
+    ],
+    [
+     "2027-06-21",
+     "2027-06-25"
+    ],
+    [
+     "2027-06-28",
+     "2027-07-02"
+    ],
+    [
+     "2027-07-06",
+     "2027-07-09"
+    ],
+    [
+     "2027-07-12",
+     "2027-07-16"
+    ],
+    [
+     "2027-07-19",
+     "2027-07-23"
+    ],
+    [
+     "2027-07-26",
+     "2027-07-30"
+    ],
+    [
+     "2027-08-02",
+     "2027-08-06"
+    ],
+    [
+     "2027-08-09",
+     "2027-08-13"
+    ]
+   ],
+   "price": [
+    39900,
+    54900,
+    "week"
+   ]
+  },
+  {
+   "id": "youth-day-camp-stanford-ca",
+   "name": "Youth Day Camp",
+   "op": 21,
+   "city": "stanford",
+   "season": 2026,
+   "topics": [
+    "sports"
+   ],
+   "ages": [
+    5,
+    11
+   ],
+   "sessions": [
+    [
+     "2026-06-15",
+     "2026-06-19"
+    ],
+    [
+     "2026-07-27",
+     "2026-07-31"
+    ]
+   ],
+   "price": [
+    39500,
+    59500,
+    "week"
+   ]
+  }
+ ]
+}

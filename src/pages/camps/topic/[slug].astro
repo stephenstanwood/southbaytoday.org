@@ -1,0 +1,86 @@
+---
+// "STEM camps in Santa Clara County": every sourced program with one interest,
+// grouped by city.
+import CalendarShell from "../../../layouts/CalendarShell.astro";
+import CampRows from "../../../components/south-bay/camps/CampRows.astro";
+import {
+  CAMPS,
+  LATEST_SEASON,
+  TOPIC_PAGES,
+  cityHref,
+  postedSentence,
+  groupByCity,
+  type Group,
+} from "../../../lib/south-bay/campFinder";
+
+// How each interest reads as a page title.
+const HEADINGS: Record<string, string> = {
+  stem: "STEM camps",
+  sports: "Sports camps",
+  arts: "Arts camps",
+  general: "All-around day camps",
+  animals: "Animal camps",
+  academic: "Academic camps",
+  adventure: "Adventure camps",
+  nature: "Nature camps",
+  culinary: "Cooking camps",
+  music: "Music camps",
+  swim: "Swim camps",
+  language: "Language camps",
+  faith: "Faith-based camps",
+  "special-needs": "Camps for kids with special needs",
+};
+
+export function getStaticPaths() {
+  return TOPIC_PAGES.map((topic) => ({ params: { slug: topic.slug }, props: { topic } }));
+}
+
+const { topic } = Astro.props as { topic: Group };
+const heading = `${HEADINGS[topic.slug] ?? `${topic.name} camps`} in ${CAMPS.regionName}`;
+const groups = groupByCity(topic.programs);
+const otherTopics = TOPIC_PAGES.filter((t) => t.slug !== topic.slug);
+
+const title = `${heading} (${LATEST_SEASON}) — South Bay Today`;
+const description =
+  `${topic.programs.length} ${(HEADINGS[topic.slug] ?? `${topic.name} camps`).toLowerCase().replace(/^stem/, "STEM")} ` +
+  `across ${CAMPS.regionName}, with ages, dates, prices and financial aid from each camp's own pages.`;
+---
+
+<CalendarShell title={title} description={description} activeTab="camps">
+  <div class="camps-page">
+    <nav class="camps-crumbs" aria-label="Breadcrumb">
+      <a href="/camps">Summer camps</a>
+      <span aria-hidden="true">/</span>
+      <span>{topic.name}</span>
+    </nav>
+
+    <h1>{heading}</h1>
+    <p class="camps-page-sub">
+      {topic.programs.length} programs in {groups.length} {groups.length === 1 ? "city" : "cities"}, each taken from the
+      camp's own pages.
+      {postedSentence(topic.programs)}
+    </p>
+
+    <ul class="camps-jump" aria-label="Narrow these camps">
+      <li><a href={`/camps?topic=${topic.slug}`}>Filter by age or week</a></li>
+      {groups.map((g) => (
+        <li><a href={`#city-${g.slug}`}>{g.name}</a></li>
+      ))}
+    </ul>
+
+    {groups.map((g) => (
+      <section class="camps-group" id={`city-${g.slug}`} aria-label={g.name}>
+        <h2><a href={cityHref(g.slug)}>{g.name}</a></h2>
+        <p class="camps-group-meta">{g.programs.length} program{g.programs.length === 1 ? "" : "s"}</p>
+        <CampRows programs={g.programs} showOperator />
+      </section>
+    ))}
+
+    <nav class="camps-group" aria-label="Other interests">
+      <h2>Other interests</h2>
+      <ul class="camps-jump">
+        {otherTopics.map((t) => <li><a href={`/camps/topic/${t.slug}`}>{t.name}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</CalendarShell>

@@ -36,6 +36,25 @@ export default function ReaderWidget() {
     setStatus('idle');
   };
 
+  // Pages can open the panel on a given kind of message ("Spot something out
+  // of date? Tell us" on the camp pages): dispatch `sbt:feedback` with
+  // { type }. The ready flag lets those buttons fall back to email until this
+  // island has hydrated.
+  useEffect(() => {
+    const open = (e: Event) => {
+      const wanted = (e as CustomEvent<{ type?: TipType }>).detail?.type;
+      if (wanted && TYPE_OPTIONS.some((o) => o.value === wanted)) setType(wanted);
+      setStatus('open');
+    };
+    const w = window as Window & { __sbtFeedbackReady?: boolean };
+    w.__sbtFeedbackReady = true;
+    window.addEventListener('sbt:feedback', open);
+    return () => {
+      w.__sbtFeedbackReady = false;
+      window.removeEventListener('sbt:feedback', open);
+    };
+  }, []);
+
   useEffect(() => {
     if (status !== 'open') return;
     const handler = (e: MouseEvent) => {

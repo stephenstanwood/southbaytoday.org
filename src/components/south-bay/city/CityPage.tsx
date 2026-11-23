@@ -138,8 +138,8 @@ type Props = {
 export default function CityPage({ cityId, cityName, data, buildDayPt }: Props) {
   // Today in Pacific time: the build's day while hydrating, the reader's
   // right after, and the next day once midnight passes in an open tab
-  // (useTodayPT checks every minute). The events, Open Right Now, and the
-  // camps pointer count days from it.
+  // (useTodayPT checks every minute). The events and Open Right Now count
+  // days from it.
   const todayIso = useTodayPT(buildDayPt);
 
   // The reader's own day, read after mount and again whenever the day turns.
@@ -210,9 +210,9 @@ export default function CityPage({ cityId, cityName, data, buildDayPt }: Props) 
           <span className="city-hero-rule" aria-hidden="true" />
         </header>
 
-        {/* Camps pointer — one-line nudge to /camps, only when this city has
-            a program still running this summer. Renders nothing otherwise. */}
-        <CityCampsPointer lastDates={data.campLastDates} cityName={cityName} todayIso={todayIso} />
+        {/* Camps pointer — one-line link to this city's summer camp list, only
+            when the camp directory has programs here. */}
+        <CityCampsPointer camps={data.camps} cityName={cityName} />
 
         {/* 5-day forecast strip — same component the homepage uses. */}
         <div className="city-forecast">
@@ -276,29 +276,20 @@ export default function CityPage({ cityId, cityName, data, buildDayPt }: Props) 
 
 
 // ---------------------------------------------------------------------------
-// City Camps Pointer — one-line nudge to /camps, only when this city has a
-// program still open this summer. Colors match CampsView's own "mix it up"
-// tip banner (#fffbeb/#fde68a/#92400e) so the cross-link feels like it comes
-// from the same page it's pointing to, not a bolted-on ad.
+// City Camps Pointer — one-line link to this city's summer camp list, when the
+// sourced camp directory has programs here. Colors match the camps area so
+// the cross-link reads as part of that section, not a bolted-on ad.
 // ---------------------------------------------------------------------------
 
-function CityCampsPointer({ lastDates, cityName, todayIso }: {
-  lastDates: Array<string | null>;
+function CityCampsPointer({ camps, cityName }: {
+  camps: CityPageData["camps"];
   cityName: string;
-  todayIso: string;
 }) {
-  // lastDates holds one entry per camp still open when the page was built.
-  // While hydrating, todayIso is the build's day, so the count matches the
-  // server render. Then it's the reader's day, so a camp that has wrapped up
-  // since the build drops out, and one that ends today drops out at midnight
-  // in an open tab.
-  const count = lastDates.filter((d) => d === null || d >= todayIso).length;
-  if (count === 0) return null;
-
+  if (!camps) return null;
   return (
-    <a href="/camps" className="city-camps">
+    <a href={camps.href} className="city-camps">
       <span aria-hidden="true">🏕️</span>
-      <span>{count} camp{count === 1 ? "" : "s"} still open in {cityName} this summer</span>
+      <span>{camps.count} summer camp program{camps.count === 1 ? "" : "s"} in {cityName}</span>
       <span aria-hidden="true" className="city-camps-arrow">→</span>
     </a>
   );

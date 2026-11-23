@@ -11,16 +11,16 @@
 // Every stat printed on a card is read live from the same data files the
 // pages themselves render from — nothing here is invented.
 //
-// Usage: npx tsx scripts/generate-og-images.mjs
+// Usage: npx tsx scripts/generate-og-images.mjs [--only og-camps.jpg,...]
 //   (tsx is required — it lets this script import the .ts data modules
-//   directly, same as the CAMPS/TECH_COMPANIES imports below.)
+//   directly, same as the TECH_COMPANIES import below.) --only renders just
+//   the named cards.
 
 import { chromium } from "playwright";
 import { mkdirSync, writeFileSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { CAMPS } from "../src/data/south-bay/camps-data.ts";
 import { TECH_COMPANIES } from "../src/data/south-bay/tech-companies.ts";
 import { CITIES } from "../src/lib/south-bay/cities.ts";
 import digests from "../src/data/south-bay/digests.json" with { type: "json" };
@@ -147,7 +147,8 @@ const sectionCards = [
     file: "og-camps.jpg",
     kicker: "South Bay Today",
     title: "Summer Camps",
-    subline: `${CAMPS.length} camps tracked across the South Bay`,
+    // No count: the camp data grows twice a day and this card is rendered by hand.
+    subline: "Santa Clara County camps by age, week and price",
   },
   {
     file: "og-gov.jpg",
@@ -181,7 +182,9 @@ const cityCards = CITIES.filter((c) => c.id !== "santa-cruz").map((c) => ({
   subline: "Events, city council meetings & local news",
 }));
 
-const cards = [...sectionCards, ...cityCards];
+const onlyArg = process.argv.indexOf("--only");
+const only = onlyArg === -1 ? null : new Set(String(process.argv[onlyArg + 1] ?? "").split(","));
+const cards = [...sectionCards, ...cityCards].filter((card) => !only || only.has(card.file));
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT } });

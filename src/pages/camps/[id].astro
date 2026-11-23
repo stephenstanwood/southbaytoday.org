@@ -1,0 +1,211 @@
+---
+// One page per camp program in the sourced camp directory (Camp Finder). Every
+// fact shows the camp page it came from and the day it was checked; the
+// primary action is the camp's own page. Pure Astro, no island.
+import CalendarShell from "../../layouts/CalendarShell.astro";
+import CampRows from "../../components/south-bay/camps/CampRows.astro";
+import CampSource from "../../components/south-bay/camps/CampSource.astro";
+import CampFeedback from "../../components/south-bay/camps/CampFeedback.astro";
+import {
+  CAMPS,
+  LATEST_SEASON,
+  addressLines,
+  cityHref,
+  operatorHref,
+  pricePer,
+  programLine,
+  sourceFor,
+  topicHref,
+  type Program,
+} from "../../lib/south-bay/campFinder";
+import { TOPIC_LABELS, formatAges, formatCents, formatRange, fullDate } from "../../lib/south-bay/campFormat";
+
+export function getStaticPaths() {
+  return CAMPS.programs.map((program) => ({ params: { id: program.id }, props: { program } }));
+}
+
+const { program: p } = Astro.props as { program: Program };
+const latest = p.season === LATEST_SEASON;
+const posted = latest && p.sessions.length > 0 && p.price;
+const ages = p.ages ? formatAges([p.ages.min, p.ages.max], p.ages.unit === "grades") : null;
+const per = pricePer(p);
+const places = addressLines(p);
+const opHref = operatorHref(p.operatorSlug);
+const kind = p.kind === "overnight" ? "Overnight camp" : "Day camp";
+const aidSource = sourceFor(p, "financialAid");
+const pdfLink = /\.pdf($|[?#])/i.test(p.url);
+
+const sameOperatorHere = CAMPS.programs
+  .filter((o) => o.id !== p.id && o.operatorSlug === p.operatorSlug && o.citySlug === p.citySlug)
+  .sort((a, b) => Number(b.season === LATEST_SEASON) - Number(a.season === LATEST_SEASON) || a.name.localeCompare(b.name));
+const MORE = 10;
+const operatorTotal = CAMPS.programs.filter((o) => o.operatorSlug === p.operatorSlug).length;
+const cityTotal = CAMPS.programs.filter((o) => o.citySlug === p.citySlug).length;
+
+const title = `${p.name}, ${p.city} summer camp — South Bay Today`;
+const description = `${p.operator} in ${p.city}: ${programLine(p)}. Every detail links to the camp's own page.`;
+
+const crumbs = [
+  { name: "Summer camps", url: "https://southbaytoday.org/camps" },
+  { name: p.city, url: `https://southbaytoday.org${cityHref(p.citySlug)}` },
+  { name: p.name, url: `https://southbaytoday.org/camps/${p.id}` },
+];
+const breadcrumbJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: crumbs.map((c, i) => ({ "@type": "ListItem", position: i + 1, name: c.name, item: c.url })),
+});
+---
+
+<CalendarShell title={title} description={description} activeTab="camps">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={breadcrumbJsonLd} />
+  </Fragment>
+
+  <article class="camps-page">
+    <nav class="camps-crumbs" aria-label="Breadcrumb">
+      <a href="/camps">Summer camps</a>
+      <span aria-hidden="true">/</span>
+      <a href={cityHref(p.citySlug)}>{p.city}</a>
+    </nav>
+
+    <h1>{p.name}</h1>
+    <p class="camps-page-sub">
+      {opHref ? <a href={opHref}>{p.operator}</a> : p.operator}
+      {" · "}{kind} in {p.city}
+    </p>
+
+    {(p.topics.length > 0 || p.financialAid === "yes") && (
+      <ul class="camps-badges" aria-label="Interests">
+        {p.topics.map((t) => (
+          <li><a class="camps-type" data-type={t} href={topicHref(t)}>{TOPIC_LABELS[t] ?? t}</a></li>
+        ))}
+        {p.financialAid === "yes" && <li class="camps-type" data-type="aid">Financial aid</li>}
+      </ul>
+    )}
+
+    {!latest && (
+      <p class="camps-note">
+        These are {p.name}'s {p.season} dates and prices. The camp hasn't posted {LATEST_SEASON} details yet, so check
+        its page for next summer.
+      </p>
+    )}
+    {latest && !posted && (
+      <p class="camps-note">
+        {p.operator} hasn't posted all of its {LATEST_SEASON} dates and prices for this camp yet. They'll show here
+        once it does.
+      </p>
+    )}
+
+    <div class="camps-cta-row">
+      <a class="sb-btn sb-btn--primary" href={p.url} target="_blank" rel="noopener" data-analytics-event="Camp page click">
+        {pdfLink ? "Open the camp's PDF" : "Go to the camp's page"} <span aria-hidden="true">↗</span>
+      </a>
+      <p>Register and confirm details there.</p>
+    </div>
+
+    <dl class="camps-detail">
+      <div>
+        <dt>Ages</dt>
+        <dd>
+          {ages ? ages.replace(/^Ages? /, "") : "Not stated on the camp's pages"}
+          {ages && <><br /><CampSource source={sourceFor(p, "ages")} /></>}
+        </dd>
+      </div>
+      <div>
+        <dt>{latest ? "Dates" : `${p.season} dates`}</dt>
+        <dd>
+          {p.sessions.length === 0 && "Not posted yet"}
+          {p.sessions.length === 1 && `${formatRange(p.sessions[0].start, p.sessions[0].end)}, ${p.season}`}
+          {p.sessions.length > 1 && (
+            <>
+              {p.sessions.length} sessions in {p.season}
+              <ul class="camps-sessions">
+                {p.sessions.map((s) => <li>{formatRange(s.start, s.end)}</li>)}
+              </ul>
+            </>
+          )}
+          {p.sessions.length > 0 && <><br /><CampSource source={sourceFor(p, "dates")} /></>}
+        </dd>
+      </div>
+      <div>
+        <dt>{latest ? "Price" : `${p.season} price`}</dt>
+        <dd>
+          {p.price ? (
+            <>
+              <ul>
+                {p.price.rates.map((r) => <li><strong>{formatCents(r.cents)}</strong> {r.label}</li>)}
+              </ul>
+              Per {per}
+              <br /><CampSource source={sourceFor(p, "price")} />
+            </>
+          ) : "Not posted yet"}
+        </dd>
+      </div>
+      <div>
+        <dt>Registration</dt>
+        <dd>
+          {p.registration?.opens && <>Opens {fullDate(p.registration.opens)}<br /></>}
+          {p.registration?.deadline && <>Deadline {fullDate(p.registration.deadline)}<br /></>}
+          {p.registration ? <CampSource source={sourceFor(p, "registration")} /> : "Dates not posted; the camp's page has how to sign up"}
+        </dd>
+      </div>
+      <div>
+        <dt>Financial aid</dt>
+        <dd>
+          {p.financialAid === "yes" && (
+            <>Yes{aidSource && <>, <a href={aidSource.url} target="_blank" rel="noopener nofollow">see how to apply</a></>}<br /><CampSource source={aidSource} /></>
+          )}
+          {p.financialAid === "no" && <>No<br /><CampSource source={aidSource} /></>}
+          {p.financialAid === "not stated" && "Not mentioned on the camp's pages"}
+        </dd>
+      </div>
+      {places.length > 0 && (
+        <div>
+          <dt>Where</dt>
+          <dd>
+            <ul>{places.map((line) => <li>{line}</li>)}</ul>
+            <CampSource source={sourceFor(p, "address")} />
+          </dd>
+        </div>
+      )}
+    </dl>
+
+    <p class="camps-checked">
+      Everything above comes from {p.operator}'s own pages{p.checked ? `, checked ${fullDate(p.checked)}` : ""}. Spot
+      something out of date? <CampFeedback subject={`Camp listing: ${p.name} (${p.city})`} />.
+    </p>
+
+    {sameOperatorHere.length > 0 && (
+      <section class="camps-group" aria-labelledby="camps-more-op">
+        <h2 id="camps-more-op">More from {p.operator} in {p.city}</h2>
+        <p class="camps-group-meta">
+          {sameOperatorHere.length > MORE ? `${MORE} of ${sameOperatorHere.length} here. ` : ""}
+          {opHref && <a href={opHref}>See all {operatorTotal} of its programs</a>}
+        </p>
+        <CampRows programs={sameOperatorHere.slice(0, MORE)} />
+      </section>
+    )}
+
+    <section class="camps-group" aria-labelledby="camps-more-city">
+      <h2 id="camps-more-city">More camps in {p.city}</h2>
+      <p class="camps-group-meta">
+        <a href={cityHref(p.citySlug)}>See all {cityTotal} programs in {p.city}</a>, or
+        <a href="/camps"> search every camp by age and week</a>.
+      </p>
+    </section>
+  </article>
+</CalendarShell>
+
+<script>
+  // Clicks out to the camp's own page are Camp Finder's measure of use
+  // (Vercel Web Analytics custom event, like the event pages' source links).
+  import { track } from "@vercel/analytics";
+
+  document.querySelectorAll<HTMLElement>("[data-analytics-event]").forEach((element) => {
+    element.addEventListener("click", () => {
+      const eventName = element.dataset.analyticsEvent;
+      if (eventName) track(eventName, { camp: location.pathname.replace(/^\/camps\//, "") });
+    });
+  });
+</script>
