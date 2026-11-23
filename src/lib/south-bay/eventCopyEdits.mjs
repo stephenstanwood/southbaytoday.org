@@ -1950,7 +1950,11 @@ const EDITS = {
       ["Race your team to assemble a puzzle fastest,", "Race with your team to assemble a puzzle the fastest,"],
       [
         "Team up with three friends to race through the same 500-piece jigsaw puzzle against other teams, then check out the puzzle swap.",
+        "Teams of four race to finish the same 500-piece puzzle. Bring a complete puzzle for the swap.",
+      ],
+      [
         "Race to finish a 500-piece jigsaw puzzle, then browse the puzzle swap. Sign up on your own or with a group of four.",
+        "Teams of four race to finish the same 500-piece puzzle. Bring a complete puzzle for the swap.",
       ],
       ["to hear stories, music, and activities in the Orchard Room.", "to hear stories and music and take part in activities in the Orchard Room."],
       ["made for children 0-5 and their families.", "for children ages 0 to 5 and their families."],

@@ -35,6 +35,23 @@ test("verified IMAX film ratings follow new showtimes in the same run", () => {
   }
 });
 
+test("TeenHQ uses the linked poster dimensions on raw and normalized studio copy", () => {
+  const event = {
+    source: "San Jose Public Library",
+    title: "TeenHQ MakerSpace Studio",
+  };
+  const prefix = "Poster Printing: All prints must be assembled on a ";
+  const suffix = " canvas and printed as a PNG file. One poster per teen per day.";
+  for (const size of ['2"x3"', "2”x3”"]) {
+    const raw = { ...event, description: prefix + size + suffix };
+    const fixed = { ...event, description: prefix + "24 × 36-inch" + suffix };
+    assert.deepEqual(applyVerifiedEventFacts(raw), fixed);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const unrelated = { ...raw, title: "Miniature Art Workshop" };
+    assert.deepEqual(applyVerifiedEventFacts(unrelated), unrelated);
+  }
+});
+
 test("Hillview's Saturday Fun stays open to all ages when the library says so", () => {
   const event = {
     title: "Saturday Fun: Arts, Crafts, and More", source: "San Jose Public Library",

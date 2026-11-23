@@ -6914,6 +6914,17 @@ function staleEventCopyFor(event) {
 }
 
 export function applyVerifiedEventFacts(event) {
+  // The studio listing points to the library's poster guide, which gives a
+  // 24-by-36-inch canvas. Correct the studio template's inch-mark typo.
+  // https://sjpl.bibliocommons.com/v2/events/690a9f713cbc052f00833647
+  if (event?.source === "San Jose Public Library" && event.title === "TeenHQ MakerSpace Studio"
+      && typeof event.description === "string") {
+    const description = event.description.replace(
+      /(?<prefix>Poster Printing: All prints must be assembled on a )2["”″]\s*[x×]\s*3["”″] canvas/i,
+      "$<prefix>24 × 36-inch canvas",
+    );
+    if (description !== event.description) event = { ...event, description };
+  }
   // Hillview describes this craft session as open to all ages. The library's
   // audience tags target children, but its listing explicitly welcomes adults.
   // https://sjpl.bibliocommons.com/v2/events/69445123571fb4d550be6386
