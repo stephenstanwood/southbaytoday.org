@@ -422,20 +422,26 @@ test("classifies rate limits and 5xx as transient source errors", () => {
 
 test("an opted-in optional source retains verified rows after an interrupted response without disguising permanent errors", () => {
   const source = { id: "fetchGambleGardenEvents", label: "Gamble Garden", preserveOnTransientFailure: true };
-  const previous = [{ id: "harvest-social", source: "Gamble Garden", date: "2026-10-29", time: "4:00 PM" }];
-  const { results, carried } = carryForwardTransientCriticalSources(
-    [source], [{ status: "rejected", reason: new TypeError("terminated") }], previous,
+  const previous = {
+    generatedAt: "2026-10-28T12:00:00.000Z",
+    events: [{ id: "harvest-social", source: "Gamble Garden", date: "2026-10-29", time: "4:00 PM" }],
+  };
+  const options = { today: "2026-10-29" };
+  const transient = { status: "rejected", reason: new TypeError("terminated") };
+  const [result] = carryForwardTransientCriticalSources(
+    [source], [transient], previous, options,
   );
-  assert.deepEqual(results[0].value, previous);
-  assert.notEqual(results[0].value[0], previous[0]);
-  assert.deepEqual(carried, [{ id: source.id, label: source.label, count: 1, error: "terminated" }]);
+  assert.equal(result.status, "fallback");
+  assert.deepEqual(result.retained.events, previous.events);
+  assert.notEqual(result.retained.events[0], previous.events[0]);
   for (const reason of [new Error("403"), new Error("parser exploded")]) {
     const failed = { status: "rejected", reason };
-    assert.equal(carryForwardTransientCriticalSources([source], [failed], previous).results[0], failed);
+    assert.equal(carryForwardTransientCriticalSources([source], [failed], previous, options)[0], failed);
   }
   const empty = { status: "fulfilled", value: [] };
-  assert.equal(carryForwardTransientCriticalSources([source], [empty], previous).results[0], empty);
-  assert.equal(carryForwardTransientCriticalSources([source], [{ status: "rejected", reason: new Error("terminated") }], []).carried.length, 0);
+  assert.equal(carryForwardTransientCriticalSources([source], [empty], previous, options)[0], empty);
+  assert.equal(carryForwardTransientCriticalSources([source], [transient], null, options)[0], transient);
+  assert.equal(carryForwardTransientCriticalSources([source], [transient], previous, { today: "2026-10-30" })[0], transient);
 });
 
 test("carries forward cached critical rows after a transient upstream failure", () => {
@@ -448,26 +454,22 @@ test("carries forward cached critical rows after a transient upstream failure", 
     { id: "tm-2", source: "Ticketmaster", date: "2026-08-11" },
     { id: "ht-1", source: "Heritage Theatre", date: "2026-08-12" },
   ];
-  const { results, carried } = carryForwardTransientCriticalSources(
+  const results = carryForwardTransientCriticalSources(
     sources,
     [
       { status: "rejected", reason: new Error("429") },
       { status: "rejected", reason: new Error("429") },
     ],
-    previousEvents,
+    { events: previousEvents, generatedAt: "2026-08-09T12:00:00.000Z" },
+    { today: "2026-08-10" },
   );
 
-  assert.equal(results[0].status, "fulfilled");
-  assert.equal(results[0].value.length, 2);
+  assert.equal(results[0].status, "fallback");
+  assert.equal(results[0].retained.events.length, 2);
   assert.equal(results[1].status, "rejected");
-  assert.deepEqual(carried, [{
-    id: "fetchTicketmasterEvents",
-    label: "Ticketmaster",
-    count: 2,
-    error: "429",
-  }]);
 
   const health = buildSourceHealth(sources, results);
+  assert.equal(health[0].error, "429");
   assert.equal(sourceProblems(health).blocking.length, 0);
 });
 
