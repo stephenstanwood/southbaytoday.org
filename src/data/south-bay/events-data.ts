@@ -709,7 +709,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Miles of San Jose streets temporarily closed to cars, open to walkers, cyclists, skaters, and dancers. Joyful open streets events in spring and fall.",
+      "In spring and fall, miles of San Jose streets temporarily close to cars and open to walkers, cyclists, skaters, and dancers.",
     url: "https://www.vivacallesj.org",
     emoji: "🚲",
     featured: true,
