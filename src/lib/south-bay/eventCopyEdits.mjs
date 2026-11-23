@@ -1349,6 +1349,11 @@ const EDITS = {
         /Please note our equipment can only accommodate (\d+) players at a time\./g,
         "The equipment can accommodate up to $1 players at a time.",
       ],
+      [/\bFree, with limited capacity of (\d+) participants\./g, "Free. Capacity is limited to $1 participants."],
+      [
+        "connect and find/lend support to other parents in the Rose Garden and Downtown San Jose area.",
+        "connect with other parents in the Rose Garden and Downtown San Jose area and support one another.",
+      ],
     ],
     blurb: [
       ["an LGBTQ+ friendly space", "an LGBTQ+-friendly space"],
