@@ -212,6 +212,22 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-library-participation.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-library-and-saxophone.json", import.meta.url))));
 
+test("SCU concert copy distinguishes the performances and removes the title echo", () => {
+  const cases = [
+    ["Santa Clara Chorale Concert", "Santa Clara Chorale's December Concert, Night One", "The Santa Clara Chorale gives the first performance of its December concert."],
+    ["Santa Clara Chorale Concert", "Santa Clara Chorale's December Concert Night Two", "The Santa Clara Chorale gives the second performance of its December concert."],
+    ["Peninsula Women's Chorus Concert", "Peninsula Women's Chorus's December Concert", ""],
+  ];
+  for (const [title, raw, description] of cases) {
+    const event = { title, source: "Santa Clara University", description: polishDescription(raw) };
+    const reviewed = { ...event, description };
+    assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+    assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+    const expanded = { ...event, description: `${event.description}. The program features holiday music.` };
+    assert.deepEqual(polishReviewedEventCopy(expanded), expanded);
+  }
+});
+
 test("the book sale's conflicting count stays out of refreshed descriptions and cached blurbs", () => {
   const [bookSale] = paloAltoLibraryFixture.cases;
   const event = {

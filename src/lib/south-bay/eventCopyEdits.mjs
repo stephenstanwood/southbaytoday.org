@@ -2659,6 +2659,11 @@ const EDITS = {
       SCU_MISSION_NAME_EDIT,
     ],
     description: [
+      // The Chorale lists an evening performance and a matinee of the same program.
+      // https://www.scc.org/december-peace-on-earth.html
+      [/^Santa Clara Chorale's December Concert, Night One$/g, "The Santa Clara Chorale gives the first performance of its December concert."],
+      [/^Santa Clara Chorale's December Concert Night Two$/g, "The Santa Clara Chorale gives the second performance of its December concert."],
+      ["Peninsula Women's Chorus's December Concert", ""],
       [
         /^Hosted by the Department of Classics and Ancient Studies and the Department of Anthropology\.?$/g,
         "The Department of Classics and Ancient Studies and the Department of Anthropology host the showcase.",
