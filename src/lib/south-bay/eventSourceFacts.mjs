@@ -7302,8 +7302,38 @@ function staleEventCopyFor(event) {
   return null;
 }
 
+const greenLibraryThanksgivingClosure = ["2026-11-27", "Green Library is closed November 26 and 27 for Thanksgiving."];
+const thompsonGalleryThanksgivingClosure = ["2026-11-27", "Thompson Gallery is closed November 25 through 27."];
+const EXHIBIT_THANKSGIVING_CLOSURES = new Map([
+  // https://library-hours.stanford.edu/libraries.json?from=2026-11-24&to=2026-11-30
+  ["https://events.stanford.edu/event/electric-contrasts-the-art-of-the-detail-7315",
+    ["2026-11-29", "Bowes Art & Architecture Library is closed November 26 through 29."]],
+  ["https://events.stanford.edu/event/korean-indigenous-futures",
+    ["2026-11-29", "East Asia Library is closed November 26 through 29."]],
+  ["https://events.stanford.edu/event/emergent-properties",
+    ["2026-11-27", "The Map Center has drop-in hours November 25 from 1 to 5 PM and is closed November 26 and 27."]],
+  ["https://events.stanford.edu/event/text-machines-scarlet-thread-of-the-digital-order-1883-2026", greenLibraryThanksgivingClosure],
+  ["https://events.stanford.edu/event/a-vision-of-paris-the-roxane-debuisson-collection-at-stanford", greenLibraryThanksgivingClosure],
+  ["https://events.stanford.edu/event/branner-library-book-map-exhibit-water",
+    ["2026-11-27", "Branner Library is closed November 26 and 27 for Thanksgiving."]],
+  // https://www.sjpl.org/holidays/
+  ["https://sjpl.bibliocommons.com/events/6ac02d7dde300e004517d401",
+    ["2026-11-27", "Almaden Library is closed November 26 and 27 for Thanksgiving."]],
+  ["https://sjpl.bibliocommons.com/events/6ae92fd7de685359098d78de",
+    ["2026-11-27", "Alviso Library is closed November 26 and 27 for Thanksgiving."]],
+  // https://www.sjsu.edu/thompsongallery/visitor-info/index.php
+  ["https://events.sjsu.edu/event/natalie-and-james-thompson-gallery-common-ground", thompsonGalleryThanksgivingClosure],
+  ["https://events.sjsu.edu/event/copy-of-natalie-and-james-thompson-gallery-common-ground", thompsonGalleryThanksgivingClosure],
+]);
+
 function thanksgivingExhibitClosure(event, venue) {
-  if (!event?.ongoing || event.time || !event.date || event.date < "2026-11-24") return null;
+  if (!event?.ongoing || event.time || event.virtual || !event.date || event.date < "2026-11-24") return null;
+
+  const closure = EXHIBIT_THANKSGIVING_CLOSURES.get(event.url);
+  if (closure) {
+    const [through, note] = closure;
+    return event.date <= through ? note : null;
+  }
 
   // These calendars carry exhibition runs through days the buildings close.
   // https://museum.stanford.edu/visit and https://anderson.stanford.edu/visit/

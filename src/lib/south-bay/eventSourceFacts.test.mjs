@@ -40,6 +40,29 @@ test("ongoing Stanford and King Library exhibits show verified Thanksgiving clos
   assert.equal(applyVerifiedEventFacts(reopened), reopened);
 });
 
+test("Thanksgiving closures follow the library or gallery's own hours", () => {
+  const rows = [
+    ["https://events.stanford.edu/event/korean-indigenous-futures",
+      "2026-11-29", "East Asia Library is closed November 26 through 29."],
+    ["https://events.stanford.edu/event/text-machines-scarlet-thread-of-the-digital-order-1883-2026",
+      "2026-11-27", "Green Library is closed November 26 and 27 for Thanksgiving."],
+    ["https://sjpl.bibliocommons.com/events/6ac02d7dde300e004517d401",
+      "2026-11-27", "Almaden Library is closed November 26 and 27 for Thanksgiving."],
+    ["https://events.sjsu.edu/event/copy-of-natalie-and-james-thompson-gallery-common-ground",
+      "2026-11-27", "Thompson Gallery is closed November 25 through 27."],
+  ];
+  for (const [url, date, note] of rows) {
+    const event = { url, date, ongoing: true, attendanceNote: "Check visiting hours." };
+    const fixed = applyVerifiedEventFacts(event);
+    assert.equal(fixed.attendanceNote, `Check visiting hours. ${note}`);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const later = { ...event, date: "2026-11-30" };
+    assert.equal(applyVerifiedEventFacts(later).attendanceNote, event.attendanceNote);
+    const online = { ...event, virtual: true };
+    assert.equal(applyVerifiedEventFacts(online).attendanceNote, event.attendanceNote);
+  }
+});
+
 test("California Current and Patty Chang use the museums' free admission", () => {
   const californiaCurrent = {
     date: "2026-11-24", ongoing: true, source: "Stanford Events",
