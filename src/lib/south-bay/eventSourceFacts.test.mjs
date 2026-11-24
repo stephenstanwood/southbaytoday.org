@@ -685,6 +685,25 @@ test("Natalia Jiménez uses the box-office showtime and retains the listing iden
   assert.deepEqual(applyVerifiedEventFacts(differentTime), differentTime);
 });
 
+test("Les Misérables uses its production rating without changing the showtimes", () => {
+  const event = {
+    title: "Les Misérables", date: "2027-05-09", time: "6:00 PM",
+    venue: "Montgomery Theater", source: "San Jose Theaters",
+    url: "https://www.sanjose.org/theaters/events/les-miserables",
+    category: "family", kidFriendly: true, attendanceNote: "Tickets sold out.",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.deepEqual(corrected, {
+    ...event,
+    category: "arts",
+    kidFriendly: false,
+    attendanceNote: "Tickets sold out. Children's Musical Theater rates this production for ages 12 and up in its student matinee guide.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  const otherRun = { ...event, date: "2028-05-09" };
+  assert.deepEqual(applyVerifiedEventFacts(otherRun), otherRun);
+});
+
 test("the dated Neighborhood Hands cleanup keeps the organizer's program times", () => {
   const event = {
     id: "94b3de5fed7c", date: "2026-11-28",
