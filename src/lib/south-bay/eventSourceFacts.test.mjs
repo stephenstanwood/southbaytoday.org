@@ -5426,3 +5426,21 @@ test("the dated Triton paint workshop uses the museum's paid enrollment details"
   const differentDate = { ...event, date: "2026-12-05" };
   assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
 });
+
+test("Black Mountain's November 24 listing shows the verified signup closure", () => {
+  const event = {
+    title: "Full Moon on Black Mountain", date: "2026-11-24", registration: "required",
+    url: "https://www.openspace.org/events/guided-activities/full-moon-black-mountain-4",
+    registrationClosesBy: "2026-11-23T22:00:00.000Z",
+    attendanceNote: "Reservations close November 23 at 2 PM PT.",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.deepEqual(fixed, {
+    ...event, registration: "closed", attendanceNote: "Reservations closed November 23 at 2 PM PT.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const rescheduledSignup = { ...event, registrationClosesBy: "2026-11-24T20:00:00.000Z" };
+  assert.deepEqual(applyVerifiedEventFacts(rescheduledSignup), rescheduledSignup);
+  const laterHike = { ...event, date: "2027-02-20" };
+  assert.deepEqual(applyVerifiedEventFacts(laterHike), laterHike);
+});

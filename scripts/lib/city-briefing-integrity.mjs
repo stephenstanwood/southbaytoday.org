@@ -1,20 +1,30 @@
 import { readFileSync } from "node:fs";
 import { writeFileAtomic } from "./io.mjs";
-import { REGISTRATION_CLOSED, REGISTRATION_FULL, declaredRegistrationAvailability, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";
+import {
+  REGISTRATION_CLOSED,
+  REGISTRATION_FULL,
+  declaredRegistrationAvailability,
+  registrationLabel,
+  requiresAdvanceRegistration,
+  requiresAttendanceConfirmation,
+} from "../../src/lib/south-bay/eventFilters.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { normalizeClockTime } from "./clock-time.mjs";
 
 /** Highlights have no attendance badge; require confirmed, available events. */
-export function isBriefingEventAvailable(event) {
+export function isBriefingEventAvailable(event, now = Date.now()) {
   // Older snapshots may predate a verified closure; apply the same dated facts
   // used by event publication before treating missing signup state as available.
   const verified = applyVerifiedEventFacts(event);
   const statedAvailability = verified?.source === "Gamble Garden"
     ? declaredRegistrationAvailability(verified.description) : null;
+  const deadlinePassed = requiresAdvanceRegistration(verified)
+    && Date.parse(verified.registrationClosesBy ?? "") <= now;
   return verified?.registration !== REGISTRATION_FULL
     && verified?.registration !== REGISTRATION_CLOSED
     && statedAvailability !== REGISTRATION_FULL
     && statedAvailability !== REGISTRATION_CLOSED
+    && !deadlinePassed
     && !requiresAttendanceConfirmation(verified);
 }
 
@@ -27,11 +37,12 @@ export function briefingEventWhen(event) {
 /** A listing's clock can describe an event window rather than its main activity. */
 export function briefingEventContext(event, dateLabel = event.displayDate || event.date) {
   const e = applyVerifiedEventFacts(event);
-  return `- ${e.title}${e.venue ? ` at ${e.venue}` : ""}${dateLabel ? ` (${dateLabel})` : ""}${e.time ? ` @ ${e.time}` : ""} — ${e.category}${e.source ? `; source: ${e.source}` : ""}${e.source === "Meetup" && e.blurb ? `; outing details: ${e.blurb.slice(0, 180)}` : ""}${e.attendanceNote ? `; attendance details: ${e.attendanceNote}` : ""}`;
+  const registration = registrationLabel(e);
+  return `- ${e.title}${e.venue ? ` at ${e.venue}` : ""}${dateLabel ? ` (${dateLabel})` : ""}${e.time ? ` @ ${e.time}` : ""} — ${e.category}${e.source ? `; source: ${e.source}` : ""}${e.source === "Meetup" && e.blurb ? `; outing details: ${e.blurb.slice(0, 180)}` : ""}${registration ? `; ${registration}` : ""}${e.attendanceNote ? `; attendance details: ${e.attendanceNote}` : ""}`;
 }
 
 /** Event refreshes can close registration after the weekly briefing is written. */
-export function refreshBriefingAvailability(path, events) {
+export function refreshBriefingAvailability(path, events, now = Date.now()) {
   let briefings;
   try {
     briefings = JSON.parse(readFileSync(path, "utf8"));
@@ -43,7 +54,7 @@ export function refreshBriefingAvailability(path, events) {
   const key = (city, item, when) => JSON.stringify([city, item.title, item.url || null, when]);
   const unavailable = new Set(events
     .filter((event) => event.date >= briefings.weekStart && event.date <= briefings.weekEnd
-      && !isBriefingEventAvailable(event))
+      && !isBriefingEventAvailable(event, now))
     .map((event) => key(event.city, event, briefingEventWhen(event))));
 
   let removed = 0;

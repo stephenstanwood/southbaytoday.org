@@ -37,6 +37,7 @@ import {
   hasEventSelectionCount,
   hasUnsupportedEventMilestone,
   hasUnsupportedSharedEventVenue,
+  briefingEventContext,
   briefingEventWhen,
   isBriefingEventAvailable,
   meetingWithinBriefingWindow,
@@ -246,6 +247,40 @@ test("city highlights exclude full and closed programs without excluding availab
   }), false, "sparse retained records must honor the verified schedule conflict");
   assert.equal(isBriefingEventAvailable({ registration: "required" }), true);
   assert.equal(isBriefingEventAvailable({}), true);
+});
+
+test("city briefings stop recommending an event at its published signup cutoff", (t) => {
+  const dir = mkdtempSync(join(tmpdir(), "sbt-briefing-deadline-"));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const path = join(dir, "briefing.json");
+  const event = {
+    title: "Guided hike", city: "los-altos", date: "2026-11-24",
+    displayDate: "Tue, Nov 24", time: "3:00 PM", registration: "required",
+    registrationClosesBy: "2026-11-23T22:00:00Z",
+    url: "https://www.openspace.org/events/guided-activities/example",
+  };
+  const closes = Date.parse(event.registrationClosesBy);
+  const highlight = { type: "event", title: event.title, url: event.url, when: briefingEventWhen(event) };
+  const briefing = { summary: "This week's events.", highlights: [highlight] };
+  const input = { weekStart: "2026-11-23", weekEnd: "2026-11-30", cities: { "los-altos": briefing } };
+  writeFileSync(path, JSON.stringify(input));
+
+  assert.equal(isBriefingEventAvailable(event, closes - 1), true);
+  assert.equal(isBriefingEventAvailable(event, closes), false);
+  assert.equal(isBriefingEventAvailable({ ...event, registration: "none" }, closes), true);
+  assert.equal(refreshBriefingAvailability(path, [event], closes - 1), 0);
+  assert.equal(refreshBriefingAvailability(path, [event], closes), 1);
+  assert.deepEqual(JSON.parse(readFileSync(path, "utf8")).cities["los-altos"], {
+    ...briefing,
+    highlights: [],
+  });
+});
+
+test("briefing leads receive the source's appointment requirement", () => {
+  const event = { title: "Vintage Media Lab", venue: "Rinconada Library", date: "2026-11-24",
+    time: "10:00 AM", category: "education" };
+  assert.match(briefingEventContext({ ...event, registration: "appointment-only" }), /Appointment required/);
+  assert.doesNotMatch(briefingEventContext(event), /Appointment required/);
 });
 
 test("city highlights honor Gamble's explicit sold-out notice before signup fields are refreshed", () => {

@@ -96,6 +96,18 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Midpen's November 24 hike sold out. Match its published cutoff so a
+  // later source update to the registration window can take precedence.
+  // https://www.eventbrite.com/e/full-moon-on-black-mountain-tickets-1993622244801
+  {
+    date: "2026-11-24",
+    matches: event => event.url === "https://www.openspace.org/events/guided-activities/full-moon-black-mountain-4"
+      && event.registrationClosesBy === "2026-11-23T22:00:00.000Z",
+    facts: {
+      registration: REGISTRATION_CLOSED,
+      attendanceNote: "Reservations closed November 23 at 2 PM PT.",
+    },
+  },
   {
     date: "2026-12-07",
     matches: event => event.source === "City Newsletter" && event.city === "santa-clara"
