@@ -1189,7 +1189,19 @@ const CORRECTIONS = [
     dateFrom: "2026-10-29",
     dateThrough: "2028-10-23",
     url: "https://events.stanford.edu/event/california-current-art-and-histories-from-the-bay-area-6587",
-    facts: { venue: "Cantor Arts Center" },
+    facts: event => ({
+      venue: "Cantor Arts Center",
+      address: event.address || "328 Lomita Drive, Stanford, CA 94305",
+      cost: event.cost ?? "free",
+    }),
+  },
+  // The Anderson's own exhibition page confirms free museum admission.
+  // https://anderson.stanford.edu/exhibitions/patty-chang-surfacing/
+  {
+    dateFrom: "2026-09-17",
+    dateThrough: "2027-02-08",
+    url: "https://events.stanford.edu/event/patty-chang-surfacing",
+    facts: event => ({ cost: event.cost ?? "free" }),
   },
   // The store's RSVP page gives the event hours and free admission.
   // The publisher gives the book title: https://www.kensingtonbooks.com/shop/the-curse-of-feathers-deluxe-stenciled-edges/
@@ -7290,6 +7302,25 @@ function staleEventCopyFor(event) {
   return null;
 }
 
+function thanksgivingExhibitClosure(event, venue) {
+  if (!event?.ongoing || event.time || !event.date || event.date < "2026-11-24") return null;
+
+  // These calendars carry exhibition runs through days the buildings close.
+  // https://museum.stanford.edu/visit and https://anderson.stanford.edu/visit/
+  if (event.date <= "2026-11-26" && event.source === "Stanford Events"
+      && event.url?.startsWith("https://events.stanford.edu/event/")
+      && (venue === "Cantor Arts Center" || venue === "Anderson Collection")) {
+    return "The museum is closed Thursday, November 26, for Thanksgiving.";
+  }
+  // https://library.sjsu.edu/library-hours
+  if (event.date <= "2026-11-27" && event.source === "SJSU Events"
+      && event.url?.startsWith("https://events.sjsu.edu/event/")
+      && /^King Library\b/.test(venue || "")) {
+    return "King Library is closed November 26 and 27 for Thanksgiving.";
+  }
+  return null;
+}
+
 export function applyVerifiedEventFacts(event) {
   // Stanford's campus guide gives Maples Pavilion's address. Two Athletics
   // newsletters were ingested with 641 Campus Drive instead.
@@ -7523,8 +7554,9 @@ export function applyVerifiedEventFacts(event) {
     );
   });
   const staleCopy = staleEventCopyFor(event);
-  if (!correction && !staleCopy) return event;
   const facts = typeof correction?.facts === "function" ? correction.facts(event) : correction?.facts;
+  const closure = thanksgivingExhibitClosure(event, facts?.venue ?? event?.venue);
+  if (!correction && !staleCopy && !closure) return event;
   const corrected = { ...event, ...facts };
   // A verified signup requirement cannot reopen a session whose current
   // provider metadata says full/closed or replace an appointment gate. A
@@ -7536,8 +7568,8 @@ export function applyVerifiedEventFacts(event) {
   }
   // Entry conditions supplement current booking/availability notices; never
   // replace a later sold-out, closed or organizer-confirmation message.
-  const note = correction?.appendAttendanceNote;
-  if (note && !corrected.attendanceNote?.includes(note)) {
+  for (const note of [correction?.appendAttendanceNote, closure]) {
+    if (!note || corrected.attendanceNote?.includes(note)) continue;
     // Replace a saved copy with curly apostrophes before checking for duplicates.
     const attendance = (corrected.attendanceNote || "").replace(note.replaceAll("'", "’"), () => note);
     corrected.attendanceNote = attendance.includes(note) ? attendance : [attendance, note].filter(Boolean).join(" ");

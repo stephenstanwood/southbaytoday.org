@@ -15,6 +15,51 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("ongoing Stanford and King Library exhibits show verified Thanksgiving closures", () => {
+  const exhibit = {
+    date: "2026-11-24", ongoing: true, time: null,
+    source: "Stanford Events", venue: "Cantor Arts Center",
+    url: "https://events.stanford.edu/event/in-focus-asian-american-art-from-the-collection",
+    attendanceNote: "Regular Thursday hours are 11 AM–8 PM.",
+  };
+  const fixed = applyVerifiedEventFacts(exhibit);
+  assert.equal(fixed.attendanceNote,
+    "Regular Thursday hours are 11 AM–8 PM. The museum is closed Thursday, November 26, for Thanksgiving.");
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const tour = { ...exhibit, ongoing: false, time: "2:00 PM" };
+  assert.equal(applyVerifiedEventFacts(tour), tour);
+  const nextDay = { ...exhibit, date: "2026-11-27" };
+  assert.equal(applyVerifiedEventFacts(nextDay), nextDay);
+
+  const library = {
+    date: "2026-11-27", ongoing: true, source: "SJSU Events", venue: "King Library, DiNapoli Gallery",
+    url: "https://events.sjsu.edu/event/renewal",
+  };
+  assert.match(applyVerifiedEventFacts(library).attendanceNote, /closed November 26 and 27/);
+  const reopened = { ...library, date: "2026-11-28" };
+  assert.equal(applyVerifiedEventFacts(reopened), reopened);
+});
+
+test("California Current and Patty Chang use the museums' free admission", () => {
+  const californiaCurrent = {
+    date: "2026-11-24", ongoing: true, source: "Stanford Events",
+    url: "https://events.stanford.edu/event/california-current-art-and-histories-from-the-bay-area-6587",
+    cost: null, venue: "Stanford University", address: "",
+  };
+  const fixed = applyVerifiedEventFacts(californiaCurrent);
+  assert.equal(fixed.cost, "free");
+  assert.equal(fixed.venue, "Cantor Arts Center");
+  assert.equal(fixed.address, "328 Lomita Drive, Stanford, CA 94305");
+  assert.match(fixed.attendanceNote, /closed Thursday, November 26/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+
+  const pattyChang = {
+    ...californiaCurrent, date: "2026-11-27", venue: "Anderson Collection",
+    url: "https://events.stanford.edu/event/patty-chang-surfacing",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(pattyChang), { ...pattyChang, cost: "free" });
+});
+
 test("Maples Pavilion uses the campus guide's street number", () => {
   const event = {
     venue: "Maples Pavilion",

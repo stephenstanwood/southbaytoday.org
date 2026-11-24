@@ -132,7 +132,8 @@ test("the Halloween storytime clears the invented morning finish without guessin
   }
 });
 
-test("Cantor exhibition hours and explicit free admission survive excerpting and follow source updates", async () => {
+test("Cantor exhibition hours and explicit free admission survive excerpting and follow source updates", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-27T19:00:00Z") });
   const day = (offset) => new Date(Date.now() + offset * 86_400_000)
     .toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   // Captured from the full JANE! Localist body on October 27. The admission
