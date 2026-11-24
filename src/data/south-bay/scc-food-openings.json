@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-23T05:45:54.731Z",
+  "generatedAt": "2026-11-24T04:19:31.572Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-23T05:45:54.730Z",
-    "updatedAt": "2026-11-22T14:31:28.000Z",
+    "checkedAt": "2026-11-24T04:19:31.572Z",
+    "updatedAt": "2026-11-23T14:36:00.000Z",
     "ageDays": 0,
     "newestRawInspection": "2026-11-20",
     "newestEligibleInspection": "2026-11-20",
@@ -13,6 +13,18 @@
   },
   "opened": [],
   "inspections": [
+    {
+      "id": "inspection-SR0884418",
+      "name": "Nothing Bundt Cakes",
+      "address": "3933 Rivermark Pkwy",
+      "cityId": "santa-clara",
+      "cityName": "SANTA CLARA",
+      "inspectionDate": "2026-11-20",
+      "sourceId": "SR0884418",
+      "status": "inspection-complete",
+      "blurb": "Bundt cake shop at 3933 Rivermark Pkwy in Santa Clara.",
+      "photoRef": "places/ChIJ9dytoPO2j4ARgn3nQjo7a7A/photos/AV-0GLdPK79Anq_nLTM8Vl2jmZEeV6aRc_NRdJ5NUWsFyJgYGdATFjiD1i_BUlq6-CgY9Me12NG5pk3q9W1vDJWX3PJS2ckHrQFVU6aQN_blwfLs_JnLeTBUzjlI1rJY641dUNR4U88D8l5HdPYPGIKdACSJbfeM3XH3aXMhulI6bEffh849dnIPuvX1ZX3H_ijOZsXZV94N4TY4_uNWkZWJngpbY01L6R990072MI_ApaThNFZ-ZrGJdkOMaa7ZQy1I_3T0BYNWk5dXrQr8uJbnYBWOMif_Pxyjip0wg3WeTUF8g5uQ2Icb7Z8AJyUeb2MBjAiOb0IB4bdgQkWlsRX0IG-9KbYaPlQQW-LVUDmVYTYJFSJOSZLDJdl2gAF4U6YZO2GMsXDnWKnKMhpWX20RVqC2gvuHXN8"
+    },
     {
       "id": "inspection-SR0886625",
       "name": "Restaurante Yoschimy",
@@ -26,16 +38,16 @@
       "photoRef": "places/ChIJTZH-mS3Nj4ARnJNXOQZGqFw/photos/AV-0GLeQ8K6bN96WMjpI7Q53PPUpyzkYyiHW-HpJDBj1nfEF9Yp07NEu_MtbOUdmJcrtAesO-TYN-T7_34P2nKpGesSqCtHdFOEfBNIKG_2vOIAOOo6v_R0uRKGPYXUsoZD4v1s21P-cIxVKpqJrI3Aw1lRIVBoVIhM_Iowc7CxzciQoOLm3xeQbmlH6EWJpvv-AfyPoCPhNy1YN0cTY-rEScUz3C1yLwO8uYwHHqgNWUZoedHF5aLifc4vNkuweI1qwFNZ_sbi-ldVHtD2MuZsmsCIfTkc9F-q-cYEX2z2LeNW8gacSXLmpNH4stJuWhS7K0-FxBpH3jHBON9-9AJLisSJmrgWQoVaYfL-qd7MGhw_4zGElV14ERQYgQGyWYQufcYRXlUjw4gbe0SI5vKGFGDVW104HXUo"
     },
     {
-      "id": "inspection-SR0884418",
-      "name": "Nothing Bundt Cakes",
-      "address": "3933 Rivermark Pkwy",
-      "cityId": "santa-clara",
-      "cityName": "SANTA CLARA",
-      "inspectionDate": "2026-11-20",
-      "sourceId": "SR0884418",
+      "id": "inspection-SR0886640",
+      "name": "The Silk Route Bar And Kitchen",
+      "address": "17 N San Pedro St",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-19",
+      "sourceId": "SR0886640",
       "status": "inspection-complete",
-      "blurb": "Bundt cake shop on Rivermark Pkwy in Santa Clara.",
-      "photoRef": "places/ChIJ9dytoPO2j4ARgn3nQjo7a7A/photos/AV-0GLdPK79Anq_nLTM8Vl2jmZEeV6aRc_NRdJ5NUWsFyJgYGdATFjiD1i_BUlq6-CgY9Me12NG5pk3q9W1vDJWX3PJS2ckHrQFVU6aQN_blwfLs_JnLeTBUzjlI1rJY641dUNR4U88D8l5HdPYPGIKdACSJbfeM3XH3aXMhulI6bEffh849dnIPuvX1ZX3H_ijOZsXZV94N4TY4_uNWkZWJngpbY01L6R990072MI_ApaThNFZ-ZrGJdkOMaa7ZQy1I_3T0BYNWk5dXrQr8uJbnYBWOMif_Pxyjip0wg3WeTUF8g5uQ2Icb7Z8AJyUeb2MBjAiOb0IB4bdgQkWlsRX0IG-9KbYaPlQQW-LVUDmVYTYJFSJOSZLDJdl2gAF4U6YZO2GMsXDnWKnKMhpWX20RVqC2gvuHXN8"
+      "blurb": "Bar and kitchen at 17 N San Pedro St in San Jose.",
+      "photoRef": "places/ChIJ8e8NJwDNj4ARK6ayxMr5paI/photos/AV-0GLd0pGYqr3y6iGCF_7yQgI7_npjR8Z6nS5yeVJiFr3esJp6UZ1gR_qWlwhl2XZg89Rx2kEOfO0XbeaBZ6R9UEqB4pJlbHLfx1HBVOfnYcpmzRlDgWe_jkd1a7ChUtt3RNA9utHJfwhvlJIhcjdcy1QjGNMx0DfNrH-KDqAdpl9kufZbf21ywaGMarF2M2yT7_-H9lIuw3ToHTXZmFurV58p3NcRpwItnA-8bSTVSAvnDbevZ439UZZlRJobXuoGCeols89luMaiWUi8fv2zpA1hEJs4tcYMXbmNE8AQ14K3yECjeIuN13bJQhOE4uI0z5AWqJwOWb48PqdtOs3YbwjAq0Tz9pn0A0HL24jWLyxM0UEJxGcPJIA4_zBEObpWPoAGzX7YyDHi9yDToJNvJDHjXdoHr_9ihll9VPKRJ2iSOww"
     },
     {
       "id": "inspection-SR0886629",
@@ -48,18 +60,6 @@
       "status": "inspection-complete",
       "blurb": "Food business on Big Basin Way in Saratoga.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886629-450.webp"
-    },
-    {
-      "id": "inspection-SR0886640",
-      "name": "The Silk Route Bar And Kitchen",
-      "address": "17 N San Pedro St",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "inspectionDate": "2026-11-19",
-      "sourceId": "SR0886640",
-      "status": "inspection-complete",
-      "blurb": "Bar and kitchen on N San Pedro St in San Jose.",
-      "photoRef": "places/ChIJ8e8NJwDNj4ARK6ayxMr5paI/photos/AV-0GLd0pGYqr3y6iGCF_7yQgI7_npjR8Z6nS5yeVJiFr3esJp6UZ1gR_qWlwhl2XZg89Rx2kEOfO0XbeaBZ6R9UEqB4pJlbHLfx1HBVOfnYcpmzRlDgWe_jkd1a7ChUtt3RNA9utHJfwhvlJIhcjdcy1QjGNMx0DfNrH-KDqAdpl9kufZbf21ywaGMarF2M2yT7_-H9lIuw3ToHTXZmFurV58p3NcRpwItnA-8bSTVSAvnDbevZ439UZZlRJobXuoGCeols89luMaiWUi8fv2zpA1hEJs4tcYMXbmNE8AQ14K3yECjeIuN13bJQhOE4uI0z5AWqJwOWb48PqdtOs3YbwjAq0Tz9pn0A0HL24jWLyxM0UEJxGcPJIA4_zBEObpWPoAGzX7YyDHi9yDToJNvJDHjXdoHr_9ihll9VPKRJ2iSOww"
     },
     {
       "id": "inspection-SR0886649",
@@ -94,7 +94,7 @@
       "inspectionDate": "2026-11-12",
       "sourceId": "SR0882351",
       "status": "inspection-complete",
-      "blurb": null,
+      "blurb": "Kitchen business on W Bayshore Dr in Palo Alto.",
       "photoRef": "places/ChIJTamC_qi7j4ARMAC_ZB2hHMI/photos/AV-0GLf4IxYllB1Ih1qr0KKvDooNZFUWmjPO4BDf0A-HpfpPUKACX4feZcOTQVLq65KNEig48eU-yn5eS76XeaDfTpbnxGCGKEP3avh0TCXmi5JV3dKFaHciafBKMJtEza2x8Wp-Zrv7E5_tlQMXUdNCE43Kqy440GcykuPlw0-eQLcqh9ts8v0aFnKfVGSg7jIU-m6Eedc4MpP-haroSLuUDcmhBjmzTbAcoOmBhBs-7ftnedmYU-HOhyWSk68IribWi0A4v6au-ndNs_HJL2QhJwoXn8ivzV9VdxseJOQJxRDryFVdsagtlPSuDekTeiD4n2JijQzW8BvIC1Qfk-xTbQKqfzoy3QvrNiWTEHhEvku6q79d5g6WnNLrixZj0htbPhxwfJP_6pjZTxW-dBHvhUI2lBn_Unw"
     },
     {
@@ -106,7 +106,7 @@
       "inspectionDate": "2026-11-12",
       "sourceId": "SR0884058",
       "status": "inspection-complete",
-      "blurb": "Cake and dessert shop on Homestead Rd in Santa Clara.",
+      "blurb": "Cake and dessert business on Homestead Rd in Santa Clara.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884058-450.webp"
     },
     {
@@ -180,7 +180,7 @@
       "date": "2026-11-20",
       "status": "coming-soon",
       "sourceId": "SR0886645",
-      "blurb": null,
+      "blurb": "Kitchen planned on West El Camino Real in Sunnyvale.",
       "photoRef": "places/ChIJ631vKGG3j4AR-QJWJEv3ipI/photos/AV-0GLeRuyEO3GwWH6cGkVI5K4XdA8Uoam_v3u-UO6SW5qHz8JwC1GN73_Zq_2AsKIAm85CvNKl0GadA8rduiC8-iVuAT8BXEZ4cNN4Q02r3l7BWoeIGH0Va1Y-Q61TZmvkoZ6Fbb9llnid14eAlwzfwuh7LTJw3CHcH8jtrdvo4XYFyz7p6ckBVgFwzhgC3hFFuqcyRAaGv1xCrH2TzBOPn00F_tq4GrOhizDsZji8WHct-nL1_6hENn5VVBzayAAli_7tCJrHeyjswVJEhF8bQnmBoOPA5xbKrpDt56srsUPITux71CgqIgTLwBU6xdMAlqJ0h8KJSavIfR33dxselX7n0296aaxSUeViSIhMU4zQHNm6JDfxaH1NR1of3CnYpjtzYhC0tdSylknZr8RXLdv549LQFksS9tg8dghaB2AADjw"
     },
     {
@@ -204,7 +204,7 @@
       "date": "2026-11-17",
       "status": "coming-soon",
       "sourceId": "SR0886162",
-      "blurb": "Wagyu-focused food business planned on West El Camino Real in Mountain View.",
+      "blurb": "Food business planned on West El Camino Real in Mountain View.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886162-450.webp"
     },
     {
@@ -276,7 +276,7 @@
       "date": "2026-10-28",
       "status": "coming-soon",
       "sourceId": "SR0885628",
-      "blurb": "Cafe planned at Mershops on Almaden Boulevard in San Jose.",
+      "blurb": "Cafe planned on Almaden Boulevard in San Jose.",
       "photoRef": "places/ChIJSxInvZrNj4ARmiGfPRj2mOI/photos/AV-0GLcUASzUNuPEZuOdo2GB9UasTQj9Tub1jXsmbiVR-9Xu_1V_Qsio-iLyimY-BrjQn1l1vVBEVluy18qpvACUfjjsGl4fXjYRQHc5i6trfF1a61WkbZDcDfRfIoluaY_fmti-wzQTVwuAH3sXDzNxRTHkqM2kFRL75LAQJPTrLWOPUSHys1UdkBvLd_qTuuKOm397csjegrS2QJiXg-EsuDBn-P9Fyv2ALs4w13dxj9YCITiGmcrMPnK_bbmUmBl-Ok_krOFN-AiU7e68yycpvXyOmX1u_utl1hXIGYIlltUxS1rg1oO9FJwJydVBbWc9elEuA4nTISQuK2MvNwcX-YbjtIuHsF62eMTuBaeD5JrtBgy7zPDBfDzMiX5NtCBEcnvDwbQvNSi93OYeLCh-mumuYEK6JI310KtaTEff22jEtg"
     },
     {
@@ -290,6 +290,18 @@
       "sourceId": "SR0884037",
       "blurb": null,
       "photoRef": "places/ChIJhzdHZwCxj4ARc00W_SclgB8/photos/AV-0GLd7L_ezsLom1mATYyNnJmrgxjnrqIVGuklSP3TqDLTH7ztdovn2_8Kqtwr81Fl-tV12osKBeQ4UrW8oEvFjCt1NwMJDlXg5ffXJ-6XWuHLlzkHt26isKw22_am0Qo_wnUeHugTCVYW4Lx5M4sMjIGrC2FY-CFOTHieuyM2n4fzCnHbgJLzYwHWub4jVZRO98l-tIgM3pAXYLLD0Ni7_8bx05D2DVRs1mjMbedjl4VAx_XDOGfkoMk1gYhBqwryGaMsHA5_XVAFLDSHVfmTylbUZDHH4gPANsWauv0rxV79l6QDTYr60E3XDtFGMorovmHEuX9u9E8IWkJNIKra66l5dPp_COb8uzKZXMUSGmMRezNapN0pKFruEg6XpnPzgj2npT_01eKUtGKSLZBvKcG9nPZrtZ7KQKBsZuem2V89DmA"
+    },
+    {
+      "id": "soon-SR0885067",
+      "name": "Teriyaki City Grill",
+      "address": "171 Branham Ln., Ste. 3",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-10-26",
+      "status": "coming-soon",
+      "sourceId": "SR0885067",
+      "blurb": "Teriyaki restaurant planned for Snell & Branham Plaza.",
+      "photoRef": "places/ChIJ_VPEd9_pj4ARmxq-V0ykzwA/photos/AV-0GLcSuC-w6OSdVFeFKr_1NU131wUzqZwJVdC-CTLbjh6PacrHTYp58o_0CrKGJaIh0_ijj9y4YAsmAuOBBt-80LcR4LSoLBDs5lDGrWlnSnuqTKXzmoZp7RTfMD2sCd3KhCOzW0guuaZHIqDVnKnWVeYb3GZl2yu8OnDSaxgyWFsrmZH1pRtbEyXaqiy0vLVbpvJqwAMRGWqKhCypSrkKJfzXNreAScu7UEfXldsJwtOXywL7Dk1AY1jOGkoZcvnwDZo7yuxbG06gPaBKaREnFTXdnC344ypHXkKHn5CO9HZYm6t1munJRHGXe8S63z6-sIdyBigNs4Gp4XuuxyXJixCdeSXRBcIlzpQt0z9PApGhqXNJYqrHyGfDa2EjFaYeVghf495XPvfcLzJzTt15EqBRLgg"
     }
   ]
 }
