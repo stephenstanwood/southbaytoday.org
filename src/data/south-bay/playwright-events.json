@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-24T03:16:40.937Z",
+    "generatedAt": "2026-11-24T07:54:56.666Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 192,
+    "eventCount": 193,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (9)",
@@ -20,7 +20,7 @@
       "Opera San José (6)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
-      "SAP Center (12)",
+      "SAP Center (13)",
       "The Tech Interactive (17)",
       "Books Inc (8)",
       "San Jose Museum of Art (1)",
@@ -262,8 +262,8 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 12,
-        "liveCount": 12,
+        "count": 13,
+        "liveCount": 13,
         "error": null,
         "sources": [
           "SAP Center"
@@ -990,7 +990,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-24T03:15:32.265Z"
+        "checkedAt": "2026-11-24T07:53:49.240Z"
       }
     },
     {
@@ -1013,7 +1013,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-24T03:15:32.266Z"
+        "checkedAt": "2026-11-24T07:53:49.241Z"
       }
     },
     {
@@ -1036,7 +1036,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-24T03:15:32.266Z"
+        "checkedAt": "2026-11-24T07:53:49.242Z"
       }
     },
     {
@@ -1059,7 +1059,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-24T03:15:32.266Z"
+        "checkedAt": "2026-11-24T07:53:49.242Z"
       }
     },
     {
@@ -1082,7 +1082,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-24T03:15:32.268Z"
+        "checkedAt": "2026-11-24T07:53:49.243Z"
       }
     },
     {
@@ -1105,7 +1105,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-24T03:15:32.268Z"
+        "checkedAt": "2026-11-24T07:53:49.244Z"
       }
     },
     {
@@ -1776,7 +1776,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1793,7 +1793,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3006,23 +3006,6 @@
       "kidFriendly": false
     },
     {
-      "id": "8bea8765329d",
-      "title": "Sharks vs Wild",
-      "date": "2026-11-23",
-      "displayDate": "Mon, Nov 23",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "8b05c10c052f",
       "title": "Sharks vs Golden Knights — Youth Hockey Appreciation",
       "date": "2026-11-27",
@@ -3043,7 +3026,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.476Z"
+        "checkedAt": "2026-11-24T07:54:27.036Z"
       }
     },
     {
@@ -3067,7 +3050,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.477Z"
+        "checkedAt": "2026-11-24T07:54:27.039Z"
       }
     },
     {
@@ -3108,7 +3091,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.477Z"
+        "checkedAt": "2026-11-24T07:54:27.039Z"
       }
     },
     {
@@ -3132,7 +3115,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.477Z"
+        "checkedAt": "2026-11-24T07:54:27.039Z"
       }
     },
     {
@@ -3156,7 +3139,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.477Z"
+        "checkedAt": "2026-11-24T07:54:27.039Z"
       }
     },
     {
@@ -3180,7 +3163,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.477Z"
+        "checkedAt": "2026-11-24T07:54:27.039Z"
       }
     },
     {
@@ -3204,7 +3187,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.477Z"
+        "checkedAt": "2026-11-24T07:54:27.039Z"
       }
     },
     {
@@ -3228,7 +3211,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.477Z"
+        "checkedAt": "2026-11-24T07:54:27.039Z"
       }
     },
     {
@@ -3252,7 +3235,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-2",
         "date": "2026-12-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.478Z"
+        "checkedAt": "2026-11-24T07:54:27.039Z"
       }
     },
     {
@@ -3276,8 +3259,49 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-3",
         "date": "2026-12-30",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T03:16:09.478Z"
+        "checkedAt": "2026-11-24T07:54:27.040Z"
       }
+    },
+    {
+      "id": "2c93bc222f21",
+      "title": "Sharks vs Flyers — New Year's Day",
+      "date": "2027-01-01",
+      "displayDate": "Fri, Jan 1",
+      "time": "1:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "Sharks Mystery Dumplings Giveaway",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-30",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-30",
+        "date": "2027-01-01",
+        "time": "1:00 PM",
+        "checkedAt": "2026-11-24T07:54:27.040Z"
+      }
+    },
+    {
+      "id": "8bea8765329d",
+      "title": "Sharks vs Wild",
+      "date": "2026-11-23",
+      "displayDate": "Mon, Nov 23",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
+      "source": "SAP Center",
+      "kidFriendly": false
     },
     {
       "id": "de5bf1dd9ed6",
