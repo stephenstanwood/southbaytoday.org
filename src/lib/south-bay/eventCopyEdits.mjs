@@ -941,6 +941,19 @@ const EDITS = {
         /\bESL 502 Course Information: Starts: ([^;]+, \d{4}); Ends: ([^;]+, \d{4}); Class Days: ([^;]+); Time: (\d{1,2}:\d{2} [AP]M) [–-] (\d{1,2}:\d{2} [AP]M); Instructor: TBD\./g,
         "ESL 502 runs from $1, through $2. Classes meet $3 from $4 to $5. The instructor is to be determined.",
       ],
+      [
+        "ESL Escucha y Conversación 1 (Curso de ESL sin crédito, nivel básico alto) Los estudiantes",
+        "ESL Escucha y Conversación 1 (curso de ESL sin crédito, nivel básico alto). Los estudiantes",
+      ],
+      [
+        /Programar una cita para realizar la evaluación, enviando un email a: ([\w.+-]+@[\w.-]+\.[a-zA-Z]{2,})\.? (?=Información del Curso ESL 502:)/g,
+        "Envía un correo electrónico a $1 para programar una cita para la evaluación. ",
+      ],
+      [
+        /Información del Curso ESL 502: Inicio: (\d{1,2} de \p{L}+ de \d{4}); Finaliza: (\d{1,2} de \p{L}+ de \d{4}); Días de Clase: ([\p{L}, ]+); Hora: (\d{1,2}:\d{2} [ap]\.m\.) [–-] (\d{1,2}:\d{2} [ap]\.m\.);? Instructor: TBD\./gu,
+        (_match, startDate, endDate, days, startTime, endTime) =>
+          `El curso ESL 502 comienza el ${startDate.toLowerCase()} y termina el ${endDate.toLowerCase()}. Las clases son los ${days.toLowerCase()} de ${startTime} a ${endTime} El instructor está por definir.`,
+      ],
       ["After, we'll take what we've learned to create art of our own!", "Then we'll use what we've learned to make art of our own."],
       ["Adults, teens and children welcome.", "Adults, teens, and children are welcome."],
       ["• October – Cardboard Nicho. Recommended items to bring:", "For October's cardboard nicho, consider bringing"],
