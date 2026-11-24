@@ -224,6 +224,21 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-23-educational-park-esl.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-library-and-latin-jazz.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-exhibits.json", import.meta.url))));
+const november24LibraryFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-library-afternoon.json", import.meta.url)));
+audits.push(november24LibraryFixture);
+
+test("library copy repairs preserve revised contacts and publisher scope", () => {
+  for (const row of november24LibraryFixture.cases) {
+    const otherSource = { source: "Another publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(otherSource), otherSource);
+  }
+
+  const appointment = november24LibraryFixture.cases.find(row => row.field === "attendanceNote");
+  const changeContacts = text => text.replace("(408) 808-3040", "(408) 808-3071")
+    .replace("ab.sjpl@sjlibrary.org", "booking@sjlibrary.org");
+  const event = { source: appointment.source, attendanceNote: changeContacts(appointment.refreshed) };
+  assert.deepEqual(polishReviewedEventCopy(event), { ...event, attendanceNote: changeContacts(appointment.reviewed) });
+});
 
 test("the two theater listings use their published Come From Away capitalization", () => {
   const sanJose = {

@@ -29,6 +29,14 @@ const SJPL_STORYTIME_TICKET_EDIT = [
 const SJPL_DESK_TICKET_COPY = "Tickets are available at the desk 30 minutes before the program starts. Everyone attending needs a ticket and must be present to get one.";
 const SJPL_TICKETS_AND_PARTICIPATION_EDIT = ["Tickets and Participation Free.", "Tickets and Participation: Free."];
 const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
+const SJPL_TECH_APPOINTMENT_EDITS = [
+  [/\bBook an Appointment[.:]? Assistance is by appointment only\./g, "Appointments are required."],
+  ["Limit to one appointment per week per person.", "Each person can book one appointment per week."],
+  [
+    /For questions or to schedule an appointment, call (\(\d{3}\) \d{3}-\d{4}) or send an email to ([\w.+-]+@[\w.-]+\.[A-Za-z]{2,}) to schedule an appointment\./g,
+    "For questions or to book, call $1 or email $2.",
+  ],
+];
 const SJPL_FIRST_COME_MATERIALS_EDIT = [
   "This event is first-come, first-served. Materials are limited to",
   "Space is available on a first-come, first-served basis. Materials are limited to",
@@ -175,6 +183,7 @@ const EDITS = {
       [/^Cambrian Pokemon Club$/g, "Cambrian Pokémon Club"],
     ],
     attendanceNote: [
+      ...SJPL_TECH_APPOINTMENT_EDITS,
       SJPL_STORYTIME_TICKET_EDIT,
       [
         /^· All participants will need a storytime ticket\. Tickets are limited and available at the Information Desk (\d+) minutes before the program\./g,
@@ -813,7 +822,7 @@ const EDITS = {
       ["of each month. Free, no registration is required.", "of each month. Free. No registration is required."],
       ["ESL course is Free! ESL 501 Reading", "ESL course is free! ESL 501 Reading"],
       [
-        "Do you want to build your English language skills and your confidence? This beginning non-credit ESL course is free! ESL 501 Reading & Writing 1. What will you learn in this class? This is a non-credit, high-beginning-level integrated ESL skills course emphasizing basic reading, writing, grammar, and vocabulary.",
+        /(?:Do you want to build your English language skills and your confidence\? )?This beginning non-credit ESL course is free[.!] ESL 501 Reading & Writing 1\. What will you learn in this class\? This is a non-credit, high-beginning-level integrated ESL skills course emphasizing basic reading, writing, grammar, and vocabulary\./g,
         "ESL 501 Reading & Writing 1 is a free, noncredit course for high-beginning English learners. It focuses on basic reading, writing, grammar, and vocabulary.",
       ],
       [
@@ -825,7 +834,7 @@ const EDITS = {
         "Complete the Guided Self-Placement assessment before classes start. It helps the college place you in a class for your English level. Get help applying and registering in person at Edenvale Branch Library.",
       ],
       [
-        "Develop your English language skills by practicing speaking, listening, reading, writing, vocabulary, pronunciation, and grammar. ESL 501 Reading & Writing 1 is a free, noncredit course for high-beginning English learners. It focuses on basic reading, writing, grammar, and vocabulary.",
+        /(?:Build your English language skills and your confidence\. )?Develop your English language skills by practicing speaking, listening, reading, writing, vocabulary, pronunciation, and grammar\. ESL 501 Reading & Writing 1 is a free, noncredit course for high-beginning English learners\. It focuses on basic reading, writing, grammar, and vocabulary\./g,
         "ESL 501 Reading & Writing 1 is a free, noncredit course for learners at the high-beginning English level. It focuses on basic reading, writing, grammar, and vocabulary, with practice in speaking, listening, and pronunciation.",
       ],
       [
@@ -938,8 +947,12 @@ const EDITS = {
       ["this engaging program is aimed for kids", "this program is intended for children"],
       ["द्विभाषी हिंदी-अंग्रेज़ी कहानी समय अल्माडेन ब्रांच पुस्तकालय", "अल्माडेन ब्रांच पुस्तकालय"],
       [
-        "ESL Listening & Speaking 1 - This is a non-credit, high-beginning-level ESL course.",
+        /^ESL Listening & Speaking 1 (?:- )?This is a non-credit, high-beginning-level ESL course\./g,
         "ESL Listening & Speaking 1 is a noncredit course for high-beginning English learners.",
+      ],
+      [
+        /^Learn to pronounce basic words accurately, communicate effectively, understand and use basic grammar structures, and build their foundational vocabulary\. This is a non-credit, high-beginning-level ESL course\./g,
+        "This noncredit ESL course is for learners at the high-beginning level. Learn to pronounce basic words accurately, communicate effectively, understand and use basic grammar, and build your foundational vocabulary.",
       ],
       [
         "To Enroll, You Must: Complete and pass the Self-Guided Computer Assessment.",
@@ -962,7 +975,7 @@ const EDITS = {
         "Para inscribirte, completa y aprueba la evaluación autoguiada en computadora. No es un examen. La evaluación nos ayuda a asignarte a la clase de ESL más adecuada para tu nivel de inglés. Para obtener resultados precisos, hazla sin ayuda y en un lugar tranquilo. Completa el formulario de inscripción.",
       ],
       [
-        /Programar una cita para realizar la evaluación, enviando un email a: ([\w.+-]+@[\w.-]+\.[a-zA-Z]{2,})\.? (?=Información del Curso ESL 502:)/g,
+        /Programar una cita para realizar la evaluación, enviando un email a:? ([\w.+-]+@[\w.-]+\.[a-zA-Z]{2,})\.? (?=Información del Curso ESL 502:|El curso ESL 502\b)/g,
         "Envía un correo electrónico a $1 para programar una cita para la evaluación. ",
       ],
       [
@@ -971,6 +984,18 @@ const EDITS = {
           `El curso ESL 502 comienza el ${startDate.toLowerCase()} y termina el ${endDate.toLowerCase()}. Las clases son los ${days.toLowerCase()} de ${startTime} a ${endTime} El instructor está por definir.`,
       ],
       ["After, we'll take what we've learned to create art of our own!", "Then we'll use what we've learned to make art of our own."],
+      ...SJPL_TECH_APPOINTMENT_EDITS,
+      ["High School and Middle School students are welcome Free program.", "Middle and high school students are welcome. The program is free."],
+      [
+        "For learners with limited ability in English, students will practice speaking using guided dialogues to help them navigate in the community they live in.",
+        "Learners with limited English can practice speaking through guided dialogues for everyday situations in their community.",
+      ],
+      ["In this drop-in program participants will be able to choose from prepared designs", "In this drop-in program, participants can choose from prepared designs"],
+      ["Creación de botones para Winter Reading ¡Ven a", "Creación de botones para Winter Reading. ¡Ven a"],
+      ["If you do you win a prize! * This program", "If you do, you'll win a prize! This program"],
+      ["*Premios disponibles hasta agotar existencias.", "Los premios están disponibles hasta agotar existencias."],
+      ["Búsqueda del Tesoro de Winter Reading ¿Puedes", "Búsqueda del tesoro de Winter Reading. ¿Puedes"],
+      [/\bDecember 0([1-9])(?= - (?:Rock Penguins|Glowing Lanterns)\b)/g, "December $1"],
       ["Adults, teens and children welcome.", "Adults, teens, and children are welcome."],
       ["• October – Cardboard Nicho. Recommended items to bring:", "For October's cardboard nicho, consider bringing"],
       ["• November – Embossing Aluminum Food Charms. Recommended items to bring:", "For November's embossed aluminum food charms, consider bringing"],
@@ -1507,6 +1532,7 @@ const EDITS = {
     ],
     blurb: [
       ["Forevery Young by Hayley Mills", "Forever Young by Hayley Mills"],
+      ["Practice English speaking through guided dialogues", "Practice speaking English through guided dialogues"],
       [
         "Sit down one-on-one with a reading coach to build reading skills, designed for students in grades K-3.",
         "Students in grades K-3 can work one-on-one with a reading coach to build their skills.",
@@ -1832,6 +1858,8 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
     ],
     description: [
+      ["during Winter Reading program, from", "during the Winter Reading program, from"],
+      ["Prize pick up is", "Prize pickup is"],
       [
         "Babies, 12 months and younger, join us for fun, interactive nursery rhymes, fingerplays, action rhymes and songs!",
         "Babies ages 12 months and younger can enjoy interactive nursery rhymes, fingerplays, action rhymes, and songs.",
@@ -2192,6 +2220,10 @@ const EDITS = {
     ],
     blurb: [
       [
+        /^Play Winter Reading Bingo at (.+? Library), a free program for readers of all ages that earns a prize\.$/g,
+        "Readers of all ages can play Winter Reading Bingo for free at $1 and earn a prize.",
+      ],
+      [
         "Read aloud to a friendly dog or cat at the library, bringing a book from home or borrowing one from the Children's Room.",
         "Read aloud to a friendly dog or cat at the library. Bring a book from home or borrow one from the Children's Room.",
       ],
@@ -2288,6 +2320,7 @@ const EDITS = {
         "The group picks a graphic novel to discuss each month. The club is open to readers ages $1 and up.",
       ],
       [/\b(USA|Translation|Sonoma County); (?=[A-Z][a-z]+ \d{1,2} - )/g, "$1. "],
+      ["A two-wheeled journey across the landscape of America, and through the heart and mind of an artist.", "A two-wheeled journey across the landscape of America and through the heart and mind of an artist."],
       ["Story of a Korean family separated by the war.", "The story follows a Korean family separated by the war."],
       ["at the Palo Alto Art Center, and at other educational venues.", "at the Palo Alto Art Center and at other educational venues."],
       [
