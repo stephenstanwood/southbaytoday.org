@@ -140,6 +140,11 @@ const EDITS = {
   },
   "San Jose Public Library": {
     title: [
+      // The library's full bilingual title ends in “Anh-Việt và Thủ công”.
+      [
+        /^Music and Movement in Vietnamese and English and Craft \/ Múa Hát Song Ngữ Anh$/g,
+        "Music and Movement in Vietnamese and English and Craft / Múa Hát Song Ngữ Anh-Việt và Thủ công",
+      ],
       ["Storytime and Parol lantern making", "Storytime and Parol Lantern Making"],
       [/^Storytime with Aac$/g, "Storytime with AAC"],
       [/^OneInMath: Math Program for K-3rd$/g, "OneInMath: Math Program for K-3"],
@@ -210,6 +215,36 @@ const EDITS = {
       ],
     ],
     description: [
+      ["Forevery Young by Hayley Mills", "Forever Young by Hayley Mills"],
+      [
+        "Want to grow in understanding basic math concepts and working on basic competitive math skills? Join us in Santa Teresa Junior Math Club and see your math and problem-solving skills improve!",
+        "Build confidence with basic math concepts and practice skills used in math competitions at the Santa Teresa Junior Math Club.",
+      ],
+      [
+        /For children in (\d+)(?:st|nd|rd|th) through (\d+)(?:st|nd|rd|th) grade \(geared towards ages (\d+)-(\d+) years old\)\./g,
+        "For children in grades $1 through $2, geared toward ages $3 to $4.",
+      ],
+      [
+        /Walk-ins welcome until program participant capacity (?:is )?reached\. Sessions are not related, so you can join any time!/g,
+        "Walk-ins are welcome until the session is full. Each session stands on its own, so you can join at any time.",
+      ],
+      [
+        /Designs must print in (\d+ hours?) (\d+ minutes?) - if you're not sure how long your design will take to print, email/g,
+        "Designs must print in $1 and $2. If you're unsure how long your design will take to print, email",
+      ],
+      ["All ages welcome to participate.", "All ages are welcome."],
+      [
+        "Free. In-person. No registration required. Practice your English speaking and listening skills through our weekly conversation club! Each session is conducted in person by a library volunteer.",
+        "Practice speaking and listening in English at a free, in-person conversation club led by a library volunteer. The club meets weekly. No registration required.",
+      ],
+      [
+        /Llama al (\(\d{3}\) \d{3}-\d{4}) para registrarte\. Por favor, entre a la biblioteca/g,
+        "Llame al $1 para inscribirse. Por favor, entre a la biblioteca",
+      ],
+      [
+        "Please note that the One-On-One Reading Tutor for Kids is a program to encourage young readers to practice their reading skills with an adult volunteer.",
+        "This program gives young readers a chance to practice with an adult volunteer.",
+      ],
       [
         "Our reading coach will listen to children read and provide support in reading and comprehension.",
         "The reading coach will listen as children read and help them improve their reading and comprehension.",
@@ -532,6 +567,10 @@ const EDITS = {
       [/(Recommended for ages \d+ and) Up\. Free\. Registration Required\./g, "$1 up. Free. Registration required."],
       ["the basics of using sewing machine!", "the basics of using a sewing machine!"],
       ["PLA - filament color at the discretion", "PLA - filament color is at the discretion"],
+      [
+        "All designs are printed in a single color of PLA - filament color is at the discretion of the program lead.",
+        "All designs are printed in one PLA filament color chosen by the program lead.",
+      ],
       ["some adult only craft time.", "some adult-only craft time."],
       ["reading of Hello, Universe where patrons will", "reading of Hello, Universe. Patrons will"],
       [/Sessions take place every (\d+(?:st|nd|rd|th) and \d+(?:st|nd|rd|th) (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)s)\./g, "Sessions take place on the $1."],
@@ -1438,6 +1477,11 @@ const EDITS = {
       ],
     ],
     blurb: [
+      ["Forevery Young by Hayley Mills", "Forever Young by Hayley Mills"],
+      [
+        "Sit down one-on-one with a reading coach to build reading skills, designed for students in grades K-3.",
+        "Students in grades K-3 can work one-on-one with a reading coach to build their skills.",
+      ],
       ["an LGBTQ+ friendly space", "an LGBTQ+-friendly space"],
       [
         "Bring your questions on printing, Word, Excel, email setup, or tech security to volunteer tech mentors who offer advice and problem-solving.",
@@ -1759,6 +1803,14 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
     ],
     description: [
+      [
+        "Babies, 12 months and younger, join us for fun, interactive nursery rhymes, fingerplays, action rhymes and songs!",
+        "Babies ages 12 months and younger can enjoy interactive nursery rhymes, fingerplays, action rhymes, and songs.",
+      ],
+      [
+        "We'll have some drinks and snacks to keep you fueled during the last days of finals. While supplies last. For high schoolers only.",
+        "The library will offer drinks and snacks during the last days of finals, while supplies last. The study space is for high schoolers only.",
+      ],
       ...SCCLD_OPEN_MIC_EDITS,
       ["Looking for community resources or not sure where to start?", "Need help finding community resources?"],
       [
