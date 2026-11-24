@@ -293,6 +293,7 @@ Agenda excerpts are often cut off mid-sentence ("...for FY 2026-", "provide dire
 
 The source is an agenda, not minutes: it lists what is before the body, not the order things happened. Never narrate a sequence of events ("once the Council settled on X, it moved to Y") — the agenda cannot support it. Describe proposed actions as items for consideration, not a list of "notable decisions" already made.
 Participation instructions and public-comment slots do not establish that anyone spoke. Never report that comments "were heard" or that the body discussed its attendance procedures based only on those notices.
+If you include ways to attend, distinguish the meeting location from remote options and preserve any stated registration requirements for each option.
 If you include public-comment deadlines, state what each one governs, such as forwarding comments to the body, publishing them with the agenda, or adding them to the meeting record. Omit timing details if the excerpt does not establish what the deadlines apply to.
 
 Match the source's wording on sensitive framing. If the agenda says "federal civil enforcement," do not narrow it to "immigration enforcement," "tax enforcement," or any specific subtype unless the source explicitly uses that word.

@@ -15,6 +15,33 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Maples Pavilion uses the campus guide's street number", () => {
+  const event = {
+    venue: "Maples Pavilion",
+    address: "Maples Pavilion, Stanford University, 641 Campus Drive, Stanford, CA 94305",
+  };
+  assert.equal(applyVerifiedEventFacts(event).address, "655 Campus Drive, Stanford, CA 94305");
+  const neighbor = { ...event, venue: "Another Stanford facility" };
+  assert.equal(applyVerifiedEventFacts(neighbor), neighbor);
+});
+
+test("the dated Korean smartphone help listing keeps the library's booking instructions", () => {
+  const event = {
+    source: "City Newsletter", city: "santa-clara", date: "2026-12-07",
+    title: "Tech Help Class: 1-on-1 Smartphone Help in Korean", url: "",
+    venue: "Technology Center", cost: null,
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.venue, "Central Park Library");
+  assert.equal(new URL(corrected.url).hostname, "bookings.cloud.microsoft");
+  assert.equal(corrected.cost, "free");
+  assert.equal(corrected.registration, REGISTRATION_APPOINTMENT);
+  assert.match(corrected.attendanceNote, /15-minute appointment/);
+  assert.equal(applyVerifiedEventFacts({ ...event, registration: "full" }).registration, "full");
+  const otherDate = { ...event, date: "2026-12-08" };
+  assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
 test("the county flag raising links to its dated flyer when the newsletter URL is empty", () => {
   const event = {
     source: "City Newsletter", city: "san-jose", date: "2026-12-10",
@@ -1680,9 +1707,9 @@ test("three dated Stanford basketball ticket pages retain their actual Maples ad
     for (const field of ["date", "url", "venue", "time", "endTime"]) assert.equal(fixed[field], raw[field]);
     assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
     const anotherYear = { ...raw, date: date.replace("2026", "2027") };
-    assert.equal(applyVerifiedEventFacts(anotherYear), anotherYear);
+    assert.deepEqual(applyVerifiedEventFacts(anotherYear), { ...anotherYear, address: fixed.address });
     const anotherUrl = { ...raw, url: "https://tickets.gostanford.com/events/unrelated" };
-    assert.equal(applyVerifiedEventFacts(anotherUrl), anotherUrl);
+    assert.deepEqual(applyVerifiedEventFacts(anotherUrl), { ...anotherUrl, address: fixed.address });
   }
 });
 

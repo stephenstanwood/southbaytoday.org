@@ -6884,16 +6884,24 @@ function mapTicketmasterEvent(e) {
   if (!city) return null;
 
   const priceRange = e.priceRanges?.[0];
-  const minPrice = priceRange?.min;
+  const isTicketWeb = /ticketweb\.com/i.test(e.url || "");
+  // Discovery sometimes exposes only this venue's two VIP rentals as the
+  // "standard" range. Neither the booth nor the room includes admission.
+  // https://www.ticketweb.com/event/sparta-public-opinion-the-ritz-tickets/15038543
+  const ritzVipOnly = isTicketWeb && venueName === "The Ritz" && city === "san-jose"
+    && priceRange?.currency === "USD"
+    && ((priceRange.min === 263.35 && priceRange.max === 520.85)
+      || (priceRange.min === 263.40 && priceRange.max === 520.90));
+  const minPrice = ritzVipOnly ? undefined : priceRange?.min;
   // Ticketmaster's TicketWeb passthrough reports San Jose Improv events as
   // $0 even when the venue's canonical event page lists a paid ticket price.
   // Do not surface those shows as free; keep the ordinary $0 behavior for
   // every other Ticketmaster event.
-  const isTicketWebImprov = /ticketweb\.com/i.test(e.url || "") && /\bimprov\b/i.test(venueName);
+  const isTicketWebImprov = isTicketWeb && /\bimprov\b/i.test(venueName);
   // Sold-out TicketWeb offers can become $0–$0 placeholders. They do not
   // establish free admission: use explicit event-copy evidence, or unknown.
   // Tauren Wells, November 12: docs/qa/2026-10-27-2307-fact-check.md.
-  const soldOutZeroOffer = soldOut && /ticketweb\.com/i.test(e.url || "")
+  const soldOutZeroOffer = soldOut && isTicketWeb
     && minPrice === 0 && priceRange?.max === 0;
   const sourceSaysFree = /\bfree\s+(?:admission|entry|event)\b|\badmission\s+is\s+free\b/i.test(e.info || "");
   const sourceSaysPaid = /\bticket prices?\s+(?:are|is)\b|\b(?:purchasing|purchase|buy)\s+(?:a|your|the)\s+ticket\b/i.test(e.info || "");
@@ -6972,7 +6980,7 @@ function mapTicketmasterEvent(e) {
     description: truncate(descCandidate),
     url: fixTicketmasterUrl(e.url, e.name, city, dateStr),
     source: "Ticketmaster",
-    kidFriendly: !minimumAge && /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|disney|cirque)/i.test(e.name + " " + genre),
+    kidFriendly: !minimumAge && /\b(kid|child|family|story|youth|teens?\b|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|disney|cirque)/i.test(e.name + " " + genre),
   };
 }
 

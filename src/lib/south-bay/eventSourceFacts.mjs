@@ -95,6 +95,22 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  {
+    date: "2026-12-07",
+    matches: event => event.source === "City Newsletter" && event.city === "santa-clara"
+      && event.title === "Tech Help Class: 1-on-1 Smartphone Help in Korean",
+    // The library newsletter's public booking link (tinyurl.com/SCLSK1)
+    // opens the city's Korean Language Smartphone Help Appointment service.
+    facts: event => ({
+      url: event.url || "https://bookings.cloud.microsoft/book/G5579d3867c8c4099a3437eaae6e0ad9a@SantaClaraCA.onmicrosoft.com/s/lm6koo9iRkOndTRcEPopCg2?ismsaljsauthenabled",
+      venue: "Central Park Library",
+      address: "2635 Homestead Road, Santa Clara, CA 95051",
+      cost: "free",
+      registration: [REGISTRATION_CLOSED, REGISTRATION_FULL].includes(event.registration)
+        ? event.registration : REGISTRATION_APPOINTMENT,
+    }),
+    appendAttendanceNote: "Book a free 15-minute appointment in advance. The appointment takes place in the Technology Center.",
+  },
   // Supervisor Otto Lee's November 20 county newsletter embeds the flyer
   // for this ceremony. Use it when the newsletter extraction omits a URL.
   {
@@ -7209,6 +7225,13 @@ function staleEventCopyFor(event) {
 }
 
 export function applyVerifiedEventFacts(event) {
+  // Stanford's campus guide gives Maples Pavilion's address. Two Athletics
+  // newsletters were ingested with 641 Campus Drive instead.
+  // https://maps.stanford.edu/ada/building-ada.cfm?FACIL_ID=09-300
+  if (event?.venue === "Maples Pavilion"
+      && /\b641 Campus Drive\b/i.test(event.address || "")) {
+    event = { ...event, address: "655 Campus Drive, Stanford, CA 94305" };
+  }
   // The studio listing points to the library's poster guide, which gives a
   // 24-by-36-inch canvas. Correct the studio template's inch-mark typo.
   // https://sjpl.bibliocommons.com/v2/events/690a9f713cbc052f00833647

@@ -71,3 +71,23 @@ test("fresh source text can remove the requirement without a dated or venue-base
   assert.equal(mapped.time, "7:00 PM");
   assert.equal(mapped.venue, "San Jose Improv");
 });
+
+test("the Ritz's booth and room rentals do not establish an admission price", () => {
+  const ritz = {
+    ...source,
+    name: "Teenage Wrist",
+    url: "https://www.ticketweb.com/event/teenage-wrist-the-ritz-tickets/14429594",
+    info: "",
+    pleaseNote: "",
+    _embedded: { venues: [{ name: "The Ritz", city: { name: "San Jose" } }] },
+  };
+  for (const [min, max] of [[263.35, 520.85], [263.40, 520.90]]) {
+    const mapped = mapTicketmasterEvent({ ...ritz, priceRanges: [{ type: "standard", currency: "USD", min, max }] });
+    assert.equal(mapped.cost, "paid");
+    assert.equal(mapped.costNote, undefined);
+    assert.equal(mapped.kidFriendly, false, "the band's name does not establish a teen audience");
+  }
+  assert.equal(mapTicketmasterEvent({
+    ...ritz, priceRanges: [{ type: "standard", currency: "USD", min: 25.73, max: 520.90 }],
+  }).costNote, "From $26");
+});
