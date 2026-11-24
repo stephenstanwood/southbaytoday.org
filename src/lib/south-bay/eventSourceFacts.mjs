@@ -93,6 +93,20 @@ const MERRY_ACHI_COPY = {
   blurb: "Hear José Hernández and Mariachi Sol de México perform Merry-Achi Christmas at Hammer Theatre.",
 };
 
+// History San José's calendar still links to December 2024. Visit San Jose
+// links the current booking calendar. The two checkout pages give the prices
+// with fees and the actual durations of the December 5 seatings.
+// https://historysanjose.org/programs-events/
+// https://www.sanjose.org/events/heritage-holiday-tea
+const HISTORY_PARK_HOLIDAY_TEA_FACTS = {
+  url: "https://fareharbor.com/embeds/book/historysanjose/items/314593/calendar/2026/12/?flow=583745&full-items=yes",
+  endTime: "4:00 PM",
+  category: "community",
+  blurb: "Choose the 11 AM–1 PM or 2–4 PM seating at the Empire Fire House.",
+  attendanceNote: "Tickets are $58.30 for general admission and $53 for History San José members, including fees.",
+  image: "https://www.sanjose.org/sites/default/files/styles/listing_detail_image/public/holiday-tea-square_7E07C13C-0D75-325C-4D57FD8380D1522C_7e083ab9-c961-5569-dc44c85a623d74a0.png.webp?itok=FJz4l4tn",
+};
+
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
@@ -6489,34 +6503,27 @@ const CORRECTIONS = [
       attendanceNote: "Limit two items per household. Check-in closes at 2:30 PM and may close earlier if capacity is reached.",
     },
   },
-  // The current organizer listing places the tea at the Empire Fire House,
-  // not outdoors. The old booking URL is dated December 2024.
-  // History San José's current calendar gives admission. Its dated artwork
-  // published by Visit San Jose confirms both seatings and replaces the
-  // calendar's unrelated default share image.
-  // https://historysanjose.org/programs-events/
-  // https://www.sanjose.org/events/heritage-holiday-tea
-  // Evidence: docs/qa/2026-10-15-2107-fact-check.md.
+  // The Winter Festival program requires reservations for all four seatings.
+  // Gamble Garden's individual occurrence pages omit that requirement.
+  // https://www.gamblegarden.org/winter/winter-festival-2026/
+  {
+    dateFrom: "2026-12-04", dateThrough: "2026-12-05",
+    matches: event => event.source === "Gamble Garden" && event.title === "Holiday Tea"
+      && event.url?.startsWith(`https://www.gamblegarden.org/event/holiday-tea/${event.date}/`),
+    facts: { registration: REGISTRATION_REQUIRED },
+  },
   {
     date: "2026-12-05", title: /^History Park Heritage Holiday Tea$/i,
     venue: /^History Park(?:, Empire Fire House)?$/i,
-    facts: {
-      url: "https://historysanjose.org/programs-events/",
-      category: "community",
-      blurb: "Seatings start at 11 AM and 2 PM at the Empire Fire House.",
-      attendanceNote: "Tickets are $55 for general admission and $50 for History San José members.",
-      image: "https://www.sanjose.org/sites/default/files/styles/listing_detail_image/public/holiday-tea-square_7E07C13C-0D75-325C-4D57FD8380D1522C_7e083ab9-c961-5569-dc44c85a623d74a0.png.webp?itok=FJz4l4tn",
-    },
+    facts: HISTORY_PARK_HOLIDAY_TEA_FACTS,
   },
-  // Correct the already published phantom date on its retired URL too. The
-  // December 10 record came from an image filename, not another tea session.
+  // The retired December 10 slug came from an image filename. Give its
+  // corrected snapshot the same booking link so it redirects to December 5.
   {
     date: "2026-12-10", id: "historysj-f6db24f857516c7b",
     facts: {
+      ...HISTORY_PARK_HOLIDAY_TEA_FACTS,
       date: "2026-12-05", displayDate: "Sat, Dec 5",
-      url: "https://historysanjose.org/programs-events/",
-      category: "community",
-      blurb: "Join the Heritage Holiday Tea at History Park's Empire Fire House.",
     },
   },
   // This event's Squarespace location incorrectly says Palo Alto / 94301.

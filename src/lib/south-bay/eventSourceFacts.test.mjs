@@ -4331,20 +4331,52 @@ test("MOAH's verified free repair session keeps its check-in deadline and item l
   }
 });
 
-test("History Park tea keeps the current organizer listing, seatings, admission and art", () => {
+test("Gamble Garden's four 2026 Holiday Tea seatings require reservations", () => {
+  const raw = {
+    date: "2026-12-04", title: "Holiday Tea", source: "Gamble Garden", cost: null,
+    url: "https://www.gamblegarden.org/event/holiday-tea/2026-12-04/1/",
+  };
+  for (const date of ["2026-12-04", "2026-12-05"]) {
+    for (const seating of ["1", "3"]) {
+      const event = { ...raw, date, url: `https://www.gamblegarden.org/event/holiday-tea/${date}/${seating}/` };
+      assert.deepEqual(applyVerifiedEventFacts(event), { ...event, registration: "required" });
+    }
+  }
+  const closed = { ...raw, registration: "closed", attendanceNote: "Booking window closed." };
+  assert.deepEqual(applyVerifiedEventFacts(closed), closed);
+  for (const other of [
+    { ...raw, date: "2027-12-04", url: raw.url.replace("2026", "2027") },
+    { ...raw, url: "https://www.gamblegarden.org/event/another-tea/" },
+  ]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("History Park tea uses both verified seatings, the current booking calendar, and inclusive prices", () => {
   const raw = {
     date: "2026-12-05", title: "History Park Heritage Holiday Tea", venue: "History Park", category: "outdoor",
+    endTime: "3:30 PM",
     url: "https://fareharbor.com/embeds/book/historysanjose/items/314593/calendar/2024/12/?full-items=yes",
     blurb: "Taste holiday tea service and sweets outdoors at History Park's Heritage Holiday Tea.",
     image: "https://historysanjose.org/wp-content/uploads/2022/07/ComingOut_About.jpg",
   };
   const fixed = applyVerifiedEventFacts(raw);
-  assert.equal(fixed.url, "https://historysanjose.org/programs-events/");
+  assert.equal(fixed.url, "https://fareharbor.com/embeds/book/historysanjose/items/314593/calendar/2026/12/?flow=583745&full-items=yes");
+  assert.equal(fixed.endTime, "4:00 PM");
   assert.equal(fixed.category, "community");
-  assert.equal(fixed.blurb, "Seatings start at 11 AM and 2 PM at the Empire Fire House.");
-  assert.equal(fixed.attendanceNote, "Tickets are $55 for general admission and $50 for History San José members.");
+  assert.equal(fixed.blurb, "Choose the 11 AM–1 PM or 2–4 PM seating at the Empire Fire House.");
+  assert.equal(fixed.attendanceNote, "Tickets are $58.30 for general admission and $53 for History San José members, including fees.");
   assert.match(fixed.image, /^https:\/\/www\.sanjose\.org\/.*\/holiday-tea-square_.*\.webp\?/);
   assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const retiredSlug = "2026-12-10-history-park-heritage-holiday-tea";
+  const ledger = { entries: [{
+    slug: retiredSlug,
+    event: { ...raw, id: "historysj-f6db24f857516c7b", date: "2026-12-10", time: "11:00 AM" },
+  }] };
+  const published = { ...fixed, id: "historysj-0a92bee231b10266", time: "11:00 AM", venue: "History Park, Empire Fire House" };
+  const { redirects, orphans } = resolveRetired(ledger, [published], [], "2026-11-24");
+  assert.equal(redirects.get(retiredSlug), "2026-12-05-history-park-heritage-holiday-tea");
+  assert.deepEqual(orphans, []);
   for (const other of [{ ...raw, date: "2026-12-10" }, { ...raw, title: "Another Tea" }, { ...raw, venue: "Other Park" }]) {
     assert.equal(applyVerifiedEventFacts(other), other);
   }
