@@ -946,6 +946,10 @@ const EDITS = {
         "ESL Escucha y Conversación 1 (curso de ESL sin crédito, nivel básico alto). Los estudiantes",
       ],
       [
+        "Para inscribirte, debes: Completar y aprobar la evaluación de computadora autoguiada (No es un examen—es simplemente una evaluación para ayudarnos a colocarte en la clase de ESL más adecuada según tu nivel actual de inglés. Para obtener resultados precisos, debes completar la evaluación de forma individual y en un lugar tranquilo, sin la ayuda de otras personas). Completar el formulario de inscripción.",
+        "Para inscribirte, completa y aprueba la evaluación autoguiada en computadora. No es un examen. La evaluación nos ayuda a asignarte a la clase de ESL más adecuada para tu nivel de inglés. Para obtener resultados precisos, hazla sin ayuda y en un lugar tranquilo. Completa el formulario de inscripción.",
+      ],
+      [
         /Programar una cita para realizar la evaluación, enviando un email a: ([\w.+-]+@[\w.-]+\.[a-zA-Z]{2,})\.? (?=Información del Curso ESL 502:)/g,
         "Envía un correo electrónico a $1 para programar una cita para la evaluación. ",
       ],
