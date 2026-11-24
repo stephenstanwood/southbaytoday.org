@@ -102,8 +102,8 @@ const CORRECTIONS = [
     matches: event => event.id === "sjpl-6b048c2795b0491ca004827b" && event.title === "Math Festival",
     facts: { title: "Math Festival at Alviso" },
   },
-  // Downtown Campbell's festival page specifies free family admission and
-  // gives the intersection omitted from the City Newsletter listing.
+  // Downtown Campbell's page identifies this as a free community festival
+  // and gives the intersection omitted from the City Newsletter listing.
   {
     date: "2026-12-05",
     url: "https://www.downtowncampbell.com/event/carol-of-lights",
@@ -111,6 +111,7 @@ const CORRECTIONS = [
       ...(!event.cost && !event.costNote ? { cost: "free" } : {}),
       ...(!event.address || event.address === "Downtown Campbell"
         ? { address: "E Campbell Ave and N 1st St, Campbell, CA 95008" } : {}),
+      category: "community",
       kidFriendly: true,
       description: "Downtown Campbell's free holiday festival features Santa visits, craft tables, a petting zoo, and community performances.",
       blurb: "Visit Santa, make a craft, and catch community performances at this free Downtown Campbell holiday festival.",
@@ -2316,10 +2317,15 @@ const CORRECTIONS = [
   },
   // The venues and their ticket calendars confirm these exact showtimes.
   // https://www.ticketmaster.com/the-ritz-tickets-san-jose/venue/342544
+  // https://sjbarracuda.com/schedule/home
   // https://improv.com/sanjose/comic/godfrey/
   // https://improv.com/sanjose/calendar/
   // https://broadwaysanjose.com/shows/the-bodyguard/
   ...[
+    {
+      date: "2027-01-30", time: "6:00 PM", venue: "Tech CU Arena",
+      url: "https://www.ticketmaster.com/san-jose-barracuda-vs-ontario-reign-san-jose-california-01-30-2027/event/1C00650495EEB7B5",
+    },
     {
       date: "2027-01-30", time: "8:00 PM", venue: "The Ritz",
       url: "https://www.ticketweb.com/event/kawaii-rave-the-ritz-tickets/14409774",

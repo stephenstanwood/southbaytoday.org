@@ -130,3 +130,41 @@ test("the museum calendar keeps separate PG-13 screenings on a shared booking UR
   const otherBooking = "https://example.org/events/screening";
   assert.equal(fuzzyDedupEvents(shows.map(show => ({ ...show, url: otherBooking }))).kept.length, 1);
 });
+
+test("The Tech's workshop calendar uses the booking sessions and their Pacific clocks", async () => {
+  const link = "https://tickets.thetech.org/events/01a1bdd1-4d1f-1c8c-9ed0-69944820e7c4";
+  const card = {
+    title: "DIY Snow Globes (Winter Wonderlab)",
+    date: "December 19, 2026 2:00PM - December 26, 2026 3:00PM",
+    venue: "The Tech Interactive",
+    link,
+  };
+  const page = { goto: async () => {}, waitForTimeout: async () => {}, evaluate: async () => [card, card] };
+  const sessions = [
+    { start_datetime: "2026-12-19T22:00:00Z", end_datetime: "2026-12-19T23:00:00Z", sold_out: false },
+    { start_datetime: "2026-12-20T23:00:00Z", end_datetime: "2026-12-21T00:00:00Z", sold_out: true },
+  ];
+  const requests = [];
+  const rows = await scrapeTheTechUpcoming(page, {
+    today: "2026-12-20",
+    fetchBooking: async (url) => {
+      requests.push(url.href);
+      return { event_session: { _total: sessions.length, _data: sessions } };
+    },
+  });
+  assert.deepEqual(requests, [
+    "https://tickets.thetech.org/api/events/01a1bdd1-4d1f-1c8c-9ed0-69944820e7c4/sessions?_sort=start_datetime",
+  ]);
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].date, "2026-12-20");
+  assert.equal(rows[0].time, "3:00PM");
+  assert.equal(rows[0].endTime, "4:00 PM");
+  assert.equal(rows[0].registration, "full");
+  assert.deepEqual(rows[0].occurrenceEvidence, {
+    kind: "first-party-occurrence-page", sourceUrl: link, date: "2026-12-20", time: "3:00 PM",
+  });
+  await assert.rejects(scrapeTheTechUpcoming(page, {
+    today: "2026-12-19",
+    fetchBooking: async () => ({ event_session: { _total: 4, _data: sessions } }),
+  }), /Incomplete booking schedule/);
+});

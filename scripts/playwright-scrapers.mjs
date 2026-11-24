@@ -24,6 +24,7 @@ import { join, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { fetchJson } from "./lib/http.mjs";
 import { classifyLibCalLocation } from "./lib/libcal-location.mjs";
 import { isClockTime, normalizeClockTime } from "./lib/clock-time.mjs";
 import { libraryEventDetails } from "./lib/library-event-details.mjs";
@@ -31,6 +32,7 @@ import { parseCdmCelebrationDate, parseCdmOccurrenceDate } from "./lib/cdm-event
 import { normalizeGuadalupeEvent } from "./lib/guadalupe-events.mjs";
 import { parseBooksIncEvents } from "./lib/booksinc-events.mjs";
 import {
+  REGISTRATION_FULL,
   REGISTRATION_NONE,
   REGISTRATION_REQUIRED,
   registrationFromLibCal,
@@ -2324,7 +2326,53 @@ export async function scrapeSapCenter(page, { today = TODAY } = {}) {
   }).filter(Boolean);
 }
 
-export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
+const TECH_WORKSHOP_TICKETS = new Map([
+  ["https://tickets.thetech.org/events/01a1bdd1-4d1f-1c8c-9ed0-69944820e7c4", {
+    costNote: "$10 members / $15 non-members, plus museum admission",
+    attendanceNote: "Each attendee needs a workshop ticket and separate museum admission.",
+  }],
+  ["https://tickets.thetech.org/events/d2567d46-4aba-bfde-d010-c74081002811", {
+    costNote: "$15 members / $20 non-members, plus museum admission",
+    attendanceNote: "Each attendee needs a workshop ticket and separate museum admission. Children under 13 need a ticketed adult.",
+  }],
+]);
+const TECH_WORKSHOP_CLOCK = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/Los_Angeles", hour: "numeric", minute: "2-digit", hour12: true,
+});
+const BOOKING_TIMESTAMP = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
+
+async function techWorkshopOccurrences(event, ticketFacts, today, fetchBooking) {
+  // The museum's card shows a run window. Only its public booking schedule
+  // establishes which sessions happen inside it and when each one ends.
+  const booking = new URL(event.url);
+  const schedule = new URL(`/api${booking.pathname}/sessions?_sort=start_datetime`, booking);
+  const { event_session: sessions } = await fetchBooking(schedule, { timeout: 8_000, attempts: 2 });
+  if (!Array.isArray(sessions?._data) || sessions._total !== sessions._data.length) {
+    throw new Error(`Incomplete booking schedule for ${event.title}`);
+  }
+  return sessions._data.map((session) => {
+    const start = new Date(session.start_datetime || "");
+    if (!BOOKING_TIMESTAMP.test(session.start_datetime) || !Number.isFinite(start.getTime())) {
+      throw new Error(`Invalid booking start for ${event.title}`);
+    }
+    const date = isoDate(start);
+    const time = normalizeClockTime(TECH_WORKSHOP_CLOCK.format(start));
+    const end = new Date(session.end_datetime || "");
+    return {
+      ...event,
+      ...ticketFacts,
+      date,
+      // Match the calendar's clock format used to generate snapshot IDs.
+      time: time.replace(" ", ""),
+      endTime: BOOKING_TIMESTAMP.test(session.end_datetime) && end > start
+        ? normalizeClockTime(TECH_WORKSHOP_CLOCK.format(end)) : null,
+      registration: session.sold_out ? REGISTRATION_FULL : REGISTRATION_REQUIRED,
+      occurrenceEvidence: { kind: "first-party-occurrence-page", sourceUrl: event.url, date, time },
+    };
+  }).filter(event => event.date >= today);
+}
+
+export async function scrapeTheTechUpcoming(page, { today = TODAY, fetchBooking = fetchJson } = {}) {
   await page.goto(TECH_INTERACTIVE_CALENDAR_URL, { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
   const raw = await page.evaluate(() => {
@@ -2347,9 +2395,9 @@ export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
       };
     }).filter(Boolean);
   });
-  return raw.map((r) => {
+  const listings = raw.map((r) => {
     const date = yearAwareDate(r.date);
-    if (!date || date < today || !isUsefulTitle(r.title)) return null;
+    if (!date || !isUsefulTitle(r.title)) return null;
     const time = clockFromText(r.date);
     return {
       title: r.title,
@@ -2372,6 +2420,19 @@ export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
       } } : {}),
     };
   }).filter(Boolean).filter(isEventPublishable);
+
+  const events = [];
+  const checkedWorkshops = new Set();
+  for (const event of listings) {
+    const ticketFacts = TECH_WORKSHOP_TICKETS.get(event.url);
+    if (!ticketFacts) {
+      if (event.date >= today) events.push(event);
+    } else if (!checkedWorkshops.has(event.url)) {
+      checkedWorkshops.add(event.url);
+      events.push(...await techWorkshopOccurrences(event, ticketFacts, today, fetchBooking));
+    }
+  }
+  return events;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
