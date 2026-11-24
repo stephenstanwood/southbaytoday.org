@@ -234,7 +234,7 @@ const EDITS = {
       ],
       ["All ages welcome to participate.", "All ages are welcome."],
       [
-        "Free. In-person. No registration required. Practice your English speaking and listening skills through our weekly conversation club! Each session is conducted in person by a library volunteer.",
+        /Free\. In-person\. No registration required\. Practice your English speaking and listening skills through our weekly conversation club! Each session is conducted in[- ]person by a library volunteer\./g,
         "Practice speaking and listening in English at a free, in-person conversation club led by a library volunteer. The club meets weekly. No registration required.",
       ],
       [
@@ -1255,7 +1255,7 @@ const EDITS = {
       ["Thanksgiving/Autumn props and characters", "Thanksgiving and autumn props and characters"],
       [/(November \d{1,2}(?: and \d{1,2})?) - (?=Introduction to Stop-Motion Animation|Creating the Thanksgiving Story|Filming the Movie|Finishing the Movie)/g, "$1: "],
       [
-        /There will be a variety of play-based, manipulative-based math puzzles and games for students in grades K\s*-\s*(\d+) and their parents or caregivers\./g,
+        /There will be a variety of play-based, manipulative-based math puzzles and games for students in grades K\s*-\s*(\d+) and their parents(?:\/caregiver| or caregivers)\./g,
         "Students in grades K-$1 and their parents or caregivers can try hands-on math puzzles and games.",
       ],
       [
@@ -2594,6 +2594,10 @@ const EDITS = {
       [
         "the Saxophone Ensemble for a night of music, led by Professor Michael Hernandez.",
         "the Saxophone Ensemble, led by Professor Michael Hernandez, for a night of music.",
+      ],
+      [
+        "The SJSU Latin Jazz Ensemble will feature a performance of Afro-Latin jazz and popular music repertoires of the US, the Caribbean, and Latin America.",
+        "The SJSU Latin Jazz Ensemble will perform Afro-Latin jazz and popular music from the US, the Caribbean, and Latin America.",
       ],
     ],
     blurb: [

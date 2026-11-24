@@ -1,0 +1,65 @@
+{
+  "reviewedAt": "2026-11-24",
+  "sourceEvidence": [
+    {
+      "url": "https://sjpl.bibliocommons.com/events/6b048c2795b0491ca004827b",
+      "observed": "The library lists hands-on puzzles and games for students and their parents or caregivers. Its description uses the form parents/caregiver."
+    },
+    {
+      "url": "https://sjpl.bibliocommons.com/events/6a5fd804cca66c2f00a509f5",
+      "observed": "The library describes a free weekly conversation club led by a volunteer and hyphenates in-person after a verb. The December 1 occurrence uses the same wording."
+    },
+    {
+      "url": "https://events.sjsu.edu/widget/view?days=31&departments=martin_luther_king_jr_library&experience=inperson&format=html&num=50&schools=sjsu&template=card&types=32174665165098",
+      "observed": "The university calendar lists Afro-Latin jazz and popular music from the US, the Caribbean, and Latin America."
+    }
+  ],
+  "cases": [
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6b048c2795b0491ca004827b",
+          "title": "Math Festival at Alviso",
+          "url": "https://sjpl.bibliocommons.com/events/6b048c2795b0491ca004827b"
+        }
+      ],
+      "refreshed": "This event was rescheduled from November 22. Join us for the Julia Robinson Math Festival, an event that provides students with fun and meaningful math experiences to develop their mathematical confidence, joy, and problem-solving skills. There will be a variety of play-based, manipulative-based math puzzles and games for students in grades K - 8 and their parents or caregivers. Each activity will be led by at least one trained volunteer who will introduce the activity and keep students engaged and excited as they explore. During the 1-hour festival, kids can explore at their own pace, choosing which activities to try and how long to spend on each. Recommended for ages 5 to 10+. Free. No registration required. This program is brought to you by the San Jose Legacy Youth Foundation.",
+      "reviewed": "This event was rescheduled from November 22. Join us for the Julia Robinson Math Festival, an event that provides students with fun and meaningful math experiences to develop their mathematical confidence, joy, and problem-solving skills. Students in grades K-8 and their parents or caregivers can try hands-on math puzzles and games. Each activity will be led by at least one trained volunteer who will introduce the activity and keep students engaged and excited as they explore. During the 1-hour festival, kids can explore at their own pace, choosing which activities to try and how long to spend on each. Recommended for ages 5 to 10+. Free. No registration required. This program is brought to you by the San Jose Legacy Youth Foundation.",
+      "sourceText": "This event was rescheduled from November 22. Join us for the Julia Robinson Math Festival, an event that provides students with fun and meaningful math experiences to develop their mathematical confidence, joy, and problem-solving skills. There will be a variety of play-based, manipulative-based math puzzles and games for students in grades K - 8 and their parents/caregiver. Each activity will be led by at least one trained volunteer who will introduce the activity and keep students engaged and excited as they explore. The festival will be open for 1 hour, during which time kids will get to explore the festival at their own pace, choosing where they want to go and for how long they want to do each activity. Recommended for ages 5 to 10+. Free. No registration required. This program is brought to you by the San Jose Legacy Youth Foundation."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6a5fd804cca66c2f00a509f5",
+          "title": "ELL Conversation Club",
+          "url": "https://sjpl.bibliocommons.com/events/6a5fd804cca66c2f00a509f5"
+        },
+        {
+          "id": "sjpl-6a5fd804cca66c2f00a509f6",
+          "title": "ELL Conversation Club",
+          "url": "https://sjpl.bibliocommons.com/events/6a5fd804cca66c2f00a509f6"
+        }
+      ],
+      "refreshed": "Free. In-person. No registration required. Practice your English speaking and listening skills through our weekly conversation club! Each session is conducted in person by a library volunteer.",
+      "reviewed": "Practice speaking and listening in English at a free, in-person conversation club led by a library volunteer. The club meets weekly. No registration required.",
+      "sourceText": "Free. In-person. No registration required. Practice your English speaking and listening skills through our weekly conversation club! Each session is conducted in-person by a library volunteer."
+    },
+    {
+      "source": "SJSU Events",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjsu-e217acd66edd8aff",
+          "title": "Latin Jazz Concert",
+          "url": "https://events.sjsu.edu/event/latin-jazz-concert-4096"
+        }
+      ],
+      "refreshed": "The SJSU Latin Jazz Ensemble will feature a performance of Afro-Latin jazz and popular music repertoires of the US, the Caribbean, and Latin America.",
+      "reviewed": "The SJSU Latin Jazz Ensemble will perform Afro-Latin jazz and popular music from the US, the Caribbean, and Latin America."
+    }
+  ]
+}
