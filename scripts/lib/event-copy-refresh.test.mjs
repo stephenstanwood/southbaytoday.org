@@ -519,6 +519,30 @@ test("Almaden's source facts and copy survive description normalization", () => 
   }
 });
 
+test("Almaden appointment copy states the requirement once and keeps the confirmed contacts", () => {
+  const id = "sjpl-69f10f4bfb87a3c2e2ac6ff0";
+  const listing = november24LibraryFixture.cases.find(row => row.field === "description" && row.events[0].id === id);
+  const serviceList = november17AfternoonFixture.cases.find(row => row.beforeFacts && row.events[0].id === "sjpl-69f10f4bfb87a3c2e2ac6fec");
+  const attendanceNote = "Appointments are required. For questions or to book, call (408) 808-3040 or email ab.sjpl@sjlibrary.org.";
+  const event = {
+    ...listing.events[0], source: listing.source, date: "2026-11-25",
+    registration: "appointment-only", attendanceNote,
+  };
+  const sourceNotice = listing.refreshed.slice(listing.refreshed.indexOf("Book an Appointment"));
+  const sourceDescription = serviceList.beforeFacts.replace(/By appointment only\. .*$/, sourceNotice);
+  const expected = {
+    ...event,
+    description: listing.reviewed
+      .replace("offers 30-minute tech help appointments", "offers one-on-one tech help by appointment")
+      .replace(" Appointments are required. Each person can book one appointment per week.", ""),
+  };
+
+  for (const description of [listing.reviewed, polishDescription(sourceDescription)]) {
+    assert.deepEqual(polishReviewedEventCopy(applyVerifiedEventFacts({ ...event, description })), expected);
+  }
+  assert.deepEqual(polishReviewedEventCopy(expected), expected);
+});
+
 test("Willow Glen storytime copy preserves the pickup conflict and capacity", () => {
   const { library, published } = JSON.parse(readFileSync(new URL("./fixtures/fact-check-2026-11-07-midday.json", import.meta.url)));
   const details = libraryEventDetails(library);

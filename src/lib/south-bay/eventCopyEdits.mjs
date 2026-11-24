@@ -37,6 +37,19 @@ const SJPL_TECH_APPOINTMENT_EDITS = [
     "For questions or to book, call $1 or email $2.",
   ],
 ];
+const SJPL_ALMADEN_TECH_INTRO = "Do you have questions or need assistance with technology? At the Almaden Branch, you can make";
+const SJPL_ALMADEN_TECH_LIST = "Learning to use Libby from OverDrive to read ebooks and listen to e-audiobooks; " +
+  "Finding e-books from Enki; Accessing the New York Times and/or the San Jose Mercury News online; " +
+  "Accessing and searching Consumer Reports; Learning a new language with Mango; Connecting to Wi-Fi/hotspots; " +
+  "Using Discover & Go to reserve free or reduced tickets to local museums and attractions; " +
+  "Navigating the SJPL website; Checking out a 7-day pass to access Great Courses from Libby; " +
+  "Using the library's pay-to-print system; Walking you through a Digital Skills Building Pathways lesson; And much more!";
+const SJPL_ALMADEN_TECH_COPY = "Get help using Libby from OverDrive to read ebooks and listen to audiobooks, finding ebooks from Enki, " +
+  "reading the New York Times and the San Jose Mercury News online, or accessing and searching Consumer Reports. " +
+  "You can also get help learning a language with Mango, connecting to Wi-Fi or a hotspot, or using Discover & Go " +
+  "to reserve free or reduced-price tickets to local museums and attractions. " +
+  "Other topics include navigating the SJPL website, checking out a 7-day pass to Great Courses through Libby, " +
+  "using the library's pay-to-print system, and working through a Digital Skills Building Pathways lesson.";
 const SJPL_FIRST_COME_MATERIALS_EDIT = [
   "This event is first-come, first-served. Materials are limited to",
   "Space is available on a first-come, first-served basis. Materials are limited to",
@@ -368,24 +381,14 @@ const EDITS = {
       ["Our fall schedule is: September: How to Write a Story October: Spooky Story November: Thank-you Letter December: Letter to Santa January: Plot and Three Little Pigs Through different writing assignments students", "The schedule covers How to Write a Story (September), Spooky Story (October), Thank-you Letter (November), Letter to Santa (December), and Plot and Three Little Pigs (January). Through different writing assignments, students"],
       ["Libby (formerly Overdrive)", "Libby (formerly OverDrive)"],
       ["non-Overdrive e-books", "non-OverDrive e-books"],
-      // Match the Almaden service list after the verified service corrections.
-      // This leaves the registration instructions and any new service list intact.
+      // Match the verified service list with or without a confirmed appointment length.
       [
-        "Do you have questions or need assistance with technology? " +
-          "At the Almaden Branch, you can make a 30-minute appointment for assistance with: " +
-          "Learning to use Libby from OverDrive to read ebooks and listen to e-audiobooks; " +
-          "Finding e-books from Enki; Accessing the New York Times and/or the San Jose Mercury News online; " +
-          "Accessing and searching Consumer Reports; Learning a new language with Mango; Connecting to Wi-Fi/hotspots; " +
-          "Using Discover & Go to reserve free or reduced tickets to local museums and attractions; " +
-          "Navigating the SJPL website; Checking out a 7-day pass to access Great Courses from Libby; " +
-          "Using the library's pay-to-print system; Walking you through a Digital Skills Building Pathways lesson; And much more!",
-        "The Almaden Branch offers 30-minute tech help appointments. " +
-          "Get help using Libby from OverDrive to read ebooks and listen to audiobooks, finding ebooks from Enki, " +
-          "reading the New York Times and the San Jose Mercury News online, or accessing and searching Consumer Reports. " +
-          "You can also get help learning a language with Mango, connecting to Wi-Fi or a hotspot, or using Discover & Go " +
-          "to reserve free or reduced-price tickets to local museums and attractions. " +
-          "Other topics include navigating the SJPL website, checking out a 7-day pass to Great Courses through Libby, " +
-          "using the library's pay-to-print system, and working through a Digital Skills Building Pathways lesson.",
+        SJPL_ALMADEN_TECH_INTRO + " a 30-minute appointment for assistance with: " + SJPL_ALMADEN_TECH_LIST,
+        "The Almaden Branch offers 30-minute tech help appointments. " + SJPL_ALMADEN_TECH_COPY,
+      ],
+      [
+        SJPL_ALMADEN_TECH_INTRO + " an appointment for assistance with: " + SJPL_ALMADEN_TECH_LIST,
+        "The Almaden Branch offers one-on-one tech help by appointment. " + SJPL_ALMADEN_TECH_COPY,
       ],
       // NASA spells the mission InSight: https://www.jpl.nasa.gov/missions/insight/
       ["Mars Science Laboratory, In Sight, and Mars 2020", "Mars Science Laboratory, InSight, and Mars 2020"],
@@ -985,6 +988,10 @@ const EDITS = {
       ],
       ["After, we'll take what we've learned to create art of our own!", "Then we'll use what we've learned to make art of our own."],
       ...SJPL_TECH_APPOINTMENT_EDITS,
+      [
+        /^(The Almaden Branch offers one-on-one tech help by appointment\.(?: .*?\.)?) (?:Appointments are required|By appointment only)\.(?= |$)/g,
+        "$1",
+      ],
       ["High School and Middle School students are welcome Free program.", "Middle and high school students are welcome. The program is free."],
       [
         "For learners with limited ability in English, students will practice speaking using guided dialogues to help them navigate in the community they live in.",
@@ -2384,6 +2391,14 @@ const EDITS = {
       [". *A detailed list of readings for each meeting", ". A detailed list of readings for each meeting"],
       [" * Unfortunately, helping you fix damaged hardware or software", " Unfortunately, helping you fix damaged hardware or software"],
       [" *This event will be held in the ", " This event will be held in the "],
+      [
+        "invasion of Panama; the events which led to it; the excessive force used; the enormity of the death and destruction; and the devastating aftermath.",
+        "invasion of Panama, including the events that led to it, the excessive force used, the enormity of the death and destruction, and the devastating aftermath.",
+      ],
+      [
+        ", presenting a view of the invasion which widely differs from that portrayed by the U.S. media and exposes how",
+        " and presents a view of the invasion that differs widely from the one portrayed by the U.S. media. The film also exposes how",
+      ],
       [/\bincluding Kqed\b/g, "including KQED"],
       ["but national PBS, however, has refused", "but national PBS has refused"],
       ["Registration is not required, but means you will receive", "Registration is not required, but registering means you will receive"],
