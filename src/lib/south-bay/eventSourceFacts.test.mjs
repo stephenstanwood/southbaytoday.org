@@ -4331,17 +4331,19 @@ test("MOAH's verified free repair session keeps its check-in deadline and item l
   }
 });
 
-test("History Park tea links the current organizer listing without an invented outdoor setting", () => {
+test("History Park tea keeps the current organizer listing, seatings, admission and art", () => {
   const raw = {
     date: "2026-12-05", title: "History Park Heritage Holiday Tea", venue: "History Park", category: "outdoor",
     url: "https://fareharbor.com/embeds/book/historysanjose/items/314593/calendar/2024/12/?full-items=yes",
     blurb: "Taste holiday tea service and sweets outdoors at History Park's Heritage Holiday Tea.",
+    image: "https://historysanjose.org/wp-content/uploads/2022/07/ComingOut_About.jpg",
   };
   const fixed = applyVerifiedEventFacts(raw);
   assert.equal(fixed.url, "https://historysanjose.org/programs-events/");
   assert.equal(fixed.category, "community");
-  assert.match(fixed.blurb, /Empire Fire House/);
-  assert.doesNotMatch(fixed.blurb, /outdoors|sweets/);
+  assert.equal(fixed.blurb, "Seatings start at 11 AM and 2 PM at the Empire Fire House.");
+  assert.equal(fixed.attendanceNote, "Tickets are $55 for general admission and $50 for History San José members.");
+  assert.match(fixed.image, /^https:\/\/www\.sanjose\.org\/.*\/holiday-tea-square_.*\.webp\?/);
   assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
   for (const other of [{ ...raw, date: "2026-12-10" }, { ...raw, title: "Another Tea" }, { ...raw, venue: "Other Park" }]) {
     assert.equal(applyVerifiedEventFacts(other), other);

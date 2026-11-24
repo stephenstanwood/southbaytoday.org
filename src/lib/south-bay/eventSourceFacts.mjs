@@ -6491,7 +6491,11 @@ const CORRECTIONS = [
   },
   // The current organizer listing places the tea at the Empire Fire House,
   // not outdoors. The old booking URL is dated December 2024.
+  // History San José's current calendar gives admission. Its dated artwork
+  // published by Visit San Jose confirms both seatings and replaces the
+  // calendar's unrelated default share image.
   // https://historysanjose.org/programs-events/
+  // https://www.sanjose.org/events/heritage-holiday-tea
   // Evidence: docs/qa/2026-10-15-2107-fact-check.md.
   {
     date: "2026-12-05", title: /^History Park Heritage Holiday Tea$/i,
@@ -6499,7 +6503,9 @@ const CORRECTIONS = [
     facts: {
       url: "https://historysanjose.org/programs-events/",
       category: "community",
-      blurb: "Join the Heritage Holiday Tea at History Park's Empire Fire House.",
+      blurb: "Seatings start at 11 AM and 2 PM at the Empire Fire House.",
+      attendanceNote: "Tickets are $55 for general admission and $50 for History San José members.",
+      image: "https://www.sanjose.org/sites/default/files/styles/listing_detail_image/public/holiday-tea-square_7E07C13C-0D75-325C-4D57FD8380D1522C_7e083ab9-c961-5569-dc44c85a623d74a0.png.webp?itok=FJz4l4tn",
     },
   },
   // Correct the already published phantom date on its retired URL too. The
