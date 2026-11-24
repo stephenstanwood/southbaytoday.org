@@ -73,6 +73,10 @@ const SCCLD_OPEN_MIC_EDITS = [
 // https://www.scu.edu/missionchurch/
 const SCU_MISSION_NAME_EDIT = [/\bMission Santa Clara de Asis\b/g, "Mission Santa Clara de Asís"];
 
+// https://www.sanjose.org/theaters/events/come-away
+// https://southbaymt.com/shows/ticket-sales/come-from-away/
+const COME_FROM_AWAY_NAME_EDIT = [/\bCome from Away\b/g, "Come From Away"];
+
 const EDITS = {
   "The Tech Interactive": {
     title: [
@@ -2884,6 +2888,7 @@ const EDITS = {
   },
   "San Jose Theaters": {
     title: [
+      COME_FROM_AWAY_NAME_EDIT,
       // The act's own spelling: https://valerieamyband.com/home
       ["Valeire: A Tribute to Amy Winehouse", "Valerie: A Tribute to Amy Winehouse"],
       // The venue's announcement spells the artist and tour name with accents.
@@ -2914,6 +2919,7 @@ const EDITS = {
       ],
     ],
     blurb: [
+      COME_FROM_AWAY_NAME_EDIT,
       [/See Panchiko perform at San Jose Civic as part of their USA Spring Tour, with doors for the (\d{1,2}:\d{2} [AP]M) show\./g, "See Panchiko's $1 show at San Jose Civic on their USA Spring Tour."],
       ["perform on their Born This Way tour stop.", "perform on their Born This Way tour."],
       [
@@ -2923,7 +2929,9 @@ const EDITS = {
     ],
   },
   "South Bay Musical Theatre": {
+    title: [COME_FROM_AWAY_NAME_EDIT],
     blurb: [
+      COME_FROM_AWAY_NAME_EDIT,
       [
         /^See a staging of South Pacific at Saratoga Civic Theater, a live theater production in the arts lineup\.$/g,
         "See South Pacific on stage at Saratoga Civic Theater.",

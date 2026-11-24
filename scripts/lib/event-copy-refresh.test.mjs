@@ -225,6 +225,41 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-library-and-latin-jazz.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-exhibits.json", import.meta.url))));
 
+test("the two theater listings use their published Come From Away capitalization", () => {
+  const sanJose = {
+    id: "sanjosetheaters-5da79e89d1c2c16c",
+    source: "San Jose Theaters",
+    title: "Come from Away",
+    date: "2026-12-04",
+    time: "7:00 PM",
+    venue: "Montgomery Theater",
+    url: "https://www.sanjose.org/theaters/events/come-away",
+    blurb: "Watch the musical Come from Away unfold at Montgomery Theater.",
+    attendanceNote: "Children's Musical Theater rates this production for ages 10 and up in its student matinee guide.",
+  };
+  const saratoga = {
+    id: "southbaymt-8991fa0d34158301",
+    source: "South Bay Musical Theatre",
+    title: "Come from Away",
+    date: "2027-01-23",
+    time: "8:00 PM",
+    venue: "Saratoga Civic Theater",
+    url: "https://southbaymt.com/shows/ticket-sales/come-from-away/",
+    blurb: "See the Broadway musical about a small Newfoundland town welcoming stranded flyers after 9/11.",
+  };
+  const cases = [
+    [sanJose, "Watch the musical Come From Away unfold at Montgomery Theater."],
+    [saratoga, saratoga.blurb],
+  ];
+  for (const [event, blurb] of cases) {
+    const reviewed = { ...event, title: "Come From Away", blurb };
+    assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+    assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+  }
+  const otherSource = { ...sanJose, source: "Another publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherSource), otherSource);
+});
+
 test("reviewed theater blurbs drop calendar boilerplate when restored from cache", () => {
   const cases = [
     [
