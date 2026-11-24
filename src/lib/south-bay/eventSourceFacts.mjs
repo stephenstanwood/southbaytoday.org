@@ -12,6 +12,8 @@ const MITCHELL_PARK_STUDY_COPY = [[
   (_match, punctuation) => `Wednesday, December 9: Confirm the start time with Mitchell Park Library${punctuation || "."}`,
 ]];
 
+const PANAMA_DECEPTION_REMINDER = /\s*\bRegistration is not required, but (?:registering )?means you will receive a reminder email the day before\.?/i;
+
 const ALMADEN_TECH_HELP_COPY = [
   [/\bLibby \(formerly OverDrive\)/gi, "Libby from OverDrive"],
   [/\bAccessing non-OverDrive e-?books and audiobooks from Boundless, Cloud\s*Library, and Enki;\s*/gi, "Finding e-books from Enki; "],
@@ -6020,7 +6022,26 @@ const CORRECTIONS = [
     date: "2026-12-03",
     url: "https://paloalto.bibliocommons.com/events/6a61028ecca66c2f00a54304",
     aliasUrls: ["https://paloalto.bibliocommons.com/v2/events/6a61028ecca66c2f00a54304"],
+    facts: (event) => {
+      // The library's booking panel says registration is required. Its body
+      // calls signup optional, which can suppress the booking field in ingest.
+      if (!PANAMA_DECEPTION_REMINDER.test(event.description || "")
+          || ![null, undefined, REGISTRATION_NONE, REGISTRATION_REQUIRED].includes(event.registration)) return {};
+      const note = "The library's booking panel says registration is required. The event description says signup is optional. Reserve a seat through the library calendar or confirm with Rinconada Library.";
+      return {
+        registration: null,
+        registrationClosesBy: null,
+        attendanceStatus: "needs-confirmation",
+        attendanceNote: event.attendanceNote?.includes(note) ? event.attendanceNote
+          : [event.attendanceNote, note].filter(Boolean).join(" "),
+      };
+    },
     copyReplacements: [
+      // Replace the copied film distributor synopsis, including its unverified
+      // PBS mandate claim, with an attributed description of the film.
+      [/^The Panama Deception documents the untold story of the December 1989 U\.S\. invasion of Panama\b[\s\S]*?\bA ban on the film originally imposed by the Panamanian government was lifted in March 1993, following strong internal and international pressure\./i,
+        "Barbara Trent's documentary uses archival footage and interviews to examine the December 1989 U.S. invasion of Panama and American news coverage of it."],
+      [PANAMA_DECEPTION_REMINDER, ""],
       [/\s*EP has recently moved its offices out of New York and California\.\s+The new headquarters for all operations is now in Chapel Hill, North Carolina\./i, ""],
       [/\s+and currently,\s*Bravo\s*[-–—]\s*the Independent\s*Film Channel retains the rights to cablecast the film\./i, "."],
       [/\s*Currently,\s*Bravo\s*\(the Independent Film Channel\) retains the rights to cablecast the film\./i, ""],

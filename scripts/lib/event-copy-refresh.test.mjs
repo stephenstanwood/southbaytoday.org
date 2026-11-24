@@ -1247,6 +1247,42 @@ test("screening grammar and workshop separators preserve revised facts and publi
   }
 });
 
+test("the December 3 Panama Deception screening reports conflicting signup instructions", () => {
+  const row = november6MiddayFixture.cases.find(({ events }) =>
+    events.some(({ id }) => id === "paloalto-6a61028ecca66c2f00a54304"));
+  const event = {
+    ...row.events[0], source: row.source, date: "2026-12-03", venue: "Rinconada Library",
+    time: "6:00 PM", endTime: "7:45 PM", cost: "free",
+  };
+  for (const input of [
+    { ...event, description: row.refreshed },
+    { ...event, description: row.reviewed, registration: "required", registrationClosesBy: "2026-12-04T02:00:00.000Z" },
+  ]) {
+    const corrected = polishReviewedEventCopy(applyVerifiedEventFacts(input));
+    assert.match(corrected.description, /Barbara Trent's documentary.*December 1989 U\.S\. invasion of Panama/);
+    assert.doesNotMatch(corrected.description, /Congressional mandate|registration is not required/i);
+    assert.equal(corrected.registration, null);
+    assert.equal(corrected.registrationClosesBy, null);
+    assert.equal(corrected.attendanceStatus, "needs-confirmation");
+    assert.match(corrected.attendanceNote, /booking panel says registration is required.*description says signup is optional/);
+    assert.deepEqual(polishReviewedEventCopy(applyVerifiedEventFacts(corrected)), corrected);
+    for (const key of ["id", "date", "time", "endTime", "venue", "cost", "url"]) {
+      assert.equal(corrected[key], input[key], key);
+    }
+  }
+
+  const closed = { ...event, description: row.refreshed, registration: "closed", attendanceNote: "Registration closed." };
+  const correctedClosed = applyVerifiedEventFacts(closed);
+  assert.equal(correctedClosed.registration, "closed");
+  assert.equal(correctedClosed.attendanceNote, closed.attendanceNote);
+  assert.equal(correctedClosed.attendanceStatus, undefined);
+
+  const updated = { ...event, description: "Screening and discussion. Advance registration is required.", registration: "required" };
+  assert.deepEqual(applyVerifiedEventFacts(updated), updated);
+  const later = { ...event, date: "2026-12-04", description: row.refreshed };
+  assert.deepEqual(applyVerifiedEventFacts(later), later);
+});
+
 test("supervision grammar preserves a revised strict age threshold and publisher scope", () => {
   const original = {
     source: "San Jose Public Library", date: "2026-12-12", registration: "required",
