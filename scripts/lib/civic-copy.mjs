@@ -63,7 +63,7 @@ export function polishCivicCopy(text, { cityId } = {}) {
       // November 24 date for the City Council agenda under review.
       .replace(/(?:The November 24, 2026, final agenda (?:item|review) was marked|The agenda (?:showed|marked) the November 24, 2026, final agenda review as) cancell?ed(?:\.|$)/g,
         (original) => cityId === "san-jose"
-          ? "The committee agenda marked its review of the November 24, 2026, City Council agenda as canceled."
+          ? "The agenda listed the committee's review of the November 24, 2026, City Council agenda as canceled."
           : original)
       .replace("Also listed were several council-sponsored community events seeking approval to spend city funds and accept donations, and a proposal to establish the La Avenida Cultural District.",
         "The agenda also listed a proposal to establish the La Avenida Cultural District and requests to spend city funds and accept donations for several council-sponsored community events.")
