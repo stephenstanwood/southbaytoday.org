@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-24T08:01:34.709Z",
-  "eventCount": 1550,
+  "eventCount": 1549,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -3082,13 +3082,15 @@
       "category": "community",
       "cost": "free",
       "description": "Santa Clara University hosts this networking meetup, which is open to the Silicon Valley community.",
-      "url": "https://events.scu.edu/ciocca-center/event/517571-bva-cafe",
+      "url": "https://www.scu.edu/cioccacenter/bronco-ventures/bronco-venture-accelerator/bva-cafe/",
       "source": "Santa Clara University",
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJwz4wNq_Lj4ARR-PU9hShHFY/photos/AV-0GLcrgBumLWnuQxcuqhmNpC2puLfinKoMVtcjy21QS1BgUhhhVNQxT3xpbQ-QxfoEfMM4YO1lC2EZvuPzk238g4LgG2_NYJcjRuszVjLFlLxGqt2KS-M_ybzYYqk9XNVrSXKoJiy1GfGyGjqL2CrlWHDNNsifVuK6SkL2BsGastNBNmG7vglU5hiMl16ffaU3GyLYYouHPWK8as-VxY_-bmuzveI1Szh34Q-L2cmi4C4BFfHXGlVXbnKIuTbtaeuexGInQZsWwT5_sLKesH3RtybuJhj-zqq80CJZhyKAjCVv40RIClKhnTLS1aIi8gzBX9eC0LBsFw82f0xRKV_iaxbuROj0rR-4ywgwmlUixIUUplewr6Vo4WzW4ETSbGyOKZ0mqdBaxgeAuRBcSOl5xBJak-s",
       "blurb": "Meet other Silicon Valley professionals at Santa Clara University's Thursday evening networking session.",
-      "firstSeenAt": "2026-11-24T08:01:34.687Z"
+      "firstSeenAt": "2026-11-24T08:01:34.687Z",
+      "registration": "required",
+      "attendanceNote": "Register through Santa Clara University before attending."
     },
     {
       "id": "museumofamericanheritage-f1eb74a880b455b3",
@@ -19160,11 +19162,11 @@
       "venue": "Calabazas Library",
       "address": "1230 S Blaney Ave San Jose",
       "city": "san-jose",
-      "registration": "required",
-      "registrationClosesBy": "2026-11-30T08:00:00.000Z",
-      "category": "education",
+      "registration": null,
+      "registrationClosesBy": null,
+      "category": "community",
       "cost": "free",
-      "description": "Join us at the Calabazas Library on the first Tuesday of every month for our Game Club! Discover a wide variety of games, learn how to play something new, or bring along an old favorite to share. We offer two full hours of gameplay for maximum fun. No registration is required—just drop in and play!",
+      "description": "Join us at the Calabazas Library on the first Tuesday of every month for our Game Club! Discover a wide variety of games, learn how to play something new, or bring along an old favorite to share. We offer two full hours of gameplay for maximum fun.",
       "sourceAudiences": [
         "Adults, ages 18+",
         "Seniors, ages 65+"
@@ -19175,7 +19177,9 @@
       "audienceAge": "adult",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/bb52969c733db11c94c936dde71ae3fb/adultgames.png",
       "blurb": "Try out new tabletop games or bring a favorite to share at Calabazas Library's monthly Game Club.",
-      "firstSeenAt": "2026-11-24T08:01:34.687Z"
+      "firstSeenAt": "2026-11-24T08:01:34.687Z",
+      "attendanceStatus": "needs-confirmation",
+      "attendanceNote": "The signup panel and description disagree about registration. Confirm with Calabazas Library before attending."
     },
     {
       "id": "sjpl-6a36f828c7d3cd580061b596",
@@ -25804,17 +25808,19 @@
       "venue": "Hammer Theatre Center, Sobrato Auditorium",
       "address": "101 Paseo De San Antonio, San José, CA 95113",
       "city": "san-jose",
-      "category": "arts",
-      "cost": null,
+      "category": "music",
+      "cost": "paid",
       "description": "Candlelight presents a unique concert experience featuring a diverse range of musical genres in an intimate and captivating setting.",
-      "url": "https://events.sjsu.edu/event/candlelight-coldplay-imagine-dragons-2895",
+      "url": "https://feverup.com/m/262152",
       "source": "SJSU Events",
       "image": null,
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJxfWisLvMj4ARLNfwpDgtJyY/photos/AV-0GLchuniDG2a_Yp7dPJStXFkOVO3FxHo3-yQVuL2RBi2Y7l0anzuWZY3dAq8YLd3QZPw9BnheGaMkVe4XehxE9O9VRUoHF0LZ3zgXfnuG9T1yPlGfVdlsqpIpNrAnchLTz3LeZuQTSPNElsWqDjGfaWNTvkzGGlkXTiWBLGd5gQ1qTa_yY0s-NF4q4cGnExsOY7RP1MoVASy5H3z-7IpUGMO8KS8jM6EwL9SWgdFY57S_hsNHU4aYbGe-BzGxEfl_f6_NFNykHuNNsAYZ27q0OvJ1M_gse-gi4TXfBKu8-tMEc8MEmVMCap-pgPcvnhwXAM37P_CtyKGsxWuRKV1VOiqJrcpw1eehtEF6KlF17QLqPYoBtXkH7Py2eLB_2fWIK8atVxpWE4WZLFPXwLltglxIKPA",
       "blurb": "Hear a Candlelight concert of Coldplay and Imagine Dragons songs in the intimate Sobrato Auditorium at the Hammer Theatre Center.",
-      "firstSeenAt": "2026-11-24T08:01:34.687Z"
+      "firstSeenAt": "2026-11-24T08:01:34.687Z",
+      "registration": "required",
+      "attendanceNote": "Ages 8 and up. An adult must accompany guests under 16."
     },
     {
       "id": "sjsu-9b35d5b61e1fccfb",
@@ -25826,17 +25832,19 @@
       "venue": "Hammer Theatre Center, Sobrato Auditorium",
       "address": "101 Paseo De San Antonio, San José, CA 95113",
       "city": "san-jose",
-      "category": "education",
-      "cost": null,
+      "category": "music",
+      "cost": "paid",
       "description": "Candlelight presents a unique concert experience featuring a diverse range of musical genres in an intimate and captivating setting.",
-      "url": "https://events.sjsu.edu/event/candlelight-the-best-of-joe-hisaishi-7754",
+      "url": "https://feverup.com/m/353164",
       "source": "SJSU Events",
       "image": null,
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJxfWisLvMj4ARLNfwpDgtJyY/photos/AV-0GLchuniDG2a_Yp7dPJStXFkOVO3FxHo3-yQVuL2RBi2Y7l0anzuWZY3dAq8YLd3QZPw9BnheGaMkVe4XehxE9O9VRUoHF0LZ3zgXfnuG9T1yPlGfVdlsqpIpNrAnchLTz3LeZuQTSPNElsWqDjGfaWNTvkzGGlkXTiWBLGd5gQ1qTa_yY0s-NF4q4cGnExsOY7RP1MoVASy5H3z-7IpUGMO8KS8jM6EwL9SWgdFY57S_hsNHU4aYbGe-BzGxEfl_f6_NFNykHuNNsAYZ27q0OvJ1M_gse-gi4TXfBKu8-tMEc8MEmVMCap-pgPcvnhwXAM37P_CtyKGsxWuRKV1VOiqJrcpw1eehtEF6KlF17QLqPYoBtXkH7Py2eLB_2fWIK8atVxpWE4WZLFPXwLltglxIKPA",
       "blurb": "Hear The Best of Joe Hisaishi performed in a Candlelight concert at the Hammer Theatre Center's Sobrato Auditorium.",
-      "firstSeenAt": "2026-11-24T08:01:34.687Z"
+      "firstSeenAt": "2026-11-24T08:01:34.687Z",
+      "registration": "required",
+      "attendanceNote": "Ages 8 and up. An adult must accompany guests under 16."
     },
     {
       "id": "los-altos-village-c483c9cf12983aa1",
@@ -32790,27 +32798,6 @@
       "photoRef": "places/ChIJ_QhGaqXMj4AR5GHCXNt35E0/photos/AV-0GLcTh89S1Z9M7vq7PsUgFKFCbGsKHxfZ_hc_uH2RYLpyQqP4T3ob0fzda7HeBnxFJm8__R1Nj9udJpVlUwiQrQuzC3HMWRFdymJsuTkf8nITISKLLuuS-JxcQ03wL7gHfmZF8ii9x1noqXMhFpzxky5o-vmQLzrRKbZEBgJt6eHa4IxbR-1kpXCvPQovadtpI48AyYC2UgjV4g_pnL4b3r2Eui63QsDgQQ8M3AUmhaMVhSPdEZcX15BmQlnc4WJfOUObscoVtwmS98b8phrWEsMNnXru5_4Rpfpxn1DrfwjYIWj26xqkIj2k3z-HyceRpZefkjPn2FXhj-FvNv2ds8A_DNBzRDOPuZAXbLZORyE_rydD2WoRVtiU8MPBh0rYaf4YQQDcBmFagoJYogxh9dYGfY5MaX1RO3OttAJS8J_fPQ",
       "blurb": "Watch dancers reinvent the holiday classic in The Hip Hop Nutcracker's touring stage show.",
       "firstSeenAt": "2026-10-15T03:49:31.059Z"
-    },
-    {
-      "id": "sjsu-e56012c5dd78df1b",
-      "title": "Football - San Jose State vs. Mountain West",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "6:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain West Championship",
-      "address": "",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": null,
-      "description": "",
-      "url": "https://events.sjsu.edu/event/football-san-jose-state-vs-mountain-west",
-      "source": "SJSU Events",
-      "image": "https://images.unsplash.com/photo-1767584413129-2ad2941b7e46?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxzcG9ydHMlMjBzdGFkaXVtJTIwZ2FtZXxlbnwwfDJ8fHwxNzc3MjMwNjE4fDA&ixlib=rb-4.1.0&q=80&w=400",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "blurb": "Watch San Jose State football battle for the Mountain West Championship title.",
-      "firstSeenAt": "2026-11-24T08:01:34.687Z"
     },
     {
       "id": "tm-G5vYZ_CUAgP-H",

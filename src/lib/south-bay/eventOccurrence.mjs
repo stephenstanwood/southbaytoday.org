@@ -147,6 +147,13 @@ export function hasUnconfirmedOccurrenceDate(event) {
 }
 
 export function nonEventOfferNotice(event) {
+  // Only the conference's top two teams qualify. San José State finished
+  // 3–5 in league play, but its calendar still published the placeholder.
+  // https://themw.com/standings.aspx?path=football&year=2026
+  if (event?.source === "SJSU Events" && event.date === "2026-12-04"
+      && /^https:\/\/events\.sjsu\.edu\/event\/football-san-jose-state-vs-mountain-west\/?(?:[?#].*)?$/.test(event.url || "")) {
+    return "This listing was a schedule placeholder. San José State finished outside the top two teams that qualified.";
+  }
   // The Globetrotters' Court/Fan Passes are pregame add-ons requiring a
   // separate game ticket, even when Ticketmaster supplies an event clock.
   // Keep the main game eligible and reject sparse cached copies of the offer.

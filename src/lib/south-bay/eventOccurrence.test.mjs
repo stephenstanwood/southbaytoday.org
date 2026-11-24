@@ -8,6 +8,25 @@ import {
   isEventPublishable,
 } from "./eventOccurrence.mjs";
 import { isEventEditoriallySuppressed } from "./eventAvailability.mjs";
+import { snapshotEvent } from "./eventSlugLedger.mjs";
+
+test("withholds the Mountain West placeholder while keeping a local SJSU home game", () => {
+  const placeholder = {
+    title: "Football - San Jose State vs. Mountain West", date: "2026-12-04", time: "6:00 PM",
+    venue: "Mountain West Championship", source: "SJSU Events",
+    url: "https://events.sjsu.edu/event/football-san-jose-state-vs-mountain-west",
+  };
+  assert.equal(isEventPublishable(placeholder), false);
+  const retired = snapshotEvent({ ...placeholder, blurb: "Watch San Jose State play for the title." });
+  assert.equal(retired.time, undefined);
+  assert.match(retired.blurb, /schedule placeholder/);
+  assert.equal(isEventPublishable({ ...placeholder, venue: "San Jose State University" }), false);
+  assert.equal(isEventPublishable({
+    ...placeholder, title: "Football - San Jose State vs. North Dakota State",
+    date: "2026-11-27", venue: "CEFCU Stadium",
+    url: "https://events.sjsu.edu/event/football-san-jose-state-vs-ndsu",
+  }), true);
+});
 
 test("withholds campus listings when the full organizer page corrects a sparse public feed", () => {
   const webinar = {

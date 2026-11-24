@@ -154,6 +154,48 @@ test("the December 3 Candlelight listing points to paid music tickets and preser
   assert.equal(redirects.get("2026-12-03-fever-presents-candlelight-90s-unplugged"), "2026-12-03-candlelight-90s-unplugged");
 });
 
+test("the two December 4 Candlelight shows keep their own ticket link, time and access status", () => {
+  for (const [slug, ticketId, time] of [
+    ["candlelight-coldplay-imagine-dragons-2895", "262152", "6:30 PM"],
+    ["candlelight-the-best-of-joe-hisaishi-7754", "353164", "8:45 PM"],
+  ]) {
+    const listing = {
+      date: "2026-12-04", time, url: `https://events.sjsu.edu/event/${slug}`,
+      category: "education", cost: null, registration: "closed",
+    };
+    const fixed = applyVerifiedEventFacts(listing);
+    assert.equal(fixed.url, `https://feverup.com/m/${ticketId}`);
+    assert.equal(fixed.time, time);
+    assert.equal(fixed.cost, "paid");
+    assert.equal(fixed.category, "music");
+    assert.equal(fixed.registration, "closed");
+    assert.equal(applyVerifiedEventFacts({ ...listing, registration: undefined }).registration, "required");
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const otherDate = { ...listing, date: "2027-01-21" };
+    assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+    const otherTime = { ...listing, time: "10:00 AM" };
+    assert.deepEqual(applyVerifiedEventFacts(otherTime), otherTime);
+  }
+});
+
+test("Calabazas game club exposes conflicting signup instructions without inventing a deadline", () => {
+  const listing = {
+    date: "2026-12-01", url: "https://sjpl.bibliocommons.com/v2/events/6abef32c377296003a4913be",
+    category: "education", registration: "required", registrationClosesBy: "2026-11-30T08:00:00.000Z",
+    description: "Try games with your neighbors. No registration is required—just drop in and play!",
+  };
+  const fixed = applyVerifiedEventFacts(listing);
+  assert.equal(fixed.category, "community");
+  assert.equal(fixed.registration, null);
+  assert.equal(fixed.registrationClosesBy, null);
+  assert.equal(fixed.attendanceStatus, "needs-confirmation");
+  assert.equal(fixed.description, "Try games with your neighbors.");
+  assert.match(fixed.attendanceNote, /Confirm with Calabazas Library/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const resolved = { ...listing, description: "Try games with your neighbors. Sign up to reserve a seat." };
+  assert.deepEqual(applyVerifiedEventFacts(resolved), resolved);
+});
+
 test("verified IMAX film ratings follow new showtimes in the same run", () => {
   for (const [date, title, ticketId] of [
     ["2026-11-29", "Hunger Games: Sunrise on the Reaping", "01a0f8a9-e4e2-59f2-90c5-8daebe40da6e"],

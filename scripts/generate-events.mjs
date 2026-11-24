@@ -3738,6 +3738,8 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (/\blibrary\b/.test(venueLower) && /^board game zone$/.test(titleLower.trim())) return "family";
   // Santa Teresa Library lists this as an open gathering for games and crafts.
   if (/\blibrary\b/.test(venueLower) && /^community game (?:&|and) craft day$/.test(titleLower.trim())) return "community";
+  // Calabazas calls this a drop-in game club. Learning a game is optional.
+  if (venueLower === "calabazas library" && /^calabazas adult activities:\s*games$/.test(titleLower.trim())) return "community";
   // Library tutoring belongs with educational programs across branches.
   if (/\blibrary\b/.test(venueLower) && /^homework help\b/.test(titleLower.trim())) return "education";
   // SJPL's fine-credit shifts are library volunteering. Keep sessions advertised for families in Family.

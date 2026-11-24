@@ -205,15 +205,24 @@ test("SCU shared copies and campus programs leave room for the two ticketed fest
 });
 
 test("BVA Café is a separate public meetup with required registration", () => {
-  const listing = {
-    title: "BVA Café", date: "2026-11-19",
-    url: "https://events.scu.edu/ciocca-center/event/517570-bva-cafe",
-  };
-  assert.equal(isStudentOnlyEvent({ title: listing.title, link: listing.url }), false);
   assert.equal(isStudentOnlyEvent({ title: "Bronco Ventures Accelerator" }), true);
-  const corrected = applyVerifiedEventFacts(listing);
-  assert.equal(corrected.cost, "free");
-  assert.equal(corrected.registration, "required");
+  for (const [date, sourceId] of [["2026-11-19", "517570"], ["2026-12-17", "517571"]]) {
+    const listing = {
+      title: "BVA Café", date,
+      url: `https://events.scu.edu/ciocca-center/event/${sourceId}-bva-cafe`,
+    };
+    assert.equal(isStudentOnlyEvent({ title: listing.title, link: listing.url }), false);
+    const corrected = applyVerifiedEventFacts(listing);
+    assert.equal(corrected.cost, "free");
+    assert.equal(corrected.registration, "required");
+    assert.equal(corrected.url, sourceId === "517571"
+      ? "https://www.scu.edu/cioccacenter/bronco-ventures/bronco-venture-accelerator/bva-cafe/"
+      : listing.url);
+    assert.equal(applyVerifiedEventFacts({ ...listing, registration: "closed" }).registration, "closed");
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    const otherDate = { ...listing, date: "2027-01-21" };
+    assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+  }
 });
 
 test("restoring the 9 PM Choreographers' Gallery show preserves the existing 7 PM event URL", () => {

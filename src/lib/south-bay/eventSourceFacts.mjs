@@ -35,6 +35,7 @@ function museumMinisWithoutArtMaking(event) {
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const COOL_YULE_URL = "https://events.sjsu.edu/event/hammer-presents-cool-yule-2026";
+const BVA_CAFE_PROGRAM_URL = "https://www.scu.edu/cioccacenter/bronco-ventures/bronco-venture-accelerator/bva-cafe/";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const OPEN_MIC_ENTRY_NOTE = "Ages 18+. Two-item minimum purchase per person.";
@@ -299,6 +300,21 @@ const CORRECTIONS = [
     },
     appendAttendanceNote: "Ages 8 and up. An adult must accompany guests under 16.",
   },
+  // The promoter confirms both December 4 shows are ticketed concerts and
+  // requires advance purchase. The Localist entries omit the ticket prices.
+  ...[
+    ["candlelight-coldplay-imagine-dragons-2895", "262152", "6:30 PM"],
+    ["candlelight-the-best-of-joe-hisaishi-7754", "353164", "8:45 PM"],
+  ].map(([slug, ticketId, time]) => {
+    const ticketUrl = `https://feverup.com/m/${ticketId}`;
+    const calendarUrl = `https://events.sjsu.edu/event/${slug}`;
+    return {
+      date: "2026-12-04",
+      matches: event => event.time === time && [calendarUrl, ticketUrl].includes(event.url),
+      facts: { url: ticketUrl, category: "music", cost: "paid", registration: REGISTRATION_REQUIRED },
+      appendAttendanceNote: "Ages 8 and up. An adult must accompany guests under 16.",
+    };
+  }),
   {
     // The orchestra lists Campbell and San Mateo performances of its season finale.
     // https://peninsulasymphony.org/the-maestros-may-2027
@@ -690,6 +706,15 @@ const CORRECTIONS = [
     url: "https://events.scu.edu/ciocca-center/event/517570-bva-cafe",
     aliasUrls: ["https://events.scu.edu/live/events/517570-bva-cafe"],
     facts: { cost: "free", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Register through Santa Clara University before attending.",
+  },
+  // SCU's /live/rss/events feed confirms December 17, 6:30–8:30 PM in
+  // Lucas Hall. Link to the organizer's program page with the signup form.
+  {
+    date: "2026-12-17",
+    url: "https://events.scu.edu/ciocca-center/event/517571-bva-cafe",
+    aliasUrls: ["https://events.scu.edu/live/events/517571-bva-cafe", BVA_CAFE_PROGRAM_URL],
+    facts: { url: BVA_CAFE_PROGRAM_URL, cost: "free", registration: REGISTRATION_REQUIRED },
     appendAttendanceNote: "Register through Santa Clara University before attending.",
   },
   // The Markey Center verifies the hours, room, price and public invitation.
@@ -5637,6 +5662,22 @@ const CORRECTIONS = [
       registration: REGISTRATION_NONE, registrationClosesBy: null,
       attendanceNote: "Registration is not required. Optional signup provides an email reminder.",
     },
+  },
+  // The library's signup panel marks registration required but the event
+  // description calls it a drop-in. Keep the caveat while both signals persist.
+  {
+    date: "2026-12-01",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6abef32c377296003a4913be\/?$/.test(event.url || "")
+      && event.registration === REGISTRATION_REQUIRED
+      && /\bNo registration is required\b/i.test(event.description || ""),
+    facts: {
+      category: "community",
+      registration: null,
+      registrationClosesBy: null,
+      attendanceStatus: "needs-confirmation",
+    },
+    copyReplacements: [[/\s*\bNo registration is required\s*[—–-]\s*just drop in and play[.!]?/gi, ""]],
+    appendAttendanceNote: "The signup panel and description disagree about registration. Confirm with Calabazas Library before attending.",
   },
   // The March 6 signup panel labels registration required while the event
   // description says signup only provides an optional reminder. The feed can
