@@ -42,8 +42,6 @@ test("ongoing Stanford and King Library exhibits show verified Thanksgiving clos
 
 test("Thanksgiving closures follow the library or gallery's own hours", () => {
   const rows = [
-    ["https://events.stanford.edu/event/korean-indigenous-futures",
-      "2026-11-29", "East Asia Library is closed November 26 through 29."],
     ["https://events.stanford.edu/event/text-machines-scarlet-thread-of-the-digital-order-1883-2026",
       "2026-11-27", "Green Library is closed November 26 and 27 for Thanksgiving."],
     ["https://sjpl.bibliocommons.com/events/6ac02d7dde300e004517d401",
@@ -60,6 +58,23 @@ test("Thanksgiving closures follow the library or gallery's own hours", () => {
     assert.equal(applyVerifiedEventFacts(later).attendanceNote, event.attendanceNote);
     const online = { ...event, virtual: true };
     assert.equal(applyVerifiedEventFacts(online).attendanceNote, event.attendanceNote);
+  }
+});
+
+test("East Asia Library exhibit identifies both visitor entry and Thanksgiving closure", () => {
+  const exhibit = {
+    date: "2026-11-24", ongoing: true, time: null,
+    url: "https://events.stanford.edu/event/korean-indigenous-futures",
+  };
+  const access = "Visitors without Stanford library access must register in person with a physical government-issued photo ID.";
+  const closure = "East Asia Library is closed November 26 through 29.";
+  const reviewed = applyVerifiedEventFacts(exhibit);
+  assert.equal(reviewed.attendanceNote, `${access} ${closure}`);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  assert.equal(applyVerifiedEventFacts({ ...exhibit, date: "2026-11-29" }).attendanceNote, `${access} ${closure}`);
+  assert.equal(applyVerifiedEventFacts({ ...exhibit, date: "2026-11-30" }).attendanceNote, access);
+  for (const other of [{ ...exhibit, virtual: true }, { ...exhibit, date: "2026-12-12" }]) {
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
   }
 });
 

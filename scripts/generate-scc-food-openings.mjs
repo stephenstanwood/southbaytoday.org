@@ -55,6 +55,11 @@ const VERIFIED_OPENING_EVIDENCE = {
     url: "https://www.instagram.com/p/DVz2HnDlNAJ/",
     source: "Fugetsu Market",
   },
+  SR0886649: {
+    date: "2026-11-20",
+    url: "https://www.vegetarianhouse.com/",
+    source: "Vegetarian House Vegan grand opening announcement",
+  },
 };
 
 // Cities we care about (South Bay). SCC data uses uppercase city names.
@@ -165,6 +170,7 @@ const NAME_OVERRIDES = {
   "SR0883776": "Auntea Jenny", // https://aunteajenny.us/discover.html
   "SR0886162": "Wagyu Factory", // https://wagyufactory.com/project/mountain-view/
   "SR0886085": "MIXT", // https://www.mixt.com/locations/
+  "SR0886649": "Vegetarian House Vegan Go", // https://www.vegetarianhouse.com/sunnyvale
   // County permit says "Teriyaki City Cafe." The plaza directory names its tenant.
   // https://www.regencycenters.com/property/detail/90016/Snell-Branham-Plaza
   "SR0885067": "Teriyaki City Grill",
@@ -178,6 +184,7 @@ const NAME_OVERRIDES = {
 };
 
 const BLURB_OVERRIDES = {
+  "SR0886649": "Vegan pickup and delivery only from Sunny's Food Hub.",
   // Permit filings whose name gave the model nothing to go on, so it invented a
   // cuisine anyway — "Anne Doan" (an applicant's name) came out as "Vietnamese
   // restaurant". Pinned to location-only until someone confirms the concept.

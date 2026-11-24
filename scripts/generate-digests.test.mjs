@@ -285,6 +285,15 @@ test("San José's holiday book drive keeps the district in the published agenda"
   }
 });
 
+test("San José's November 18 agenda review names the council date under review", () => {
+  const options = { cityId: "san-jose" };
+  const clarified = "The committee agenda marked its review of the November 24, 2026, City Council agenda as canceled.";
+  const summary = "The committee listed several proposals. The November 24, 2026, final agenda review was marked canceled.";
+  assert.equal(polishCivicCopy(summary, options), `The committee listed several proposals. ${clarified}`);
+  assert.equal(polishCivicTopic("The agenda marked the November 24, 2026, final agenda review as canceled.", options), clarified);
+  assert.equal(polishCivicTopic(clarified, options), clarified);
+});
+
 test("the real digest generator finishes sentence topics but preserves fragments and identifiers", () => {
   const keyTopics = [
     "The agenda listed a proposed agreement not to exceed $165,000 for fiscal year 2026-27",

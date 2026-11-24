@@ -59,8 +59,12 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace("any further work it wants done on a potential annexation", "any further work it wanted done on a potential annexation")
       .replace("Saratoga Village economic vitality update, including ideas gathered through community engagement, with Council invited to give staff additional direction; also on the agenda was a ceremonial recognition of",
         "The agenda included a Saratoga Village economic vitality update with ideas from community engagement and an invitation for the Council to give staff additional direction. It also listed ceremonial recognition of")
-      .replace(/(?:The November 24, 2026, final agenda item was marked cancelled\.|^The agenda showed the November 24, 2026, final agenda review as cancelled\.?$)/g,
-        "The review of the final agenda for the November 24, 2026, meeting was marked canceled.")
+      // Item ROGC 26-395 of the November 18 committee agenda uses the
+      // November 24 date for the City Council agenda under review.
+      .replace(/(?:The November 24, 2026, final agenda (?:item|review) was marked|The agenda (?:showed|marked) the November 24, 2026, final agenda review as) cancell?ed(?:\.|$)/g,
+        (original) => cityId === "san-jose"
+          ? "The committee agenda marked its review of the November 24, 2026, City Council agenda as canceled."
+          : original)
       .replace("Also listed were several council-sponsored community events seeking approval to spend city funds and accept donations, and a proposal to establish the La Avenida Cultural District.",
         "The agenda also listed a proposal to establish the La Avenida Cultural District and requests to spend city funds and accept donations for several council-sponsored community events.")
       .replace("to irrigate nonfunctional turfgrass, and updating the recycled water service area",

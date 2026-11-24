@@ -4839,6 +4839,14 @@ const CORRECTIONS = [
       attendanceNote: "Bowes Art & Architecture Library is closed Saturdays. Check the event calendar for hours. Visitors are asked to call 650-723-3408 for building and elevator access.",
     },
   },
+  // East Asia Library issues day passes for public events.
+  // https://library.stanford.edu/about-stanford-libraries/visitor-access
+  {
+    dateFrom: "2026-09-29", dateThrough: "2026-12-11",
+    matches: (event) => event.ongoing === true && !event.time && !event.virtual
+      && event.url === "https://events.stanford.edu/event/korean-indigenous-futures",
+    appendAttendanceNote: "Visitors without Stanford library access must register in person with a physical government-issued photo ID.",
+  },
   // The rolling exhibit date identifies the run. The organizer publishes a
   // separate viewing schedule and admission instructions.
   {

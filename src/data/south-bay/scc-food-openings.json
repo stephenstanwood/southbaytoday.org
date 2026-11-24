@@ -11,7 +11,26 @@
     "newestEligibleInspection": "2026-11-20",
     "eligibleStatus": "recent"
   },
-  "opened": [],
+  "opened": [
+    {
+      "id": "opened-SR0886649",
+      "name": "Vegetarian House Vegan Go",
+      "address": "1026 W Evelyn Ave",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
+      "sourceId": "SR0886649",
+      "status": "opened",
+      "date": "2026-11-20",
+      "inspectionDate": "2026-11-17",
+      "openingEvidence": {
+        "date": "2026-11-20",
+        "url": "https://www.vegetarianhouse.com/",
+        "source": "Vegetarian House Vegan grand opening announcement"
+      },
+      "blurb": "Vegan pickup and delivery only from Sunny's Food Hub.",
+      "photoRef": "places/ChIJe-4L03q3j4ARz5ky3Hr5zRE/photos/AV-0GLcCwEdgX8Q49J2r3BMyrRTj0ioJuU9ECAFbbMpNRbV0ejqE8Rbp8zw_fhfm44pfjt-qvS8UpB6Ss-xl8-intAhMRNgWJPvPOalChc_quUIbbSkBxrpjEZFIepW7S_wV7xmGNCTHaWdEM_hPBERH0mw0eviUirj7VFne-Z20RVioUgCLnzaThcq1GpopYdm3plZ8mNl5siLmS_J88PmLCD-K5eHYCZKCd8CNacaOzZQyanGDNIKV-GZvpusEJuJLtUbQiQXjGrFhLM5Bu7PWyjJ1F6S1T-Urcze81O56ff1tYeuNlU6KAi-4Y3Ezzz5gnSoTowqtoiPffqyfEskdb3y1exjPx5zn6W8hpeG6FXUJjtGzU-81OxyHuUiYex6U7zGfRAxoCF6GQiJu_gfv4ujZV3kNNjEGBCjqSCzC3Dtr"
+    }
+  ],
   "inspections": [
     {
       "id": "inspection-SR0884418",
@@ -60,18 +79,6 @@
       "status": "inspection-complete",
       "blurb": "Food business on Big Basin Way in Saratoga.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886629-450.webp"
-    },
-    {
-      "id": "inspection-SR0886649",
-      "name": "Vegetarian House Vegan",
-      "address": "1026 W Evelyn Ave",
-      "cityId": "sunnyvale",
-      "cityName": "SUNNYVALE",
-      "inspectionDate": "2026-11-17",
-      "sourceId": "SR0886649",
-      "status": "inspection-complete",
-      "blurb": null,
-      "photoRef": "places/ChIJe-4L03q3j4ARz5ky3Hr5zRE/photos/AV-0GLcCwEdgX8Q49J2r3BMyrRTj0ioJuU9ECAFbbMpNRbV0ejqE8Rbp8zw_fhfm44pfjt-qvS8UpB6Ss-xl8-intAhMRNgWJPvPOalChc_quUIbbSkBxrpjEZFIepW7S_wV7xmGNCTHaWdEM_hPBERH0mw0eviUirj7VFne-Z20RVioUgCLnzaThcq1GpopYdm3plZ8mNl5siLmS_J88PmLCD-K5eHYCZKCd8CNacaOzZQyanGDNIKV-GZvpusEJuJLtUbQiQXjGrFhLM5Bu7PWyjJ1F6S1T-Urcze81O56ff1tYeuNlU6KAi-4Y3Ezzz5gnSoTowqtoiPffqyfEskdb3y1exjPx5zn6W8hpeG6FXUJjtGzU-81OxyHuUiYex6U7zGfRAxoCF6GQiJu_gfv4ujZV3kNNjEGBCjqSCzC3Dtr"
     },
     {
       "id": "inspection-SR0886537",
