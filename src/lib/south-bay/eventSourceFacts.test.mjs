@@ -1495,6 +1495,7 @@ test("Almaden's November 24 and 25 tech help replaces retired services for each 
     };
     const corrected = {
       ...event,
+      attendanceNote: date === "2026-11-25" ? "By appointment only." : event.attendanceNote,
       description: "Learning to use Libby from OverDrive to read ebooks and listen to e-audiobooks; Finding e-books from Enki; Checking out a 7-day pass to access Great Courses from Libby; By appointment only.",
     };
     assert.deepEqual(applyVerifiedEventFacts(event), corrected);
@@ -1508,6 +1509,56 @@ test("Almaden's November 24 and 25 tech help replaces retired services for each 
     };
     assert.deepEqual(applyVerifiedEventFacts(unverified), unverified);
   }
+});
+
+test("Almaden's November 25 tech help keeps booking contacts when the source gives conflicting terms", () => {
+  const event = {
+    date: "2026-11-25",
+    id: "sjpl-69f10f4bfb87a3c2e2ac6ff0",
+    source: "San Jose Public Library",
+    url: "https://sjpl.bibliocommons.com/v2/events/69f10f4bfb87a3c2e2ac6ff0",
+    registration: "appointment-only",
+  };
+  const book = "For questions or to book, call (408) 808-3040 or email ab.sjpl@sjlibrary.org.";
+  const published = {
+    ...event,
+    description: "The Almaden Branch offers 30-minute tech help appointments.",
+    attendanceNote: `Appointments are required. Each person can book one appointment per week. ${book}`,
+  };
+  assert.deepEqual(applyVerifiedEventFacts(published), {
+    ...event,
+    description: "The Almaden Branch offers one-on-one tech help by appointment.",
+    attendanceNote: `Appointments are required. ${book}`,
+  });
+
+  const refreshed = {
+    ...event,
+    description: "At the Almaden Branch you can make a 30-minute appointment to assist you with: learning new technology.",
+    attendanceNote: "Please call or stop by the Almaden Branch Library to book a 15- or 30-minute session with our staff. Only one appointment per day, please.",
+  };
+  const corrected = {
+    ...event,
+    description: "At the Almaden Branch, you can make an appointment to assist you with: learning new technology.",
+    attendanceNote: "Please call or stop by the Almaden Branch Library to book an appointment.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(refreshed), corrected);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+});
+
+test("Milpitas Winter Reading Bingo respects the library's all-ages invitation", () => {
+  const event = {
+    date: "2026-12-01", id: "sccl-6b05d51e3377ce00332d53ce",
+    title: "Winter Reading Bingo", source: "Santa Clara County Library",
+    description: "This free program invites readers of all ages to explore new stories.",
+    sourceAudiences: ["Kids: Grades 5-8", "Kids: Preschoolers"],
+    audienceAge: "kids", kidFriendly: true,
+  };
+  assert.deepEqual(applyVerifiedEventFacts(event), { ...event, audienceAge: "all" });
+
+  const restricted = { ...event, description: "This program is for readers in grades 5-8." };
+  assert.deepEqual(applyVerifiedEventFacts(restricted), restricted);
+  const differentBranch = { ...event, id: "sccl-other-bingo" };
+  assert.deepEqual(applyVerifiedEventFacts(differentBranch), differentBranch);
 });
 
 test("Montalvo's sold-out wreath workshop keeps its waitlist and any explicit price", () => {

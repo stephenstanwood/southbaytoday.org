@@ -19,6 +19,28 @@ const ALMADEN_TECH_HELP_COPY = [
   [/\b(Checking out a 7-day pass to access Great Courses from Libby) or Hoopla\b/gi, "$1"],
 ];
 
+// The November 25 booking panel and description give different session
+// lengths and limits. Keep the agreed appointment requirement and contacts.
+// https://sjpl.bibliocommons.com/v2/events/69f10f4bfb87a3c2e2ac6ff0
+const ALMADEN_NOVEMBER_25_BOOKING_COPY = [
+  [
+    "The Almaden Branch offers 30-minute tech help appointments.",
+    "The Almaden Branch offers one-on-one tech help by appointment.",
+  ],
+  [
+    /\bAt the Almaden Branch,? you can make a 30-minute appointment ((?:for assistance|to assist you) with:)/gi,
+    "At the Almaden Branch, you can make an appointment $1",
+  ],
+  [
+    /\b(Please call or stop by the Almaden Branch Library to book) a 15- or 30-minute session with our staff\./gi,
+    "$1 an appointment.",
+  ],
+  [
+    /(^|\s+)(?:Each person can book one appointment per week|(?:Limit to )?one appointment per week per person|Only one appointment per day, please)\.(\s+|$)/gi,
+    (_match, before, after) => before && after ? " " : "",
+  ],
+];
+
 function hasMitchellParkStudyHours(event) {
   return event.source === "Palo Alto City Library" && event.venue === "Mitchell Park Library"
     && event.title === "Locked in: Teen Finals Study Space!"
@@ -110,6 +132,15 @@ const HISTORY_PARK_HOLIDAY_TEA_FACTS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Milpitas Library's description invites readers of all ages. Its catalog
+  // audience tags only list children, which otherwise excludes adult readers.
+  // https://sccl.bibliocommons.com/events/6b05d51e3377ce00332d53ce
+  {
+    date: "2026-12-01",
+    matches: event => event.id === "sccl-6b05d51e3377ce00332d53ce"
+      && /\breaders of all ages\b/i.test(event.description || ""),
+    facts: { audienceAge: "all" },
+  },
   // Midpen's November 24 hike sold out. Match its published cutoff so a
   // later source update to the registration window can take precedence.
   // https://www.eventbrite.com/e/full-moon-on-black-mountain-tickets-1993622244801
@@ -1393,7 +1424,9 @@ const CORRECTIONS = [
     id: `sjpl-${id}`,
     url: `https://sjpl.bibliocommons.com/events/${id}`,
     aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${id}`],
-    copyReplacements: ALMADEN_TECH_HELP_COPY,
+    copyReplacements: date === "2026-11-25"
+      ? [...ALMADEN_TECH_HELP_COPY, ...ALMADEN_NOVEMBER_25_BOOKING_COPY]
+      : ALMADEN_TECH_HELP_COPY,
   })),
   // The sold-out occurrence page confirms a workshop fee and supplies. It
   // gives no price amount. Leave the waitlist and any current price intact.
