@@ -1261,6 +1261,10 @@ test("the December 3 Panama Deception screening reports conflicting signup instr
     const corrected = polishReviewedEventCopy(applyVerifiedEventFacts(input));
     assert.match(corrected.description, /Barbara Trent's documentary.*December 1989 U\.S\. invasion of Panama/);
     assert.doesNotMatch(corrected.description, /Congressional mandate|registration is not required/i);
+    assert.ok(corrected.description.endsWith(
+      "The United Nations Association Film Festival screens documentaries on current issues. " +
+      "Jasmina Bojic, a Stanford lecturer and the festival's founder and director, leads discussions with filmmakers and producers.",
+    ));
     assert.equal(corrected.registration, null);
     assert.equal(corrected.registrationClosesBy, null);
     assert.equal(corrected.attendanceStatus, "needs-confirmation");

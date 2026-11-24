@@ -6041,6 +6041,10 @@ const CORRECTIONS = [
       // PBS mandate claim, with an attributed description of the film.
       [/^The Panama Deception documents the untold story of the December 1989 U\.S\. invasion of Panama\b[\s\S]*?\bA ban on the film originally imposed by the Panamanian government was lifted in March 1993, following strong internal and international pressure\./i,
         "Barbara Trent's documentary uses archival footage and interviews to examine the December 1989 U.S. invasion of Panama and American news coverage of it."],
+      [
+        "United Nations Association Film Festival presents documentaries on topical subjects. Jasmina Bojic, Stanford lecturer and International Documentary Film Festival UNAFF founder and director, facilitates discussions with filmmakers and producers.",
+        "The United Nations Association Film Festival screens documentaries on current issues. Jasmina Bojic, a Stanford lecturer and the festival's founder and director, leads discussions with filmmakers and producers.",
+      ],
       [PANAMA_DECEPTION_REMINDER, ""],
       [/\s*EP has recently moved its offices out of New York and California\.\s+The new headquarters for all operations is now in Chapel Hill, North Carolina\./i, ""],
       [/\s+and currently,\s*Bravo\s*[-–—]\s*the Independent\s*Film Channel retains the rights to cablecast the film\./i, "."],
