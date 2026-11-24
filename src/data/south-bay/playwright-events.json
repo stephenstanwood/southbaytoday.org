@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-24T16:25:56.577Z",
+    "generatedAt": "2026-11-24T20:34:07.069Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 192,
+    "eventCount": 193,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (9)",
@@ -16,7 +16,7 @@
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (4)",
       "Santana Row (6)",
-      "City of Cupertino (38)",
+      "City of Cupertino (39)",
       "Opera San José (6)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
@@ -209,8 +209,8 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 38,
-        "liveCount": 38,
+        "count": 39,
+        "liveCount": 39,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -990,7 +990,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-24T16:24:45.585Z"
+        "checkedAt": "2026-11-24T20:32:59.624Z"
       }
     },
     {
@@ -1013,7 +1013,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-24T16:24:45.586Z"
+        "checkedAt": "2026-11-24T20:32:59.625Z"
       }
     },
     {
@@ -1036,7 +1036,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-24T16:24:45.586Z"
+        "checkedAt": "2026-11-24T20:32:59.625Z"
       }
     },
     {
@@ -1059,7 +1059,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-24T16:24:45.586Z"
+        "checkedAt": "2026-11-24T20:32:59.625Z"
       }
     },
     {
@@ -1082,7 +1082,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-24T16:24:45.591Z"
+        "checkedAt": "2026-11-24T20:32:59.628Z"
       }
     },
     {
@@ -1105,7 +1105,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-24T16:24:45.591Z"
+        "checkedAt": "2026-11-24T20:32:59.629Z"
       }
     },
     {
@@ -1362,6 +1362,23 @@
       "costNote": "Resident Rate: $5 Non-Resident Rate: $6 Pre-registration is required and all attending children and adults must be registered.",
       "description": "Deaf and hard of hearing children, along with their families, are invited to spend time with a Santa who understands sign language! Santa only communicates using sign language but an interpreter will be on-site to help translate for friends and family. Register Registration opens in late July. For more information, please visit the Signing Santa event page.",
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/Signing-Santa/Signing-Santa-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "f014c58e7fc3",
+      "title": "Cupertino Café",
+      "date": "2026-12-13",
+      "displayDate": "Sun, Dec 13",
+      "time": "03:00 PM",
+      "endTime": "08:00 PM",
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, 10185 N Stelling Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Teens, need a productive place to study? The Youth Activity Board is opening the Quinlan Community Center’s banquet hall for a special teen study space. Enjoy free Panda Express, snacks, and coffee while you settle in and prepare for exams. When you’re ready for a break, unwind with recreational games and calming activities. Cupertino Café is free, but please RSVP so we know how much food to order. RSVP",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Cupertino-Caf%C3%A9",
       "source": "City of Cupertino",
       "kidFriendly": true
     },
@@ -1776,7 +1793,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1793,7 +1810,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3026,7 +3043,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.001Z"
+        "checkedAt": "2026-11-24T20:33:35.703Z"
       }
     },
     {
@@ -3050,7 +3067,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.706Z"
       }
     },
     {
@@ -3091,7 +3108,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.706Z"
       }
     },
     {
@@ -3115,7 +3132,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.706Z"
       }
     },
     {
@@ -3139,7 +3156,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.706Z"
       }
     },
     {
@@ -3163,7 +3180,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.706Z"
       }
     },
     {
@@ -3187,7 +3204,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.706Z"
       }
     },
     {
@@ -3211,7 +3228,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.706Z"
       }
     },
     {
@@ -3235,7 +3252,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-2",
         "date": "2026-12-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.707Z"
       }
     },
     {
@@ -3259,7 +3276,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-3",
         "date": "2026-12-30",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.707Z"
       }
     },
     {
@@ -3283,7 +3300,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-30",
         "date": "2027-01-01",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-24T16:25:22.004Z"
+        "checkedAt": "2026-11-24T20:33:35.707Z"
       }
     },
     {
