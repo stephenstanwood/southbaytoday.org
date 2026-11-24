@@ -4,6 +4,15 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    date: "2027-01-22",
+    title: /^Tech & Innovation Summit$/i,
+    venue: /.*/,
+    matches: event => event.source === "SVLG"
+      && /^https:\/\/www\.eventbrite\.com\/e\/tech-innovation-summit-tickets-2002660719121(?:[/?#]|$)/.test(event.url || ""),
+    reason: "The organizer's registration page restricts the summit to employees of Silicon Valley Leadership Group member companies.",
+    source: "https://www.eventbrite.com/e/tech-innovation-summit-tickets-2002660719121",
+  }),
+  Object.freeze({
     date: "2026-11-28",
     title: /^Pacific Art League Gallery Open Saturday$/i,
     venue: /^Pacific Art League(?:,|$)/i,

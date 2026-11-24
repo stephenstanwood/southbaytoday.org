@@ -44,3 +44,34 @@ test("the SVLG correction does not apply to another occurrence or another organi
     }
   }
 });
+
+test("the Coffee & Conversation ticket pages supply the room and free admission for both dates", () => {
+  const dates = [
+    ["2027-01-07", "coffee-conversation-russell-hancock-tickets-2003679243555"],
+    ["2027-02-04", "new-date-coffee-conversation-otto-lee-tickets-2002235621643"],
+  ];
+  for (const [date, path] of dates) {
+    const input = {
+      date, source: "SVLG", venue: "Google Conference Room", cost: "unknown",
+      url: `https://www.eventbrite.com/e/${path}?aff=calendar`,
+    };
+    const corrected = applyVerifiedEventFacts(input);
+    assert.equal(corrected.venue, "SVLG Conference Room");
+    assert.equal(corrected.cost, "free");
+    assert.equal(corrected.url, input.url);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    const otherDate = { ...input, date: "2027-02-05" };
+    assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+  }
+});
+
+test("the members-only SVLG summit is excluded from public events", () => {
+  const summit = {
+    date: "2027-01-22", title: "Tech & Innovation Summit", source: "SVLG",
+    url: "https://www.eventbrite.com/e/tech-innovation-summit-tickets-2002660719121?aff=calendar",
+    venue: "Nutanix HQ",
+  };
+  assert.equal(isEventPublishable(summit), false);
+  assert.equal(isEventPublishable({ ...summit, date: "2027-01-23" }), true);
+  assert.equal(isEventPublishable({ ...summit, url: "https://example.org/community-summit" }), true);
+});

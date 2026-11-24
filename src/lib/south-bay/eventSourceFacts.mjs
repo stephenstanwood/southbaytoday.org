@@ -4468,6 +4468,46 @@ const CORRECTIONS = [
     matches: (event) => /^https:\/\/www\.eventbrite\.com\/e\/coffee-conversation-otto-lee-tickets-2002235621643(?:[/?#]|$)/.test(event.url || ""),
     facts: { venue: "SVLG Conference Room" },
   },
+  // SVLG's ticket pages give the conference room and explicitly list free
+  // tickets. The calendar cards use a different room name at the same address.
+  {
+    date: "2027-01-07",
+    matches: event => event.source === "SVLG"
+      && /^https:\/\/www\.eventbrite\.com\/e\/coffee-conversation-russell-hancock-tickets-2003679243555(?:[/?#]|$)/.test(event.url || ""),
+    facts: { venue: "SVLG Conference Room", cost: "free" },
+  },
+  {
+    date: "2027-02-04",
+    matches: event => event.source === "SVLG"
+      && /^https:\/\/www\.eventbrite\.com\/e\/(?:new-date-)?coffee-conversation-otto-lee-tickets-2002235621643(?:[/?#]|$)/.test(event.url || ""),
+    facts: {
+      venue: "SVLG Conference Room", cost: "free",
+      blurb: "Hear Santa Clara County Supervisor Otto Lee discuss county policy with Chappie Jones.",
+    },
+  },
+  // The theater's season program confirms the four Campbell-presented shows
+  // as concerts. The other two listings are tribute concerts on its calendar.
+  // https://www.heritagetheatre.org/2027-spring-season-of-shows
+  ...[
+    ["2027-02-07", "campbell-heritage-theatre-presents-kalani-pea-and-taimane"],
+    ["2027-02-19", "journey-usa-the-hits-of-journey"],
+    ["2027-02-21", "campbell-heritage-theatre-presents-chris-cagle"],
+    ["2027-03-06", "fleetwood-mask-a-tribute-to-fleetwood-mac"],
+    ["2027-03-19", "campbell-heritage-theatre-presents-the-spinners"],
+    ["2027-04-10", "campbell-heritage-theatre-presents-the-ultimate-doors"],
+  ].map(([date, path]) => ({
+    date,
+    url: `https://www.heritagetheatre.org/events/${path}`,
+    facts: { category: "music" },
+  })),
+  // The city's December 13 event copy says the study space is for teens,
+  // admission is free, and asks for an RSVP to plan food.
+  {
+    date: "2026-12-13",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Cupertino-Caf%C3%A9",
+    facts: { cost: "free", sourceAudiences: ["Teens"], audienceAge: "kids" },
+    appendAttendanceNote: "The city asks teens to RSVP so it can plan food.",
+  },
   {
     date: "2026-12-10",
     // The ticket page marks this date postponed and lists the replacement as TBD.
