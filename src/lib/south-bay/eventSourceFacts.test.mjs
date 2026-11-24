@@ -704,6 +704,30 @@ test("Les Misérables uses its production rating without changing the showtimes"
   assert.deepEqual(applyVerifiedEventFacts(otherRun), otherRun);
 });
 
+test("Come From Away uses CMT's age guidance only for the Montgomery Theater run", () => {
+  const event = {
+    title: "Come from Away", date: "2026-12-13", time: "1:00 PM",
+    venue: "Montgomery Theater", source: "San Jose Theaters",
+    url: "https://www.sanjose.org/theaters/events/come-away",
+    category: "family", kidFriendly: true,
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.deepEqual(corrected, {
+    ...event,
+    category: "arts",
+    kidFriendly: false,
+    attendanceNote: "Children's Musical Theater rates this production for ages 10 and up in its student matinee guide.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  const otherProduction = {
+    ...event, source: "South Bay Musical Theatre", venue: "Saratoga Civic Theater",
+    url: "https://southbaymt.com/shows/ticket-sales/come-from-away/",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(otherProduction), otherProduction);
+  const otherRun = { ...event, date: "2026-12-14" };
+  assert.deepEqual(applyVerifiedEventFacts(otherRun), otherRun);
+});
+
 test("the dated Neighborhood Hands cleanup keeps the organizer's program times", () => {
   const event = {
     id: "94b3de5fed7c", date: "2026-11-28",

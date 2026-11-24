@@ -352,16 +352,19 @@ const CORRECTIONS = [
       blurb: "Hear pianist Jon Nakamatsu perform with Peninsula Symphony in Mitchell Sardou Klein's final program as music director.",
     },
   },
-  {
-    // The theater calendar groups bookings by producer. CMT's production
-    // rating for this run is 12+: https://www.cmtsj.org/student-audience-matinees/
-    dateFrom: "2027-05-07", dateThrough: "2027-05-16",
+  // The theater calendar groups bookings by producer. Use CMT's guidance
+  // for these specific productions: https://www.cmtsj.org/student-audience-matinees/
+  ...[
+    ["come-away", "2026-12-04", "2026-12-13", 10],
+    ["les-miserables", "2027-05-07", "2027-05-16", 12],
+  ].map(([slug, dateFrom, dateThrough, recommendedAge]) => ({
+    dateFrom, dateThrough,
     matches: (event) => event.source === "San Jose Theaters"
-      && event.url === "https://www.sanjose.org/theaters/events/les-miserables"
+      && event.url === `https://www.sanjose.org/theaters/events/${slug}`
       && event.venue === "Montgomery Theater",
     facts: { category: "arts", kidFriendly: false },
-    appendAttendanceNote: "Children's Musical Theater rates this production for ages 12 and up in its student matinee guide.",
-  },
+    appendAttendanceNote: `Children's Musical Theater rates this production for ages ${recommendedAge} and up in its student matinee guide.`,
+  })),
   {
     // The museum invites all ages to sketch in the galleries.
     dateFrom: "2026-11-27", dateThrough: "2027-09-24",
