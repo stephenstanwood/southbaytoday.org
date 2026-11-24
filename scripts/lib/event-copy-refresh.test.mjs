@@ -1804,3 +1804,18 @@ test("Qi Gong schedule copy stays readable after removing the old cancellation n
   assert.deepEqual(polishReviewedEventCopy(verified), reviewed);
   assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
 });
+
+test("Korean smartphone help copy keeps updated appointment lengths and source details", () => {
+  const description = polishDescription(
+    "Free 20-minute 1-on-1 sessions with a Technology Consultant who speaks English and Korean, covering help with iPhone, iPad, or Android photos, apps, and settings. Bring your charger.",
+  );
+  const event = { source: "City Newsletter", description, registration: "appointment-only" };
+  const reviewed = {
+    ...event,
+    description: "Get free 20-minute one-on-one help with photos, apps, and settings on an iPhone, iPad, or Android device. The technology consultant speaks English and Korean. Bring your charger.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+  const otherPublisher = { ...event, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});

@@ -2480,6 +2480,10 @@ const EDITS = {
         "The county's annual ceremony marks Human Rights Day and celebrates the Universal Declaration of Human Rights. The theme is \"Making Humanity Together.\"",
       ],
       [
+        /^Free (\d+)-minute 1-on-1 sessions with a Technology Consultant who speaks English and Korean, covering help with iPhone, iPad, or Android photos, apps, and settings\./g,
+        "Get free $1-minute one-on-one help with photos, apps, and settings on an iPhone, iPad, or Android device. The technology consultant speaks English and Korean.",
+      ],
+      [
         "Holiday festivities begin in Historic Saratoga Village with Candy Cane Village, part of the kickoff to the holiday season.",
         "Candy Cane Village opens the holiday festivities in Historic Saratoga Village.",
       ],
