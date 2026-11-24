@@ -366,6 +366,15 @@ const CORRECTIONS = [
     appendAttendanceNote: `Children's Musical Theater rates this production for ages ${recommendedAge} and up in its student matinee guide.`,
   })),
   {
+    // The Saratoga producer leaves suitability for younger children to parents.
+    dateFrom: "2027-01-23", dateThrough: "2027-02-13",
+    matches: (event) => event.source === "South Bay Musical Theatre"
+      && event.url === "https://southbaymt.com/shows/ticket-sales/come-from-away/"
+      && event.venue === "Saratoga Civic Theater",
+    facts: { kidFriendly: false },
+    appendAttendanceNote: "South Bay Musical Theatre advises parental discretion for younger children. The show deals with the September 11 attacks and includes occasional strong language.",
+  },
+  {
     // The museum invites all ages to sketch in the galleries.
     dateFrom: "2026-11-27", dateThrough: "2027-09-24",
     url: "https://events.stanford.edu/event/anderson-friday-drop-in-drawing",

@@ -359,6 +359,32 @@ test("South Bay Musical Theatre never invents a shared ticket floor for differen
   }
 });
 
+test("South Bay Musical Theatre corrects only the verified closing matinee year", async (t) => {
+  const show = "https://southbaymt.com/shows/ticket-sales/come-from-away/";
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-24T20:07:00Z") });
+  const past = "Saturday, February 13, 2026 at 2:30 pm";
+  let closingMatinee = past;
+  t.mock.method(globalThis, "fetch", async (url) => new Response(`
+    <title>Musical — South Bay Musical Theatre</title>
+    <h2>SHOW DATES &amp; TIMES</h2>
+    ${String(url) === show
+      ? `<p>Friday, February 12, 2027 at 8:00 pm</p><p>${closingMatinee}</p>`
+      : `<p>${past}</p>`}
+  `));
+
+  const [evening, closing] = await fetchSouthBayMusicalTheatreEvents();
+  assert.equal(evening.date, "2027-02-12");
+  assert.deepEqual([closing.url, closing.date, closing.time, closing.displayDate], [
+    show, "2027-02-13", "2:30 PM", "Sat, Feb 13",
+  ]);
+
+  closingMatinee = "Saturday, February 13, 2027 at 2:30 pm";
+  assert.deepEqual(await fetchSouthBayMusicalTheatreEvents(), [evening, closing]);
+
+  closingMatinee = "";
+  assert.deepEqual(await fetchSouthBayMusicalTheatreEvents(), [evening]);
+});
+
 test("sports schedules without ticket prices cannot publish estimated admission floors", async () => {
   const start = new Date(Date.now() + 14 * 86400000).toISOString();
   const date = new Date(start).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });

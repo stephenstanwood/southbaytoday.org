@@ -10106,11 +10106,12 @@ async function fetchSanJoseTheatersEvents({ previousEvents = readJsonFile(OUT_PA
 
 async function fetchSouthBayMusicalTheatreEvents() {
   console.log("  ⏳ South Bay Musical Theatre...");
+  const comeFromAwayUrl = "https://southbaymt.com/shows/ticket-sales/come-from-away/";
   const pages = [
     "https://southbaymt.com/shows/ticket-sales/in-the-heights/",
     "https://southbaymt.com/shows/ticket-sales/ouam/",
     "https://southbaymt.com/shows/ticket-sales/holiday-sunshine/",
-    "https://southbaymt.com/shows/ticket-sales/come-from-away/",
+    comeFromAwayUrl,
     "https://southbaymt.com/shows/ticket-sales/musicomedy/",
     "https://southbaymt.com/shows/ticket-sales/southpacific2027/",
     "https://southbaymt.com/shows/ticket-sales/candide/",
@@ -10128,7 +10129,15 @@ async function fetchSouthBayMusicalTheatreEvents() {
         .replace(/\s+/g, " ")
         .trim();
       const sectionStart = bodyText.search(/SHOW DATES\s*(?:&|AND)?\s*TIMES|DATES\s*(?:&|AND)?\s*TIMES/i);
-      const dateText = sectionStart >= 0 ? bodyText.slice(sectionStart, sectionStart + 2500) : bodyText;
+      let dateText = sectionStart >= 0 ? bodyText.slice(sectionStart, sectionStart + 2500) : bodyText;
+      if (pageUrl === comeFromAwayUrl) {
+        // The season brochure confirms the closing matinee's year.
+        // https://southbaymt.com/wp-content/uploads/2026/02/season-64-brochure-final-spreads.pdf
+        dateText = dateText.replace(
+          /\bSaturday, February 13, 2026 at 2:30 pm\b/i,
+          "Saturday, February 13, 2027 at 2:30 pm",
+        );
+      }
       const description = truncate(stripBareUrls(bodyText
         .replace(/^.*?Loading\.\.\.\s*/i, "")
         .replace(/SHOW DATES[\s\S]*$/i, "")

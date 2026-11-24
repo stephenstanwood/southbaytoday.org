@@ -728,6 +728,24 @@ test("Come From Away uses CMT's age guidance only for the Montgomery Theater run
   assert.deepEqual(applyVerifiedEventFacts(otherRun), otherRun);
 });
 
+test("Come From Away uses the Saratoga producer's own parental advisory", () => {
+  const event = {
+    title: "Come From Away", date: "2027-02-13", time: "2:30 PM",
+    source: "South Bay Musical Theatre", venue: "Saratoga Civic Theater",
+    url: "https://southbaymt.com/shows/ticket-sales/come-from-away/",
+    category: "arts", kidFriendly: true, attendanceNote: "Tickets sold out.",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.deepEqual(corrected, {
+    ...event,
+    kidFriendly: false,
+    attendanceNote: "Tickets sold out. South Bay Musical Theatre advises parental discretion for younger children. The show deals with the September 11 attacks and includes occasional strong language.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  const otherRun = { ...event, date: "2028-02-13" };
+  assert.equal(applyVerifiedEventFacts(otherRun), otherRun);
+});
+
 test("the dated Neighborhood Hands cleanup keeps the organizer's program times", () => {
   const event = {
     id: "94b3de5fed7c", date: "2026-11-28",
