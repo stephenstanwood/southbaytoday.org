@@ -2835,6 +2835,10 @@ const EDITS = {
       ['"Jane!" exhibition', '"JANE!" exhibition'],
       ["Curator of European Art, Patrick R. Crowley,", "Curator of European Art Patrick R. Crowley,"],
       ["Jane! celebrates the aesthetic and affective excesses of Jane Stanford", "JANE! celebrates the aesthetic and affective excesses of Jane Stanford"],
+      [
+        "The East Asia Library at Stanford University will host a print exhibition by Kim Bong-Jun, a leading figure in Korean Minjung (People's) Art, from ",
+        "The East Asia Library at Stanford University will exhibit prints by Kim Bong-Jun, a leading figure in the Korean Minjung (people's) art movement, from ",
+      ],
       ["and early 20th century changed the history", "and early 20th centuries changed the history"],
       ["Abstract Lithium-bearing brines", "Abstract: Lithium-bearing brines"],
       ["Phil Deutch is one the most experienced energy technology investors", "Phil Deutch is one of the most experienced energy technology investors"],
