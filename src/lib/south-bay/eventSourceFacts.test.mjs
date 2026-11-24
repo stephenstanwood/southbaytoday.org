@@ -15,6 +15,20 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("the county flag raising links to its dated flyer when the newsletter URL is empty", () => {
+  const event = {
+    source: "City Newsletter", city: "san-jose", date: "2026-12-10",
+    title: "Human Rights Day Flag Raising Ceremony", url: "",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(event), {
+    ...event, url: "https://assets.unlayer.com/projects/126416/1795110608252-981110.png",
+  });
+  const linked = { ...event, url: "https://example.org/ceremony" };
+  assert.deepEqual(applyVerifiedEventFacts(linked), linked);
+  const nextYear = { ...event, date: "2027-12-10" };
+  assert.deepEqual(applyVerifiedEventFacts(nextYear), nextYear);
+});
+
 test("the November 28 reading session uses the library's resolved signup window", () => {
   const staleCopy = "You may register for a 10-minute session online beginning two days before the event.";
   const event = {

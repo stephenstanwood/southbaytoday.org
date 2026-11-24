@@ -95,6 +95,14 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Supervisor Otto Lee's November 20 county newsletter embeds the flyer
+  // for this ceremony. Use it when the newsletter extraction omits a URL.
+  {
+    date: "2026-12-10",
+    matches: event => !event.url && event.source === "City Newsletter"
+      && event.city === "san-jose" && event.title === "Human Rights Day Flag Raising Ceremony",
+    facts: { url: "https://assets.unlayer.com/projects/126416/1795110608252-981110.png" },
+  },
   // SJPL's rescheduled November 29 occurrence uses the full program title.
   // https://sjpl.bibliocommons.com/events/6b048c2795b0491ca004827b
   {
