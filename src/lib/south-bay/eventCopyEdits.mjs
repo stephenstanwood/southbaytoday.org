@@ -2916,6 +2916,22 @@ const EDITS = {
     blurb: [
       [/See Panchiko perform at San Jose Civic as part of their USA Spring Tour, with doors for the (\d{1,2}:\d{2} [AP]M) show\./g, "See Panchiko's $1 show at San Jose Civic on their USA Spring Tour."],
       ["perform on their Born This Way tour stop.", "perform on their Born This Way tour."],
+      [
+        /^See Les Misérables on stage at San Jose's Montgomery Theater, a production listed in the family category\.$/g,
+        "See Les Misérables on stage at the Montgomery Theater in San José.",
+      ],
+    ],
+  },
+  "South Bay Musical Theatre": {
+    blurb: [
+      [
+        /^See a staging of South Pacific at Saratoga Civic Theater, a live theater production in the arts lineup\.$/g,
+        "See South Pacific on stage at Saratoga Civic Theater.",
+      ],
+      [
+        /^Watch South Pacific performed live on stage at Saratoga Civic Theater as part of the local arts calendar\.$/g,
+        "See South Pacific on stage at Saratoga Civic Theater.",
+      ],
     ],
   },
   "Santa Clara University": {

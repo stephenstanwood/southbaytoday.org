@@ -225,6 +225,34 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-library-and-latin-jazz.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-exhibits.json", import.meta.url))));
 
+test("reviewed theater blurbs drop calendar boilerplate when restored from cache", () => {
+  const cases = [
+    [
+      "San Jose Theaters",
+      "See Les Misérables on stage at San Jose's Montgomery Theater, a production listed in the family category.",
+      "See Les Misérables on stage at the Montgomery Theater in San José.",
+    ],
+    [
+      "South Bay Musical Theatre",
+      "See a staging of South Pacific at Saratoga Civic Theater, a live theater production in the arts lineup.",
+      "See South Pacific on stage at Saratoga Civic Theater.",
+    ],
+    [
+      "South Bay Musical Theatre",
+      "Watch South Pacific performed live on stage at Saratoga Civic Theater as part of the local arts calendar.",
+      "See South Pacific on stage at Saratoga Civic Theater.",
+    ],
+  ];
+  for (const [source, cachedBlurb, blurb] of cases) {
+    const event = { source, blurb: cachedBlurb };
+    const reviewed = { ...event, blurb };
+    assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+    assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+    const expanded = { ...event, blurb: cachedBlurb + " Tickets are available at the box office." };
+    assert.deepEqual(polishReviewedEventCopy(expanded), expanded);
+  }
+});
+
 test("SCU concert copy distinguishes the performances and removes the title echo", () => {
   const cases = [
     ["Santa Clara Chorale Concert", "Santa Clara Chorale's December Concert, Night One", "The Santa Clara Chorale gives the first performance of its December concert."],
