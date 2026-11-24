@@ -2424,6 +2424,10 @@ const EDITS = {
     ],
     description: [
       [
+        /^Annual County ceremony marking Human Rights Day, with the theme "Making Humanity Together\." It celebrates the Universal Declaration of Human Rights\.$/g,
+        "The county's annual ceremony marks Human Rights Day and celebrates the Universal Declaration of Human Rights. The theme is \"Making Humanity Together.\"",
+      ],
+      [
         "Holiday festivities begin in Historic Saratoga Village with Candy Cane Village, part of the kickoff to the holiday season.",
         "Candy Cane Village opens the holiday festivities in Historic Saratoga Village.",
       ],
