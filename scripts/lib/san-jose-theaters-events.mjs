@@ -68,8 +68,8 @@ export function applyValleyChristianChristmasProgram(event) {
 
   return {
     ...event,
-    description: `Valley Christian Schools students perform “${performance.program}” at California Theatre as part of the school's four-night Christmas concert series.`,
-    blurb: `Hear Valley Christian Schools students perform “${performance.program}” at California Theatre.`,
+    description: `Valley Christian Schools students perform "${performance.program}" at California Theatre as part of the school's four-night Christmas concert series.`,
+    blurb: `Hear Valley Christian Schools students perform "${performance.program}" at California Theatre.`,
   };
 }
 

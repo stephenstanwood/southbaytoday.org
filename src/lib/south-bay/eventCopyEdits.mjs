@@ -79,6 +79,12 @@ const EDITS = {
       ["Lasers: Kpop Demon Hunters", "Lasers: K-Pop Demon Hunters"],
     ],
     description: [
+      ["Don't just dream of a winter wonderland, create your own.", "Don't just dream of a winter wonderland. Create your own."],
+      [
+        /Price: (\$\d+(?:\.\d{2})?) members, (\$\d+(?:\.\d{2})?) non-members General Admission not included, but required for entry\. Workshop ticket required for anyone entering\./gi,
+        "Workshop tickets cost $1 for members and $2 for nonmembers. Each attendee needs a workshop ticket and separate museum admission.",
+      ],
+      ["a bite-sized culinary adventure, in sphere form!", "a bite-sized culinary adventure in sphere form!"],
       [/\bImax\b/g, "IMAX"],
       ["share the one of a kind experience", "share the one-of-a-kind experience"],
       ["Juniors begin by animating their own artwork, then learning about video game design.", "Juniors begin by animating their own artwork, then learn about video game design."],
@@ -89,6 +95,10 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        "Taste a bite-sized, sphere-shaped take on holiday feast leftovers at a hands-on food science session built for friends and family.",
+        "Use molecular gastronomy to turn holiday-inspired flavors into bite-sized spheres in a hands-on workshop for friends and family.",
+      ],
       [
         "Watch The Hunger Games: Sunrise on the Reaping, following young Haymitch Abernathy in the 50th Hunger Games.",
         'Follow young Haymitch Abernathy through the 50th Hunger Games in "The Hunger Games: Sunrise on the Reaping."',
@@ -200,6 +210,14 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        "Our reading coach will listen to children read and provide support in reading and comprehension.",
+        "The reading coach will listen as children read and help them improve their reading and comprehension.",
+      ],
+      [
+        /Until (\d{1,2}(?::\d{2})? [ap]m),? the storytime librarian and special toys will be on the Children's Room floor to keep the fun going\./gi,
+        "The storytime librarian will be on the Children's Room floor with special toys until $1.",
+      ],
       ["Participants must be ages 10 and up.", "Participants must be at least 10 years old."],
       SJPL_FIRST_COME_MATERIALS_EDIT,
       [
@@ -1489,6 +1507,10 @@ const EDITS = {
       ["at Hillview Library; bring your own mat, no registration needed.", "at Hillview Library; bring your own mat. No registration needed."],
       ["create art alongside other kids, no registration needed.", "create art alongside other kids; no registration needed."],
       [/^Join stories, songs\b/g, "Join us for stories, songs"],
+      [
+        "Join us for stories, songs, rhymes, and movement activities with the whole family at Stay & Play storytime.",
+        "Bring the whole family for stories, songs, rhymes, and movement, then stay to play.",
+      ],
       ["Listen to stories and join activities honoring", "Listen to stories and join in activities honoring"],
       ["Dress up in costume and join crafts, treats, and a parade at Berryessa Library's free Halloween party, no registration needed.", "Dress up in costume for crafts, treats, and a parade at Berryessa Library's free Halloween party. No registration needed."],
       ["a 15-20 minute session", "a 15-20-minute session"],
@@ -2149,6 +2171,10 @@ const EDITS = {
       [/^Documentary Screening-Zora Neale Hurston: Claiming Space$/g, "Documentary Screening – Zora Neale Hurston: Claiming a Space"],
     ],
     description: [
+      [
+        /All materials are provided, and participants receive their very own kit to take home and continue exploring\. This program is for Kids Ages (\d+-\d+) only\. Materials provided!/gi,
+        "All materials are provided, and participants get a kit to take home and continue exploring. This program is open only to children ages $1.",
+      ],
       ["Ages 8–11 recommended Materials provided!", "Recommended for ages 8–11."],
       [
         "Join us in celebrating one of the most important American, female and Black authors in history with a screening of the PBS documentary Zora Neale Hurston: Claiming Space. While best know for her classic novel Their Eyes Were Watching God, this documentary delves deep into Hurston's work as an anthropologist and it's influence on her writing.",

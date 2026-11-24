@@ -219,8 +219,8 @@ test("verified Christmas programs survive blurb resolution without changing the 
     assert.equal(occurrence.url, VALLEY_CHRISTIAN_CHRISTMAS.programUrl);
     const { description: _description, ...originalOccurrence } = events[index];
     assert.deepEqual(occurrence, originalOccurrence);
-    assert.ok(description.includes(program), description);
-    assert.ok(blurb.includes(program), blurb);
+    assert.ok(description.includes(`"${program}"`), description);
+    assert.ok(blurb.includes(`"${program}"`), blurb);
   }
 
   for (const change of [
