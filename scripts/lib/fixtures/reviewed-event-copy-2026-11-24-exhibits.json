@@ -1,0 +1,76 @@
+{
+  "reviewedAt": "2026-11-24",
+  "sourceEvidence": [
+    {
+      "url": "https://sjpl.bibliocommons.com/events/6ac02d7dde300e004517d401",
+      "observed": "Almaden Library describes a photography exhibit where visitors can hear South Asian instruments using a QR code."
+    },
+    {
+      "url": "https://sjpl.bibliocommons.com/v2/events/6ac02d38de300e004517d3f5",
+      "observed": "The library’s kickoff listing confirms the QR code lets visitors hear the instruments on display."
+    },
+    {
+      "url": "https://museum.stanford.edu/exhibitions/jane",
+      "observed": "The Cantor Arts Center uses JANE! for the exhibition in both its title and description."
+    },
+    {
+      "url": "https://library.stanford.edu/news/korean-indigenous-futures-art-kim-bong-jun-gimbongjun-panhwajeon-tochagjeog-milae-kateu",
+      "observed": "Stanford Libraries identifies Kim Bong-Jun with the Korean Minjung art movement and explains the name as people’s art."
+    }
+  ],
+  "cases": [
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6ac02d7dde300e004517d401",
+          "title": "Sounds of South Asia: an Exhibit",
+          "url": "https://sjpl.bibliocommons.com/events/6ac02d7dde300e004517d401"
+        }
+      ],
+      "refreshed": "This interactive photography exhibit showcases several musical instruments from the South Asian subcontinent. Each exhibit will have a QR code that allows participants to listen to the sound of the instruments played in Afghanistan, Bangladesh, Bhutan, India, Maldives, Nepal, Pakistan, and Sri Lanka. They include stringed, wind, and percussion instruments passed down through generations, which are still played around the Bay Area. Come and enjoy this exhibit, which starts on November 14, 2026, and closes on December 5, 2026. The exhibit is brought to you by the South Asians in Silicon Valley initiative at the SJSU King Library. Through this unique initiative, the SJSU King Library records, preserves, and shares the living legacy of the South Asian diaspora in the San Francisco Bay Area. Website: https://library.sjsu.edu/sasv",
+      "reviewed": "This interactive photography exhibit showcases several musical instruments from the South Asian subcontinent. Scan a QR code to hear instruments played in Afghanistan, Bangladesh, Bhutan, India, Maldives, Nepal, Pakistan, and Sri Lanka. These stringed, wind, and percussion instruments have been passed down through generations and are still played around the Bay Area. Come and enjoy this exhibit, which starts on November 14, 2026, and closes on December 5, 2026. The exhibit is brought to you by the South Asians in Silicon Valley initiative at the SJSU King Library. Through this unique initiative, the SJSU King Library records, preserves, and shares the living legacy of the South Asian diaspora in the San Francisco Bay Area. Website: https://library.sjsu.edu/sasv"
+    },
+    {
+      "source": "Stanford Events",
+      "field": "title",
+      "events": [
+        {
+          "id": "stanford-52880326677126",
+          "title": "Jane! An intimate exploration of Gilded Age excess and the enigmatic life and death of Jane Stanford",
+          "url": "https://events.stanford.edu/event/jane-an-intimate-exploration-of-gilded-age-excess-and-the-enigmatic-life-and-death-of-jane-stanford"
+        }
+      ],
+      "refreshed": "Jane! An intimate exploration of Gilded Age excess and the enigmatic life and death of Jane Stanford",
+      "reviewed": "JANE! An intimate exploration of Gilded Age excess and the enigmatic life and death of Jane Stanford",
+      "sourceText": "JANE! An intimate exploration of Gilded Age excess  and the enigmatic life and death of Jane Stanford"
+    },
+    {
+      "source": "Stanford Events",
+      "field": "description",
+      "events": [
+        {
+          "id": "stanford-52880326677126",
+          "title": "Jane! An intimate exploration of Gilded Age excess and the enigmatic life and death of Jane Stanford",
+          "url": "https://events.stanford.edu/event/jane-an-intimate-exploration-of-gilded-age-excess-and-the-enigmatic-life-and-death-of-jane-stanford"
+        }
+      ],
+      "refreshed": "Curated by Associate Curator of European Art Patrick R. Crowley, Jane! celebrates the aesthetic and affective excesses of Jane Stanford, the Gilded Age founder and matriarch of Stanford University.",
+      "reviewed": "Curated by Associate Curator of European Art Patrick R. Crowley, JANE! celebrates the aesthetic and affective excesses of Jane Stanford, the Gilded Age founder and matriarch of Stanford University."
+    },
+    {
+      "source": "Stanford Events",
+      "field": "blurb",
+      "events": [
+        {
+          "id": "stanford-53878610973590",
+          "title": "Korean Indigenous Futures: The Art of Kim Bong-Jun",
+          "url": "https://events.stanford.edu/event/korean-indigenous-futures"
+        }
+      ],
+      "refreshed": "View prints by Kim Bong-Jun, a leading figure in Korean Minjung People's Art, at Lathrop Library.",
+      "reviewed": "View prints by Kim Bong-Jun, a leading figure in the Korean Minjung (people's) art movement, at Lathrop Library."
+    }
+  ]
+}

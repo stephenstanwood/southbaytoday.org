@@ -446,6 +446,14 @@ const EDITS = {
       ["Program is for children 5 and up and family members interested in South Asian music.", "The program is for children 5 and up and family members interested in South Asian music."],
       ["the sound of the instruments performed in Afghanistan", "the sound of the instruments played in Afghanistan"],
       ["instruments passed down from generations, which are still performed around the Bay Area.", "instruments passed down through generations, which are still played around the Bay Area."],
+      [
+        "Each exhibit will have a QR code that allows participants to listen to the sound of the instruments played in ",
+        "Scan a QR code to hear instruments played in ",
+      ],
+      [
+        "They include stringed, wind, and percussion instruments passed down through generations, which are still played around the Bay Area.",
+        "These stringed, wind, and percussion instruments have been passed down through generations and are still played around the Bay Area.",
+      ],
       ["How to Register Visit the OneInMath website", "How to register: Visit the OneInMath website"],
       ["How to register: Visit the OneInMath website to register.", "Register on the OneInMath website."],
       ["Personal designs must be in. Stl format", "Personal designs must be in .stl format"],
@@ -2745,6 +2753,7 @@ const EDITS = {
       ['as Regulators of Biological Function "', 'as Regulators of Biological Function"'],
       // https://museum.stanford.edu/about/press-releases/jane
       ["Gallery Conversations | Jane!", "Gallery Conversations | JANE!"],
+      ["Jane! An intimate exploration of Gilded Age excess", "JANE! An intimate exploration of Gilded Age excess"],
     ],
     venue: [
       ["Nvidia Auditorium", "NVIDIA Auditorium"],
@@ -2825,6 +2834,7 @@ const EDITS = {
       ],
       ['"Jane!" exhibition', '"JANE!" exhibition'],
       ["Curator of European Art, Patrick R. Crowley,", "Curator of European Art Patrick R. Crowley,"],
+      ["Jane! celebrates the aesthetic and affective excesses of Jane Stanford", "JANE! celebrates the aesthetic and affective excesses of Jane Stanford"],
       ["and early 20th century changed the history", "and early 20th centuries changed the history"],
       ["Abstract Lithium-bearing brines", "Abstract: Lithium-bearing brines"],
       ["Phil Deutch is one the most experienced energy technology investors", "Phil Deutch is one of the most experienced energy technology investors"],
@@ -2851,6 +2861,7 @@ const EDITS = {
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
       ["music, activities, and light bites, all welcome.", "music, activities, and light bites. All are welcome."],
       ["inside the Jane! exhibition", "inside the JANE! exhibition"],
+      ["in Korean Minjung People's Art, at Lathrop Library.", "in the Korean Minjung (people's) art movement, at Lathrop Library."],
       [
         'Tour Cantor Arts Center\'s galleries on a guided "A Closer Look" walk that points out new details and connections in the art.',
         "Take a guided tour of the Cantor Arts Center galleries to discover new details and connections among selected works.",
