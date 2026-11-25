@@ -4,6 +4,12 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    ids: Object.freeze(["sjpl-6b06060b3377ce00332d69af"]),
+    matches: (event) => normalizeDate(event.date) === "2026-11-30",
+    reason: "The library calendar lists November 30 for Fall Finals Study Hall at Almaden. The description starts December 7. The library has not independently confirmed the November occurrence.",
+    source: "https://sjpl.bibliocommons.com/v2/events?series=6b06011bc225ba002c10299c",
+  }),
+  Object.freeze({
     date: "2027-01-22",
     title: /^Tech & Innovation Summit$/i,
     venue: /.*/,

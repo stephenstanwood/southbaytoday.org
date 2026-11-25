@@ -10,6 +10,28 @@ import {
 import { isEventEditoriallySuppressed } from "./eventAvailability.mjs";
 import { snapshotEvent } from "./eventSlugLedger.mjs";
 
+test("withholds the unconfirmed November 30 Almaden study hall occurrence", () => {
+  const studyHall = {
+    id: "sjpl-6b06060b3377ce00332d69af",
+    title: "Fall Finals Study Hall",
+    venue: "Almaden Library",
+    date: "2026-11-30",
+    time: "3:00 PM",
+    url: "https://sjpl.bibliocommons.com/events/6b06060b3377ce00332d69af",
+  };
+  assert.equal(isEventPublishable(studyHall), false);
+  assert.equal(isEventPublishable({
+    ...studyHall, id: undefined, url: studyHall.url.replace("/events/", "/v2/events/"),
+  }), false);
+  assert.equal(isEventPublishable({
+    ...studyHall,
+    id: "sjpl-6b06060b3377ce00332d69b1",
+    date: "2026-12-07",
+    url: "https://sjpl.bibliocommons.com/v2/events/6b06060b3377ce00332d69b1",
+  }), true);
+  assert.equal(isEventPublishable({ ...studyHall, date: "2026-12-07" }), true);
+});
+
 test("withholds the Mountain West placeholder while keeping a local SJSU home game", () => {
   const placeholder = {
     title: "Football - San Jose State vs. Mountain West", date: "2026-12-04", time: "6:00 PM",

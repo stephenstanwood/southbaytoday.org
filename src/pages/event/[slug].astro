@@ -19,6 +19,7 @@ interface RawEvent {
   id?: string | null;
   title?: string | null;
   date?: string | null;
+  dateUnconfirmed?: boolean;
   time?: string | null;
   endTime?: string | null;
   venue?: string | null;
@@ -84,7 +85,9 @@ interface Props {
   updatedAt: string | null;
 }
 
-const { event, passed, retired, updatedAt } = Astro.props;
+const { event, passed: dateHasPassed, retired, updatedAt } = Astro.props;
+const dateUnconfirmed = retired && event.dateUnconfirmed === true;
+const passed = dateHasPassed && !dateUnconfirmed;
 const cityName = event.locality || (event.city ? CITIES.find((c) => c.id === event.city)?.name ?? null : null);
 const pageUrl = `https://southbaytoday.org${Astro.url.pathname}`;
 
@@ -144,7 +147,8 @@ const uniqueCity = cityName && sameDayTitleEvents.filter((candidate) => candidat
   ? cityName
   : null;
 const titleDisambiguator = sameDayTitleEvents.length > 1 ? uniqueTime || uniqueVenue || uniqueCity : null;
-const titleCore = [event.title, titleDisambiguator, dayLabelNoYear].filter(Boolean).join(" — ");
+const titleCore = [event.title, titleDisambiguator, dateUnconfirmed ? "Date unconfirmed" : dayLabelNoYear]
+  .filter(Boolean).join(" — ");
 const title = titleCore.length > 68 ? titleCore : `${titleCore} — South Bay Today`;
 const descriptionTitle = [event.title, titleDisambiguator].filter(Boolean).join(" — ");
 
@@ -156,14 +160,15 @@ function capDescription(text: string, max = 155): string {
   const safe = (lastSpace > 0 ? sliced.slice(0, lastSpace) : sliced).trimEnd();
   return `${safe}…`;
 }
+const summary = (event.blurb || event.description || "").trim();
 const description = capDescription(
-  isVirtual
-    ? `${descriptionTitle} on ${dayLabel}. Online event${event.venue ? ` hosted by ${event.venue}` : ""}. ${(
-        event.blurb || event.description || ""
-      ).trim()}`.trim()
-    : `${descriptionTitle} on ${dayLabel}${event.venue ? ` at ${event.venue}` : ""}${
-        cityName ? ` in ${cityName}` : ""
-      }. ${(event.blurb || event.description || "").trim()}`.trim(),
+  dateUnconfirmed
+    ? `${descriptionTitle}${event.venue ? ` at ${event.venue}` : ""}. Date unconfirmed. ${summary}`
+    : isVirtual
+      ? `${descriptionTitle} on ${dayLabel}. Online event${event.venue ? ` hosted by ${event.venue}` : ""}. ${summary}`
+      : `${descriptionTitle} on ${dayLabel}${event.venue ? ` at ${event.venue}` : ""}${
+          cityName ? ` in ${cityName}` : ""
+        }. ${summary}`,
 );
 
 const directImageUrl = normalizeAbsoluteHttpUrl(event.image);
@@ -250,8 +255,10 @@ const breadcrumbSchema = {
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "South Bay Today", item: "https://southbaytoday.org" },
     { "@type": "ListItem", position: 2, name: "Events", item: "https://southbaytoday.org/events" },
-    { "@type": "ListItem", position: 3, name: dayLabel, item: `https://southbaytoday.org/events/${event.date}` },
-    { "@type": "ListItem", position: 4, name: event.title ?? "", item: pageUrl },
+    ...(dateUnconfirmed ? [] : [
+      { "@type": "ListItem", position: 3, name: dayLabel, item: `https://southbaytoday.org/events/${event.date}` },
+    ]),
+    { "@type": "ListItem", position: dateUnconfirmed ? 3 : 4, name: event.title ?? "", item: pageUrl },
   ],
 };
 const jsonLd = JSON.stringify({
@@ -318,7 +325,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
   </Fragment>
 
   <nav class="cal-daynav evx-daynav" aria-label="Breadcrumb">
-    {passed ? (
+    {passed || dateUnconfirmed ? (
       <a class="evx-backlink" href="/events"><span aria-hidden="true">←</span> Upcoming events</a>
     ) : (
       <a class="evx-backlink" href={`/events/${event.date}`}><span aria-hidden="true">←</span> {dayLabel}</a>
@@ -336,7 +343,9 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
     <p class="cal-passed">
       This listing is no longer in South Bay Today's calendar.
       {event.url ? <>Check <a href={event.url} rel="noopener noreferrer">the source</a> before you go, or </>: <>Check with the organizer before you go, or </>}
-      <a href={`/events/${event.date}`}>see what else is on {dayLabelNoYear} →</a>
+      {dateUnconfirmed
+        ? <a href="/events">see upcoming events →</a>
+        : <a href={`/events/${event.date}`}>see what else is on {dayLabelNoYear} →</a>}
     </p>
   )}
 
@@ -387,7 +396,12 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
   )}
 
   <dl class="cal-detail-facts">
-    <div><dt>When</dt><dd>{dayLabel}{timeLabel && <> · <span class="evx-nowrap">{timeLabel}</span></>}</dd></div>
+    <div>
+      <dt>When</dt>
+      <dd>{dateUnconfirmed
+        ? "Date unconfirmed"
+        : <>{dayLabel}{timeLabel && <> · <span class="evx-nowrap">{timeLabel}</span></>}</>}</dd>
+    </div>
     {isVirtual ? (
       <div>
         <dt>Where</dt>
@@ -428,7 +442,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
         Add to Google Calendar
       </a>
     )}
-    {passed ? (
+    {passed || dateUnconfirmed ? (
       <a class="sb-btn" href="/events" data-analytics-event="Related events click">Upcoming events</a>
     ) : (
       <a class="sb-btn" href={`/events/${event.date}`} data-analytics-event="Related events click">More events this day</a>
