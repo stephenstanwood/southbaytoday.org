@@ -28,6 +28,19 @@ test("an intraday refresh archives only started missing sessions and keeps the 9
   assert.deepEqual(atMidnight.events.map(e=>e.id), ["a"], "midnight is minute zero in Pacific time");
 });
 
+test("archiving preserves event identity but removes subscriber tracking from new and existing records", () => {
+  const wrapper = "https://app.mail.gostanford.com/e/er?elq=recipient";
+  const clean = "https://tickets.gostanford.com/events/sample?slot=2";
+  const archived = { id: "old", title: "Example event", date: "2026-11-04", url: wrapper };
+  const previous = { id: "new", title: "Sample event", date: "2026-11-05", url: clean + "&elq=recipient", urlOriginal: wrapper };
+  const { events } = maintainEventArchive({ archiveEvents: [archived], previousEvents: [previous], now });
+  assert.deepEqual(events, [
+    { ...archived, url: null },
+    { id: "new", title: "Sample event", date: "2026-11-05", url: clean },
+  ]);
+  assert.equal(previous.urlOriginal, wrapper);
+});
+
 test("Stanford carries mandatory free tickets from admission terms, without inferring them from a link", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now });
   const record = fixture.stanford.record;

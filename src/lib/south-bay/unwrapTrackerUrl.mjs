@@ -11,13 +11,15 @@
 // venue's own page).
 //
 // Cached persistently (url-unwrap-cache.json) so we never re-fetch the same
-// tracker. Failures cache the original URL so a broken redirect doesn't
-// retry on every regen.
+// tracker. Cache keys are hashes, and unresolved redirects store null.
+// The cache is committed, so neither field may store a subscriber token.
 // ---------------------------------------------------------------------------
 
+import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { normalizeAbsoluteHttpUrl } from "./httpUrl.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, "..", "..", "..");
@@ -117,7 +119,9 @@ const TRACKING_PARAMS = new Set([
   "ref_src", "ref_url",
   "vero_id", "vero_conv",
   "ck_subscriber_id",
-  "trk", "trkCampaign",
+  "trk", "trkcampaign",
+  // Oracle Eloqua can carry the recipient identifier onto the organizer URL.
+  "elq", "elqtrackid", "elqaid", "elqat", "elqcampaignid", "elqak",
 ]);
 
 export function isTrackerUrl(url) {
@@ -144,19 +148,44 @@ export function stripTrackingParams(url) {
   }
 }
 
+/** Keep the organizer destination only when it can be published directly. */
+export function publicEventSourceUrl(url) {
+  if (typeof url !== "string" || !normalizeAbsoluteHttpUrl(url) || isTrackerUrl(url)) return null;
+  return stripTrackingParams(url.replace(/&amp;/gi, "&"));
+}
+
+/** Public copies of archived and retired listings need only their clean links. */
+export function publicEventLinks(event) {
+  const { urlOriginal, ...published } = event;
+  if (published.url) published.url = publicEventSourceUrl(published.url);
+  return published;
+}
+
 // ---------------------------------------------------------------------------
 // Persistent cache
 // ---------------------------------------------------------------------------
 
-function loadCache() {
-  if (!existsSync(CACHE_PATH)) return { byUrl: {}, generatedAt: null };
-  try {
-    const raw = JSON.parse(readFileSync(CACHE_PATH, "utf8"));
-    if (!raw.byUrl) raw.byUrl = {};
-    return raw;
-  } catch {
-    return { byUrl: {}, generatedAt: null };
+function trackerCacheKey(url) {
+  return createHash("sha256").update(url).digest("hex");
+}
+
+export function normalizeTrackerCache(raw) {
+  const byHash = {};
+  for (const [key, value] of Object.entries(raw?.byHash ?? {})) {
+    if (/^[0-9a-f]{64}$/.test(key)) byHash[key] = publicEventSourceUrl(value);
   }
+  for (const [url, value] of Object.entries(raw?.byUrl ?? {})) {
+    const key = trackerCacheKey(url);
+    if (!Object.hasOwn(byHash, key)) byHash[key] = value === url ? null : publicEventSourceUrl(value);
+  }
+  return { byHash, generatedAt: raw?.generatedAt ?? null };
+}
+
+function loadCache() {
+  try {
+    if (existsSync(CACHE_PATH)) return normalizeTrackerCache(JSON.parse(readFileSync(CACHE_PATH, "utf8")));
+  } catch { /* retry resolution with an empty cache */ }
+  return normalizeTrackerCache();
 }
 
 function saveCache(cache) {
@@ -237,8 +266,9 @@ export async function unwrapMany(urls, { verbose = false } = {}) {
       result.set(u, u);
       continue;
     }
-    if (cache.byUrl[u]) {
-      result.set(u, cache.byUrl[u]);
+    const key = trackerCacheKey(u);
+    if (Object.hasOwn(cache.byHash, key)) {
+      result.set(u, cache.byHash[key] ?? u);
       continue;
     }
     todo.push(u);
@@ -254,17 +284,11 @@ export async function unwrapMany(urls, { verbose = false } = {}) {
   async function worker() {
     while (queue.length) {
       const u = queue.shift();
-      const finalUrl = await resolveOne(u);
-      if (finalUrl) {
-        cache.byUrl[u] = finalUrl;
-        result.set(u, finalUrl);
-        resolved++;
-      } else {
-        // Cache the failure as identity so we don't keep re-fetching.
-        cache.byUrl[u] = u;
-        result.set(u, u);
-        failed++;
-      }
+      const finalUrl = publicEventSourceUrl(await resolveOne(u));
+      cache.byHash[trackerCacheKey(u)] = finalUrl;
+      result.set(u, finalUrl ?? u);
+      if (finalUrl) resolved++;
+      else failed++;
       await sleep(POLITE_DELAY_MS);
     }
   }
@@ -273,7 +297,7 @@ export async function unwrapMany(urls, { verbose = false } = {}) {
   if (todo.length) saveCache(cache);
 
   if (verbose) {
-    console.log(`  🔗 unwrap done: ${resolved} resolved, ${failed} kept original`);
+    console.log(`  🔗 unwrap done: ${resolved} resolved, ${failed} unresolved`);
   }
   return result;
 }

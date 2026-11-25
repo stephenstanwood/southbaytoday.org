@@ -9,7 +9,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { isTrackerUrl, stripTrackingParams } from "./unwrapTrackerUrl.mjs";
+import { isTrackerUrl, normalizeTrackerCache, publicEventSourceUrl, stripTrackingParams } from "./unwrapTrackerUrl.mjs";
 
 test("flags PatronPoint library redirects (carry a per-subscriber contactHash)", () => {
   assert.equal(
@@ -65,4 +65,30 @@ test("stripTrackingParams drops utm/click ids but keeps real query params", () =
     stripTrackingParams("https://example.com/e?event_id=12"),
     "https://example.com/e?event_id=12",
   );
+});
+
+test("public event URLs keep ticket selectors and strip Eloqua subscriber parameters", () => {
+  assert.equal(
+    publicEventSourceUrl("https://tickets.gostanford.com/events/sample?slot=2&elqTrackId=campaign&elq=recipient&elqCampaignId=sample"),
+    "https://tickets.gostanford.com/events/sample?slot=2",
+  );
+  assert.equal(publicEventSourceUrl("https://app.mail.gostanford.com/e/er?elq=recipient"), null);
+});
+
+test("the committed redirect cache migrates raw URLs without retaining subscriber tokens", () => {
+  const resolved = "https://app.mail.gostanford.com/e/er?elq=recipient";
+  const unresolved = "https://example.list-manage.com/track/click?e=recipient";
+  const cache = normalizeTrackerCache({
+    byUrl: {
+      [resolved]: "https://tickets.gostanford.com/events/sample?elq=recipient",
+      [unresolved]: unresolved,
+    },
+    generatedAt: "2026-11-25T13:12:35.539Z",
+  });
+  assert.equal(Object.keys(cache.byHash).length, 2);
+  assert.ok(Object.keys(cache.byHash).every((key) => /^[a-f0-9]{64}$/.test(key)));
+  assert.deepEqual(Object.values(cache.byHash), ["https://tickets.gostanford.com/events/sample", null]);
+  assert.equal(cache.generatedAt, "2026-11-25T13:12:35.539Z");
+  assert.doesNotMatch(JSON.stringify(cache), /recipient/);
+  assert.deepEqual(normalizeTrackerCache(cache), cache);
 });

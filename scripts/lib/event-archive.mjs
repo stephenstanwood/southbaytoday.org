@@ -1,3 +1,4 @@
+import { publicEventLinks } from "../../src/lib/south-bay/unwrapTrackerUrl.mjs";
 import { normalizeClockTime } from "./clock-time.mjs";
 
 // Source feeds can drop a session as soon as it starts. Preserve that dated
@@ -24,7 +25,7 @@ export function maintainEventArchive({ archiveEvents = [], previousEvents = [], 
   const byId = new Map(archiveEvents.map(e => [key(e), e]));
   for (const e of aging) byId.set(key(e), e);
   const events = [...byId.values()].filter(e => typeof e?.date === "string"
-    && e.date >= cutoffDay && (e.date < today || startedToday(e)));
+    && e.date >= cutoffDay && (e.date < today || startedToday(e))).map(publicEventLinks);
   events.sort((a, b) => a.date.localeCompare(b.date) || String(a.id ?? "").localeCompare(String(b.id ?? "")));
   return { events, agingCount: aging.length };
 }

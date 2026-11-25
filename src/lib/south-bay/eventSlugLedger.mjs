@@ -29,7 +29,7 @@ import { buildEventSlugs, slugifyTitle } from "./eventSlug.ts";
 import { eventPagePool } from "./eventPagePool.ts";
 import { applyVerifiedEventFacts } from "./eventSourceFacts.mjs";
 import { hasUnconfirmedStartTime, hasUnconfirmedOccurrenceDate, isEventExplicitlyInactive, isNonEventOffer, nonEventOfferNotice } from "./eventOccurrence.mjs";
-import { isTrackerUrl } from "./unwrapTrackerUrl.mjs";
+import { publicEventLinks } from "./unwrapTrackerUrl.mjs";
 
 export const RETAIN_DAYS = 90;
 /** How far back a refresh looks for a rolling run's passed nights. */
@@ -55,11 +55,12 @@ export function shiftDate(isoDate, days) {
 
 /** Trim an event record to the fields a retired leaf needs to render. */
 export function snapshotEvent(e) {
+  const published = publicEventLinks(e);
   const out = {};
-  for (const f of SNAPSHOT_FIELDS) {
-    if (e[f] !== undefined && e[f] !== null && e[f] !== "") out[f] = e[f];
+  for (const field of SNAPSHOT_FIELDS) {
+    const value = published[field];
+    if (value !== undefined && value !== null && value !== "") out[field] = value;
   }
-  if (isTrackerUrl(out.url)) delete out.url;
   // Retaining an old URL must not retain a kickoff the source says is TBA.
   if (isEventExplicitlyInactive(e) || hasUnconfirmedStartTime(e) || hasUnconfirmedOccurrenceDate(e) || isNonEventOffer(e)) {
     delete out.time;
@@ -136,6 +137,7 @@ export function retireSlugs(ledger, previousEvents, currentEvents, todayPt, now 
 
   const entries = [...bySlug.values()]
     .filter((entry) => !current.has(entry.slug) && entry.event.date >= cutoff)
+    .map((entry) => ({ ...entry, event: publicEventLinks(entry.event) }))
     .sort((a, b) => a.slug.localeCompare(b.slug));
 
   return { updatedAt: now, retainDays: RETAIN_DAYS, count: entries.length, entries };
@@ -242,8 +244,7 @@ export function resolveRetired(ledger, upcomingEvents, archiveEvents, todayPt) {
       ? null : findSuccessor(event, live, { rolled: entry.rolled === true });
     if (successor) redirects.set(entry.slug, successor);
     else {
-      const published = isTrackerUrl(event.url) ? { ...event, url: null } : event;
-      orphans.push({ slug: entry.slug, event: published, retiredAt: entry.retiredAt });
+      orphans.push({ slug: entry.slug, event: publicEventLinks(event), retiredAt: entry.retiredAt });
     }
   }
   return { redirects, orphans };

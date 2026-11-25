@@ -150,6 +150,7 @@ import {
   SJ_GIANTS_JAPANESE_HERITAGE_2026_07_26_URL,
   SILICON_VALLEY_PRIDE_2026_URL,
   normalizeInboundEventPresentation,
+  publicInboundEventLinks,
 } from "./inbound-event-normalize.mjs";
 
 test("Lakewood's original city advisory restores its public URL without changing the opening schedule", () => {
@@ -695,4 +696,26 @@ test("a same-evening end time survives, including one that crosses midnight", ()
     endsAt: "2026-09-18T01:00:00-07:00",
     sourceUrl: "https://example.com/show",
   }).endTime, "1:00 AM");
+});
+
+test("inbound publication keeps the organizer URL without saving the original tracking link", () => {
+  const wrapper = "https://app.mail.gostanford.com/e/er?elq=recipient";
+  const destination = "https://tickets.gostanford.com/events/sample?slot=2&elq=recipient";
+  const event = {
+    id: "newsletter-event",
+    title: "Example event",
+    sourceUrl: wrapper,
+    sourceUrlOriginal: wrapper,
+    canonicalUrl: destination,
+  };
+  const clean = publicInboundEventLinks(event, new Map([[wrapper, destination]]));
+  assert.deepEqual(clean, {
+    id: event.id,
+    title: event.title,
+    sourceUrl: "https://tickets.gostanford.com/events/sample?slot=2",
+    canonicalUrl: "https://tickets.gostanford.com/events/sample?slot=2",
+  });
+  assert.equal(publicInboundEventLinks(event).sourceUrl, null);
+  assert.equal(event.sourceUrlOriginal, wrapper);
+  assert.equal(normalizeInboundEventPresentation({ sourceUrl: destination }).url, clean.sourceUrl);
 });

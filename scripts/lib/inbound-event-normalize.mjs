@@ -1,4 +1,4 @@
-import { isTrackerUrl } from "../../src/lib/south-bay/unwrapTrackerUrl.mjs";
+import { isTrackerUrl, publicEventLinks, publicEventSourceUrl } from "../../src/lib/south-bay/unwrapTrackerUrl.mjs";
 import { applyVerifiedEventFacts, PCLG_NOVEMBER_18_BULLETIN } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { resolveVirtualFlag } from "../../src/lib/south-bay/eventFilters.mjs";
 
@@ -116,9 +116,19 @@ const SUNNYVALE_OCTOBER_CALENDAR =
   "https://www.library.sunnyvale.ca.gov/events/calendar-month-view/-curm-10/-cury-2026/-direct-true";
 
 function detrack(url) {
-  if (!url || !isTrackerUrl(url)) return url;
+  if (!isTrackerUrl(url)) return publicEventSourceUrl(url);
   const fallback = TRACKER_FALLBACKS.find((f) => f.match.test(url));
   return fallback ? fallback.url : "";
+}
+
+/** Publication keeps the organizer URL while the intake keeps the original. */
+export function publicInboundEventLinks(event, resolved) {
+  const { sourceUrlOriginal, ...published } = publicEventLinks(event);
+  if (event.sourceUrl) {
+    published.sourceUrl = publicEventSourceUrl(resolved?.get(event.sourceUrl) ?? event.sourceUrl);
+  }
+  if (event.canonicalUrl) published.canonicalUrl = publicEventSourceUrl(event.canonicalUrl);
+  return published;
 }
 
 export function inboundClock(value) {

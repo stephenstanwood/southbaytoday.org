@@ -23,6 +23,7 @@ import {
   VIRTUAL_ADDRESS_SIGNALS,
 } from "./social/lib/content-rules.mjs";
 import { unwrapMany, isTrackerUrl } from "../src/lib/south-bay/unwrapTrackerUrl.mjs";
+import { publicInboundEventLinks } from "./lib/inbound-event-normalize.mjs";
 import { inboundReadProblems } from "./lib/inbound-shard-health.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
 
@@ -189,40 +190,17 @@ for (const e of fresh) {
 const trackerUrls = fresh
   .map((e) => e.sourceUrl)
   .filter((u) => u && isTrackerUrl(u));
-if (trackerUrls.length) {
-  const resolved = await unwrapMany(trackerUrls, { verbose: true });
-  for (const e of fresh) {
-    if (e.sourceUrl && resolved.has(e.sourceUrl)) {
-      const final = resolved.get(e.sourceUrl);
-      if (final && final !== e.sourceUrl) {
-        e.sourceUrlOriginal = e.sourceUrl;
-        e.sourceUrl = final;
-      }
-    }
-  }
-  // A tracker that failed to resolve is cached as identity by unwrapMany, so
-  // without this the raw wrapper survives all the way to the public page.
-  // That is worse than having no link: these tokens expire with the email
-  // blast, and several encode the recipient (Mailchimp's `e=`, PatronPoint's
-  // `contactHash`, ls.49ers.com's per-send path). Drop the link instead —
-  // missing beats leaking, and detrack() downstream applies the same rule.
-  let unresolvedTrackers = 0;
-  for (const e of fresh) {
-    if (e.sourceUrl && isTrackerUrl(e.sourceUrl)) {
-      e.sourceUrlOriginal ??= e.sourceUrl;
-      e.sourceUrl = null;
-      unresolvedTrackers++;
-    }
-  }
-  if (unresolvedTrackers) {
-    console.log(`  🔗 dropped ${unresolvedTrackers} unresolved tracker URL(s) rather than publish them`);
-  }
-}
+const resolved = trackerUrls.length
+  ? await unwrapMany(trackerUrls, { verbose: true })
+  : new Map();
+const published = fresh.map((event) => publicInboundEventLinks(event, resolved));
+const unresolvedTrackers = fresh.filter((event, i) => isTrackerUrl(event.sourceUrl) && !published[i].sourceUrl).length;
+if (unresolvedTrackers) console.log(`  🔗 dropped ${unresolvedTrackers} unresolved tracker URL(s)`);
 
 // Retained Blob shards predate fact checks. Preserve the same verified
 // description repairs used by publication after tracker URLs are resolved,
 // so a later pull cannot restore unsupported attendance claims locally.
-for (const event of fresh) {
+for (const event of published) {
   const verified = applyVerifiedEventFacts({
     date: String(event.startsAt || "").slice(0, 10), url: event.sourceUrl,
     title: event.title, venue: event.location, description: event.description,
@@ -238,7 +216,7 @@ const out = {
     shardTotal,
     shardFailures: shardErrors.length,
   },
-  events: fresh,
+  events: published,
 };
 
 // Warn in every mode — a degraded pull that still passes the guards should be
