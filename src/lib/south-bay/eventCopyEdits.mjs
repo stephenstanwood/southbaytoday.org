@@ -3,6 +3,11 @@
 // through unchanged. No event-ID lookup or historical description restore.
 // Apply after prose casing and cached/generated blurbs have been selected, so
 // raw capitalization and cache hits cannot undo an approved grammar repair.
+const SCCLD_BABY_SIGN_AGE_EDIT = [
+  /This program is for infants and prewalking babies only, ages (\d+)[-–](\d+) months\./g,
+  "This program is for infants and prewalking babies ages $1–$2 months only.",
+];
+
 const SCCLD_BOOK_DISCUSSION_EDITS = [
   ["our monthly book club meeting, as we discuss", "our monthly book club meeting to discuss"],
   ["Space is limited, and regular/ongoing attendees do not need to register.", "Space is limited. Regular attendees do not need to register."],
@@ -179,7 +184,7 @@ const EDITS = {
       [/^Music and Movement with Stay&Play$/g, "Music and Movement with Stay & Play"],
       ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
-      [/^One on One Tech Mentor (?=\/ )/g, "One-on-One Tech Mentor "],
+      [/^One on One Tech Mentor(?=$| \/ )/g, "One-on-One Tech Mentor"],
       [/^Lego Club$/g, "LEGO Club"],
       [/^One-On-One Reading Coach for Kids$/g, "One-on-One Reading Coach for Kids"],
       ["Drop In for TinkerCad 3D Printing", "Drop In for Tinkercad 3D Printing"],
@@ -1464,7 +1469,7 @@ const EDITS = {
         "Learn to code with Swift Playground. Participants will be introduced to the app",
       ],
       ["get help with their homework/school enrichment", "get help with homework or school enrichment"],
-      [/November 25 - Coffee Filter Turkey craft$/g, "On November 25, make a coffee filter turkey."],
+      [/\b(November \d{1,2}) - Coffee Filter Turkey craft\.?(?=$| Free\.)/g, "On $1, make a coffee filter turkey."],
       ["Ofrecemos asistencia gratuita en: Creación de un currículum", "Ofrecemos asistencia gratuita con las siguientes tareas. Creación de un currículum"],
       ["Búsqueda de Oportunidades de Empleo -", "Búsqueda de oportunidades de empleo -"],
       ["Llenado de Formularios de Solicitud -", "Llenado de formularios de solicitud -"],
@@ -1650,8 +1655,52 @@ const EDITS = {
         /^One on One Tech Mentor Would you like to find out more about computers\? Learn at your own pace! Free\. Offered in person, in English or (Tiếng Việt|Spanish)\. (?:Giáo Viên Máy Tính|Mentor Tecnológico) /g,
         "Get one-on-one computer help at your own pace. Sessions are free and offered in person in English or $1. ",
       ],
+      [
+        /^One on One Tech Mentor Would you like to find out more about computers\? Learn at your own pace! Free\. Offered in person, in English or Chinese\./g,
+        "Get one-on-one computer help at your own pace. Sessions are free and offered in person in English or Chinese.",
+      ],
+      [
+        "You are welcome to bring your own device, such as a laptop, phone or tablet, or you can use one of our computers.",
+        "Bring your own laptop, phone, or tablet, or use one of the library's computers.",
+      ],
+      [/Offered in English and Tiếng Việt\. No registration required$/g, "Offered in English and Tiếng Việt. No registration required."],
+      [
+        "Tips de seguridad y buenas prácticas. Suscripción al boletín electrónico: Obtenga",
+        "También aprenderás buenas prácticas y recibirás consejos de seguridad. Suscripción al boletín electrónico: Obtén",
+      ],
+      [
+        "sobre recursos comerciales y profesionales en SJPL. Suscríbase hoy a nuestro boletín electrónico mensual",
+        "sobre recursos comerciales y profesionales en SJPL. Suscríbete hoy a nuestro boletín electrónico mensual",
+      ],
+      [
+        "For 30 minutes following Storytime, special age-appropriate toys will be available for children and caregivers to continue the fun together: Storytime: 11:30 a.m. to noon; Stay & Play: noon to 12:30 p.m.",
+        "For 30 minutes after storytime, children and caregivers can keep playing with age-appropriate toys. Storytime runs from 11:30 a.m. to noon. Stay & Play runs from noon to 12:30 p.m.",
+      ],
+      [
+        /Tiempo de cuentos: 11:30 a\.m\. - 12:00 p\.m\.;? Stay & Play: 12:00 p\.m\. - 12:30 p\.m\./g,
+        "Tiempo de cuentos: de 11:30 a.m. a 12:00 p.m. Stay & Play: de 12:00 p.m. a 12:30 p.m.",
+      ],
+      ["ha sido diseñado en alineación con los Estándares de Calidad", "se diseñó de acuerdo con los Estándares de Calidad"],
+      [
+        /Reúnase personalmente con un miembro del personal de la biblioteca \(uno a uno\) para aprender cómo: Crear o actualizar su currículum; Navegar por sitios web de solicitudes de empleo; Completar formularios de solicitud de empleo; Aprender técnicas de entrevista; Obtener ayuda para registrarse en Serv ?Safe \(tarjeta para manipuladores de alimentos\); /g,
+        "Reúnase en persona con un miembro del personal de la biblioteca para recibir ayuda individual. Puede crear o actualizar su currículum, usar sitios web de solicitudes de empleo, completar solicitudes y practicar técnicas de entrevista. También puede recibir ayuda para registrarse en ServSafe (tarjeta para manipuladores de alimentos). ",
+      ],
+      [
+        "*Desafortunadamente, no podemos ayudar con ninguna información personal/sensible (por ejemplo, número de seguro social, información bancaria, formularios de impuestos, etc.).",
+        "No podemos ayudarle con información personal o sensible, como números de Seguro Social, datos bancarios o formularios de impuestos.",
+      ],
+      [
+        "Using the library's pay-to-print system; Walking you through a Digital Skills Building Pathways lesson; And much more!",
+        "Using the library's pay-to-print system and working through a Digital Skills Building Pathways lesson, among other topics.",
+      ],
+      ["Using Discover & Go to reserve free or reduced tickets", "Using Discover & Go to reserve free or reduced-price tickets"],
+      ["develop and increase English language and vocabulary skills. Participants will be practicing", "develop their English skills and build their vocabulary. Participants will practice"],
     ],
     blurb: [
+      [
+        "Build towers, spaceships, forts and more from LEGO bricks at Seven Trees Library, a club recommended for children 5 and older.",
+        "Build towers, spaceships, forts, and more with LEGO bricks at Seven Trees Library. The club is recommended for children ages 5 and older.",
+      ],
       ["Forevery Young by Hayley Mills", "Forever Young by Hayley Mills"],
       ["Practice English speaking through guided dialogues", "Practice speaking English through guided dialogues"],
       [
@@ -1957,6 +2006,7 @@ const EDITS = {
       [/^cnps talk #(\d+) The birds, the bees and a magic trait:/gi, "CNPS Talk #$1: The birds, the bees, and a magic trait:"],
     ],
     attendanceNote: [
+      SCCLD_BABY_SIGN_AGE_EDIT,
       ...SCCLD_OPEN_MIC_EDITS,
       ...SCCLD_BOOK_DISCUSSION_EDITS,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
@@ -1979,6 +2029,25 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
     ],
     description: [
+      SCCLD_BABY_SIGN_AGE_EDIT,
+      ["Join the Children's Librarians for a fun, interactive", "Join the children's librarians for a fun, interactive"],
+      ["learn basic American Sign Language signs to communicate", "learn basic signs in American Sign Language to communicate"],
+      [
+        "Mattie Ross knows that as a teenaged girl in the 1870's, she'll need help finding Tom Chaney, her late father's murderer. Especially since Chaney is a member of a notorious outlaw gang.",
+        "As a teenager in the 1870s, Mattie Ross needs help finding her father's murderer, Tom Chaney, who belongs to a notorious outlaw gang.",
+      ],
+      [
+        'She hires the washed up Marshall Rueben T. "Rooster" Cogburn, believing he has the true grit necessary for the dangerous job, and that his reputation for violence is an asset in the circumstances.',
+        "She hires the washed-up marshal Rooster Cogburn, believing he has the true grit for the dangerous job and that his reputation for violence will help.",
+      ],
+      [
+        'A Texas ranger joins forces with them since he\'s also seeking Chaney for a previous murder and he\'s intent on bringing him back to Texas to earn the "dead or alive" reward.',
+        'A Texas Ranger joins them. He also wants to bring Chaney back to Texas for an earlier murder and collect the "dead or alive" reward.',
+      ],
+      [
+        "At the meeting, we will discuss the book and participate in an activity related to the book.",
+        "We'll discuss the book and do a related activity at the meeting.",
+      ],
       ["during Winter Reading program, from", "during the Winter Reading program, from"],
       ["Prize pick up is", "Prize pickup is"],
       [
@@ -2341,6 +2410,10 @@ const EDITS = {
     ],
     blurb: [
       [
+        "Bring K-5 homework and work with volunteer tutors who provide basic school supplies as space allows.",
+        "Bring K–5 homework for help from volunteer tutors. Walk-ins are welcome as space allows, and basic school supplies are provided.",
+      ],
+      [
         /^Play Winter Reading Bingo at (.+? Library), a free program for readers of all ages that earns a prize\.$/g,
         "Readers of all ages can play Winter Reading Bingo for free at $1 and earn a prize.",
       ],
@@ -2405,6 +2478,10 @@ const EDITS = {
       [/^Documentary Screening-Zora Neale Hurston: Claiming Space$/g, "Documentary Screening – Zora Neale Hurston: Claiming a Space"],
     ],
     description: [
+      [
+        /Join Librarian Juliana on Saturdays from (\d{1,2}:\d{2})-(\d{1,2}(?::\d{2})? AM) at Mitchell Park Library/g,
+        "Join Librarian Juliana on Saturdays from $1 to $2 at Mitchell Park Library",
+      ],
       [
         /All materials are provided, and participants receive their very own kit to take home and continue exploring\. This program is for Kids Ages (\d+-\d+) only\. Materials provided!/gi,
         "All materials are provided, and participants get a kit to take home and continue exploring. This program is open only to children ages $1.",
@@ -2635,6 +2712,10 @@ const EDITS = {
       [/^(The Story of Christ's Birth:) [Ss]hort [Ff]ilm by the Chosen$/g, "$1 Short Film by The Chosen"],
     ],
     blurb: [
+      [
+        "Shop fresh produce, baked goods, local artisan goods and prepared foods at the Hammer Theatre Plaza market's final stand of the season.",
+        "Visit Hammer Theatre Plaza for the season's last farmers' market, with fresh produce, baked goods, local artisan goods, and prepared foods.",
+      ],
       [
         "Volunteer at the NUMU community craft table in Old Town Los Gatos, helping with set-up, breakdown and craft management during three shift options.",
         "Take one of three volunteer shifts at the Magical Memories craft table in Old Town Los Gatos.",
@@ -2932,6 +3013,7 @@ const EDITS = {
       ],
     ],
     description: [
+      ["Abstract Future society needs a sustainable energy supply", "Future society needs a sustainable energy supply"],
       [
         "Come to The O'Donohue Family Stanford Educational Farm to build your own seasonal, organic, flower bouquet using flowers grown on the campus farm. Follow provided directions to make your bouquet.",
         "Make a bouquet from seasonal, organic flowers grown at the O'Donohue Family Stanford Educational Farm. Instructions are provided.",
@@ -3015,6 +3097,14 @@ const EDITS = {
       [/^Event is in Persian\.$/g, "The talk is in Persian."],
     ],
     blurb: [
+      [
+        "Hear Boryann Liaw present how AI-guided approaches grounded in fundamental science can help build sustainable energy systems, at this Earth sciences seminar.",
+        "At this Earth sciences seminar, Boryann Liaw explains how AI-guided approaches grounded in fundamental science can help build sustainable energy systems.",
+      ],
+      [
+        "open a new era of scientific breakthroughs, in a talk at Gates.",
+        "open a new era of scientific breakthroughs in a talk at the Gates Computer Science Building.",
+      ],
       [
         "Grab a donut and chat with the Office for Military-Affiliated Communities team in a relaxed Friday morning gathering with no agenda.",
         "Chat with the Office for Military-Affiliated Communities team over a donut at this casual Friday morning gathering. There's no agenda.",

@@ -28,6 +28,7 @@ export function polishCivicModifiers(text, { cityId } = {}) {
       .replace(/\bCity Council sponsored special event\b/g, "City Council-sponsored special event")
       .replace(/\bHistoric-listed home\b/g, "Home listed as historic")
       .replace(/\bHistoric-listed Washington Street lot\b/g, "Washington Street lot listed as historic")
+      .replace(/^(Planning Commission agenda: )(\d[\d,]*)-unit apartments(?= at 400 Saratoga Avenue golf course$)/g, "$1$2 apartments")
     : text;
 }
 
@@ -50,6 +51,10 @@ export function polishCivicCopy(text, { cityId } = {}) {
         "for Eden Housing's proposed 251-unit residential development at 10333 N. Wolfe Road.")
       .replace("along the western and part of the southern property lines.",
         "along the western property line and part of the southern property line.")
+      .replace("E. Homestead Road It would replace", "E. Homestead Road. It would replace")
+      .replace("on a General Plan amendment and rezone for a", "on a General Plan amendment and rezoning for a")
+      .replace("and dedicate land for a public park, and an EIR was prepared and circulated for public review.",
+        "and dedicate land for a public park. An environmental impact report was prepared and circulated for public review.")
       .replace("Staff said the project would add about 1,368 net daily trips, new crosswalks near Campbell Technology Parkway and McGlincy Lane are required, and a separate city restriping project at Camden and White Oaks was discussed.",
         "Staff said the project would add about 1,368 net daily trips and require new crosswalks near Campbell Technology Parkway and McGlincy Lane. Discussion also covered a separate city restriping project at Camden and White Oaks.")
       .replace("one councilmember said she supported it but wants the program's effectiveness reviewed more closely.",
@@ -65,6 +70,15 @@ export function polishCivicCopy(text, { cityId } = {}) {
         (original) => cityId === "san-jose"
           ? "The agenda listed the committee's review of the November 24, 2026, City Council agenda as canceled."
           : original)
+      .replace(/It listed the November 24, 2026, final agenda as cancell?ed and the (December 1, 2026, draft agenda) for review/g,
+        (original, draftAgenda) => cityId === "san-jose"
+          ? "It listed the committee's review of the November 24, 2026, City Council agenda as canceled. It also listed the " + draftAgenda + " for review"
+          : original)
+      .replace(/The November 24, 2026, final agenda was listed as cancell?ed; the (December 1, 2026, draft agenda) was listed for review/g,
+        (original, draftAgenda) => cityId === "san-jose"
+          ? "The agenda listed the committee's review of the November 24, 2026, City Council agenda as canceled. It listed the " + draftAgenda + " for review"
+          : original)
+      .replace("setting 'time certain' slots for specific items", 'setting "time certain" slots for specific items')
       .replace("Also listed were several council-sponsored community events seeking approval to spend city funds and accept donations, and a proposal to establish the La Avenida Cultural District.",
         "The agenda also listed a proposal to establish the La Avenida Cultural District and requests to spend city funds and accept donations for several council-sponsored community events.")
       .replace("to irrigate nonfunctional turfgrass, and updating the recycled water service area",
@@ -85,6 +99,16 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace("an affordable housing proposal request for 340 Portage Avenue", "a request for affordable housing proposals at 340 Portage Avenue")
       .replace("The agenda listed authorizing a Request for Proposals and a local funding contribution",
         "The agenda listed a proposal to authorize a request for proposals and a local funding contribution")
+      .replace("a request to release a Request for Proposals and provide local funding",
+        "a proposal to issue a request for proposals and provide local funding")
+      .replace(/The agenda listed for (the [^.]+ City Council meeting|the [^.]+ City Council's [^.]+ meeting) includes ([^.]+)\. It also lists /g,
+        "The agenda for $1 listed $2. It also listed ")
+      .replace("It also listed an agreement with a vendor whose name is cut off in the excerpt.",
+        "It also listed a vendor agreement.")
+      .replace(/The agenda included a public comment period for non-agenda topics, with speakers allowed up to (\d+|three) minutes, once, on any number of topics\./g,
+        "The agenda included a public comment period for topics outside the agenda. Each speaker could comment once for up to $1 minutes and could cover any number of topics.")
+      .replace("The agenda said the public can join by registering for the Zoom webinar, raising a hand on Zoom or dialing *9 by phone to speak, and generally get two minutes per speaker (double for speakers using a translator).",
+        "The agenda asked the public to register to join the Zoom webinar. To speak, remote participants could raise their hand in Zoom or press *9 by phone. Speakers generally had two minutes, or twice that if they used a translator.")
       .replace("change its North Ventura area plan designation, to match the adjacent 2951 El Camino Real parcel and add it as a housing inventory site.",
         "change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.")
       .replace("medium-density mixed use and change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.",

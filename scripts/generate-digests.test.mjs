@@ -292,6 +292,27 @@ test("San José's November 18 agenda review names the council date under review"
   assert.equal(polishCivicCopy(summary, options), `The committee listed several proposals. ${clarified}`);
   assert.equal(polishCivicTopic("The agenda marked the November 24, 2026, final agenda review as canceled.", options), clarified);
   assert.equal(polishCivicTopic(clarified, options), clarified);
+
+  const refreshedSummary = "The committee listed several proposals. It listed the November 24, 2026, final agenda as cancelled and the December 1, 2026, draft agenda for review.";
+  const refreshedTopic = "The November 24, 2026, final agenda was listed as cancelled; the December 1, 2026, draft agenda was listed for review, including adding new items and setting 'time certain' slots for specific items.";
+  const expectedSummary = "The committee listed several proposals. It listed the committee's review of the November 24, 2026, City Council agenda as canceled. It also listed the December 1, 2026, draft agenda for review.";
+  const expectedTopic = clarified + ' It listed the December 1, 2026, draft agenda for review, including adding new items and setting "time certain" slots for specific items.';
+  assert.equal(polishCivicCopy(refreshedSummary, options), expectedSummary);
+  assert.equal(polishCivicTopic(refreshedTopic, options), expectedTopic);
+  assert.equal(polishCivicTopic(expectedTopic, options), expectedTopic);
+  assert.equal(polishCivicCopy(refreshedSummary, { cityId: "another-city" }), refreshedSummary);
+});
+
+test("refreshed planning copy separates the preschool address and gives the apartment count once", () => {
+  const summary = "A hearing continued from November 9 was listed on the November 23 Planning Commission agenda for a 16,000-square-foot, two-story childcare and preschool at 855 E. Homestead Road It would replace a vacant commercial building, and the plan includes a new eight-foot masonry wall along the western property line and part of the southern property line.";
+  const reviewed = summary.replace("Homestead Road It", "Homestead Road. It");
+  const headline = "Planning Commission agenda: 316-unit apartments at 400 Saratoga Avenue golf course";
+  assert.equal(polishCivicCopy(summary, { cityId: "sunnyvale" }), reviewed);
+  assert.equal(polishCivicCopy(reviewed, { cityId: "sunnyvale" }), reviewed);
+  assert.equal(polishCivicModifiers(headline, { cityId: "santa-clara" }),
+    "Planning Commission agenda: 316 apartments at 400 Saratoga Avenue golf course");
+  assert.equal(polishCivicModifiers("400 Saratoga Avenue: 316-unit apartment building"),
+    "400 Saratoga Avenue: 316-unit apartment building");
 });
 
 test("the real digest generator finishes sentence topics but preserves fragments and identifiers", () => {

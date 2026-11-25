@@ -228,6 +228,7 @@ const november24LibraryFixture = JSON.parse(readFileSync(new URL("./fixtures/rev
 audits.push(november24LibraryFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-library-evening.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-teenhq-makerspace.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-night-refresh.json", import.meta.url))));
 
 test("library copy repairs preserve revised contacts and publisher scope", () => {
   for (const row of november24LibraryFixture.cases) {
@@ -1469,7 +1470,7 @@ test("evening punctuation repairs preserve revised facts, contacts and publisher
     const original = { source: row.source, description: revised(row.refreshed) + suffix, time: "4:00 PM", costNote: "$30" };
     const next = polishReviewedEventCopy(original);
     // The later registration-sentence repair also punctuates a new contact.
-    const reviewed = revised(row.reviewed).replace(/email updated@example\.org$/, "email updated@example.org.");
+    const reviewed = revised(latestReviewedCopy(row)).replace(/email updated@example\.org$/, "email updated@example.org.");
     assert.deepEqual(next, { ...original, description: reviewed + suffix });
     assert.deepEqual(numbers(next.description), numbers(original.description));
     assert.deepEqual(identifiers(next.description), identifiers(original.description));
