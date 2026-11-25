@@ -9,7 +9,9 @@ import { polishCivicCopy, polishCivicModifiers, polishCivicTopic } from "./lib/c
 
 const scripts = dirname(fileURLToPath(import.meta.url));
 const cities = ["campbell", "saratoga", "los-altos", "los-gatos", "san-jose", "mountain-view", "sunnyvale", "cupertino", "santa-clara", "milpitas", "palo-alto"];
+const CAMPBELL_NOV_17_ID = "2d32a975-87ba-41aa-9897-6233cdfc7e72";
 function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, campbellRecord = null,
+  campbellPdEoc = false,
   keyTopics = ['Review of winter storm preparedness activities', 'Proposed stream corridor protection changes'],
   summary = "The agenda listed winter storm preparedness and proposed changes to stream corridor protection." } = {}) {
   const root = mkdtempSync(join(tmpdir(), "sbt-digest-source-"));
@@ -24,14 +26,20 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, camp
       sourceUrl: "https://example.test/previous", generatedAt: "2026-10-27T01:00:00.000Z",
     }]));
     previous["palo-alto"] = { ...previous["palo-alto"], body: "Architectural Review Board", meetingDateIso: publishedDate };
+    if (campbellPdEoc) Object.assign(previous.campbell, {
+      meetingDateIso: "2026-11-02", carriedForward: true,
+      carryForwardReason: "source-unverified", carriedForwardRuns: 3,
+    });
     const output = join(root, "src/data/south-bay/digests.json");
     writeFileSync(output, JSON.stringify(previous));
     const capture = join(root, "prompts.json");
     const fixture = join(scripts, "fixtures/primegov");
+    let fixtureNow = campbellRecord ? "2026-11-16T03:40:00Z" : "2026-10-29T03:40:00Z";
+    if (campbellPdEoc) fixtureNow = "2026-11-25T04:40:00Z";
     writeFileSync(join(root, "source-mocks.mjs"), `
       import fs from 'node:fs';
       const RealDate = Date;
-      const now = ${JSON.stringify(campbellRecord ? "2026-11-16T03:40:00Z" : "2026-10-29T03:40:00Z")};
+      const now = ${JSON.stringify(fixtureNow)};
       globalThis.Date = class extends RealDate {
         constructor(...args) { super(...(args.length ? args : [now])); }
         static now() { return new RealDate(now).getTime(); }
@@ -52,6 +60,20 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, camp
             keywords: ['budget'],
           }] : [];
           return Response.json({records});
+        }
+        if (url.hostname === 'pub-campbell.escribemeetings.com' && ${campbellPdEoc}) {
+          const id = ${JSON.stringify(CAMPBELL_NOV_17_ID)};
+          if (url.pathname.endsWith('/PastMeetings')) {
+            const { type } = JSON.parse(init.body);
+            const meetings = type === 'City Council Regular Session Meeting - PD EOC'
+              ? [{ Id: id, Start: '/Date(' + Date.parse('2026-11-18T03:00:00Z') + ')/', HasAgenda: true }]
+              : [];
+            return Response.json({ d: { Meetings: meetings } });
+          }
+          if (url.searchParams.get('Id') === id) return new Response(
+            '<div class="AgendaItemTitle"><a>Urgency Ordinance for Detention or Custodial Facilities</a></div>' +
+            '<div class="AgendaItemTitle"><a>Community Center Pool Replacement Project Design Services</a></div>',
+          );
         }
         if (url.hostname === 'cityofpaloalto.primegov.com') {
           if (${unavailable}) return new Response('source unavailable', {status: 503});
@@ -129,6 +151,35 @@ test("the Campbell transcript keeps the verified agenda link for its record and 
   for (const unrelated of [{ ...record, id: 7380 }, { ...record, date: "2026-11-03" }]) {
     assert.equal(run({ campbellRecord: unrelated }).digests.campbell.sourceUrl, "https://pub-campbell.escribemeetings.com/");
   }
+});
+
+test("Campbell recovers the November 17 council agenda from the PD EOC meeting type", () => {
+  const { digests, prompts } = run({
+    campbellPdEoc: true,
+    campbellRecord: {
+      id: 7451, city: "Campbell", date: "2026-11-17", meetingType: "City Council", source: "ingest",
+      title: "These are the minutes of the regular council meeting of November 2, 2026",
+      excerpt: "These are the minutes of the regular council meeting of November 2, 2026. Unattributed transcript preview.",
+      keywords: ["minutes"],
+    },
+    summary: "The agenda listed a proposed detention-facility moratorium and design services for the community pool.",
+    keyTopics: ["Proposed detention-facility moratorium", "Design services for the community pool"],
+  });
+  const card = digests.campbell;
+  assert.equal(card.meetingDateIso, "2026-11-17");
+  assert.equal(card.body, "City Council");
+  assert.equal(
+    card.sourceUrl,
+    `https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=${CAMPBELL_NOV_17_ID}&Agenda=Agenda&lang=English`,
+  );
+  assert.equal(card.carriedForward, undefined);
+  assert.equal(card.carryForwardReason, undefined);
+  assert.equal(card.carriedForwardRuns, undefined);
+  const prompt = prompts.find(call => call.messages[0].content.includes("Campbell, CA City Council"));
+  assert.ok(prompt, "Campbell agenda was sent to the summarizer");
+  assert.match(prompt.messages[0].content, /Agenda highlights: Urgency Ordinance for Detention or Custodial Facilities/);
+  assert.match(prompt.messages[0].content, /Community Center Pool Replacement Project/);
+  assert.doesNotMatch(prompt.messages[0].content, /Unattributed transcript preview/);
 });
 
 test("unavailable sources and older recovered agendas preserve the published digest", () => {

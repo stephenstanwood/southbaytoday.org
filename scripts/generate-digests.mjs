@@ -77,6 +77,8 @@ const CITIES = [
       // a resident can read about, and eScribe files them as their own type.
       meetingTypes: [
         "City Council Regular Session Meeting",
+        // Campbell files some regular sessions under this separate archive label.
+        "City Council Regular Session Meeting - PD EOC",
         "City Council Special Meeting",
         "City Council Study Session",
       ],
