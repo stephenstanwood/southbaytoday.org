@@ -105,7 +105,14 @@ test("Sunnyvale's December volunteer club keeps its teen audience and discloses 
   assert.equal(reviewed.registration, null);
   assert.equal(reviewed.registrationClosesBy, null);
   assert.equal(requiresAttendanceConfirmation(reviewed), true);
-  assert.match(reviewed.attendanceNote, /signup is optional.*booking panel says registration is required/);
+  assert.equal(reviewed.attendanceNote, "The library's bulletin and event description say signing up is optional and will get you an email reminder. The booking panel says registration is required. Check with the library before walking in.");
+  const extraNote = "See the library calendar for updates.";
+  const oldNote = "The library’s bulletin and event description say signup is optional for an email reminder. The booking panel says registration is required. Check with the library before walking in.";
+  const saved = { ...reviewed, attendanceNote: `${extraNote} ${oldNote}` };
+  assert.deepEqual(applyVerifiedEventFacts(saved), {
+    ...reviewed,
+    attendanceNote: `${extraNote} ${reviewed.attendanceNote}`,
+  });
   assert.match(reviewed.description, /volunteer hours, apply first/);
   assert.doesNotMatch(reviewed.description, /drop.in/i);
   assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);

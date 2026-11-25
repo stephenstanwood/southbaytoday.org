@@ -63,6 +63,7 @@ const COOL_YULE_URL = "https://events.sjsu.edu/event/hammer-presents-cool-yule-2
 const BVA_CAFE_PROGRAM_URL = "https://www.scu.edu/cioccacenter/bronco-ventures/bronco-venture-accelerator/bva-cafe/";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
+const SUNNYVALE_TEEN_VOLUNTEER_NOTE = "The library's bulletin and event description say signing up is optional and will get you an email reminder. The booking panel says registration is required. Check with the library before walking in.";
 const OPEN_MIC_ENTRY_NOTE = "Ages 18+. Two-item minimum purchase per person.";
 const OUR_TOWN_WAITLIST_NOTE = "Tickets sold out when checked November 12. TAPS distributes in-person waitlist numbers at the venue one hour before curtain; admission is not guaranteed.";
 const YULETIDE_NEWSLETTER_DESCRIPTION = "Pop-up holiday boutique with gifts, handmade items, vintage goods, holiday décor and specialty foods from local vendors. Runs Friday, Nov 20 and Saturday, Nov 21; no times given.";
@@ -759,6 +760,10 @@ const CORRECTIONS = [
     facts: (event) => ({
       venue: "Sunnyvale Main Library, Teen Space",
       address: "665 W. Olive Ave., Sunnyvale, CA 94086",
+      attendanceNote: event.attendanceNote?.replace(
+        /The library['’]s bulletin and event description say signup is optional for an email reminder\. The booking panel says registration is required\. Check with the library before walking in\./,
+        SUNNYVALE_TEEN_VOLUNTEER_NOTE,
+      ),
       sourceAudiences: ["Teens age 13 and up"],
       audienceAge: "kids",
       attendanceStatus: "needs-confirmation",
@@ -767,7 +772,7 @@ const CORRECTIONS = [
       description: "Teens age 13 and older can make toys for shelter dogs and cats. To earn volunteer hours, apply first if you aren't already a registered library volunteer.",
       blurb: "Make toys for shelter dogs and cats at this library session for teens age 13 and older.",
     }),
-    appendAttendanceNote: "The library's bulletin and event description say signup is optional for an email reminder. The booking panel says registration is required. Check with the library before walking in.",
+    appendAttendanceNote: SUNNYVALE_TEEN_VOLUNTEER_NOTE,
   },
   // The organizer and its registration page give the same race-day timeline.
   // Normalize both newsletter copies before dedup so pickup does not become a second race.
