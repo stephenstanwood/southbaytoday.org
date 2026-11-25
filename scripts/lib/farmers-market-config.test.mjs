@@ -104,6 +104,19 @@ test("the Food calendar skips Palo Alto's holiday break and excludes monthly fai
   }
 });
 
+test("the Food calendar skips downtown San Jose's announced winter break", () => {
+  for (const [date, open] of [
+    ["2026-11-25", true],
+    ["2026-12-02", false], ["2026-12-09", false], ["2026-12-16", false],
+    ["2026-12-23", false], ["2026-12-30", false], ["2027-01-06", false],
+    ["2027-01-13", false], ["2027-01-20", false],
+    ["2027-01-27", true],
+  ]) {
+    const markets = farmersMarketsForWeek(date).find((day) => day.date === date)?.markets ?? [];
+    assert.equal(markets.some(({ id }) => id === "sj-downtown-market"), open, date);
+  }
+});
+
 test("the Food calendar offers the Los Altos market only within published seasons", () => {
   const marketId = "los-altos-village-market";
   for (const [date, open] of [

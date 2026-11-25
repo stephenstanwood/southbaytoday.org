@@ -263,6 +263,12 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     // Neither publishes a seasonal range; do not restore the old June–December claim.
     venue: "Paseo de San Antonio",
     address: "101 Paseo de San Antonio, San Jose",
+    // The San Jose Downtown Association's November 24, 2026 newsletter names
+    // November 25 as the last market and January 27 as the next one.
+    excludedDates: [
+      "2026-12-02", "2026-12-09", "2026-12-16", "2026-12-23", "2026-12-30",
+      "2027-01-06", "2027-01-13", "2027-01-20",
+    ],
     category: "market",
     recurrence: "weekly",
     days: ["wednesday"],
