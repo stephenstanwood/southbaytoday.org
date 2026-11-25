@@ -17,7 +17,7 @@
 //   the named cards.
 
 import { chromium } from "playwright";
-import { mkdirSync, writeFileSync, statSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -36,16 +36,20 @@ const SIZE_BUDGET_BYTES = 80 * 1024;
 
 mkdirSync(OUT_DIR, { recursive: true });
 
-// ── Brand tokens (mirrors SignalShell.astro / CalendarShell.astro) ─────────
+// ── Brand tokens (mirrors src/styles/sbt/tokens.css) ──────────────────────
+// White since 2026-11-25, like the site: the cards wore the same cream and
+// peach wash the pages did ("how'd we let SBT as a whole get so beige-y?").
 const INK = "#13072F";
 const MUTED = "#5f5870";
-const BG_GRADIENT = "linear-gradient(180deg, #fff8f2 0%, #fff7ff 44%, #f3fbff 100%)";
-const SUNRISE_GLOW = "radial-gradient(circle at 8% -12%, rgba(255, 123, 43, 0.28), transparent 40%)";
 const ACCENT_RULE = "linear-gradient(90deg, #FF7B2B, #F43F7C, #8738F5, #22C6D3)";
+
+/** A committed site image as a data URI, so setContent() can show it. */
+const imageData = (publicPath) =>
+  `data:image/webp;base64,${readFileSync(join(REPO_ROOT, "public", publicPath)).toString("base64")}`;
 const FONTS_HREF =
   "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@500;600;700&family=Space+Mono:wght@700&display=swap";
 
-function cardHtml({ kicker, title, subline }) {
+function cardHtml({ kicker, title, subline, art }) {
   return `<!doctype html>
 <html><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,17 +65,23 @@ function cardHtml({ kicker, title, subline }) {
   }
   body {
     position: relative;
-    background: ${SUNRISE_GLOW}, ${BG_GRADIENT};
+    background: #fff;
   }
-  .dots {
+  .stripe {
     position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(19,7,47,0.08) 1.6px, transparent 1.6px);
-    background-size: 26px 26px;
-    background-position: -6px -6px;
-    mask-image: radial-gradient(circle at 88% 20%, black 0%, transparent 55%);
-    -webkit-mask-image: radial-gradient(circle at 88% 20%, black 0%, transparent 55%);
+    inset: 0 0 auto;
+    height: 10px;
+    background: ${ACCENT_RULE};
   }
+  .art {
+    position: absolute;
+    right: -24px;
+    top: 50%;
+    width: 640px;
+    transform: translateY(-46%);
+  }
+  .has-art .title { max-width: 540px; }
+  .has-art .subline { max-width: 500px; }
   .frame {
     position: relative;
     height: 100%;
@@ -124,8 +134,9 @@ function cardHtml({ kicker, title, subline }) {
     opacity: 0.55;
   }
 </style></head>
-<body>
-  <div class="dots"></div>
+<body class="${art ? "has-art" : ""}">
+  <div class="stripe"></div>
+  ${art ? `<img class="art" src="${imageData(art)}" alt="">` : ""}
   <div class="frame">
     <div class="kicker">${kicker}</div>
     <div class="title">${title}</div>
@@ -149,6 +160,8 @@ const sectionCards = [
     title: "Summer Camps",
     // No count: the camp data grows twice a day and this card is rendered by hand.
     subline: "Santa Clara County camps by age, week and price",
+    art: "images/camps/hero.webp",
+    quality: 74, // the art pushes this card past the 80 KB budget at the default
   },
   {
     file: "og-gov.jpg",
@@ -193,7 +206,7 @@ const results = [];
 for (const card of cards) {
   await page.setContent(cardHtml(card), { waitUntil: "networkidle" });
   const outPath = join(OUT_DIR, card.file);
-  const buffer = await page.screenshot({ type: "jpeg", quality: JPEG_QUALITY });
+  const buffer = await page.screenshot({ type: "jpeg", quality: card.quality ?? JPEG_QUALITY });
   writeFileSync(outPath, buffer);
   const { size } = statSync(outPath);
   results.push({ file: card.file, bytes: size });
