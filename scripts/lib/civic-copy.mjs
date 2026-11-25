@@ -111,6 +111,8 @@ export function polishCivicCopy(text, { cityId } = {}) {
         "The agenda included a public comment period for topics outside the agenda. Each speaker could comment once for up to $1 minutes and could cover any number of topics.")
       .replace("The agenda said the public can join by registering for the Zoom webinar, raising a hand on Zoom or dialing *9 by phone to speak, and generally get two minutes per speaker (double for speakers using a translator).",
         "The agenda asked the public to register to join the Zoom webinar. To speak, remote participants could raise their hand in Zoom or press *9 by phone. Speakers generally had two minutes, or twice that if they used a translator.")
+      .replace("Comments can also be emailed to wilson.tam@sanjoseca.gov.",
+        "The agenda directed people to email written comments to wilson.tam@sanjoseca.gov before or during the meeting.")
       .replace("change its North Ventura area plan designation, to match the adjacent 2951 El Camino Real parcel and add it as a housing inventory site.",
         "change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.")
       .replace("medium-density mixed use and change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.",

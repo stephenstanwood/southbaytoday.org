@@ -76,6 +76,26 @@ test("both real generators use the download and retire Permit View publication",
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
+test("labels garage conversions by the city's ADU subtype without changing housing counts", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "sbt-permit-adu-test-"));
+  const garage = ["400 EXAMPLE ST, SAN JOSE CA", "example-adu", "Single Family",
+    "Garage Conversion to ADU", "New Construction", "ADU   Accessory Dwelling Unit",
+    "10/20/2026 12:00:00 AM", "1", "125000", "Example Applicant"];
+  try {
+    const outputPath = join(dir, "pulse.json");
+    await generatePermitPulse({
+      outputPath, now, sleep: noSleep,
+      fetchImpl: async () => new Response(csv([garage, rows[1]])),
+    });
+    const city = JSON.parse(readFileSync(outputPath)).cities["san-jose"];
+    assert.equal(city.stats.newUnits, 2);
+    assert.deepEqual(city.permits.map(({ category, categoryLabel }) => [category, categoryLabel]), [
+      ["residential-new", "New Home"],
+      ["residential-new", "Accessory Dwelling Unit"],
+    ]);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
 test("a failed or malformed download leaves each generator's existing artifact intact", async () => {
   const dir = mkdtempSync(join(tmpdir(), "sbt-permit-source-failure-test-"));
   try {

@@ -10,6 +10,22 @@ import {
 import { isEventEditoriallySuppressed } from "./eventAvailability.mjs";
 import { snapshotEvent } from "./eventSlugLedger.mjs";
 
+test("withholds the Milpitas crafts calendar copy and preserves the exact library occurrence", () => {
+  const newsletter = {
+    title: "Fall Crafts for Grades K-5", date: "2026-11-24", time: "3:30 PM",
+    venue: "Milpitas Library", source: "City Newsletter",
+    url: "https://sccl.bibliocommons.com/v2/events?locations=MI",
+  };
+  const library = {
+    ...newsletter, source: "Santa Clara County Library",
+    url: "https://sccl.bibliocommons.com/events/6add3e7629c3d60033323c19",
+    registration: "closed",
+  };
+  assert.equal(isEventPublishable(newsletter), false);
+  assert.equal(isEventPublishable(library), true);
+  assert.equal(isEventPublishable({ ...newsletter, date: "2026-11-25" }), true);
+});
+
 test("withholds the unconfirmed November 30 Almaden study hall occurrence", () => {
   const studyHall = {
     id: "sjpl-6b06060b3377ce00332d69af",

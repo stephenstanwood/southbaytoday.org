@@ -15,6 +15,25 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("identifies the downtown holiday opening as free family admission", () => {
+  const ceremony = {
+    source: "City Newsletter", city: "san-jose", date: "2026-11-27",
+    title: "Christmas in the Park Opening Night Ceremony and Tree Lighting",
+    url: "https://christmasinthepark.com/events/", category: "outdoor",
+    venue: "Plaza de San Jose", cost: null, kidFriendly: false,
+    blurb: "See the tree lighting at Plaza de San Jose.",
+  };
+  const verified = applyVerifiedEventFacts(ceremony);
+  assert.equal(verified.cost, "free");
+  assert.equal(verified.category, "community");
+  assert.equal(verified.kidFriendly, true);
+  assert.equal(verified.venue, "Plaza de San José");
+  assert.equal(verified.blurb, "See the tree lighting at Plaza de San José.");
+  assert.deepEqual(applyVerifiedEventFacts(verified), verified);
+  const vipParty = { ...ceremony, title: "Opening Night VIP Party" };
+  assert.equal(applyVerifiedEventFacts(vipParty), vipParty);
+});
+
 test("ongoing Stanford and King Library exhibits show verified Thanksgiving closures", () => {
   const exhibit = {
     date: "2026-11-24", ongoing: true, time: null,

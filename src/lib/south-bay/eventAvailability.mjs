@@ -4,6 +4,15 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    date: "2026-11-24",
+    title: /^Fall Crafts for Grades K-5$/i,
+    venue: /^Milpitas Library$/i,
+    matches: event => event.source === "City Newsletter" && event.time === "3:30 PM"
+      && /^https:\/\/sccl\.bibliocommons\.com\/v2\/events\?/.test(event.url || ""),
+    reason: "The newsletter calendar copy omits the signup limit and can linger after the library occurrence ends. The library's November 24 occurrence is already archived with its registration deadline.",
+    source: "https://sccl.bibliocommons.com/v2/events/6add3e7629c3d60033323c19",
+  }),
+  Object.freeze({
     ids: Object.freeze(["sjpl-6b06060b3377ce00332d69af"]),
     matches: (event) => normalizeDate(event.date) === "2026-11-30",
     reason: "The library calendar lists November 30 for Fall Finals Study Hall at Almaden. The description starts December 7. The library has not independently confirmed the November occurrence.",

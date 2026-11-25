@@ -217,17 +217,22 @@ export async function generatePermitPulse({ fetchImpl = fetch, sleep, outputPath
     }
 
     if (cat) {
+      const subtype = r.SUBTYPEDESCRIPTION ?? "";
+      // The city codes ADUs, including garage conversions, as new construction.
+      const categoryLabel = cat === "residential-new" && /^ADU\b/i.test(subtype)
+        ? "Accessory Dwelling Unit"
+        : CATEGORY_LABELS[cat] ?? cat;
       notable.push({
         id: r.FOLDERNUMBER ?? r.FOLDERRSN,
         address: formatAddress(r.gx_location),
         category: cat,
-        categoryLabel: CATEGORY_LABELS[cat] ?? cat,
+        categoryLabel,
         workType: r.WORKDESCRIPTION ?? "",
         description: cleanDescription(r.FOLDERNAME, r.WORKDESCRIPTION, r.SUBTYPEDESCRIPTION),
         valuation: val,
         units: parseInt(r.DWELLINGUNITS ?? "0", 10) || 0,
         issueDate: toIsoDate(parseDate(r.ISSUEDATE)),
-        subtype: r.SUBTYPEDESCRIPTION ?? "",
+        subtype,
       });
     }
   }

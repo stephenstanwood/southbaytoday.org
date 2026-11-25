@@ -135,6 +135,19 @@ const HISTORY_PARK_HOLIDAY_TEA_FACTS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The downtown opening ceremony is a free community event for families.
+  // https://christmasinthepark.com/ and https://christmasinthepark.com/events/
+  {
+    date: "2026-11-27",
+    matches: event => event.source === "City Newsletter" && event.city === "san-jose"
+      && event.title === "Christmas in the Park Opening Night Ceremony and Tree Lighting"
+      && event.url === "https://christmasinthepark.com/events/",
+    facts: {
+      cost: "free", category: "community", kidFriendly: true,
+      venue: "Plaza de San José", address: "Plaza de San José, Downtown San José",
+    },
+    copyReplacements: [[/Plaza de San Jose/g, "Plaza de San José"]],
+  },
   // Milpitas Library's description invites readers of all ages. Its catalog
   // audience tags only list children, which otherwise excludes adult readers.
   // https://sccl.bibliocommons.com/events/6b05d51e3377ce00332d53ce
