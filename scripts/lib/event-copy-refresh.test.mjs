@@ -226,6 +226,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-exhibits.json", import.meta.url))));
 const november24LibraryFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-library-afternoon.json", import.meta.url)));
 audits.push(november24LibraryFixture);
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-library-evening.json", import.meta.url))));
 
 test("library copy repairs preserve revised contacts and publisher scope", () => {
   for (const row of november24LibraryFixture.cases) {
@@ -1963,4 +1964,40 @@ test("Korean smartphone help copy keeps updated appointment lengths and source d
   assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
   const otherPublisher = { ...event, source: "Different publisher" };
   assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
+
+test("library copy repairs survive source normalization and preserve event fields", () => {
+  const source = "San Jose Public Library";
+  const samples = [
+    {
+      title: "TeenHQ MakerSpace Studio",
+      description: "Pre-registration is now in-person, beginning at 3:45PM on the day of the event. The first five teens are guaranteed space.",
+      reviewed: "In-person sign-up starts at 3:45 p.m. on the day of the event. The first five teens are guaranteed a spot.",
+    },
+    {
+      title: "STEM November",
+      description: "Join us STEM activities during the Thanksgiving School Break. All participants need to sign-in.",
+      reviewed: "Join us for STEM activities during Thanksgiving break. All participants must sign in.",
+    },
+    {
+      title: "Chinese Orchestra",
+      description: 'Chinese Orchestra This is an open rehearsal featuring the Chinese erhu (the erhu is a traditional two-stringed bowed musical instrument often referred to as the "Chinese violin"). The public is invited to observe the preparation process for an upcoming performance and participate in a Q&A session. (50+) Harmony Chinese Chamber Orchestra Stanley Wong, Ming Tsai and Joyce Lin, (Overdrive). Overdirve:,',
+      reviewed: "The open rehearsal features the erhu, a traditional Chinese two-stringed bowed instrument often called the Chinese violin. The public can watch the group prepare for an upcoming performance and take part in a Q&A. Stanley Wong, Ming Tsai, and Joyce Lin of the Harmony Chinese Chamber Orchestra lead the 50+ series.",
+    },
+  ];
+
+  for (const {title, description, reviewed} of samples) {
+    const event = { source, title, description: polishDescription(description), date: "2026-12-01", registration: "optional" };
+    const expected = { ...event, description: reviewed };
+    assert.deepEqual(polishReviewedEventCopy(event), expected);
+    assert.deepEqual(polishReviewedEventCopy(expected), expected);
+    const otherPublisher = { ...event, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+  }
+
+  assert.equal(polishReviewedEventCopy({ source, title: "Lego Club" }).title, "LEGO Club");
+  assert.equal(
+    polishReviewedEventCopy({ source, title: "One on One Tech Mentor / Mentor Tecnológico" }).title,
+    "One-on-One Tech Mentor / Mentor Tecnológico",
+  );
 });

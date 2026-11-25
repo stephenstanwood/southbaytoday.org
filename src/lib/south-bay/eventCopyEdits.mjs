@@ -179,6 +179,8 @@ const EDITS = {
       [/^Music and Movement with Stay&Play$/g, "Music and Movement with Stay & Play"],
       ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
+      [/^One on One Tech Mentor (?=\/ )/g, "One-on-One Tech Mentor "],
+      [/^Lego Club$/g, "LEGO Club"],
       [/^One-On-One Reading Coach for Kids$/g, "One-on-One Reading Coach for Kids"],
       ["Drop In for TinkerCad 3D Printing", "Drop In for Tinkercad 3D Printing"],
       ["TinkerCAD Workshop for Kids", "Tinkercad Workshop for Kids"],
@@ -1535,6 +1537,102 @@ const EDITS = {
       [
         "Our tech mentors can guide you in learning a variety of computer skills that enable you to better use the library's public computers and to benefit from the library's freely available online resources, including ebooks! Don't worry about not having a computer; iPads will be available for in-library use during the mentoring session.",
         "Tech mentors can show you how to use the library's public computers and free online resources, including ebooks. iPads are available to use in the library during the session.",
+      ],
+      [
+        "About Power Beans Foundation The Power Beans Foundation is a non-profit organization dedicated to making robotics education more accessible. Our mission is to empower every student with the opportunity to learn robotics while cultivating essential skills in teamwork, leadership, and problem-solving. They are a two-time VEX V5RC World Championship Finalist and aim to share their experience and knowledge with the community.",
+        "The Power Beans Foundation is a nonprofit that works to make robotics education more accessible and help students build teamwork, leadership, and problem-solving skills. The foundation is a two-time VEX V5RC World Championship finalist and aims to share its robotics experience with the community.",
+      ],
+      [
+        /Pre-registration is now in-person, beginning at (\d{1,2}:\d{2})\s*PM on the day of the event\. The first five teens are guaranteed space\./g,
+        "In-person sign-up starts at $1 p.m. on the day of the event. The first five teens are guaranteed a spot.",
+      ],
+      [
+        /^LEGO Club This will give children the opportunity to get creative and build anything they choose with lots of LEGO bricks\. They can either work on their own creations or build as a team\./g,
+        "LEGO Club gives children a chance to build whatever they like with LEGO bricks. They can work on their own or build as a team.",
+      ],
+      ["Recommended for ages 3 to 17 and families/caregivers.", "Recommended for children ages 3 to 17 and their families or caregivers."],
+      ["Club LEGO Los niños tendrán la oportunidad", "En el Club LEGO, los niños tendrán la oportunidad"],
+      ["Recomendado para edades de 3 a 17 años y familias/cuidadores.", "Recomendado para niños de 3 a 17 años y sus familias o cuidadores."],
+      [
+        "Free Reading Help for Students in Grades 1–3. Recommended for students in 2nd and 3rd grade.",
+        "Free reading help is available for students in grades 1–3. The program is recommended for students in grades 2 and 3.",
+      ],
+      [
+        /Our staff can meet with you, approach your needs without judg(?:e)?ment, and help you find where to go for shelter, food, showers, mental health services, legal help, and more\./g,
+        "Staff can meet with you without judgment and help you find shelter, food, showers, mental health services, legal help, and more.",
+      ],
+      [
+        "We will try our best to get you connected to any resource we know of that could suit your needs.",
+        "We'll do our best to connect you with resources that meet your needs.",
+      ],
+      ["an individual, 15-20-minute tutoring session", "an individual 15- to 20-minute tutoring session"],
+      ["math worksheet(s) provided by Math Buddies volunteers", "math worksheets provided by Math Buddies volunteers"],
+      [
+        "Pre-registration not required. However, tutoring sessions are available on a first-come, first-served basis, and the availability of sessions may be limited depending on the number of volunteers and/or participating children.",
+        "No advance registration is required. Tutoring is first come, first served. The number of sessions may depend on how many volunteers and children attend.",
+      ],
+      [
+        "iPads will be provided however, they are limited, so registration will be required. If slots are available at the start of the program we will accept walk-ins.",
+        "The library provides a limited number of iPads, so registration is required. Walk-ins are welcome if space is available when the program starts.",
+      ],
+      [
+        "Participants will understand more about coding, this class is your first leap into the vast and exciting world of programming.",
+        "The class introduces participants to the basics of programming.",
+      ],
+      [
+        "connect and find and lend support to other parents in the Rose Garden and Downtown San José area.",
+        "meet and support one another in the Rose Garden and downtown San José area.",
+      ],
+      [
+        "About Las Madres Las Madres Neighborhood Playgroups is a volunteer-run, non-profit organization.",
+        "Las Madres Neighborhood Playgroups is a volunteer-run nonprofit.",
+      ],
+      [
+        "Las Madres offers parents and their children the opportunity to join playgroups that are organized by the age of the child and by Neighborhood Clubs. We are based in Santa Clara County, California.",
+        "Las Madres offers playgroups for parents and children, organized by children's ages and by neighborhood clubs. The organization is based in Santa Clara County, California.",
+      ],
+      [
+        /Teens Reach is the youth council for the San Jos[eé] Public Library for ages 13-18, providing a key way for young adults to build their leadership skills by developing and participating in library activities, as well as becoming library advisors and advocates\./g,
+        "Teens Reach is the San José Public Library's youth council for ages 13–18. Members build leadership skills by organizing and taking part in library activities and serving as library advisors and advocates.",
+      ],
+      ["children aged 2 to 5 years old", "children ages 2 to 5"],
+      [
+        "Sessions take place on the 1st and 3rd (& 5th, if applicable) Tuesdays.",
+        "The club meets on the 1st and 3rd Tuesdays of each month and on the 5th Tuesday when there is one.",
+      ],
+      [
+        "Attendees will learn to: Write fiction that reads like reality; Create characters that leave readers breathless; Identify plot points that serve multiple genres.",
+        "Attendees will learn to make their fiction feel real, create characters that hold readers' attention, and identify plot points that work across genres.",
+      ],
+      ["Please register for each session of this workshop you are looking to attend.", "Register for each session you plan to attend."],
+      [
+        "A parent or guardian must be present to assist children between 5-9 years old throughout the duration of the program.",
+        "A parent or guardian must stay and help children ages 5 to 9 throughout the program.",
+      ],
+      ["Do you enjoy working with yarn, knitting or crochet?", "Do you enjoy knitting, crocheting, or other yarn crafts?"],
+      ["All hand needle crafts welcome.", "All hand needlecrafts are welcome."],
+      [
+        /^Chinese Orchestra This is an open rehearsal featuring the Chinese erhu \(the erhu is a traditional two-stringed bowed musical instrument often referred to as the "Chinese violin"\)\. The public is invited to observe the preparation process for an upcoming performance and participate in a Q&A session\./g,
+        "The open rehearsal features the erhu, a traditional Chinese two-stringed bowed instrument often called the Chinese violin. The public can watch the group prepare for an upcoming performance and take part in a Q&A.",
+      ],
+      [
+        / \(50\+\) Harmony Chinese Chamber Orchestra Stanley Wong, Ming Tsai and Joyce Lin, \(Overdrive\)\. Overdirve:,$/g,
+        " Stanley Wong, Ming Tsai, and Joyce Lin of the Harmony Chinese Chamber Orchestra lead the 50+ series.",
+      ],
+      ["freshen up on your skills", "brush up on your skills"],
+      [
+        "You'll learn while playing the game: How to set up the game tiles and understand them; The flow of the game; How to make sets during the game; How to win it.",
+        "As you play, you'll learn how to set up and identify the tiles, follow the flow of play, make sets, and win the game.",
+      ],
+      [
+        /Meet with a peer navigator who can help you find resources, sign up for services, connect with your support team, and take steps toward stable housing\. (Navigators are available on a first-come, first-served basis\. Assistance is available in Spanish, Vietnamese, and Chinese\.) United Effort Organization peer support team\.?$/g,
+        "Meet with a peer navigator from The United Effort Organization who can help you find resources, sign up for services, connect with your support team, and take steps toward stable housing. $1",
+      ],
+      ["Join us STEM activities during the Thanksgiving School Break.", "Join us for STEM activities during Thanksgiving break."],
+      ["All participants need to sign-in.", "All participants must sign in."],
+      [
+        /^One on One Tech Mentor Would you like to find out more about computers\? Learn at your own pace! Free\. Offered in person, in English or (Tiếng Việt|Spanish)\. (?:Giáo Viên Máy Tính|Mentor Tecnológico) /g,
+        "Get one-on-one computer help at your own pace. Sessions are free and offered in person in English or $1. ",
       ],
     ],
     blurb: [
