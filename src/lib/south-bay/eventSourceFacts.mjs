@@ -223,6 +223,24 @@ const CORRECTIONS = [
     }),
     appendAttendanceNote: "Book a free 15-minute appointment in advance. The appointment takes place in the Technology Center.",
   },
+  // The library's December 1 notice asks families to reserve a time slot.
+  // Its Redwood Room listing overlaps the library's book talk in that room.
+  // https://www.santaclaraca.gov/Home/Components/Calendar/Event/115099/
+  // https://www.eventbrite.com/e/we-will-receive-justice-a-local-indigenous-history-tickets-2003829860053
+  {
+    date: "2026-12-01",
+    matches: event => !event.virtual && event.source === "City Newsletter" && event.city === "santa-clara"
+      && event.url === "https://www.santaclaraca.gov/Home/Components/Calendar/Event/115099/"
+      && /\breserve a time slot\b/i.test(event.description || ""),
+    facts: event => ({
+      registration: REGISTRATION_REQUIRED,
+      ...(event.venue === "Central Park Library - Redwood Room" ? {
+        venue: "Central Park Library", address: "2635 Homestead Road, Santa Clara, CA 95051",
+      } : {}),
+    }),
+    appendAttendanceNote: "Confirm the room when you reserve your time slot.",
+    copyReplacements: [[/\s+in the Redwood Room\b/gi, ""]],
+  },
   // Supervisor Otto Lee's November 20 county newsletter embeds the flyer
   // for this ceremony. Use it when the newsletter extraction omits a URL.
   {

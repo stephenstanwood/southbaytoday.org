@@ -15,6 +15,31 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Reading with Pets shows the required reservation and uses the verified library address", () => {
+  const session = {
+    date: "2026-12-01",
+    source: "City Newsletter",
+    city: "santa-clara",
+    url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/115099/",
+    venue: "Central Park Library - Redwood Room",
+    address: "Central Park Library - Redwood Room, 2635 Homestead Road, Santa Clara, CA 95051",
+    description: "Call the library to reserve a time slot.",
+    blurb: "Read to a therapy pet in the Redwood Room.",
+  };
+  const reviewed = applyVerifiedEventFacts(session);
+  assert.equal(requiresAdvanceRegistration(reviewed), true);
+  assert.equal(reviewed.venue, "Central Park Library");
+  assert.equal(reviewed.address, "2635 Homestead Road, Santa Clara, CA 95051");
+  assert.equal(reviewed.blurb, "Read to a therapy pet.");
+  assert.equal(reviewed.attendanceNote, "Confirm the room when you reserve your time slot.");
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  assert.equal(applyVerifiedEventFacts({ ...session, registration: "full" }).registration, "full");
+  assert.equal(applyVerifiedEventFacts({ ...session, venue: "Central Park Library - Edinger Room" }).venue,
+    "Central Park Library - Edinger Room");
+  const otherDate = { ...session, date: "2027-01-05" };
+  assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
 test("the Earthquakes watch party offers an RSVP and welcomes all ages", () => {
   const party = {
     date: "2026-11-28", title: "Quakes Game 2 Watch Party", source: "City Newsletter",
