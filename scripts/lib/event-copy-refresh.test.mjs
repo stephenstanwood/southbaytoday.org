@@ -230,6 +230,8 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-teenhq-makerspace.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-night-refresh.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-published-delta.json", import.meta.url))));
+const libraryAndMarketFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-25-library-and-market.json", import.meta.url)));
+audits.push(libraryAndMarketFixture);
 
 test("library copy repairs preserve revised contacts and publisher scope", () => {
   for (const row of november24LibraryFixture.cases) {
@@ -2043,6 +2045,24 @@ test("cached chess blurbs keep the organizer's independent-play requirement", ()
   assert.deepEqual(polishReviewedEventCopy(chessReviewed), chessReviewed);
   const revisedLesson = { ...chess, description: "Library volunteers teach the rules to beginners." };
   assert.deepEqual(polishReviewedEventCopy(revisedLesson), revisedLesson);
+});
+
+test("reviewed library and market blurbs leave new wording and other publishers alone", () => {
+  for (const row of libraryAndMarketFixture.cases) {
+    const event = { ...row.events[0], source: row.source, blurb: row.refreshed };
+    const revised = { ...event, blurb: event.blurb + " Check the new program details." };
+    assert.deepEqual(polishReviewedEventCopy(revised), revised);
+    const otherPublisher = { ...event, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+
+    if (event.description) {
+      const updated = {
+        ...event,
+        description: event.description.replace("children may drop in to hear a story any time during the program.", "children must register in advance."),
+      };
+      assert.deepEqual(polishReviewedEventCopy(updated), updated);
+    }
+  }
 });
 
 test("Reading with Pets blurbs say who reads and keep the verified reservation instructions", () => {

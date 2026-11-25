@@ -1756,6 +1756,14 @@ const EDITS = {
       ],
       ["the TeenHQ Maker Space", "the TeenHQ MakerSpace"],
       [
+        /^Use the TeenHQ MakerSpace for 3D printers, a poster printer, Glowforge, sewing machines, Cricut, button press and craft supplies, with room for five teens at a time\.$/g,
+        "Use 3D printers, a poster printer, a Glowforge, sewing machines, a Cricut, a button press, and craft supplies at TeenHQ MakerSpace. Up to five teens can use the equipment at a time.",
+      ],
+      [
+        /^Hear kids read one-on-one or in small groups with volunteers Mike, Sally, and Matt at Willow Glen Library\.$/g,
+        "Kids can read one-on-one or in small groups with volunteers Mike, Sally, and Matt at Willow Glen Library.",
+      ],
+      [
         "Try hands-on STEM activities during Thanksgiving break, from Buzz Off to hovercrafts to stop motion animation, for ages 8-12, free and drop-in.",
         "Kids ages 8-12 can drop in for free STEM activities over Thanksgiving break, including Buzz Off, hovercrafts, and stop-motion animation.",
       ],
@@ -1994,6 +2002,10 @@ const EDITS = {
     blurb: [
       ["Taste a Wednesday midday holiday luncheon among Gamble Garden's grounds in Palo Alto.", "Enjoy a Wednesday midday holiday luncheon on Gamble Garden's grounds in Palo Alto."],
       ["a Saturday midday holiday luncheon among the garden grounds.", "a Saturday midday holiday luncheon on the garden grounds."],
+      [
+        /^Shop holiday gifts from 30-plus vendors spread through the Gamble House and garden, strung with twinkling lights\.$/g,
+        "Shop for holiday gifts from 30-plus vendors in the Gamble House and garden, under a canopy of twinkling lights.",
+      ],
       ["Spend a Saturday morning at Gamble Garden, an outdoor visit open to visitors of all ages.", "Spend a Saturday morning outdoors at Gamble Garden. Visitors of all ages are welcome."],
     ],
   },
@@ -3416,6 +3428,20 @@ export function polishReviewedEventCopy(event) {
       && next.description.includes("Attendees are expected to know the rules of chess and must be able to play independently.")
       && next.blurb === "Play chess and meet other young players in a relaxed drop-in setting for grades K-8.") {
     next.blurb = "Drop in for chess at Milpitas Library. Players in grades K–8 need to know the rules and be able to play on their own.";
+  }
+  if (next.source === "San Jose Public Library" && next.title === "Reading to Children"
+      && typeof next.description === "string" && typeof next.blurb === "string"
+      && next.description.includes("They are also welcome to practice reading to our volunteer.")
+      && next.description.includes("children may drop in to hear a story any time during the program.")) {
+    next.blurb = next.blurb
+      .replace(
+        /^Bring your child to read one-on-one or in a small group with volunteer Janani\.$/,
+        "Kids can drop in for a story with volunteer Janani or practice reading aloud, one-on-one or in a small group.",
+      )
+      .replace(
+        /^Read one-on-one or in small groups with adult volunteers to build reading confidence and a love of books\.$/,
+        "Kids can drop in to hear a story from a volunteer or practice reading aloud, one-on-one or in a small group.",
+      );
   }
   // Cached Reading with Pets copy can still name the room after fact-checking removed it.
   if (next.source === "City Newsletter" && next.title === "Reading with Pets at Central Park Library"
