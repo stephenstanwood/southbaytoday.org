@@ -342,6 +342,10 @@ test("San José's November 18 agenda review names the council date under review"
   const summary = "The committee listed several proposals. The November 24, 2026, final agenda review was marked canceled.";
   assert.equal(polishCivicCopy(summary, options), `The committee listed several proposals. ${clarified}`);
   assert.equal(polishCivicTopic("The agenda marked the November 24, 2026, final agenda review as canceled.", options), clarified);
+  assert.equal(polishCivicCopy("It listed the November 24, 2026, final agenda as cancelled and the December 1, 2026, draft agenda for review.", options),
+    clarified.replace(/\.$/, " and the December 1, 2026, draft agenda for review."));
+  assert.match(polishCivicTopic("The November 24, 2026, final agenda was listed as cancelled; the December 1 draft was listed for review.", options),
+    /the committee's review of the November 24, 2026, City Council agenda as canceled/);
   assert.equal(polishCivicTopic(clarified, options), clarified);
 });
 

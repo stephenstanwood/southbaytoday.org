@@ -3274,14 +3274,14 @@ export function polishReviewedEventCopy(event) {
       );
     }
   }
-  // The library requires an application and recommends grades 2 and 3 within grades 1–3.
-  // https://sjpl.bibliocommons.com/events/6a7e13412dac6e00371ed9f0
+  // San José Public Library uses the same application and grade guidance across Reading Partners branches.
+  // See the Evergreen and Village Square listings: 6a7b5896a821f90037ed21c8 and 6a7b589eb204780029922cbe.
   if (next.source === "San Jose Public Library" && next.title === "Reading Partners One-on-One Reading Tutoring"
-      && next.venue === "Seven Trees Library" && next.registration === "required"
+      && next.venue && next.registration === "required"
       && typeof next.description === "string"
       && next.description.includes("Free reading help is available for students in grades 1–3. The program is recommended for students in grades 2 and 3.")
-      && next.blurb === "Bring your 2nd or 3rd grader for free one-on-one reading tutoring with trained volunteer tutors from Reading Partners.") {
-    next.blurb = "Apply for free one-on-one reading tutoring at Seven Trees Library for students in grades 1–3. The library recommends it for grades 2 and 3.";
+      && next.description.includes("applications are reviewed")) {
+    next.blurb = `Apply for free one-on-one reading tutoring at ${next.venue} for students in grades 1–3. The library recommends it for grades 2 and 3.`;
   }
   // The club is a drop-in for children who already know how to play.
   // https://sccl.bibliocommons.com/events/69fa6349caf93436005a035e

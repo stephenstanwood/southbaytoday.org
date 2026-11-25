@@ -2003,15 +2003,32 @@ test("library copy repairs survive source normalization and preserve event field
   );
 });
 
-test("cached library blurbs keep the organizer's application and skill requirements", () => {
-  const tutoring = {
-    source: "San Jose Public Library",
-    title: "Reading Partners One-on-One Reading Tutoring",
-    venue: "Seven Trees Library",
-    registration: "required",
-    description: "Free Reading Help for Students in Grades 1–3. Recommended for students in 2nd and 3rd grade.",
-    blurb: "Bring your 2nd or 3rd grader for free one-on-one reading tutoring with trained volunteer tutors from Reading Partners.",
-  };
+test("Reading Partners blurbs preserve application and grade guidance across library branches", () => {
+  const branches = [
+    ["Evergreen Library", "Get one-on-one reading help for grades 1-3 from a trained volunteer tutor at Evergreen Library in the afternoon."],
+    ["Village Square Library", "Get matched with a volunteer tutor for one-on-one reading practice if your child is in grades 1-3."],
+    ["Hillview Library", "Meet with a trained volunteer tutor for one-on-one reading practice if you're in grades 1-3 at Hillview Library."],
+    ["Seven Trees Library", "Bring your 2nd or 3rd grader for free one-on-one reading tutoring with trained volunteer tutors from Reading Partners."],
+  ];
+  const gradeGuidance = "Free Reading Help for Students in Grades 1–3. Recommended for students in 2nd and 3rd grade.";
+  for (const [venue, blurb] of branches) {
+    const event = {
+      source: "San Jose Public Library",
+      title: "Reading Partners One-on-One Reading Tutoring",
+      venue,
+      registration: "required",
+      description: `${gradeGuidance} Space is limited, and applications are reviewed to determine if the program is a good fit for your child.`,
+      blurb,
+    };
+    const reviewed = polishReviewedEventCopy(event);
+    assert.equal(reviewed.blurb, `Apply for free one-on-one reading tutoring at ${venue} for students in grades 1–3. The library recommends it for grades 2 and 3.`);
+    assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+    assert.equal(polishReviewedEventCopy({ ...event, registration: "closed" }).blurb, blurb);
+    assert.equal(polishReviewedEventCopy({ ...event, description: gradeGuidance }).blurb, blurb);
+  }
+});
+
+test("cached chess blurbs keep the organizer's independent-play requirement", () => {
   const chess = {
     source: "Santa Clara County Library",
     title: "Milpitas Children's Chess Club",
@@ -2019,11 +2036,6 @@ test("cached library blurbs keep the organizer's application and skill requireme
     description: "This program is not a class. Attendees are expected to know the rules of chess and must be able to play independently.",
     blurb: "Play chess and meet other young players in a relaxed drop-in setting for grades K-8.",
   };
-  const tutoringReviewed = polishReviewedEventCopy(tutoring);
-  assert.equal(tutoringReviewed.blurb, "Apply for free one-on-one reading tutoring at Seven Trees Library for students in grades 1–3. The library recommends it for grades 2 and 3.");
-  assert.deepEqual(polishReviewedEventCopy(tutoringReviewed), tutoringReviewed);
-  assert.equal(polishReviewedEventCopy({ ...tutoring, registration: "closed" }).blurb, tutoring.blurb);
-
   const chessReviewed = polishReviewedEventCopy(chess);
   assert.equal(chessReviewed.blurb, "Drop in for chess at Milpitas Library. Players in grades K–8 need to know the rules and be able to play on their own.");
   assert.deepEqual(polishReviewedEventCopy(chessReviewed), chessReviewed);

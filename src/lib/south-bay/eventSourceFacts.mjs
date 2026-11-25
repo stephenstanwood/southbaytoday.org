@@ -13,6 +13,7 @@ const MITCHELL_PARK_STUDY_COPY = [[
 ]];
 
 const PANAMA_DECEPTION_REMINDER = /\s*\bRegistration is not required, but (?:registering )?means you will receive a reminder email the day before\.?/i;
+const TURKEY_TROT_RACE_INFO = "https://www.svturkeytrot.com/general-race-info/";
 
 const ALMADEN_TECH_HELP_COPY = [
   [/\bLibby \(formerly OverDrive\)/gi, "Libby from OverDrive"],
@@ -601,15 +602,28 @@ const CORRECTIONS = [
     ["2026-11-21", "inbound-f5f7e6c23507b047"],
     ["2026-11-22", "inbound-dbe8c81d745bff20"],
   ].map(([date, id]) => ({ date, id, facts: { category: "market" } })),
-  // The November 20 county newsletter confirms these occurrences. The race
-  // organizer and meal hosts supply the venue names and admission terms.
-  ...[
-    ["Applied Materials Silicon Valley Turkey Trot", "san-jose", /W\. Santa Clara Street at N\. 1st Street/i, {
-      url: "https://www.svturkeytrot.com/general-race-info/",
+  // The organizer and its registration page give the same race-day timeline.
+  // Normalize both newsletter copies before dedup so pickup does not become a second race.
+  {
+    date: "2026-11-26",
+    matches: event => event.title === "Applied Materials Silicon Valley Turkey Trot"
+      && (event.url === TURKEY_TROT_RACE_INFO
+        || event.url === "https://runsignup.com/Race/CA/SanJose/SiliconValleyTurkeyTrot"
+        || (!event.url && /W\. Santa Clara Street at N\. 1st Street/i.test(event.address || event.venue || ""))),
+    facts: {
+      url: TURKEY_TROT_RACE_INFO,
       venue: "Downtown San Jose",
       address: "W. Santa Clara Street at N. First Street, San Jose",
+      time: "8:30 AM", endTime: null,
       cost: "paid", registration: REGISTRATION_REQUIRED,
-    }],
+      description: "The Thanksgiving Day 5K run/walk and 10K run start together in downtown San José.",
+      blurb: "Run or walk the 5K or run the 10K in downtown San José. Both races start at 8:30 AM.",
+    },
+    appendAttendanceNote: "Bib and shirt pickup and gear check open at 7:00 AM.",
+  },
+  // The November 20 county newsletter confirms these occurrences. The meal
+  // hosts supply the venue names and admission terms.
+  ...[
     ["48th Annual Free Thanksgiving Lunch with Knights of Columbus Council 5796", "milpitas", /Pavalkis Hall.*279 S\. Main/i, {
       url: "https://www.sjbparish.org/",
       cost: "free",
