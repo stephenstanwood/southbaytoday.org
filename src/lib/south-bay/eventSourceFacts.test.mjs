@@ -139,6 +139,17 @@ test("the county flag raising links to its dated flyer when the newsletter URL i
   assert.deepEqual(applyVerifiedEventFacts(nextYear), nextYear);
 });
 
+test("the Saratoga Thanksgiving service links to the city's confirmed 10 AM listing", () => {
+  const event = {
+    date: "2026-11-26", title: "61st Annual Community Interfaith Thanksgiving Service",
+    venue: "Sacred Heart Parish", time: "10:00 AM", endTime: null, url: "",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.deepEqual(fixed, { ...event, url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2710" });
+  const updated = { ...fixed, attendanceStatus: "needs-confirmation", attendanceNote: "Check the parish for a weather update." };
+  assert.deepEqual(applyVerifiedEventFacts(updated), updated);
+});
+
 test("the November 28 reading session uses the library's resolved signup window", () => {
   const staleCopy = "You may register for a 10-minute session online beginning two days before the event.";
   const event = {

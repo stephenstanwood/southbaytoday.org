@@ -2995,16 +2995,14 @@ const CORRECTIONS = [
       && event.venue === "Triton Museum of Art",
     facts: { url: "https://www.tritonmuseum.org/book-club" },
   },
-  // The city and Congregation Beth David list 10 AM. Sacred Heart lists 10:30.
-  // https://parish.sacredheartsaratoga.org/upcoming-events/
-  // https://bethdavid.mhsoftware.com/ViewList.html
+  // Sacred Heart's flyer and Beth David's calendar confirm the city's 10 AM start.
+  // https://parish.sacredheartsaratoga.org/wp-content/uploads/2026/11/Thanksgiving-Mass-Interfaith-Service-2026.png
+  // https://beth-david.org/events-programs-classes/
   {
     date: "2026-11-26",
-    url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2710",
     matches: event => !event.url && event.title === "61st Annual Community Interfaith Thanksgiving Service"
       && /^Sacred Heart Parish(?:,|$)/.test(event.venue || ""),
-    facts: { url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2710", attendanceStatus: "needs-confirmation" },
-    appendAttendanceNote: "Saratoga's calendar lists 10 AM. Sacred Heart Parish lists 10:30 AM. Confirm the start with the parish before going.",
+    facts: { url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2710" },
   },
   {
     date: "2026-12-03",
