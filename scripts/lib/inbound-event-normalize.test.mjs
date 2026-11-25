@@ -1,9 +1,35 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { fetchInboundEvents, inferCategory } from "../generate-events.mjs";
+import { capUpcomingEventSources, fetchInboundEvents, inferCategory } from "../generate-events.mjs";
 import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { VIRTUAL_TITLE_SIGNALS } from "../social/lib/content-rules.mjs";
+
+test("the Turkey Trot's two newsletter copies converge on the organizer's race start", () => {
+  const title = "Applied Materials Silicon Valley Turkey Trot";
+  const source = { cityKey: "san-jose", title };
+  const raw = [
+    { ...source, id: "packet-pickup", startsAt: "2026-11-26T07:00:00-08:00",
+      endsAt: "2026-11-26T11:30:00-08:00", location: "Downtown San Jose",
+      sourceUrl: "https://runsignup.com/Race/CA/SanJose/SiliconValleyTurkeyTrot" },
+    { ...source, id: "race-start", startsAt: "2026-11-26T08:30:00-08:00",
+      location: "Start line at W. Santa Clara Street at N. 1st Street, San Jose" },
+  ];
+  const events = fetchInboundEvents({ today: "2026-11-24", events: raw }).map(applyVerifiedEventFacts);
+  assert.equal(events.length, 2);
+  for (const event of events) {
+    assert.equal(event.time, "8:30 AM");
+    assert.equal(event.endTime, null);
+    assert.equal(event.registration, "required");
+    assert.equal(event.category, "community");
+    assert.match(event.attendanceNote, /pickup and gear check open at 7:00 AM/);
+    assert.equal(applyVerifiedEventFacts(event).attendanceNote, event.attendanceNote);
+  }
+  assert.equal(capUpcomingEventSources(events).length, 1);
+  assert.equal(normalizeInboundEventPresentation({
+    ...raw[0], startsAt: "2027-11-25T07:00:00-08:00",
+  }).time, "7:00 AM");
+});
 
 test("Sunnyvale's dated toy drive keeps its official link and named meeting point", () => {
   const raw = {
