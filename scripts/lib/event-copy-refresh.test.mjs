@@ -2101,6 +2101,27 @@ test("Reading with Pets blurbs say who reads and keep the verified reservation i
   }
 });
 
+test("Berryessa Pokémon copy distinguishes the cards provided from library membership cards", () => {
+  const event = applyVerifiedEventFacts({
+    id: "sjpl-6affa6610ad4ed003a04847f",
+    title: "Pokémon TCG (Trading Card Game)",
+    source: "San Jose Public Library",
+    date: "2026-12-02",
+    description: "Practice playing the most popular trading card game, Pokémon TCG. We will have tutorial decks that teach you how to play and cards that you can use to construct and play a deck.",
+    blurb: "Play Pokémon TCG with tutorial decks that teach the rules, and build a deck from library cards.",
+  });
+  const reviewed = {
+    ...event,
+    description: "Practice playing the Pokémon Trading Card Game. Use a tutorial deck to learn the rules. You can also build your own deck with the cards provided and try it out.",
+    blurb: "Learn the Pokémon Trading Card Game with a tutorial deck or build your own with the cards provided.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+
+  const otherPublisher = { ...event, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
+
 test("reviewed calendar descriptions survive refresh", () => {
   const samples = [
     {

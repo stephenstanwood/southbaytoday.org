@@ -250,6 +250,10 @@ const EDITS = {
     ],
     description: [
       [
+        "Practice playing the Pokémon Trading Card Game. We will have tutorial decks that teach you how to play and cards that you can use to construct and play a deck.",
+        "Practice playing the Pokémon Trading Card Game. Use a tutorial deck to learn the rules. You can also build your own deck with the cards provided and try it out.",
+      ],
+      [
         "who attended our 3D Design & Printing workshop and now want to try their hands at it.",
         "who attended our 3D Design & Printing workshop and are ready for hands-on practice.",
       ],
@@ -1733,6 +1737,10 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        "Play Pokémon TCG with tutorial decks that teach the rules, and build a deck from library cards.",
+        "Learn the Pokémon Trading Card Game with a tutorial deck or build your own with the cards provided.",
+      ],
       [
         "Make an iron-on mini drawstring bag from several designs, with supplies provided free and no registration required, alongside other teens.",
         "Join other teens to decorate a mini drawstring bag. Choose from several iron-on designs. Supplies are free, and no registration is required.",
