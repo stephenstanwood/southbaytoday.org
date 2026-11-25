@@ -294,6 +294,14 @@ test("refreshed Campbell digest keeps the reviewed transcript and fence wording"
 test("refreshed council summaries keep their reviewed agenda wording", () => {
   const examples = [
     [
+      "The agenda included a contract for designing a replacement of the Community Center pool.",
+      "The agenda included a contract to design a replacement for the Community Center pool.",
+    ],
+    [
+      "The agenda listed an urgency ordinance to set a temporary moratorium on approving applications for, and the establishment or operation of, detention or custodial detention facilities and custodial processing facilities.",
+      "The agenda listed an urgency ordinance for a temporary moratorium on approving applications for detention facilities, custodial detention facilities, or custodial processing facilities. The moratorium would also cover establishing or operating those facilities.",
+    ],
+    [
       "The agenda listed a $417,400 contract with ELECCO of Milpitas to replace the Police Department's backup generator, with up to 15% for construction contingency.",
       "The agenda listed a $417,400 contract with ELECCO of Milpitas to replace the Police Department's backup generator, with a construction contingency of up to 15%.",
     ],
@@ -377,10 +385,31 @@ test("San José's November 18 agenda review names the council date under review"
   assert.equal(polishCivicCopy(summary, options), `The committee listed several proposals. ${clarified}`);
   assert.equal(polishCivicTopic("The agenda marked the November 24, 2026, final agenda review as canceled.", options), clarified);
   assert.equal(polishCivicCopy("It listed the November 24, 2026, final agenda as cancelled and the December 1, 2026, draft agenda for review.", options),
-    clarified.replace(/\.$/, " and the December 1, 2026, draft agenda for review."));
+    clarified + " It also listed the December 1, 2026, draft agenda for review.");
   assert.match(polishCivicTopic("The November 24, 2026, final agenda was listed as cancelled; the December 1 draft was listed for review.", options),
     /the committee's review of the November 24, 2026, City Council agenda as canceled/);
   assert.equal(polishCivicTopic(clarified, options), clarified);
+
+  const refreshedSummary = "The committee listed several proposals. It listed the November 24, 2026, final agenda as cancelled and the December 1, 2026, draft agenda for review.";
+  const refreshedTopic = "The November 24, 2026, final agenda was listed as cancelled; the December 1, 2026, draft agenda was listed for review, including adding new items and setting 'time certain' slots for specific items.";
+  const expectedSummary = `The committee listed several proposals. ${clarified} It also listed the December 1, 2026, draft agenda for review.`;
+  const expectedTopic = clarified + ' It also listed the December 1, 2026, draft agenda for review, including adding new items and setting "time certain" slots for specific items.';
+  assert.equal(polishCivicCopy(refreshedSummary, options), expectedSummary);
+  assert.equal(polishCivicTopic(refreshedTopic, options), expectedTopic);
+  assert.equal(polishCivicTopic(expectedTopic, options), expectedTopic);
+  assert.equal(polishCivicCopy(refreshedSummary, { cityId: "another-city" }), refreshedSummary);
+});
+
+test("refreshed planning copy separates the preschool address and gives the apartment count once", () => {
+  const summary = "A hearing continued from November 9 was listed on the November 23 Planning Commission agenda for a 16,000-square-foot, two-story childcare and preschool at 855 E. Homestead Road It would replace a vacant commercial building, and the plan includes a new eight-foot masonry wall along the western property line and part of the southern property line.";
+  const reviewed = summary.replace("Homestead Road It", "Homestead Road. It");
+  const headline = "Planning Commission agenda: 316-unit apartments at 400 Saratoga Avenue golf course";
+  assert.equal(polishCivicCopy(summary, { cityId: "sunnyvale" }), reviewed);
+  assert.equal(polishCivicCopy(reviewed, { cityId: "sunnyvale" }), reviewed);
+  assert.equal(polishCivicModifiers(headline, { cityId: "santa-clara" }),
+    "Planning Commission agenda: 316 apartments at 400 Saratoga Avenue golf course");
+  assert.equal(polishCivicModifiers("400 Saratoga Avenue: 316-unit apartment building"),
+    "400 Saratoga Avenue: 316-unit apartment building");
 });
 
 test("the real digest generator finishes sentence topics but preserves fragments and identifiers", () => {
