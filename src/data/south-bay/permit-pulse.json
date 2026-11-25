@@ -1,31 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-25T04:11:51.617Z",
+      "generatedAt": "2026-11-25T14:14:06.497Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 17 – Nov 24",
+      "dateRange": "Nov 18 – Nov 25",
       "stats": {
-        "total": 471,
-        "notable": 45,
-        "newUnits": 8,
-        "totalValuation": 44674303
+        "total": 426,
+        "notable": 40,
+        "newUnits": 5,
+        "totalValuation": 39978205
       },
       "permits": [
-        {
-          "id": "2026-120848-RS",
-          "address": "2432 Quimby Rd #2",
-          "category": "residential-new",
-          "categoryLabel": "Accessory Dwelling Unit",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 175040,
-          "units": 1,
-          "issueDate": "2026-11-17",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
         {
           "id": "2026-139434-RS",
           "address": "3072 Delta Rd #2",
@@ -36,30 +24,6 @@
           "valuation": 131588,
           "units": 1,
           "issueDate": "2026-11-20",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-126240-RS",
-          "address": "779 Bird Av #2",
-          "category": "residential-new",
-          "categoryLabel": "Accessory Dwelling Unit",
-          "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 113996,
-          "units": 1,
-          "issueDate": "2026-11-17",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-132227-RS",
-          "address": "775 Malone Rd #2",
-          "category": "residential-new",
-          "categoryLabel": "Accessory Dwelling Unit",
-          "workType": "New Construction",
-          "description": "Epr Code Amnesty Legalize Detach Garage Conversion to ADU",
-          "valuation": 106432,
-          "units": 1,
-          "issueDate": "2026-11-17",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -123,16 +87,52 @@
           "subtype": "Health Club"
         },
         {
-          "id": "2026-145786-CI",
-          "address": "3625 Cisco Wy",
+          "id": "2026-148001-CI",
+          "address": "5220 Prospect Rd",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Cisco Chiller Replacement",
-          "valuation": 1563000,
+          "description": "Westgate Church (Be 100%) New Parking Lot",
+          "valuation": 1439600,
           "units": 0,
-          "issueDate": "2026-11-17",
-          "subtype": "Commercial/Industrial"
+          "issueDate": "2026-11-19",
+          "subtype": "Church"
+        },
+        {
+          "id": "2026-148276-CI",
+          "address": "1905 E San Antonio St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "New Construction",
+          "description": "Meditation Center",
+          "valuation": 1400000,
+          "units": 0,
+          "issueDate": "2026-11-19",
+          "subtype": "Church"
+        },
+        {
+          "id": "2026-147371-CI",
+          "address": "102 Poughkeepsie Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Be 100%) Underground Tank Replacement",
+          "valuation": 800000,
+          "units": 0,
+          "issueDate": "2026-11-18",
+          "subtype": "Service Station"
+        },
+        {
+          "id": "2026-148279-CI",
+          "address": "180 Oakland Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "New Construction",
+          "description": "Master Zen House",
+          "valuation": 500000,
+          "units": 0,
+          "issueDate": "2026-11-19",
+          "subtype": "Church"
         }
       ]
     }
