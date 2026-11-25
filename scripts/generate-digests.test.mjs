@@ -407,10 +407,13 @@ test("Los Gatos digest keeps the adoption and separate authorizations clear", ()
 test("San José's holiday book drive keeps the district in the published agenda", () => {
   const shortTopic = "A proclamation and council-sponsored special event for the Holiday Children Book Drive in Council District 11 (Kamei).";
   const eventApprovals = "Council District 6 (Mulcahy) had an item seeking retroactive approval and approval of various council-sponsored events, and District 11 (Kamei) had an item seeking approval of a proclamation and a Holiday Children Book Drive event";
+  const publishedTopic = "The agenda listed approval of a Holiday Children Book Drive proclamation and event sponsored by Council District 1 (Kamei)";
   const retroactiveApprovals = "Council District 9 (Foley) and District 7 (Doan) each had an item seeking retroactive approval of a Senior Symposium and a bus visit to the Vietnam Traveling Memorial Wall, respectively, as council-sponsored events using city funds and donated materials and services";
   for (const [topic, reviewed] of [
     [shortTopic, shortTopic.replace("District 11", "District 1")],
     [eventApprovals, "Council District 6 (Mulcahy) sought approval for several council-sponsored events, including retroactive approval for some. District 1 (Kamei) sought approval for the Holiday Children Book Drive and its proclamation."],
+    [`${publishedTopic}, plus retroactive approval and approval of various events sponsored by Council District 6 (Mulcahy).`,
+      `${publishedTopic}. It also listed several events sponsored by Council District 6 (Mulcahy) for approval, some retroactively.`],
     [retroactiveApprovals, `${retroactiveApprovals}.`],
   ]) {
     const corrected = polishCivicTopic(topic, { cityId: "san-jose" });
@@ -453,6 +456,16 @@ test("refreshed planning copy separates the preschool address and gives the apar
     "Planning Commission agenda: 316 apartments at 400 Saratoga Avenue golf course");
   assert.equal(polishCivicModifiers("400 Saratoga Avenue: 316-unit apartment building"),
     "400 Saratoga Avenue: 316-unit apartment building");
+});
+
+test("refreshed Golden Oak Court copy identifies the site being divided", () => {
+  const options = { cityId: "sunnyvale" };
+  assert.equal(polishCivicModifiers("Nine townhomes proposed on Golden Oak Court single-family lot", options),
+    "Nine townhomes proposed for a single-family lot on Golden Oak Court");
+  const summary = "The 0.35-acre site is zoned medium density residential (R-3), and the project would be subdivided into three lots including a common lot.";
+  const reviewed = "The 0.35-acre site is zoned medium-density residential (R-3). The proposal would divide the site into three lots, including a common lot.";
+  assert.equal(polishCivicCopy(summary, options), reviewed);
+  assert.equal(polishCivicCopy(reviewed, options), reviewed);
 });
 
 test("the real digest generator finishes sentence topics but preserves fragments and identifiers", () => {

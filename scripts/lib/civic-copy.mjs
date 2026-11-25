@@ -29,6 +29,7 @@ export function polishCivicModifiers(text, { cityId } = {}) {
       .replace(/\bHistoric-listed home\b/g, "Home listed as historic")
       .replace(/\bHistoric-listed Washington Street lot\b/g, "Washington Street lot listed as historic")
       .replace(/^(Planning Commission agenda: )(\d[\d,]*)-unit apartments(?= at 400 Saratoga Avenue golf course$)/g, "$1$2 apartments")
+      .replace("Nine townhomes proposed on Golden Oak Court single-family lot", "Nine townhomes proposed for a single-family lot on Golden Oak Court")
     : text;
 }
 
@@ -52,6 +53,8 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace("along the western and part of the southern property lines.",
         "along the western property line and part of the southern property line.")
       .replace("E. Homestead Road It would replace", "E. Homestead Road. It would replace")
+      .replace("is zoned medium density residential (R-3), and the project would be subdivided into three lots including a common lot.",
+        "is zoned medium-density residential (R-3). The proposal would divide the site into three lots, including a common lot.")
       .replace("on a General Plan amendment and rezone for a", "on a General Plan amendment and rezoning for a")
       .replace("and dedicate land for a public park, and an EIR was prepared and circulated for public review.",
         "and dedicate land for a public park. An environmental impact report was prepared and circulated for public review.")
@@ -144,6 +147,8 @@ export function polishCivicTopic(text, options) {
   if (options?.cityId === "san-jose" && typeof copy === "string") {
     if (/\bHoliday Children Book Drive\b/i.test(copy)) {
       copy = copy.replace(/\bDistrict 11\b(?= \(Kamei\))/i, "District 1")
+        .replace(", plus retroactive approval and approval of various events sponsored by Council District 6 (Mulcahy).",
+          ". It also listed several events sponsored by Council District 6 (Mulcahy) for approval, some retroactively.")
         .replace(/^Council District 6 \(Mulcahy\) had an item seeking retroactive approval and approval of various council-sponsored events, and District 1 \(Kamei\) had an item seeking approval of a proclamation and a Holiday Children Book Drive event\.?$/,
           "Council District 6 (Mulcahy) sought approval for several council-sponsored events, including retroactive approval for some. District 1 (Kamei) sought approval for the Holiday Children Book Drive and its proclamation.");
     }
