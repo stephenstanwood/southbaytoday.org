@@ -191,7 +191,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     title: "Los Gatos Farmers Market",
     city: "los-gatos",
     venue: "Town Plaza Park",
-    address: "Main St & N Santa Cruz Ave, Los Gatos",
+    address: "W Main St & S Santa Cruz Ave, Los Gatos",
     category: "market",
     recurrence: "weekly",
     days: ["sunday"],

@@ -6,7 +6,7 @@ import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFact
 
 const fixture = JSON.parse(readFileSync(new URL("../lib/fixtures/sjsu-event-categories-2026-11-02.json", import.meta.url)));
 
-test("Los Gatos market projections use the organizer's intersection rather than an unsupported street number", async () => {
+test("Los Gatos market projections use the town's park name and street intersection", async () => {
   const source = readFileSync(new URL("../lib/fixtures/los-gatos-farmers-market-2026-11-02.txt", import.meta.url), "utf8");
   assert.match(source, /Town Park Plaza on Main Street & N\. Santa Cruz Avenue/);
   const market = FARMERS_MARKETS.find((entry) => entry.title === "Los Gatos Farmers Market");
@@ -19,8 +19,8 @@ test("Los Gatos market projections use the organizer's intersection rather than 
   assert.equal(events[0].date, "2026-11-08");
   assert.equal(events.at(-1).date, "2027-01-31");
   for (const event of events) {
-    assert.equal(event.address, "Main St & N Santa Cruz Ave, Los Gatos");
-    assert.equal(event.venue, "Town Park Plaza");
+    assert.equal(event.address, "W Main St & S Santa Cruz Ave, Los Gatos");
+    assert.equal(event.venue, "Town Plaza Park");
     assert.equal(event.time, "9:00 AM");
     assert.equal(event.endTime, "1:00 PM");
     assert.equal(event.projectedRecurrence, true);

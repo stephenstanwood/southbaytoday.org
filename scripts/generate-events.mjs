@@ -8211,9 +8211,9 @@ const FARMERS_MARKETS = [
   },
   {
     title: "Los Gatos Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM",
-    // The organizer publishes an intersection, as does events-data.ts. Never
-    // substitute a nearby numbered address for the actual market location.
-    venue: "Town Park Plaza", address: "Main St & N Santa Cruz Ave, Los Gatos", city: "los-gatos",
+    // The town's market operations RFP gives the park name and intersection.
+    // https://www.losgatosca.gov/DocumentCenter/View/40158/Farmers-Market-RFP-Final
+    venue: "Town Plaza Park", address: "W Main St & S Santa Cruz Ave, Los Gatos", city: "los-gatos",
     url: "https://www.cafarmersmkts.com/losgatos-farmers-market/", season: [1, 12],
     evidencePatterns: [/Los Gatos Farmers[’']? Market/i, /Every Sunday/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
   },
