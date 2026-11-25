@@ -53,14 +53,6 @@ export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
     source: "https://sccl.bibliocommons.com/v2/events/6afe8547e4f7a1002c08ec05",
   }),
   Object.freeze({
-    title: /^A Christmas Carol(?: presented by Silicon Valley Shakespeare)?$/i,
-    venue: /^Montalvo Arts Center$/i,
-    date: "2026-12-04",
-    matches: event => /^https:\/\/(?:my\.montalvoarts\.org\/3261\/3262|(?:www\.)?svshakespeare\.org\/carol)\/?(?:[?#].*)?$/.test(event.url || ""),
-    reason: "Montalvo's dated page gives 6 PM and directs ticket buyers to Silicon Valley Shakespeare, which lists 7:30 PM for evening performances. Withhold the opening until the producer confirms its start.",
-    source: "https://my.montalvoarts.org/3261/3262",
-  }),
-  Object.freeze({
     title: /^Building Evidentiary Infrastructure During an Active War: Lessons from the Ukraine War Archive$/i,
     venue: /.*/,
     date: "2026-11-20",

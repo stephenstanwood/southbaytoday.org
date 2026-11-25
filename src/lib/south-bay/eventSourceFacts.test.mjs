@@ -15,6 +15,57 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("the Earthquakes watch party offers an RSVP and welcomes all ages", () => {
+  const party = {
+    date: "2026-11-28", title: "Quakes Game 2 Watch Party", source: "City Newsletter",
+    city: "san-jose", venue: "San Pedro Square", url: "https://www.sjearthquakes.com/fans/watchparty",
+  };
+  const verified = applyVerifiedEventFacts(party);
+  assert.equal(verified.attendanceNote, "All ages welcome. RSVP is available on the Earthquakes' watch party page.");
+  assert.equal(requiresAdvanceRegistration(verified), false);
+  assert.deepEqual(applyVerifiedEventFacts(verified), verified);
+  const otherDate = { ...party, date: "2026-12-05" };
+  assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
+test("the Christmas Carol opening follows the producer's dated sold-out performance", () => {
+  const show = {
+    date: "2026-12-04", title: "A Christmas Carol presented by Silicon Valley Shakespeare",
+    city: "saratoga", venue: "Montalvo Arts Center", url: "https://my.montalvoarts.org/3261/3262",
+    time: "6:00 PM", attendanceStatus: "needs-confirmation",
+  };
+  const reviewed = applyVerifiedEventFacts(show);
+  assert.equal(reviewed.time, "7:30 PM");
+  assert.equal(reviewed.url, "https://www.svshakespeare.org/carol");
+  assert.equal(reviewed.registration, "full");
+  assert.match(reviewed.attendanceNote, /waitlist.*No tickets at the door/);
+  assert.equal(requiresAttendanceConfirmation(reviewed), false);
+  assert.equal(isEventPublishable(reviewed), true);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  const browserRow = { ...show, title: "A Christmas Carol", url: "https://montalvoarts.org/christmas-carol/", time: null };
+  assert.equal(applyVerifiedEventFacts(browserRow).time, "7:30 PM");
+  const otherDate = { ...show, date: "2026-12-13" };
+  assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
+test("ICA exhibits show regular gallery hours without changing run dates or timed programs", () => {
+  const exhibit = {
+    date: "2027-01-15", startDate: "2027-01-15", endDate: "2027-08-22",
+    url: "https://www.icasanjose.org/upcoming-exhibitions/nimahgobirfamiliar/",
+    source: "ICA San José", ongoing: true,
+    blurb: "See Nimah Gobir's exhibition on your own schedule.",
+  };
+  const verified = applyVerifiedEventFacts(exhibit);
+  assert.deepEqual(verified, {
+    ...exhibit,
+    blurb: "See Nimah Gobir's exhibition Familiar at ICA San José.",
+    attendanceNote: "Regular gallery hours are Thursday through Sunday, noon to 5 PM.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(verified), verified);
+  const workshop = { ...exhibit, time: "5:00 PM", url: "https://www.icasanjose.org/upcoming-programs/decffzines/" };
+  assert.equal(applyVerifiedEventFacts(workshop), workshop);
+});
+
 test("identifies the downtown holiday opening as free family admission", () => {
   const ceremony = {
     source: "City Newsletter", city: "san-jose", date: "2026-11-27",

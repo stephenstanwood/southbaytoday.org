@@ -135,6 +135,44 @@ const HISTORY_PARK_HOLIDAY_TEA_FACTS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The team's watch party page embeds the dated RSVP form. It confirms
+  // that all ages are welcome and offers an RSVP without saying it is required.
+  // https://sjearthquakes.formstack.com/forms/2026viewingparty
+  {
+    date: "2026-11-28",
+    matches: event => event.source === "City Newsletter" && event.city === "san-jose"
+      && event.title === "Quakes Game 2 Watch Party" && event.venue === "San Pedro Square"
+      && event.url === "https://www.sjearthquakes.com/fans/watchparty",
+    appendAttendanceNote: "All ages welcome. RSVP is available on the Earthquakes' watch party page.",
+  },
+  // Silicon Valley Shakespeare's box office lists December 4 at 7:30 PM.
+  // The venue's 6 PM page directs readers to the producer for tickets.
+  // https://www.svshakespeare.org/tickets
+  {
+    date: "2026-12-04",
+    matches: event => event.city === "saratoga" && event.venue === "Montalvo Arts Center"
+      && /^A Christmas Carol(?: presented by Silicon Valley Shakespeare)?$/i.test(event.title || "")
+      && /^https:\/\/(?:my\.montalvoarts\.org\/3261\/3262|(?:www\.)?montalvoarts\.org\/christmas-carol|(?:www\.)?svshakespeare\.org\/carol)\/?(?:[?#].*)?$/.test(event.url || ""),
+    facts: {
+      title: "A Christmas Carol",
+      time: "7:30 PM",
+      endTime: null,
+      url: "https://www.svshakespeare.org/carol",
+      cost: "paid",
+      registration: REGISTRATION_FULL,
+      attendanceStatus: undefined,
+      attendanceNote: "Sold out as of November 25. The producer offers a waitlist. No tickets at the door.",
+      description: "Silicon Valley Shakespeare's production moves through the historic Villa and courtyards at Montalvo Arts Center.",
+      blurb: "Follow Silicon Valley Shakespeare's roving production through the Villa and courtyards at Montalvo Arts Center.",
+      occurrenceEvidence: {
+        kind: "first-party-occurrence-page",
+        sourceUrl: "https://www.svshakespeare.org/tickets",
+        date: "2026-12-04",
+        time: "7:30 PM",
+        checkedAt: "2026-11-25T10:18:39Z",
+      },
+    },
+  },
   // The downtown opening ceremony is a free community event for families.
   // https://christmasinthepark.com/ and https://christmasinthepark.com/events/
   {
@@ -5284,6 +5322,12 @@ const CORRECTIONS = [
     url: "https://www.icasanjose.org/current-exhibitions/gregito-togiveandtake/",
     facts: { blurb: "Explore Greg Ito's paintings, sculptures and video installation about family, sacrifice and inheritance at ICA San José." },
   },
+  {
+    dateFrom: "2027-01-15", dateThrough: "2027-08-22",
+    url: "https://www.icasanjose.org/upcoming-exhibitions/nimahgobirfamiliar/",
+    // This exhibition follows the gallery's opening hours.
+    facts: { blurb: "See Nimah Gobir's exhibition Familiar at ICA San José." },
+  },
   // First-party ticket pages distinguish the free community showcase from
   // the paid student performance. Sparse calendar/booking responses must not
   // restore a fee or turn the performing ensemble into a craft activity.
@@ -7553,6 +7597,15 @@ function thanksgivingExhibitClosure(event) {
 }
 
 export function applyVerifiedEventFacts(event) {
+  // Ongoing ICA exhibition rows carry a date range. Use the museum's regular
+  // hours to keep the range from implying that the gallery opens every day.
+  // https://www.icasanjose.org/visit/
+  if (event?.source === "ICA San José" && event.ongoing && !event.time && !event.virtual) {
+    const hours = "Regular gallery hours are Thursday through Sunday, noon to 5 PM.";
+    if (!event.attendanceNote?.includes(hours)) {
+      event = { ...event, attendanceNote: [event.attendanceNote, hours].filter(Boolean).join(" ") };
+    }
+  }
   // Stanford's campus guide gives Maples Pavilion's address. Two Athletics
   // newsletters were ingested with 641 Campus Drive instead.
   // https://maps.stanford.edu/ada/building-ada.cfm?FACIL_ID=09-300
