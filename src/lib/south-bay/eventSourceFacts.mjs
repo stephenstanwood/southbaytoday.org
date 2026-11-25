@@ -687,6 +687,57 @@ const CORRECTIONS = [
       address: "760 Lakechime Drive, Sunnyvale, CA 94089",
     },
   })),
+  // These dated LibCal pages give the location and sign-up instructions.
+  // https://www.library.sunnyvale.ca.gov/about-us/locations-hours
+  {
+    date: "2026-12-03",
+    url: "https://sunnyvale.libcal.com/event/16525085",
+    facts: {
+      venue: "Sunnyvale Main Library, Program Room",
+      address: "665 W. Olive Ave., Sunnyvale, CA 94086",
+      registration: REGISTRATION_REQUIRED,
+    },
+    appendAttendanceNote: "Reserve a spot in advance. The library takes walk-ins when space is available.",
+  },
+  {
+    date: "2026-12-03",
+    url: "https://sunnyvale.libcal.com/event/17982107",
+    facts: {
+      venue: "Lakewood Branch Library, Program Room",
+      address: "760 Lakechime Drive, Sunnyvale, CA 94089",
+      registration: REGISTRATION_REQUIRED,
+      cost: "free",
+      audienceAge: "all",
+      sourceAudiences: ["Teens", "Adults"],
+      description: "Tiffany Tzeng leads a beginner embroidery workshop for teens and adults. Space is limited, and registration is required.",
+      blurb: "Learn beginner embroidery with Tiffany Tzeng at Lakewood Branch Library. The free workshop welcomes teens and adults.",
+    },
+    appendAttendanceNote: "The booking form asks for a child's grade. Contact Lakewood Branch if the form does not offer a grade that applies to you.",
+  },
+  {
+    // The event description says booking is optional. The booking panel and
+    // the November 25 City of Sunnyvale library bulletin say it is required.
+    date: "2026-12-07",
+    url: "https://sunnyvale.libcal.com/event/17861320",
+    facts: {
+      venue: "Sunnyvale Main Library, Program Room",
+      address: "665 W. Olive Ave., Sunnyvale, CA 94086",
+      cost: "free",
+      attendanceStatus: "needs-confirmation",
+      description: "Students in grades 6–12 can learn to spot AI-generated content and check online claims in a workshop led by the student-run Civify Project.",
+      blurb: "Practice spotting AI-generated content and checking online claims at a free workshop for grades 6–12.",
+    },
+    appendAttendanceNote: "The event description calls sign-up optional. The booking panel and library bulletin say registration is required. Check with the library before walking in.",
+  },
+  // The library confirms the tutorial decks and cards. Its promotional copy
+  // gives no basis for ranking this game against other trading card games.
+  // https://sjpl.bibliocommons.com/v2/events/6affa6610ad4ed003a04847f
+  {
+    date: "2026-12-02",
+    id: "sjpl-6affa6610ad4ed003a04847f",
+    copyReplacements: [[/\bPractice playing the most popular trading card game, Pokémon TCG\./i,
+      "Practice playing the Pokémon Trading Card Game."]],
+  },
   // The Friends' sale calendar and library bulletin both list this sale.
   {
     date: "2026-12-12",

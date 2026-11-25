@@ -21029,7 +21029,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": "free",
-      "description": "Practice playing the most popular trading card game, Pokémon TCG. We will have tutorial decks that teach you how to play and cards that you can use to construct and play a deck.",
+      "description": "Practice playing the Pokémon Trading Card Game. We will have tutorial decks that teach you how to play and cards that you can use to construct and play a deck.",
       "sourceAudiences": [
         "Kids, ages 5-10",
         "Pre-Teens, ages 10-12"
@@ -24697,8 +24697,8 @@
       "displayDate": "Thu, Dec 3",
       "time": "5:00 PM",
       "endTime": "6:30 PM",
-      "venue": "Sunnyvale Main Library",
-      "address": "Sunnyvale Main Library, Program Room",
+      "venue": "Sunnyvale Main Library, Program Room",
+      "address": "665 W. Olive Ave., Sunnyvale, CA 94086",
       "city": "sunnyvale",
       "category": "education",
       "cost": null,
@@ -24709,7 +24709,9 @@
       "audienceAge": "kids",
       "image": "https://d68g328n4ug0e.cloudfront.net/misc/4934/events/13025/2026_09_24_13_56_56.png",
       "blurb": "Teens in grades 6-12 can make their own lip balm from all-natural ingredients and learn about beeswax.",
-      "firstSeenAt": "2026-11-25T20:27:31.542Z"
+      "firstSeenAt": "2026-11-25T20:27:31.542Z",
+      "registration": "required",
+      "attendanceNote": "Reserve a spot in advance. The library takes walk-ins when space is available."
     },
     {
       "id": "midpen-60edade061abbb99",
@@ -26002,19 +26004,21 @@
       "displayDate": "Mon, Dec 7",
       "time": "4:00 PM",
       "endTime": "5:00 PM",
-      "venue": "Sunnyvale Main Library",
-      "address": "Sunnyvale Main Library, Library Program Room",
+      "venue": "Sunnyvale Main Library, Program Room",
+      "address": "665 W. Olive Ave., Sunnyvale, CA 94086",
       "city": "sunnyvale",
       "category": "education",
-      "cost": null,
-      "description": "Educational AI workshop for students in grades 6-12. Registration is required, and spots are guaranteed only until the start of the program.",
+      "cost": "free",
+      "description": "Students in grades 6–12 can learn to spot AI-generated content and check online claims in a workshop led by the student-run Civify Project.",
       "url": "https://sunnyvale.libcal.com/event/17861320",
       "source": "City Newsletter",
       "kidFriendly": true,
       "audienceAge": "kids",
       "image": "https://d68g328n4ug0e.cloudfront.net/misc/4934/events/13025/2026_11_10_10_16_35.jpg",
-      "blurb": "Join a hands-on educational AI workshop for students in grades 6-12, with registration required.",
-      "firstSeenAt": "2026-11-25T20:27:31.542Z"
+      "blurb": "Practice spotting AI-generated content and checking online claims at a free workshop for grades 6–12.",
+      "firstSeenAt": "2026-11-25T20:27:31.542Z",
+      "attendanceStatus": "needs-confirmation",
+      "attendanceNote": "The event description calls sign-up optional. The booking panel and library bulletin say registration is required. Check with the library before walking in."
     },
     {
       "id": "midpen-9c4c05e4259b9ea4",
@@ -26088,19 +26092,25 @@
       "displayDate": "Thu, Dec 3",
       "time": "3:00 PM",
       "endTime": "4:00 PM",
-      "venue": "Lakewood Branch Library",
-      "address": "Lakewood Branch Library, Maker Lab",
+      "venue": "Lakewood Branch Library, Program Room",
+      "address": "760 Lakechime Drive, Sunnyvale, CA 94089",
       "city": "sunnyvale",
       "category": "community",
-      "cost": null,
-      "description": "Embroidery program for teens in grades 6-12. Registration is not required, but space is limited and doors close when the room is full.",
+      "cost": "free",
+      "description": "Tiffany Tzeng leads a beginner embroidery workshop for teens and adults. Space is limited, and registration is required.",
       "url": "https://sunnyvale.libcal.com/event/17982107",
       "source": "City Newsletter",
       "kidFriendly": false,
-      "audienceAge": "kids",
+      "audienceAge": "all",
       "image": "https://d68g328n4ug0e.cloudfront.net/misc/4934/events/23216/2026_11_19_15_38_01.jpg",
-      "blurb": "Stitch embroidery alongside other teens in grades 6-12 at a drop-in session where space is limited.",
-      "firstSeenAt": "2026-11-25T20:27:31.542Z"
+      "blurb": "Learn beginner embroidery with Tiffany Tzeng at Lakewood Branch Library. The free workshop welcomes teens and adults.",
+      "firstSeenAt": "2026-11-25T20:27:31.542Z",
+      "registration": "required",
+      "sourceAudiences": [
+        "Teens",
+        "Adults"
+      ],
+      "attendanceNote": "The booking form asks for a child's grade. Contact Lakewood Branch if the form does not offer a grade that applies to you."
     },
     {
       "id": "sjsu-b633beb6f4439b5a",

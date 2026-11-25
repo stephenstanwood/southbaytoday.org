@@ -40,6 +40,64 @@ test("Reading with Pets shows the required reservation and uses the verified lib
   assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
 });
 
+test("Sunnyvale's dated workshop listings use the booking pages' locations and attendance terms", () => {
+  const lipBalm = {
+    date: "2026-12-03",
+    url: "https://sunnyvale.libcal.com/event/16525085",
+    venue: "Sunnyvale Main Library",
+    address: "Sunnyvale Main Library, Program Room",
+  };
+  const lipBalmReviewed = applyVerifiedEventFacts(lipBalm);
+  assert.equal(lipBalmReviewed.venue, "Sunnyvale Main Library, Program Room");
+  assert.equal(lipBalmReviewed.address, "665 W. Olive Ave., Sunnyvale, CA 94086");
+  assert.equal(requiresAdvanceRegistration(lipBalmReviewed), true);
+  assert.match(lipBalmReviewed.attendanceNote, /takes walk-ins when space is available/);
+  assert.equal(applyVerifiedEventFacts({ ...lipBalm, registration: "full" }).registration, "full");
+  assert.deepEqual(applyVerifiedEventFacts(lipBalmReviewed), lipBalmReviewed);
+
+  const embroidery = {
+    date: "2026-12-03",
+    url: "https://sunnyvale.libcal.com/event/17982107",
+    address: "Lakewood Branch Library, Maker Lab",
+    audienceAge: "kids",
+    description: "Registration is not required.",
+    blurb: "Drop in for teen embroidery.",
+  };
+  const embroideryReviewed = applyVerifiedEventFacts(embroidery);
+  assert.equal(embroideryReviewed.venue, "Lakewood Branch Library, Program Room");
+  assert.equal(embroideryReviewed.address, "760 Lakechime Drive, Sunnyvale, CA 94089");
+  assert.equal(embroideryReviewed.audienceAge, "all");
+  assert.deepEqual(embroideryReviewed.sourceAudiences, ["Teens", "Adults"]);
+  assert.equal(requiresAdvanceRegistration(embroideryReviewed), true);
+  assert.match(embroideryReviewed.description, /registration is required/);
+  assert.doesNotMatch(embroideryReviewed.blurb, /drop.in/i);
+
+  const ai = {
+    date: "2026-12-07",
+    url: "https://sunnyvale.libcal.com/event/17861320",
+    description: "Registration is required.",
+    blurb: "Registration is required.",
+  };
+  const aiReviewed = applyVerifiedEventFacts(ai);
+  assert.equal(requiresAttendanceConfirmation(aiReviewed), true);
+  assert.match(aiReviewed.attendanceNote, /calls sign-up optional.*say registration is required/);
+  assert.doesNotMatch(aiReviewed.description + aiReviewed.blurb, /registration is required/);
+  assert.deepEqual(applyVerifiedEventFacts(aiReviewed), aiReviewed);
+  const laterAi = { ...ai, date: "2027-01-20" };
+  assert.equal(applyVerifiedEventFacts(laterAi), laterAi);
+});
+
+test("the Berryessa Pokémon session describes the activity without a popularity ranking", () => {
+  const session = {
+    id: "sjpl-6affa6610ad4ed003a04847f",
+    date: "2026-12-02",
+    description: "Practice playing the most popular trading card game, Pokémon TCG. Tutorial decks are available.",
+  };
+  const reviewed = applyVerifiedEventFacts(session);
+  assert.equal(reviewed.description, "Practice playing the Pokémon Trading Card Game. Tutorial decks are available.");
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+});
+
 test("the Earthquakes watch party offers an RSVP and welcomes all ages", () => {
   const party = {
     date: "2026-11-28", title: "Quakes Game 2 Watch Party", source: "City Newsletter",
