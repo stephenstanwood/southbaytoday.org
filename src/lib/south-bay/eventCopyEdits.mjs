@@ -2558,6 +2558,7 @@ const EDITS = {
         "Join established local yoga teacher Patricia Becker as she takes us through exercises to loosen joints, improve flexibility, improve cognition, and increase strength in Rinconada Library's Embarcadero Room.",
         "Join local yoga teacher Patricia Becker in Rinconada Library's Embarcadero Room for exercises to loosen joints, improve flexibility and cognition, and build strength.",
       ],
+      ["Registration isn't needed but means you will receive an email reminder.", "Registration is optional. If you register, you'll receive an email reminder."],
       [/\bpom (poms?)\b/g, "pom-$1"],
       [
         /English as a Second Language \(ESL\) \/ Learn English: Beyond the Basics is an in-person (\d+)-week class with lessons on English grammar, pronunciation, and idioms\./g,

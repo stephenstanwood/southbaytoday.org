@@ -2045,13 +2045,19 @@ test("cached chess blurbs keep the organizer's independent-play requirement", ()
   assert.deepEqual(polishReviewedEventCopy(revisedLesson), revisedLesson);
 });
 
-test("reviewed Nowruz and watch party descriptions survive refresh", () => {
+test("reviewed calendar descriptions survive refresh", () => {
   const samples = [
     {
       source: "Palo Alto City Library",
       title: "Nowruz New Year Celebration",
       description: "Celebrate the arrival of spring and new beginnings this Nowruz! Join Palo Alto City Library for a fun-filled Nowruz celebration at the Mitchell Park Community Center. More information to come!",
       reviewed: "Welcome spring and new beginnings with Palo Alto City Library's Nowruz celebration at Mitchell Park Community Center. More details to come.",
+    },
+    {
+      source: "Palo Alto City Library",
+      title: "Chair Yoga with Patricia Becker",
+      description: "Join established local yoga teacher Patricia Becker as she takes us through exercises to loosen joints, improve flexibility, improve cognition, and increase strength in Rinconada Library's Embarcadero Room. Registration isn't needed but means you will receive an email reminder. Here are the dates for 2027: January 2; March 6; May 1; July 3; September 4; November 6.",
+      reviewed: "Join local yoga teacher Patricia Becker in Rinconada Library's Embarcadero Room for exercises to loosen joints, improve flexibility and cognition, and build strength. Registration is optional. If you register, you'll receive an email reminder. Here are the dates for 2027: January 2; March 6; May 1; July 3; September 4; November 6.",
     },
     {
       source: "City Newsletter",
