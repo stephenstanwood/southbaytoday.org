@@ -10,6 +10,20 @@ import {
 } from "../../src/lib/south-bay/eventFilters.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { normalizeClockTime } from "./clock-time.mjs";
+import { ptClockString, ptDateString } from "../social/lib/pt-clock.mjs";
+
+function clockMinutes(time) {
+  const match = /^([1-9]|1[0-2]):([0-5]\d) (AM|PM)$/.exec(normalizeClockTime(time));
+  return match ? (Number(match[1]) % 12 + (match[3] === "PM" ? 12 : 0)) * 60 + Number(match[2]) : null;
+}
+
+/** A rolling briefing must omit occurrences that already started when it ran. */
+export function isBriefingEventUpcoming(event, now) {
+  const today = ptDateString(now);
+  if (event.date !== today) return event.date > today;
+  const start = clockMinutes(event.time);
+  return start === null || start >= clockMinutes(ptClockString(now));
+}
 
 /** Highlights have no attendance badge; require confirmed, available events. */
 export function isBriefingEventAvailable(event, now = Date.now()) {
@@ -243,10 +257,8 @@ export function hasUnsupportedSharedEventTime(text, events = []) {
 /** Explicit forward sequences must not put every sourced occurrence backward. */
 export function hasReversedEventSequence(text, events = []) {
   const startKey = (event) => {
-    const clock = normalizeClockTime(String(event?.time || ""));
-    const match = /^([1-9]|1[0-2]):([0-5]\d) (AM|PM)$/.exec(clock);
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(event?.date || "") || !match) return null;
-    const minutes = (Number(match[1]) % 12 + (match[3] === "PM" ? 12 : 0)) * 60 + Number(match[2]);
+    const minutes = clockMinutes(event?.time);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(event?.date || "") || minutes === null) return null;
     return `${event.date}T${String(minutes).padStart(4, "0")}`;
   };
   const copy = String(text || "").replace(/\b([ap])\.\s*m\./gi, "$1m");

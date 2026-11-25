@@ -28,9 +28,11 @@ import {
   briefingEventWhen,
   briefingMeetingContext,
   briefingMeetingHighlight,
+  isBriefingEventUpcoming,
   isBriefingEventAvailable,
   meetingWithinBriefingWindow,
 } from "./lib/city-briefing-integrity.mjs";
+import { ptDateString } from "./social/lib/pt-clock.mjs";
 import {
   hasDownbeatDayLanguage,
   hasRelativeDayReference,
@@ -73,12 +75,6 @@ const CITIES = [
 // toISOString() (UTC) while labelling with toLocaleDateString() (local) made the
 // two disagree every night the job ran after 5pm PT — the UTC day had already
 // rolled over, so a Jul 21–28 window shipped under a "Jul 20 – Jul 27" header.
-const TZ = "America/Los_Angeles";
-
-function pacificDateStr(date) {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: TZ }).format(date);
-}
-
 // Anchor at noon UTC so day arithmetic and formatting never cross a DST edge.
 function shiftDays(dateStr, days) {
   const dt = new Date(`${dateStr}T12:00:00Z`);
@@ -94,8 +90,8 @@ function labelDate(dateStr) {
   });
 }
 
-function getWeekRange() {
-  const start = pacificDateStr(new Date());
+function getWeekRange(now) {
+  const start = ptDateString(now);
   const end = shiftDays(start, 7);
   return { start, end, label: `${labelDate(start)} – ${labelDate(end)}` };
 }
@@ -269,7 +265,8 @@ async function main() {
   const { events: allEvents } = JSON.parse(readFileSync(EVENTS_PATH, "utf8"));
   const around = JSON.parse(readFileSync(AROUND_PATH, "utf8"));
   const meetingsData = JSON.parse(readFileSync(MEETINGS_PATH, "utf8"));
-  const { start, end, label } = getWeekRange();
+  const now = new Date();
+  const { start, end, label } = getWeekRange(now);
 
   // This script copies around-town headlines verbatim into city-hall highlights,
   // so it only tells the truth when it runs AFTER generate-around-town.mjs. When
@@ -303,7 +300,7 @@ async function main() {
       // Virtual listings belong in the Events calendar, but they are not a
       // physical city highlight. Without this guard, an online author talk or
       // campus webinar can displace a real local event from the weekly brief.
-      (e) => e.city === city.id && !e.ongoing && e.virtual !== true && e.date >= start && e.date <= end
+      (e) => e.city === city.id && !e.ongoing && e.virtual !== true && e.date <= end && isBriefingEventUpcoming(e, now)
     ).sort((a, b) => a.date.localeCompare(b.date) || (a.time ?? "").localeCompare(b.time ?? ""));
 
     // Filter out non-public events (practices, rehearsals, etc.)

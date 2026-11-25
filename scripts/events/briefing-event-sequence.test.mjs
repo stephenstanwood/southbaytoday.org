@@ -1,6 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { hasReversedEventSequence } from "../lib/city-briefing-integrity.mjs";
+import { hasReversedEventSequence, isBriefingEventUpcoming } from "../lib/city-briefing-integrity.mjs";
+
+test("an evening Pacific briefing excludes earlier starts on the same day", () => {
+  const generatedAt = new Date("2026-11-25T04:21:11.245Z");
+  assert.equal(isBriefingEventUpcoming({ date: "2026-11-24", time: "9:00 AM" }, generatedAt), false);
+  assert.equal(isBriefingEventUpcoming({ date: "2026-11-24", time: "7:00 PM" }, generatedAt), false);
+  assert.equal(isBriefingEventUpcoming({ date: "2026-11-24", time: "9:00 PM" }, generatedAt), true);
+  assert.equal(isBriefingEventUpcoming({ date: "2026-11-25", time: "10:00 AM" }, generatedAt), true);
+  assert.equal(isBriefingEventUpcoming({ date: "2026-11-23", time: "9:00 PM" }, generatedAt), false);
+});
 
 // Stanford's November 11 occurrences, verified against the organizer:
 // https://events.stanford.edu/event/tangling-the-digital-weaving-printmaking-computing
