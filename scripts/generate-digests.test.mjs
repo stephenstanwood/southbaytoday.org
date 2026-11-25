@@ -11,7 +11,7 @@ const scripts = dirname(fileURLToPath(import.meta.url));
 const cities = ["campbell", "saratoga", "los-altos", "los-gatos", "san-jose", "mountain-view", "sunnyvale", "cupertino", "santa-clara", "milpitas", "palo-alto"];
 const CAMPBELL_NOV_17_ID = "2d32a975-87ba-41aa-9897-6233cdfc7e72";
 function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, campbellRecord = null,
-  campbellPdEoc = false,
+  campbellPdEoc = false, santaClaraDate = null,
   keyTopics = ['Review of winter storm preparedness activities', 'Proposed stream corridor protection changes'],
   summary = "The agenda listed winter storm preparedness and proposed changes to stream corridor protection." } = {}) {
   const root = mkdtempSync(join(tmpdir(), "sbt-digest-source-"));
@@ -35,7 +35,7 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, camp
     const capture = join(root, "prompts.json");
     const fixture = join(scripts, "fixtures/primegov");
     let fixtureNow = campbellRecord ? "2026-11-16T03:40:00Z" : "2026-10-29T03:40:00Z";
-    if (campbellPdEoc) fixtureNow = "2026-11-25T04:40:00Z";
+    if (campbellPdEoc || santaClaraDate) fixtureNow = "2026-11-25T04:40:00Z";
     writeFileSync(join(root, "source-mocks.mjs"), `
       import fs from 'node:fs';
       const RealDate = Date;
@@ -52,6 +52,15 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, camp
           const campbell = ${JSON.stringify(campbellRecord)};
           if (url.searchParams.get('city') === 'Campbell' && campbell) {
             return Response.json({records: [campbell]});
+          }
+          const santaClaraDate = ${JSON.stringify(santaClaraDate)};
+          if (url.searchParams.get('city') === 'Santa Clara' && santaClaraDate) {
+            return Response.json({records: [{
+              id: 131, city: 'Santa Clara', date: santaClaraDate, meetingType: 'City Council', source: 'ingest',
+              title: 'ZOOM WEBINAR FOR THE PUBLIC, REGISTRATION',
+              excerpt: 'The agenda explains how to register for the Zoom webinar. The Stevens Creek Corridor Steering Committee is scheduled to review current corridor activities.',
+              keywords: ['corridor'],
+            }]});
           }
           const records = url.searchParams.get('city') === 'Palo Alto' ? [{
             id: 215, city: 'Palo Alto', date: '2026-10-22', meetingType: 'City Council', source: 'ingest',
@@ -74,6 +83,9 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, camp
             '<div class="AgendaItemTitle"><a>Urgency Ordinance for Detention or Custodial Facilities</a></div>' +
             '<div class="AgendaItemTitle"><a>Community Center Pool Replacement Project Design Services</a></div>',
           );
+        }
+        if (url.hostname === 'webapi.legistar.com' && url.pathname === '/v1/santaclara/Events' && ${JSON.stringify(santaClaraDate)}) {
+          return Response.json([{ EventBodyName: 'Stevens Creek Corridor Steering Committee' }]);
         }
         if (url.hostname === 'cityofpaloalto.primegov.com') {
           if (${unavailable}) return new Response('source unavailable', {status: 503});
@@ -180,6 +192,28 @@ test("Campbell recovers the November 17 council agenda from the PD EOC meeting t
   assert.match(prompt.messages[0].content, /Agenda highlights: Urgency Ordinance for Detention or Custodial Facilities/);
   assert.match(prompt.messages[0].content, /Community Center Pool Replacement Project/);
   assert.doesNotMatch(prompt.messages[0].content, /Unattributed transcript preview/);
+});
+
+test("Santa Clara regeneration preserves the November 23 venue and remote option from the verified agenda", () => {
+  const { digests, log } = run({
+    santaClaraDate: "2026-11-23",
+    summary: "The agenda lists a Stevens Creek Corridor Steering Committee meeting dated November 23, 2026, held over a Zoom webinar.",
+    runs: 2,
+  });
+  const card = digests["santa-clara"];
+  assert.equal(card.meetingDateIso, "2026-11-23");
+  assert.equal(card.body, "Stevens Creek Corridor Steering Committee");
+  assert.equal(card.carriedForward, undefined);
+  assert.match(card.summary, /Council Chambers at San José City Hall \(200 E Santa Clara St\.\)/);
+  assert.match(card.summary, /Zoom webinar for remote participation with advance registration/);
+  assert.doesNotMatch(card.summary, /held over a Zoom webinar/);
+  assert.equal(new URL(card.sourceUrl).searchParams.get("ID"), "1462004");
+  assert.match(log, /digest-cache.+santa-clara.+reused result/);
+
+  const summary = "The agenda listed updates to the committee's corridor study.";
+  const later = run({ santaClaraDate: "2026-11-24", summary }).digests["santa-clara"];
+  assert.equal(later.meetingDateIso, "2026-11-24");
+  assert.equal(later.summary, summary);
 });
 
 test("unavailable sources and older recovered agendas preserve the published digest", () => {

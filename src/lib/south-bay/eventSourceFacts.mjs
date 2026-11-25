@@ -1430,6 +1430,23 @@ const CORRECTIONS = [
       ? [...ALMADEN_TECH_HELP_COPY, ...ALMADEN_NOVEMBER_25_BOOKING_COPY]
       : ALMADEN_TECH_HELP_COPY,
   })),
+  // The December 1 panel and description agree on appointments by phone.
+  // The eResources FAQ supersedes the outdated services in the description.
+  // https://www.sjpl.org/faq/ebooks-emedia-faqs/
+  {
+    date: "2026-12-01",
+    id: "sjpl-69f10f4bfb87a3c2e2ac6ff2",
+    url: "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6ff2",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/69f10f4bfb87a3c2e2ac6ff2"],
+    facts: event => ({
+      blurb: "Bring your technology questions to Almaden Library and work through them with a helper in a one-on-one digital skills session for seniors.",
+      description: "Get help borrowing ebooks and audiobooks with Libby, connecting to Wi-Fi, navigating the library website, or printing at the library.",
+      ...([REGISTRATION_CLOSED, REGISTRATION_FULL].includes(event.registration) ? {} : {
+        registration: REGISTRATION_APPOINTMENT,
+        attendanceNote: "Appointments are required. Call Almaden Library at (408) 808-3040 to book.",
+      }),
+    }),
+  },
   // The sold-out occurrence page confirms a workshop fee and supplies. It
   // gives no price amount. Leave the waitlist and any current price intact.
   {

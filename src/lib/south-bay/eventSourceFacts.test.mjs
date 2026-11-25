@@ -1534,6 +1534,39 @@ test("Almaden's November 24 and 25 tech help replaces retired services for each 
   }
 });
 
+test("Almaden's December 1 tech help keeps the shared booking instructions and current resources", () => {
+  const event = {
+    id: "sjpl-69f10f4bfb87a3c2e2ac6ff2",
+    date: "2026-12-01",
+    url: "https://sjpl.bibliocommons.com/v2/events/69f10f4bfb87a3c2e2ac6ff2",
+    venue: "Almaden Library",
+    time: "12:00 PM",
+    registration: "required",
+    description: "Book a 30-minute session for help with Boundless, Cloud Library, Hoopla, and Consumer Reports.",
+    blurb: "Book an appointment to learn how to use Hoopla.",
+  };
+  for (const attendanceNote of [
+    "Appointments are required. Each person can book one appointment per week by phone or email.",
+    "Please call or stop by the Almaden Branch Library to book a 15- or 30-minute session with our staff. Only one appointment per day, please.",
+  ]) {
+    const corrected = applyVerifiedEventFacts({ ...event, attendanceNote });
+    assert.match(corrected.description, /Libby/);
+    assert.doesNotMatch(corrected.description + corrected.blurb, /Boundless|Cloud Library|Hoopla|Consumer Reports|30-minute/);
+    assert.equal(corrected.attendanceNote, "Appointments are required. Call Almaden Library at (408) 808-3040 to book.");
+    assert.equal(corrected.registration, "appointment-only");
+    assert.equal(corrected.time, event.time);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  }
+
+  const full = { ...event, registration: "full", attendanceNote: "All appointments are booked." };
+  const correctedFull = applyVerifiedEventFacts(full);
+  assert.equal(correctedFull.registration, full.registration);
+  assert.equal(correctedFull.attendanceNote, full.attendanceNote);
+
+  const later = { ...event, date: "2026-12-02" };
+  assert.deepEqual(applyVerifiedEventFacts(later), later);
+});
+
 test("Almaden's November 25 tech help keeps booking contacts when the source gives conflicting terms", () => {
   const event = {
     date: "2026-11-25",

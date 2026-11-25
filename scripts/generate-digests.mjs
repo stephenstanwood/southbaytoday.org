@@ -99,7 +99,17 @@ const CITIES = [
   { city: "sunnyvale",     stoaCity: "Sunnyvale",     cityName: "Sunnyvale",     schedule: "Tuesdays",                agendaUrl: "https://sunnyvaleca.legistar.com/Calendar.aspx",  legistar: "sunnyvaleca",  legistarApi: "sunnyvaleca" },
   { city: "cupertino",     stoaCity: "Cupertino",     cityName: "Cupertino",     schedule: "1st and 3rd Tuesday",   agendaUrl: "https://cupertino.legistar.com/Calendar.aspx",    legistar: "cupertino",    legistarApi: "cupertino" },
   { city: "santa-clara",   stoaCity: "Santa Clara",   cityName: "Santa Clara",   schedule: "2nd and 4th Tuesday",   agendaUrl: "https://santaclara.legistar.com/Calendar.aspx",   legistar: "santaclara",   legistarApi: "santaclara",
-    legistarBodies: ["City Council and Authorities Concurrent"] },
+    legistarBodies: ["City Council and Authorities Concurrent"],
+    // The ingested excerpt starts at the Zoom notice and skips the venue
+    // above it on the agenda: https://santaclara.legistar.com/View.ashx?M=AADA&ID=1462004&GUID=FBD5E81A-9346-48DB-A993-408148C523D4
+    verifiedAgendaSummary: {
+      date: "2026-11-23",
+      body: "Stevens Creek Corridor Steering Committee",
+      sourceUrl: "https://santaclara.legistar.com/MeetingDetail.aspx?GUID=FBD5E81A-9346-48DB-A993-408148C523D4&ID=1462004&Options=info%7C&Search=",
+      summary: "The November 23 agenda listed the meeting in the Council Chambers at San José City Hall (200 E Santa Clara St.) " +
+        "and offered a Zoom webinar for remote participation with advance registration. " +
+        "The committee oversees a joint transportation study by San José, Santa Clara, Cupertino, Santa Clara County, and VTA.",
+    } },
   // Milpitas + Palo Alto digests stall when Stoa lacks full agenda text: recent
   // Milpitas records are CivicClerk stubs ("Meeting record available on...") that
   // fail hasRealContent, and recent Palo Alto records are commission/item-level
@@ -671,8 +681,14 @@ async function main() {
   }
 
   // Include carried-forward cards and cached summaries in the copy pass.
-  for (const digest of Object.values(digests)) {
-    const options = { cityId: digest.city };
+  for (const { city, verifiedAgendaSummary } of CITIES) {
+    const digest = digests[city];
+    if (!digest) continue;
+    if (verifiedAgendaSummary && digest.meetingDateIso === verifiedAgendaSummary.date && digest.body === verifiedAgendaSummary.body) {
+      digest.summary = verifiedAgendaSummary.summary;
+      digest.sourceUrl = verifiedAgendaSummary.sourceUrl;
+    }
+    const options = { cityId: city };
     digest.summary = polishCivicCopy(digest.summary, options);
     if (Array.isArray(digest.keyTopics)) {
       digest.keyTopics = digest.keyTopics.map((topic) => polishCivicTopic(topic, options));
