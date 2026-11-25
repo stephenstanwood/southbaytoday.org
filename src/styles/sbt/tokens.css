@@ -25,12 +25,14 @@
   --sb-arc-soft: linear-gradient(135deg, #fff1e6 0%, #fdeaf3 45%, #efe7ff 75%, #e4f8fa 100%);
 
   /* ── Surfaces & lines ── */
-  --sb-bg: #FFF8F2;
+  /* A white page (2026-11-25): the warm cream base from the 2026-09 overhaul
+     washed every tab beige. Color comes from the day arc and the art, not
+     from tinting the paper. */
+  --sb-bg: #FFFFFF;
   --sb-card: #FFFFFF;
-  --sb-surface-tint: #fbf8ff;
-  --sb-surface-warm: #fffaf5;
-  /* Neutral ink hairlines read cleaner than tinted ones on the warm page;
-     color is reserved for accents that mean something. */
+  --sb-surface-tint: #f8f6ff;
+  --sb-surface-warm: #f6f5f9;
+  /* Neutral ink hairlines; color is reserved for accents that mean something. */
   --sb-border: rgba(46, 16, 101, 0.16);
   --sb-border-light: rgba(19, 7, 47, 0.09);
   --sb-line: rgba(19, 7, 47, 0.09);

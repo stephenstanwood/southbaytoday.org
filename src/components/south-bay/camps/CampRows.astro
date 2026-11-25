@@ -1,7 +1,9 @@
 ---
-// A plain list of camp programs for the static camp pages: each name links to
-// its /camps/<id> page, with ages, dates and price on the line below.
+// The program list on the static camp pages: each row wears its interest's art
+// as a small disc, links to its /camps/<id> page, and has ages, dates and price
+// on the line below.
 import { LATEST_SEASON, programLine, type Program } from "../../../lib/south-bay/campFinder";
+import { TOPIC_ART, TOPIC_COLOR, artTopic } from "../../../lib/south-bay/campFormat";
 
 interface Props {
   programs: Program[];
@@ -15,11 +17,19 @@ const { programs, showOperator = false, showCity = false } = Astro.props;
 ---
 
 <ul class="camps-rows">
-  {programs.map((p) => (
-    <li>
-      <a href={`/camps/${p.id}`}>{p.name}</a>
-      {p.season !== LATEST_SEASON && <span class="camps-season">{p.season} details</span>}
-      <p>{[showOperator ? p.operator : null, showCity ? p.city : null, programLine(p)].filter(Boolean).join(" · ")}</p>
-    </li>
-  ))}
+  {programs.map((p) => {
+    const topic = artTopic(p.name, p.topics);
+    return (
+      <li data-color={(topic && TOPIC_COLOR[topic]) || "violet"}>
+        <span class="camps-row-art" aria-hidden="true">
+          <img src={TOPIC_ART(topic ?? "general")} alt="" width="480" height="480" loading="lazy" decoding="async" />
+        </span>
+        <div class="camps-row-body">
+          <a href={`/camps/${p.id}`}>{p.name}</a>
+          {p.season !== LATEST_SEASON && <span class="camps-season">{p.season} details</span>}
+          <p>{[showOperator ? p.operator : null, showCity ? p.city : null, programLine(p)].filter(Boolean).join(" · ")}</p>
+        </div>
+      </li>
+    );
+  })}
 </ul>

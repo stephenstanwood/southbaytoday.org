@@ -1,366 +1,580 @@
-/* Camps: the /camps directory (filters, week strip, cards, browse links) and
-   the static camp pages (/camps/<id>, /camps/city|topic|operator/<slug>).
-   Loaded site-wide from BaseLayout, so every class here is camps- prefixed. */
+/* Camps: the /camps directory (hero, interest tiles, finder, cities,
+   organizations) and the static camp pages (/camps/<id>,
+   /camps/city|topic|operator/<slug>). Loaded site-wide from BaseLayout, so
+   every class here is camps- prefixed.
 
-.camps-view {
-  /* Same amber the PageHero kicker wears on this tab. #B45309 on cream is
-     ~4.9:1, so it's safe for the small mono kickers. */
-  --camps-accent: #b45309;
-  --camps-good: #166534;
-  --camps-good-tint: #ecfdf3;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+   The look is a summer poster series: the Recraft art set
+   (public/images/camps/, scripts/camps/generate-camp-art.mjs) on a white page,
+   with each interest wearing one color from the SBT day arc. */
+
+/* ── Colors ── */
+.camps-view,
+.camps-page {
+  --camps-link: var(--sb-accent-ink);
+  --camps-soft: #f4f3f8;
+  --camps-good: #0f766e;
+}
+
+/* An interest's color: --c fills, --c-ink is the text on that fill (each pair
+   is at least 5:1), --c-soft sits behind the art. */
+[data-color="violet"] { --c: var(--sb-accent); --c-ink: #fff; --c-soft: #f1e9ff; }
+[data-color="coral"] { --c: var(--sb-coral); --c-ink: var(--sb-ink); --c-soft: #ffe7ef; }
+[data-color="teal"] { --c: var(--sb-teal); --c-ink: var(--sb-ink); --c-soft: #dcf6f8; }
+[data-color="gold"] { --c: var(--sb-gold); --c-ink: var(--sb-ink); --c-soft: #fff4c7; }
+[data-color="sunset"] { --c: var(--sb-sunset); --c-ink: var(--sb-ink); --c-soft: #ffe8da; }
+
+.camps-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
   padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* ── Section heads ── */
-.camps-directory {
+/* ── Page rhythm ── */
+.camps-view {
   display: flex;
   flex-direction: column;
-  gap: 52px;
+  gap: 64px;
+  padding: 0 0 8px;
 }
 
-.camps-browse {
+.camps-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.camps-h2 {
+  margin: 0;
+  color: var(--sb-ink);
+  font-family: var(--sb-serif);
+  font-size: clamp(26px, 3.4vw, 34px);
+  font-weight: 900;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.camps-h3 {
+  margin: 0;
+  color: var(--sb-ink);
+  font-family: var(--sb-serif);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+/* ── Hero ── */
+.camps-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.camps-hero-art {
+  position: relative;
+  margin: 0;
+}
+
+.camps-hero-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  object-position: 50% 55%;
+}
+
+.camps-hero-sticker {
+  position: absolute;
+  left: 2%;
+  top: 8%;
+  padding: 9px 16px 8px;
+  border: 2px solid var(--sb-ink);
+  border-radius: var(--sb-radius-pill);
+  background: var(--sb-gold);
+  box-shadow: 4px 4px 0 var(--sb-ink);
+  color: var(--sb-ink);
+  font-family: var(--sb-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-5deg);
+}
+
+.camps-hero-body {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  min-width: 0;
 }
 
-.camps-section-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 380px);
-  align-items: end;
-  gap: 10px 32px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--sb-line);
-}
-
-.camps-kicker {
-  color: var(--camps-accent);
-}
-
-.camps-section-head h2 {
-  margin: 7px 0 0;
+.camps-hero-title {
+  margin: 0;
   color: var(--sb-ink);
   font-family: var(--sb-serif);
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.012em;
-  line-height: 1.08;
-  text-wrap: balance;
+  font-size: clamp(48px, 8.4vw, 92px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
 }
 
-.camps-section-head p {
-  margin: 0;
-  color: var(--sb-muted);
-  font-size: 14px;
-  line-height: 1.55;
+.camps-hero-dek {
+  max-width: 34em;
+  margin: 10px 0 0;
+  color: var(--sb-ink-2);
+  font-size: clamp(16px, 1.9vw, 19px);
+  line-height: 1.5;
   text-wrap: pretty;
 }
 
-/* ── Card grids ── */
-.camps-grid {
+.camps-hero-search {
   display: grid;
-  gap: 16px;
-
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) 150px auto;
+  gap: 8px;
+  max-width: 780px;
+  padding: 8px;
+  border: 2px solid var(--sb-ink);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 6px 6px 0 var(--sb-accent);
 }
 
-/* ── Camp card ── */
-.camps-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 0;
-  padding: 20px 20px 18px;
-  background: var(--sb-card);
-  border: 1px solid var(--sb-line);
-  border-radius: var(--sb-radius-md);
-  box-shadow: var(--sb-shadow-sm);
-  overflow: hidden;
-  container-type: inline-size;
-}
-
-.camps-card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-}
-
-.camps-card-kicker {
-  min-width: 0;
-  color: var(--sb-muted);
-  font-family: var(--sb-mono);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-.camps-card-sep {
-  color: var(--sb-light);
-}
-
-/* Focus type chip: the dot is the one bit of color on the card, and it
-   means something (the camp's focus). */
-.camps-type {
-  --camps-type: var(--sb-muted);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px 3px 8px;
-  border: 1px solid var(--sb-line);
-  border-radius: var(--sb-radius-pill);
-  background: var(--sb-surface-warm);
-  color: var(--sb-ink-2);
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
-  white-space: nowrap;
-}
-
-.camps-type::before {
-  content: "";
-  flex: none;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--camps-type);
-}
-
-.camps-type[data-type="sports"] { --camps-type: #0e7490; }
-.camps-type[data-type="arts"] { --camps-type: var(--sb-accent); }
-.camps-type[data-type="stem"] { --camps-type: #1d4ed8; }
-.camps-type[data-type="nature"] { --camps-type: #15803d; }
-.camps-type[data-type="academic"] { --camps-type: #b45309; }
-.camps-type[data-type="animals"] { --camps-type: #a16207; }
-.camps-type[data-type="adventure"] { --camps-type: #c2410c; }
-.camps-type[data-type="culinary"] { --camps-type: #be185d; }
-.camps-type[data-type="music"] { --camps-type: #7c3aed; }
-.camps-type[data-type="swim"] { --camps-type: #0369a1; }
-.camps-type[data-type="language"] { --camps-type: #4d7c0f; }
-.camps-type[data-type="faith"] { --camps-type: #92400e; }
-.camps-type[data-type="special-needs"] { --camps-type: #0f766e; }
-.camps-type[data-type="overnight"] { --camps-type: var(--sb-ink-2); }
-.camps-type[data-type="aid"] { --camps-type: #166534; }
-
-.camps-card-title {
-  margin: -2px 0 0;
+.camps-hero-field input,
+.camps-hero-field select {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--camps-soft);
   color: var(--sb-ink);
-  font-family: var(--sb-serif);
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: -0.006em;
-  line-height: 1.18;
-  text-wrap: balance;
+  font: 600 16px/1.2 var(--sb-sans);
 }
 
-.camps-facts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 0;
-  border: 1px solid var(--sb-line);
-  border-radius: var(--sb-radius-sm);
-  background: var(--sb-surface-warm);
-  overflow: hidden;
+.camps-hero-field select {
+  appearance: none;
+  padding-right: 34px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--sb-ink) 50%),
+    linear-gradient(135deg, var(--sb-ink) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 23px, calc(100% - 13px) 23px;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 
-.camps-facts > div {
-  min-width: 0;
-  padding: 10px 12px 11px;
+.camps-hero-field input::placeholder {
+  color: #77708a;
+  font-weight: 500;
 }
 
-.camps-facts > div:nth-child(even) {
-  border-left: 1px solid var(--sb-line);
+.camps-hero-field input:focus-visible,
+.camps-hero-field select:focus-visible {
+  outline: 3px solid var(--sb-accent);
+  outline-offset: 1px;
 }
 
-.camps-facts > div:nth-child(n + 3) {
-  border-top: 1px solid var(--sb-line);
+.camps-hero-go {
+  min-height: 50px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--sb-ink);
+  color: #fff;
+  font: 800 16px/1 var(--sb-sans);
+  cursor: pointer;
+  transition: background 0.2s var(--sb-ease), transform 0.2s var(--sb-ease);
 }
 
-.camps-facts dt {
-  color: var(--sb-light);
-  font-family: var(--sb-mono);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  line-height: 1.2;
-  text-transform: uppercase;
+.camps-hero-go:hover {
+  background: var(--sb-accent-ink);
 }
 
-.camps-facts dd {
+.camps-hero-go:active {
+  transform: translateY(1px);
+}
+
+.camps-hero-go:focus-visible {
+  outline: 3px solid var(--sb-accent);
+  outline-offset: 2px;
+}
+
+.camps-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
   margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--sb-muted);
+  font-size: 14.5px;
+}
+
+.camps-hero-stats strong {
   color: var(--sb-ink);
-  font-size: 14px;
-  font-weight: 650;
-  line-height: 1.35;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
-  overflow-wrap: anywhere;
 }
 
-/* "$257–$290/wk" reads as one token; never split it at the dash. */
-.camps-facts dd.camps-fact-price {
-  white-space: nowrap;
-  overflow-wrap: normal;
-}
-
-.camps-card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+/* ── Interest tiles ── */
+.camps-topics {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 12px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Registration line under a card's facts. */
-.camps-card-note {
-  margin: 0;
-  padding-left: 11px;
-  border-left: 2px solid var(--sb-line-strong);
-  color: var(--sb-muted);
-  font-size: 12.5px;
-  line-height: 1.55;
-  text-wrap: pretty;
+.camps-topic {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 2px solid var(--sb-ink);
+  border-radius: var(--sb-radius-lg);
+  background: var(--c-soft);
+  color: var(--c-ink);
+  text-decoration: none;
+  transition: transform 0.22s var(--sb-ease), box-shadow 0.22s var(--sb-ease);
 }
 
-/* ── Directory filter bar ── */
+.camps-topic-art {
+  display: block;
+  aspect-ratio: 1;
+  padding: 6px 6px 0;
+}
+
+.camps-topic-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.camps-topic-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: auto;
+  padding: 9px 11px 10px;
+  border-top: 2px solid var(--sb-ink);
+  background: var(--c);
+  line-height: 1.2;
+}
+
+.camps-topic-name {
+  font-size: 15px;
+  font-weight: 800;
+  hyphens: auto;
+}
+
+.camps-topic-count {
+  font-size: 12px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.camps-topic:hover {
+  transform: translate(-2px, -3px);
+  box-shadow: 5px 6px 0 var(--sb-ink);
+}
+
+.camps-topic[aria-current="true"] {
+  transform: translate(-2px, -3px);
+  box-shadow: 5px 6px 0 var(--c);
+  outline: 3px solid var(--sb-ink);
+  outline-offset: 2px;
+}
+
+.camps-topic:focus-visible {
+  outline: 3px solid var(--sb-accent);
+  outline-offset: 3px;
+}
+
+/* ── Finder: toolbar, toggles, weeks, results ── */
+.camps-finder {
+  scroll-margin-top: 16px;
+}
+
+.camps-finder-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 20px;
+}
+
+.camps-finder-count {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0;
+  color: var(--sb-muted);
+  font-size: 15px;
+}
+
+.camps-finder-count strong {
+  color: var(--sb-ink);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.camps-clear {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--camps-link);
+  font: 700 14px/1 var(--sb-sans);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
 .camps-toolbar {
   display: grid;
-  grid-template-columns: minmax(220px, 2fr) repeat(auto-fit, minmax(118px, 1fr));
-  gap: 12px;
-  align-items: end;
-  padding: 14px;
-  border: 1px solid var(--sb-line);
-  border-radius: var(--sb-radius-md);
-  background: rgba(255, 255, 255, 0.78);
-  box-shadow: var(--sb-shadow-xs);
+  grid-template-columns: minmax(0, 2.2fr) repeat(4, minmax(0, 1fr));
+  gap: 8px;
 }
 
-.camps-field {
+.camps-field input,
+.camps-field select {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 13px;
+  border: 1.5px solid var(--sb-line-strong);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--sb-ink);
+  font: 600 14.5px/1.2 var(--sb-sans);
+  transition: border-color 0.15s ease;
+}
+
+.camps-field select {
+  appearance: none;
+  padding-right: 30px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--sb-ink) 50%),
+    linear-gradient(135deg, var(--sb-ink) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 21px, calc(100% - 11px) 21px;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.camps-field input::placeholder {
+  color: #77708a;
+  font-weight: 500;
+}
+
+.camps-field input:hover,
+.camps-field select:hover {
+  border-color: var(--sb-ink);
+}
+
+.camps-field input:focus-visible,
+.camps-field select:focus-visible {
+  border-color: var(--sb-accent);
+  outline: 3px solid rgba(135, 56, 245, 0.3);
+  outline-offset: 0;
+}
+
+.camps-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.camps-toggle {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1.5px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-pill);
+  background: #fff;
+  color: var(--sb-ink-2);
+  font: 700 14px/1 var(--sb-sans);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.camps-toggle:hover {
+  border-color: var(--sb-ink);
+  color: var(--sb-ink);
+}
+
+.camps-toggle[aria-pressed="true"] {
+  border-color: var(--sb-ink);
+  background: var(--sb-ink);
+  color: #fff;
+}
+
+.camps-toggle:focus-visible,
+.camps-week:focus-visible,
+.camps-clear:focus-visible,
+.camps-more:focus-visible,
+.camps-method-link:focus-visible,
+.camps-az summary:focus-visible {
+  outline: 3px solid var(--sb-accent);
+  outline-offset: 2px;
+}
+
+/* The weeks as a little histogram of the summer: each bar is that week's
+   share of the busiest week, under the reader's other filters. */
+.camps-weeks {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 6px;
+  padding: 14px 12px 10px;
+  border-radius: var(--sb-radius-lg);
+  background: var(--camps-soft);
+}
+
+.camps-week {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 4px 2px 6px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--sb-ink-2);
+  font-family: var(--sb-sans);
+  cursor: pointer;
+}
+
+.camps-week-bar {
+  display: flex;
+  align-items: flex-end;
+  width: 70%;
+  height: 58px;
+}
+
+.camps-week-bar span {
+  display: block;
+  width: 100%;
+  border-radius: 6px 6px 2px 2px;
+  background: linear-gradient(180deg, var(--sb-sunset), var(--sb-coral));
+  transition: block-size 0.3s var(--sb-ease), background 0.2s ease;
+}
+
+.camps-week-count {
+  color: var(--sb-ink);
+  font-size: 13px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.camps-week-label {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.camps-week:hover {
+  background: #fff;
+}
+
+.camps-week[aria-pressed="true"] {
+  background: #fff;
+  box-shadow: inset 0 0 0 2px var(--sb-ink);
+}
+
+.camps-week[aria-pressed="true"] .camps-week-bar span {
+  background: var(--sb-accent);
+}
+
+.camps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* ── Camp card ── */
+.camps-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-md);
+  background: #fff;
+  transition: border-color 0.2s var(--sb-ease), transform 0.2s var(--sb-ease), box-shadow 0.2s var(--sb-ease);
+}
+
+.camps-card:hover {
+  border-color: var(--sb-ink);
+  transform: translateY(-2px);
+  box-shadow: 4px 5px 0 var(--c);
+}
+
+.camps-card-art {
+  display: block;
+  width: 76px;
+  height: 76px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--c-soft);
+}
+
+.camps-card-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.12);
+  mix-blend-mode: multiply;
+}
+
+.camps-card-body {
   display: flex;
   flex-direction: column;
   gap: 6px;
   min-width: 0;
 }
 
-.camps-field > span {
+.camps-card-kicker {
+  margin: 0;
   color: var(--sb-muted);
-  font-family: var(--sb-mono);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  line-height: 1.3;
   text-transform: uppercase;
 }
 
-.camps-field input,
-.camps-field select {
-  width: 100%;
-  min-width: 0;
-  min-height: 42px;
-  padding: 0 12px;
-  border: 1px solid var(--sb-line-strong);
-  border-radius: var(--sb-radius-sm);
-  background-color: var(--sb-card);
+.camps-card-title {
+  margin: 0;
   color: var(--sb-ink);
-  font-family: var(--sb-sans);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.2;
-  -webkit-appearance: none;
-  appearance: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: var(--sb-serif);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
-/* Hand-rolled chevron from two gradient triangles (no icon art). */
-.camps-field select {
-  padding-right: 32px;
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--sb-muted) 50%),
-    linear-gradient(135deg, var(--sb-muted) 50%, transparent 50%);
-  background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
-  background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  text-overflow: ellipsis;
-}
-
-.camps-field input::placeholder {
-  color: var(--sb-light);
-  opacity: 1;
-}
-
-.camps-field input:hover,
-.camps-field select:hover {
-  border-color: rgba(19, 7, 47, 0.3);
-}
-
-.camps-field input:focus-visible,
-.camps-field select:focus-visible {
-  outline: none;
-  border-color: var(--sb-ink);
-  box-shadow: var(--sb-focus);
-}
-
-.camps-results-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  min-height: 36px;
-  color: var(--sb-muted);
-  font-size: 13.5px;
-}
-
-.camps-results-head strong {
-  color: var(--sb-ink);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.camps-show-more {
-  align-self: center;
-  min-height: 44px;
-  margin-top: 6px;
-  padding-inline: 22px;
-}
-
-.camps-empty {
-  padding: 40px 24px;
-  border: 1px dashed var(--sb-line-strong);
-  border-radius: var(--sb-radius-md);
-  background: rgba(255, 255, 255, 0.6);
-}
-
-
-/* Last summer's details on a card: muted, never alarming. */
-.camps-season {
-  flex: none;
-  padding: 2px 9px;
-  border: 1px dashed var(--sb-line-strong);
-  border-radius: var(--sb-radius-pill);
-  color: var(--sb-muted);
-  font-family: var(--sb-mono);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* The title link covers the whole card; the card shows hover and focus. */
 .camps-card-link {
   color: inherit;
   text-decoration: none;
 }
 
+/* The whole card is the link's hit area. */
 .camps-card-link::after {
   content: "";
   position: absolute;
@@ -368,291 +582,339 @@
   border-radius: inherit;
 }
 
-.camps-card {
-  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s var(--sb-ease);
-}
-
-.camps-card:hover {
-  border-color: var(--sb-line-strong);
-  box-shadow: var(--sb-shadow-hover);
-}
-
-.camps-card:hover .camps-card-link {
-  color: var(--sb-accent-ink);
-}
-
 .camps-card-link:focus-visible {
   outline: none;
 }
 
 .camps-card:has(.camps-card-link:focus-visible) {
-  border-color: var(--sb-ink);
-  box-shadow: var(--sb-focus);
+  outline: 3px solid var(--sb-accent);
+  outline-offset: 2px;
 }
 
-/* ── Only-show toggles ── */
-.camps-toggles {
+.camps-card-where {
+  margin: 0;
+  color: var(--sb-muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.camps-card-facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: -6px;
-}
-
-.camps-toggle {
-  min-height: 40px;
-  padding: 6px 14px;
-  border-color: var(--sb-line-strong);
-  color: var(--sb-ink-2);
-  font-family: var(--sb-sans);
-  font-size: 13px;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
-}
-
-.camps-toggle::before {
-  content: "";
-  width: 14px;
-  height: 14px;
-  border: 1.5px solid var(--sb-line-strong);
-  border-radius: 4px;
-  background: #fff;
-}
-
-.camps-toggle:hover {
-  border-color: rgba(19, 7, 47, 0.3);
-  color: var(--sb-ink);
-}
-
-.camps-toggle[aria-pressed="true"] {
-  border-color: var(--camps-accent);
-  background: #fff7ed;
-  color: var(--sb-ink);
-}
-
-.camps-toggle[aria-pressed="true"]::before {
-  border-color: var(--camps-accent);
-  background:
-    linear-gradient(45deg, transparent 44%, #fff 44% 56%, transparent 56%) 3px 2px / 6px 8px no-repeat,
-    var(--camps-accent);
-}
-
-/* ── Week strip: each summer week with how many programs run then ── */
-.camps-weeks {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.camps-weeks-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.camps-weeks-label {
-  color: var(--sb-muted);
-  font-family: var(--sb-mono);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.camps-weeks-clear {
-  min-height: 32px;
+  gap: 6px;
+  margin: 6px 0 0;
   padding: 0;
-  border: 0;
-  background: none;
-  color: var(--sb-accent-ink);
-  font: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  cursor: pointer;
+  list-style: none;
 }
 
-.camps-weeks-strip {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-  gap: 8px;
-}
-
-.camps-weekchip {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  min-height: 52px;
-  padding: 8px 11px;
-  border: 1px solid var(--sb-line);
-  border-radius: var(--sb-radius-sm);
-  background: var(--sb-card);
+.camps-card-facts li {
+  padding: 5px 10px;
+  border-radius: var(--sb-radius-pill);
+  background: var(--camps-soft);
   color: var(--sb-ink);
-  font-family: var(--sb-sans);
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
-}
-
-.camps-weekchip:hover {
-  border-color: var(--sb-line-strong);
-  box-shadow: var(--sb-shadow-xs);
-}
-
-.camps-weekchip-dates {
   font-size: 13px;
   font-weight: 650;
-  line-height: 1.25;
-  white-space: nowrap;
-}
-
-.camps-weekchip-count {
-  color: var(--sb-muted);
-  font-family: var(--sb-mono);
-  font-size: 12px;
-  font-weight: 700;
+  line-height: 1.3;
   font-variant-numeric: tabular-nums;
 }
 
-.camps-weekchip-count::after {
-  content: " programs";
-  font-family: var(--sb-sans);
+.camps-card-facts li.is-missing {
+  color: var(--sb-muted);
   font-weight: 500;
 }
 
-.camps-weekchip[aria-pressed="true"] {
-  border-color: var(--sb-ink);
-  background: var(--sb-ink);
-  color: #fff;
+.camps-card-facts li.camps-card-price {
+  background: #fff1b8;
+  font-weight: 800;
 }
 
-.camps-weekchip[aria-pressed="true"] .camps-weekchip-count {
-  color: rgba(255, 255, 255, 0.82);
+.camps-card-facts li.camps-card-aid {
+  background: #d5f5f2;
+  color: #0b4f4a;
 }
 
-.camps-weekchip:focus-visible,
-.camps-toggle:focus-visible,
-.camps-weeks-clear:focus-visible,
-.camps-method-link:focus-visible {
-  outline: none;
-  box-shadow: var(--sb-focus);
+.camps-card-note {
+  margin: 2px 0 0;
+  color: var(--sb-ink-2);
+  font-size: 13px;
+  font-weight: 600;
 }
 
-/* ── Browse links ── */
-.camps-links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px 32px;
+.camps-card-note::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--sb-sunset);
+  vertical-align: 1px;
 }
 
-.camps-links-group h3 {
-  margin: 0 0 10px;
+.camps-empty {
+  padding: 40px 20px;
+  border: 2px dashed var(--sb-line-strong);
+  border-radius: var(--sb-radius-lg);
+  text-align: center;
+}
+
+.camps-empty h3 {
+  margin: 0 0 6px;
+  font-family: var(--sb-serif);
+  font-size: 22px;
+}
+
+.camps-empty p {
+  margin: 0;
   color: var(--sb-muted);
-  font-family: var(--sb-mono);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
-.camps-links-group ul,
-.camps-check-list {
+.camps-more {
+  align-self: center;
+  min-height: 48px;
+  padding: 0 26px;
+  border: 2px solid var(--sb-ink);
+  border-radius: var(--sb-radius-pill);
+  background: #fff;
+  color: var(--sb-ink);
+  font: 800 15px/1 var(--sb-sans);
+  cursor: pointer;
+  transition: transform 0.2s var(--sb-ease), box-shadow 0.2s var(--sb-ease);
+}
+
+.camps-more span {
+  color: var(--sb-muted);
+  font-weight: 600;
+}
+
+.camps-more:hover {
+  transform: translate(-1px, -2px);
+  box-shadow: 4px 4px 0 var(--sb-ink);
+}
+
+/* ── Cities ── */
+.camps-cities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.camps-links-group li {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--sb-line);
-  font-size: 14.5px;
-}
-
-.camps-links-group a,
-.camps-check-list a {
+.camps-cities a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 8px 0 18px;
+  border: 1.5px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-pill);
+  background: #fff;
   color: var(--sb-ink);
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: var(--sb-line-strong);
-  text-underline-offset: 3px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.camps-links-group a:hover,
-.camps-check-list a:hover {
-  color: var(--sb-accent-ink);
-  text-decoration-color: currentColor;
-}
-
-.camps-links-group li span {
-  color: var(--sb-muted);
-  font-family: var(--sb-mono);
-  font-size: 12px;
+.camps-cities a span {
+  min-width: 34px;
+  padding: 5px 9px;
+  border-radius: var(--sb-radius-pill);
+  background: var(--camps-soft);
+  color: var(--sb-ink-2);
+  font-size: 12.5px;
+  font-weight: 800;
+  text-align: center;
   font-variant-numeric: tabular-nums;
 }
 
-/* ── More camps to check ── */
-.camps-check-list {
-  columns: 2 300px;
-  column-gap: 32px;
+.camps-cities a:hover {
+  border-color: var(--sb-ink);
+  background: #f1e9ff;
 }
 
-.camps-check-list li {
+.camps-cities a:focus-visible,
+.camps-orgs a:focus-visible,
+.camps-az a:focus-visible,
+.camps-check a:focus-visible {
+  outline: 3px solid var(--sb-accent);
+  outline-offset: 2px;
+}
+
+/* ── Organizations ── */
+.camps-orgs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--sb-line-strong);
+}
+
+.camps-orgs li {
+  border-bottom: 1px solid var(--sb-line);
+}
+
+.camps-orgs a {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--sb-line);
+  padding: 12px 2px;
+  color: var(--sb-ink);
+  text-decoration: none;
+}
+
+.camps-org-name {
+  font-size: 15.5px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.camps-org-count {
+  color: var(--sb-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.camps-orgs a:hover .camps-org-name {
+  color: var(--camps-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.camps-az summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-pill);
+  color: var(--sb-ink);
+  font-size: 14.5px;
+  font-weight: 800;
+  list-style: none;
+  cursor: pointer;
+}
+
+.camps-az summary::-webkit-details-marker {
+  display: none;
+}
+
+.camps-az summary::after {
+  content: "+";
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.camps-az[open] summary::after {
+  content: "–";
+}
+
+.camps-az summary:hover {
+  border-color: var(--sb-ink);
+}
+
+.camps-az ul {
+  columns: 3 220px;
+  column-gap: 28px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.camps-az li {
   break-inside: avoid;
+  padding: 4px 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.camps-az a {
+  color: var(--sb-ink);
+  text-decoration: none;
+}
+
+.camps-az a:hover {
+  color: var(--camps-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.camps-az li span {
+  color: var(--sb-muted);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Camps still to check ── */
+.camps-check {
+  gap: 10px;
+  padding: 24px;
+  border-radius: var(--sb-radius-lg);
+  background: var(--camps-soft);
+}
+
+.camps-check > p {
+  margin: 0;
+  color: var(--sb-muted);
   font-size: 14.5px;
 }
 
-.camps-check-city {
+.camps-check ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 24px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.camps-check li {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.camps-check a {
+  color: var(--sb-ink);
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.camps-check a:hover {
+  color: var(--camps-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.camps-check li > span {
   color: var(--sb-muted);
   font-size: 13px;
 }
 
 /* ── Where the details come from ── */
-.camps-method {
-  max-width: 68ch;
-  padding: 20px 22px;
-  border: 1px solid var(--sb-line);
-  border-radius: var(--sb-radius-md);
-  background: var(--sb-surface-warm);
-}
-
-.camps-method h2 {
-  margin: 0 0 8px;
-  color: var(--sb-ink);
-  font-family: var(--sb-serif);
-  font-size: 20px;
-  font-weight: 800;
-  line-height: 1.2;
-}
-
 .camps-method p {
+  max-width: 46em;
   margin: 0;
-  color: var(--sb-ink-2);
-  font-size: 14.5px;
+  color: var(--sb-muted);
+  font-size: 14px;
   line-height: 1.6;
-}
-
-.camps-method p + p {
-  margin-top: 10px;
 }
 
 .camps-method-link {
   padding: 0;
   border: 0;
   background: none;
-  color: var(--sb-accent-ink);
+  color: var(--camps-link);
   font: inherit;
-  font-weight: 650;
+  font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
@@ -666,15 +928,12 @@
   gap: 4px 8px;
   margin: 0 0 14px;
   color: var(--sb-muted);
-  font-family: var(--sb-mono);
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 .camps-crumbs a {
-  color: var(--camps-accent, #b45309);
+  color: var(--camps-link);
   text-decoration: none;
 }
 
@@ -683,12 +942,40 @@
   text-underline-offset: 3px;
 }
 
-.camps-page {
-  --camps-accent: #b45309;
-}
-
 .camps-page h1 {
   margin-bottom: 8px;
+}
+
+.camps-page-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  align-items: center;
+  gap: 20px;
+  margin: 0 0 8px;
+}
+
+.camps-page-head h1 {
+  margin: 0 0 8px;
+}
+
+.camps-page-art {
+  display: block;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border: 2px solid var(--sb-ink);
+  border-radius: 50%;
+  background: var(--c-soft);
+  box-shadow: 5px 5px 0 var(--c);
+}
+
+.camps-page-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  mix-blend-mode: multiply;
 }
 
 .camps-page-sub {
@@ -704,6 +991,7 @@
   text-underline-offset: 3px;
 }
 
+/* Interest chips on a program page. */
 .camps-badges {
   display: flex;
   flex-wrap: wrap;
@@ -713,13 +1001,48 @@
   list-style: none;
 }
 
-.camps-badges a.camps-type {
+.camps-type {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 13px;
+  border: 1.5px solid var(--sb-ink);
+  border-radius: var(--sb-radius-pill);
+  background: var(--c, #fff);
+  color: var(--c-ink, var(--sb-ink));
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+a.camps-type {
   text-decoration: none;
 }
 
-.camps-badges a.camps-type:hover {
-  border-color: var(--sb-line-strong);
-  color: var(--sb-ink);
+a.camps-type:hover {
+  box-shadow: 3px 3px 0 var(--sb-ink);
+}
+
+.camps-type[data-type="aid"] {
+  background: #d5f5f2;
+  color: #0b4f4a;
+}
+
+.camps-type[data-type="overnight"] {
+  background: var(--sb-ink);
+  color: #fff;
+}
+
+.camps-season {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: var(--sb-radius-pill);
+  background: var(--camps-soft);
+  color: var(--sb-muted);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .camps-cta-row {
@@ -731,9 +1054,9 @@
 }
 
 .camps-cta-row .sb-btn {
-  min-height: 44px;
-  padding-inline: 20px;
-  font-size: 12.5px;
+  min-height: 46px;
+  padding-inline: 22px;
+  font-size: 13px;
 }
 
 .camps-cta-row p {
@@ -744,10 +1067,10 @@
 
 .camps-note {
   margin: 0 0 24px;
-  padding: 12px 14px;
-  border-left: 3px solid var(--camps-accent);
+  padding: 12px 16px;
+  border-left: 4px solid var(--sb-gold);
   border-radius: 0 var(--sb-radius-sm) var(--sb-radius-sm) 0;
-  background: #fff7ed;
+  background: #fffbe6;
   color: var(--sb-ink-2);
   font-size: 14.5px;
   line-height: 1.55;
@@ -755,7 +1078,7 @@
 
 .camps-detail {
   margin: 0 0 28px;
-  border-top: 1px solid var(--sb-line-strong);
+  border-top: 2px solid var(--sb-ink);
 }
 
 .camps-detail > div {
@@ -769,11 +1092,8 @@
 .camps-detail dt {
   padding-top: 2px;
   color: var(--sb-muted);
-  font-family: var(--sb-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .camps-detail dd {
@@ -798,11 +1118,11 @@
 }
 
 .camps-sessions li {
-  padding: 3px 10px;
-  border: 1px solid var(--sb-line);
+  padding: 4px 11px;
   border-radius: var(--sb-radius-pill);
-  background: var(--sb-card);
+  background: var(--camps-soft);
   font-size: 13.5px;
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -819,7 +1139,7 @@
 }
 
 .camps-source a:hover {
-  color: var(--sb-accent-ink);
+  color: var(--camps-link);
 }
 
 .camps-checked {
@@ -833,7 +1153,7 @@
   padding: 0;
   border: 0;
   background: none;
-  color: var(--sb-accent-ink);
+  color: var(--camps-link);
   font: inherit;
   font-weight: 650;
   text-decoration: underline;
@@ -849,8 +1169,8 @@
   margin: 0 0 4px;
   color: var(--sb-ink);
   font-family: var(--sb-serif);
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 24px;
+  font-weight: 900;
   line-height: 1.2;
 }
 
@@ -860,52 +1180,101 @@
 }
 
 .camps-group h2 a:hover {
-  color: var(--sb-accent-ink);
+  color: var(--camps-link);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .camps-group-meta {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   color: var(--sb-muted);
   font-size: 13.5px;
 }
 
+/* Program lists on the city, interest and organization pages: compact rows,
+   each with its interest's art as a small disc. */
 .camps-rows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--sb-line);
 }
 
 .camps-rows li {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--sb-line);
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-md);
+  background: #fff;
+  transition: border-color 0.15s ease;
+}
+
+.camps-rows li:hover {
+  border-color: var(--sb-ink);
+}
+
+.camps-row-art {
+  display: block;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--c-soft, var(--camps-soft));
+}
+
+.camps-row-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.12);
+  mix-blend-mode: multiply;
+}
+
+.camps-row-body {
+  min-width: 0;
 }
 
 .camps-rows a {
   color: var(--sb-ink);
-  font-size: 16px;
-  font-weight: 650;
+  font-size: 15.5px;
+  font-weight: 750;
+  line-height: 1.3;
   text-decoration: none;
 }
 
-.camps-rows a:hover {
-  color: var(--sb-accent-ink);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.camps-rows a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.camps-rows a:focus-visible {
+  outline: none;
+}
+
+.camps-rows li:has(a:focus-visible) {
+  outline: 3px solid var(--sb-accent);
+  outline-offset: 2px;
 }
 
 .camps-rows p {
-  margin: 3px 0 0;
+  margin: 2px 0 0;
   color: var(--sb-muted);
-  font-size: 13.5px;
-  line-height: 1.5;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .camps-rows .camps-season {
-  margin-left: 8px;
-  vertical-align: 2px;
+  margin-left: 6px;
+  vertical-align: 1px;
 }
 
 .camps-jump {
@@ -920,14 +1289,14 @@
 .camps-jump a {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  padding: 4px 12px;
-  border: 1px solid var(--sb-line-strong);
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1.5px solid var(--sb-line-strong);
   border-radius: var(--sb-radius-pill);
-  background: var(--sb-card);
+  background: #fff;
   color: var(--sb-ink-2);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 13.5px;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -936,59 +1305,86 @@
   color: var(--sb-ink);
 }
 
+.camps-jump a:focus-visible {
+  outline: 3px solid var(--sb-accent);
+  outline-offset: 2px;
+}
+
 /* ── Responsive ── */
 @media (max-width: 900px) {
-  .camps-section-head {
-    grid-template-columns: 1fr;
-  }
-
-  .camps-section-head p {
-    max-width: 640px;
+  .camps-topics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .camps-toolbar {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .camps-field--search {
+  .camps-field--q {
     grid-column: 1 / -1;
   }
 
-  .camps-links {
+  .camps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .camps-orgs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .camps-check ul {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 640px) {
   .camps-view {
-    gap: 24px;
+    gap: 44px;
   }
 
-  .camps-directory {
-    gap: 40px;
+  .camps-hero-art img {
+    aspect-ratio: 4 / 3;
+    object-position: 38% 50%;
   }
 
-  .camps-section-head h2 {
-    font-size: 25px;
+  .camps-hero-sticker {
+    font-size: 12px;
+    padding: 7px 12px 6px;
   }
 
-  .camps-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+  .camps-hero-search {
+    grid-template-columns: minmax(0, 1fr) auto;
+    box-shadow: 4px 4px 0 var(--sb-accent);
   }
 
-  .camps-card {
-    padding: 18px 16px 16px;
+  .camps-hero-field--q {
+    grid-column: 1 / -1;
   }
 
-  .camps-card-title {
-    font-size: 20px;
+  /* Phones swipe the interests sideways instead of stacking seven rows. */
+  .camps-topics {
+    display: flex;
+    overflow-x: auto;
+    margin-inline: calc(var(--sb-gutter) * -1);
+    padding: 4px var(--sb-gutter) 10px;
+    scroll-padding-inline: var(--sb-gutter);
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .camps-topics::-webkit-scrollbar,
+  .camps-weeks::-webkit-scrollbar {
+    display: none;
+  }
+
+  .camps-topics li {
+    flex: none;
+    width: 136px;
+    scroll-snap-align: start;
   }
 
   .camps-toolbar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    padding: 12px;
   }
 
   /* 16px keeps iOS Safari from zooming the page when a field takes focus. */
@@ -997,28 +1393,53 @@
     font-size: 16px;
   }
 
-  /* Phones swipe the weeks sideways instead of stacking four rows. */
-  .camps-weeks-strip {
+  .camps-weeks {
     display: flex;
     overflow-x: auto;
     margin-inline: calc(var(--sb-gutter) * -1);
-    padding: 2px var(--sb-gutter) 6px;
+    padding: 12px var(--sb-gutter) 8px;
+    border-radius: 0;
+    scroll-padding-inline: var(--sb-gutter);
     scroll-snap-type: x proximity;
     scrollbar-width: none;
   }
 
-  .camps-weeks-strip::-webkit-scrollbar {
-    display: none;
-  }
-
-  .camps-weekchip {
+  .camps-week {
     flex: none;
-    min-width: 104px;
+    width: 74px;
     scroll-snap-align: start;
   }
 
-  .camps-links {
+  .camps-card {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .camps-card-art {
+    width: 56px;
+    height: 56px;
+  }
+
+  .camps-card-title {
+    font-size: 19px;
+  }
+
+  .camps-orgs,
+  .camps-check ul,
+  .camps-rows {
     grid-template-columns: 1fr;
+  }
+
+  .camps-page-head {
+    grid-template-columns: minmax(0, 1fr) 96px;
+    gap: 14px;
+  }
+
+  .camps-page-art {
+    width: 96px;
+    height: 96px;
+    box-shadow: 4px 4px 0 var(--c);
   }
 
   .camps-detail > div {
@@ -1027,7 +1448,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .camps-card {
+  .camps-topic,
+  .camps-card,
+  .camps-more,
+  .camps-week-bar span {
     transition: none;
+  }
+
+  .camps-topic:hover,
+  .camps-card:hover,
+  .camps-more:hover {
+    transform: none;
   }
 }

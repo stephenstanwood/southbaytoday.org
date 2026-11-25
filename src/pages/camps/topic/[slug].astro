@@ -12,6 +12,7 @@ import {
   groupByCity,
   type Group,
 } from "../../../lib/south-bay/campFinder";
+import { TOPIC_ART, TOPIC_COLOR } from "../../../lib/south-bay/campFormat";
 
 // How each interest reads as a page title.
 const HEADINGS: Record<string, string> = {
@@ -54,12 +55,19 @@ const description =
       <span>{topic.name}</span>
     </nav>
 
-    <h1>{heading}</h1>
-    <p class="camps-page-sub">
-      {topic.programs.length} programs in {groups.length} {groups.length === 1 ? "city" : "cities"}, each taken from the
-      camp's own pages.
-      {postedSentence(topic.programs)}
-    </p>
+    <header class="camps-page-head" data-color={TOPIC_COLOR[topic.slug] ?? "violet"}>
+      <div>
+        <h1>{heading}</h1>
+        <p class="camps-page-sub">
+          {topic.programs.length} programs in {groups.length} {groups.length === 1 ? "city" : "cities"}, each taken from
+          the camp's own pages.
+          {postedSentence(topic.programs)}
+        </p>
+      </div>
+      <span class="camps-page-art" aria-hidden="true">
+        <img src={TOPIC_ART(topic.slug)} alt="" width="480" height="480" decoding="async" />
+      </span>
+    </header>
 
     <ul class="camps-jump" aria-label="Narrow these camps">
       <li><a href={`/camps?topic=${topic.slug}`}>Filter by age or week</a></li>

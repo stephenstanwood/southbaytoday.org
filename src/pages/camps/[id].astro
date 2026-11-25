@@ -18,7 +18,7 @@ import {
   topicHref,
   type Program,
 } from "../../lib/south-bay/campFinder";
-import { TOPIC_LABELS, formatAges, formatCents, formatRange, fullDate } from "../../lib/south-bay/campFormat";
+import { TOPIC_ART, TOPIC_COLOR, TOPIC_LABELS, artTopic, formatAges, formatCents, formatRange, fullDate } from "../../lib/south-bay/campFormat";
 
 export function getStaticPaths() {
   return CAMPS.programs.map((program) => ({ params: { id: program.id }, props: { program } }));
@@ -34,6 +34,7 @@ const opHref = operatorHref(p.operatorSlug);
 const kind = p.kind === "overnight" ? "Overnight camp" : "Day camp";
 const aidSource = sourceFor(p, "financialAid");
 const pdfLink = /\.pdf($|[?#])/i.test(p.url);
+const art = artTopic(p.name, p.topics) ?? "general";
 
 const sameOperatorHere = CAMPS.programs
   .filter((o) => o.id !== p.id && o.operatorSlug === p.operatorSlug && o.citySlug === p.citySlug)
@@ -69,16 +70,23 @@ const breadcrumbJsonLd = JSON.stringify({
       <a href={cityHref(p.citySlug)}>{p.city}</a>
     </nav>
 
-    <h1>{p.name}</h1>
-    <p class="camps-page-sub">
-      {opHref ? <a href={opHref}>{p.operator}</a> : p.operator}
-      {" · "}{kind} in {p.city}
-    </p>
+    <header class="camps-page-head" data-color={TOPIC_COLOR[art] ?? "violet"}>
+      <div>
+        <h1>{p.name}</h1>
+        <p class="camps-page-sub">
+          {opHref ? <a href={opHref}>{p.operator}</a> : p.operator}
+          {" · "}{kind} in {p.city}
+        </p>
+      </div>
+      <span class="camps-page-art" aria-hidden="true">
+        <img src={TOPIC_ART(art)} alt="" width="480" height="480" decoding="async" />
+      </span>
+    </header>
 
     {(p.topics.length > 0 || p.financialAid === "yes") && (
       <ul class="camps-badges" aria-label="Interests">
         {p.topics.map((t) => (
-          <li><a class="camps-type" data-type={t} href={topicHref(t)}>{TOPIC_LABELS[t] ?? t}</a></li>
+          <li><a class="camps-type" data-type={t} data-color={TOPIC_COLOR[t] ?? "violet"} href={topicHref(t)}>{TOPIC_LABELS[t] ?? t}</a></li>
         ))}
         {p.financialAid === "yes" && <li class="camps-type" data-type="aid">Financial aid</li>}
       </ul>

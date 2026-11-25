@@ -13,6 +13,7 @@
 - `src/styles/sbt/chrome.css` holds the masthead, nav, footer, page hero, and section heads. It also holds the shared building blocks: `.sb-btn` (the house pill button), `.sb-chip`, `.sb-card`, `.sb-skeleton`, and `.sb-empty`.
 - Per-area rules live in `home.css`, `events.css`, `gov.css`, `tech.css`, `camps.css`, `food.css`, and `city.css`. `BaseLayout.astro` loads all of them site-wide (lazy tab chunks can't inject CSS into a prerendered head), so class names must stay area-prefixed.
 - Every page wears the same header and footer: `Masthead.tsx` and `SiteFooter.tsx`. That covers the app tabs, `CalendarShell` static pages, and city pages. Don't fork them per page.
+- **The page is white (2026-11-25).** Stephen: "how'd we let SBT as a whole get so beige-y? don't love it". The 2026-09 overhaul had tinted the body, masthead and nav cream and peach. `--sb-bg` is white, the masthead is white under a 5px day-arc stripe, and the nav is white glass. Don't tint the page or chrome warm again; color comes from the day arc, photos and art.
 - House rules from the 2026-09 overhaul:
   - No red UI. Hot states and warnings use amber, rust, or coral.
   - Body text ≥14px and meta ≥12px. Nothing at 7–9px.
@@ -130,6 +131,8 @@ Do NOT add health-score / inspection / closure / quake / outage / water / air-qu
 
 ## Camps: built from Camp Finder (since 2026-11-23)
 `/camps`, `/camps/<id>` and the city, interest and organization lists under `/camps/` are built from `src/data/south-bay/camp-finder.json` (every fact with its source, build time only) and `camp-finder-index.json` (the directory island's slim list). Both are generated: the Mini job `org.southbaytoday.camp-finder-sync` (`scripts/camps/`) pulls the private `stephenstanwood/camp-finder-data` repo at 2:40 AM and 12:40 PM and runs `npm run sync-camp-finder`, which refuses a refresh that would drop more than a fifth of the published programs. Never hand-edit those two files: a wrong fact gets fixed in camp-finder-data and published by the next sync. A record's `id` is its page address, so ids never change.
+
+The camps pages wear a committed Recraft art set in `public/images/camps/` (a hero and one image per interest), made by `scripts/camps/generate-camp-art.mjs` with one shared poster style. Add or replace art with that script and its STYLE, never by hand-drawing SVG. `artTopic()` in `campFormat.ts` picks a program's art from its name first (sailing wears the water art) and then its first interest. Stephen rejected the text-wall version on 2026-11-25 ("no images or anything?", "kind of just an insane block of text", "'by organization' is just an incredibly long list"). Keep `/camps` led by the art, the interest tiles and the week histogram, and keep long lists (organizations, A to Z) folded.
 
 Camp Finder is a Ventures product (status `free` in stoa.works `ops/ventures/decisions.json`): the Codex operator grows the data and never edits this repo; the pages' design and words belong to Claude sessions. `camps-data.ts` is last summer's hand-made list, kept only for the "More camps to check" section until the data covers every camp in it; don't add camps there.
 
