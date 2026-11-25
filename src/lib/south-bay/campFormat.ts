@@ -25,6 +25,50 @@ export const TOPIC_LABELS: Record<string, string> = {
   "special-needs": "Special needs",
 };
 
+/** The illustration for an interest: one committed WebP per topic in
+ *  public/images/camps/ (scripts/camps/generate-camp-art.mjs). */
+export const TOPIC_ART = (topic: string): string => `/images/camps/${topic in TOPIC_LABELS ? topic : "general"}.webp`;
+
+// A program's name often says more than its broad interest: a sailing camp
+// filed under Sports should wear the water art, not the soccer field.
+const NAME_ART: Array<[RegExp, string]> = [
+  [/\b(sail|sailing|kayak|paddle|surf|surfing|windsurf|swim|swimming|dive|diving|water polo|aquatic|rowing|canoe)/i, "swim"],
+  [/\b(cook|cooking|chef|bak(e|ing)|culinary|kitchen)/i, "culinary"],
+  [/\b(martial arts|karate|taekwondo|judo|kung fu|soccer|basketball|baseball|softball|tennis|volleyball|golf|fencing|gymnastics|lacrosse|football|hockey|cheer|track and field)/i, "sports"],
+  [/\b(climb|climbing|ropes|zip ?line|camping|backpacking)/i, "adventure"],
+  [/\b(chess|debate|writing|reading|spelling|tutoring|speech)/i, "academic"],
+  [/\b(music|guitar|piano|drum|drums|band|choir|ukulele|violin|singing|rock band)\b/i, "music"],
+  [/\b(horse|equestrian|riding|farm|zoo|animal|vet|pet)s?\b/i, "animals"],
+  [/\b(hik(e|ing)|nature|outdoor|garden|ecology|wildlife|naturalist)/i, "nature"],
+  [/\b(robot|robotics|coding|code|program+ing|engineer|lego|minecraft|3d|drone|science|stem|math)/i, "stem"],
+  [/\b(art|arts|paint|painting|draw|drawing|ceramic|pottery|craft|crafts|theat(er|re)|drama|acting|dance)/i, "arts"],
+];
+
+/** Which interest's art a program wears: its name first, then its first interest. */
+export function artTopic(name: string, topics: string[]): string | undefined {
+  for (const [pattern, topic] of NAME_ART) if (pattern.test(name)) return topic;
+  return topics[0];
+}
+
+/** Each interest's color from the SBT day arc; camps.css maps the name to a
+ *  token (data-color="…"), so tiles, cards and page heads agree. */
+export const TOPIC_COLOR: Record<string, "violet" | "coral" | "teal" | "gold" | "sunset"> = {
+  stem: "violet",
+  arts: "coral",
+  sports: "teal",
+  academic: "gold",
+  adventure: "sunset",
+  general: "violet",
+  nature: "teal",
+  music: "coral",
+  animals: "gold",
+  culinary: "sunset",
+  swim: "teal",
+  language: "violet",
+  faith: "gold",
+  "special-needs": "coral",
+};
+
 /** A city, interest or camp gets its own page once it has this many programs;
  *  below that the directory filter is the better destination. */
 export const CITY_PAGE_MIN = 3;

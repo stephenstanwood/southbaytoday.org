@@ -11,10 +11,7 @@ html {
 
 body {
   font-family: var(--sb-sans);
-  background:
-    radial-gradient(1200px 520px at 50% -140px, rgba(255, 123, 43, 0.10), transparent 70%),
-    linear-gradient(180deg, #fff8f2 0%, #fff7fd 42%, #f5f9ff 100%);
-  background-attachment: scroll;
+  background: var(--sb-bg);
   color: var(--sb-ink);
   margin: 0;
   overflow-x: clip;
@@ -32,12 +29,18 @@ body {
 /* ── Masthead ── */
 .sb-header {
   position: relative;
-  background:
-    radial-gradient(circle at 50% -30%, rgba(255, 123, 43, 0.26), transparent 38%),
-    radial-gradient(circle at 18% 0%, rgba(244, 63, 124, 0.06), transparent 30%),
-    radial-gradient(circle at 82% 0%, rgba(34, 198, 211, 0.07), transparent 30%);
-  padding: 22px var(--sb-gutter) 16px;
+  background: #fff;
+  padding: 26px var(--sb-gutter) 16px;
   text-align: center;
+}
+
+/* The day arc as a printed stripe across the top of every page. */
+.sb-header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: var(--sb-arc);
 }
 
 .sb-header-inner {
@@ -208,7 +211,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 99;
-  background: rgba(255, 250, 246, 0.86);
+  background: rgba(255, 255, 255, 0.9);
   -webkit-backdrop-filter: saturate(1.4) blur(14px);
   backdrop-filter: saturate(1.4) blur(14px);
   border-top: 1px solid var(--sb-line);

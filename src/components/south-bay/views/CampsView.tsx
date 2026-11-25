@@ -1,12 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent, type MouseEvent } from "react";
 import indexJson from "../../../data/south-bay/camp-finder-index.json";
-import PageHero from "../PageHero";
 import { useTodayPT } from "../../../lib/south-bay/useTodayPT";
 import {
   CITY_PAGE_MIN,
   OPERATOR_PAGE_MIN,
+  TOPIC_ART,
+  TOPIC_COLOR,
   TOPIC_LABELS,
   TOPIC_PAGE_MIN,
+  artTopic,
   formatAges,
   formatPriceRange,
   formatRegistration,
@@ -19,7 +21,8 @@ import {
 // ---------------------------------------------------------------------------
 // The /camps directory. Its list is camp-finder-index.json, the slim side of
 // the sourced camp records (scripts/sync-camp-finder.mjs); each card links to
-// the program's own static page, where every fact shows its source.
+// the program's own static page, where every fact shows its source. The art
+// is a committed Recraft set (scripts/camps/generate-camp-art.mjs).
 // ---------------------------------------------------------------------------
 
 interface Row {
@@ -53,8 +56,11 @@ const INDEX = indexJson as unknown as CampIndex;
 const LATEST = INDEX.latestSeason;
 const CITY_NAME = new Map(INDEX.cities.map((c) => [c.slug, c.name]));
 const PAGE = 24;
+const AGES = Array.from({ length: 16 }, (_, i) => String(i + 3)); // 3 to 18
+const fmt = (n: number) => n.toLocaleString("en-US");
 
 const isPosted = (row: Row) => row.season === LATEST && !!row.sessions?.length && !!row.price;
+const POSTED = INDEX.programs.filter(isPosted).length;
 
 // Next summer's posted programs first, then next summer's not-yet-posted, then
 // last summer's. Inside each tier: soonest first (the default, which also
@@ -86,7 +92,19 @@ function countBy<T extends string>(keys: (row: Row) => T[]): Map<T, number> {
 const CITY_COUNTS = countBy((r) => [r.city]);
 const TOPIC_COUNTS = countBy((r) => r.topics);
 const OPERATOR_COUNTS = countBy((r) => [INDEX.operators[r.op].slug]);
-const TOPICS_PRESENT = Object.keys(TOPIC_LABELS).filter((t) => TOPIC_COUNTS.has(t));
+// Interests in the order readers reach for them: the biggest first.
+const TOPICS_PRESENT = Object.keys(TOPIC_LABELS)
+  .filter((t) => TOPIC_COUNTS.has(t))
+  .sort((a, b) => (TOPIC_COUNTS.get(b) ?? 0) - (TOPIC_COUNTS.get(a) ?? 0));
+const CITIES_BY_SIZE = [...INDEX.cities].sort(
+  (a, b) => (CITY_COUNTS.get(b.slug) ?? 0) - (CITY_COUNTS.get(a.slug) ?? 0) || a.name.localeCompare(b.name),
+);
+const OPERATOR_PAGES = INDEX.operators
+  .filter((o) => (OPERATOR_COUNTS.get(o.slug) ?? 0) >= OPERATOR_PAGE_MIN)
+  .sort((a, b) => a.name.localeCompare(b.name));
+const BIGGEST_OPERATORS = [...OPERATOR_PAGES]
+  .sort((a, b) => (OPERATOR_COUNTS.get(b.slug) ?? 0) - (OPERATOR_COUNTS.get(a.slug) ?? 0) || a.name.localeCompare(b.name))
+  .slice(0, 12);
 
 interface Filters {
   q: string;
@@ -180,6 +198,118 @@ function searchWords(q: string): string[] {
     .filter(Boolean);
 }
 
+/** A plain click (no new-tab modifier) that the page can handle in place. */
+const plainClick = (e: MouseEvent) => e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
+
+function scrollToResults() {
+  const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById("camps-results")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+}
+
+// ---------------------------------------------------------------------------
+// Hero
+// ---------------------------------------------------------------------------
+
+function Hero({ q, age, onSearch }: { q: string; age: string; onSearch: (q: string, age: string) => void }) {
+  const [draftQ, setDraftQ] = useState(q);
+  const [draftAge, setDraftAge] = useState(age);
+  useEffect(() => setDraftQ(q), [q]);
+  useEffect(() => setDraftAge(age), [age]);
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    onSearch(draftQ, draftAge);
+  };
+
+  return (
+    <section className="camps-hero" aria-labelledby="camps-hero-title">
+      <div className="camps-hero-art">
+        <img src="/images/camps/hero.webp" alt="" width={1440} height={810} fetchPriority="high" decoding="async" />
+        <span className="camps-hero-sticker" aria-hidden="true">Summer {LATEST}</span>
+      </div>
+
+      <div className="camps-hero-body">
+        <div className="camps-hero-copy">
+          <h1 id="camps-hero-title" className="camps-hero-title">Summer Camps</h1>
+          <p className="camps-hero-dek">
+            Ages, weeks and prices for summer camps across Santa Clara County, straight from each camp's own website.
+          </p>
+        </div>
+
+        <form className="camps-hero-search" role="search" aria-label="Find a summer camp" onSubmit={submit}>
+          <label className="camps-hero-field camps-hero-field--q">
+            <span className="camps-sr">Camp, activity or city</span>
+            <input
+              type="search"
+              placeholder="Soccer, robotics, Cupertino…"
+              value={draftQ}
+              onChange={(e) => setDraftQ(e.target.value)}
+            />
+          </label>
+          <label className="camps-hero-field">
+            <span className="camps-sr">Age</span>
+            <select value={draftAge} onChange={(e) => setDraftAge(e.target.value)}>
+              <option value="">Any age</option>
+              {AGES.map((a) => (
+                <option key={a} value={a}>Age {a}</option>
+              ))}
+            </select>
+          </label>
+          <button type="submit" className="camps-hero-go">Find camps</button>
+        </form>
+
+        <ul className="camps-hero-stats" aria-label="In the directory">
+          <li><strong>{fmt(INDEX.programs.length)}</strong> programs</li>
+          <li><strong>{fmt(POSTED)}</strong> with {LATEST} dates and prices</li>
+          <li><strong>{INDEX.cities.length}</strong> cities</li>
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Interests: the illustrated way in
+// ---------------------------------------------------------------------------
+
+function Interests({ active, onPick }: { active: string; onPick: (topic: string) => void }) {
+  return (
+    <section className="camps-section" aria-labelledby="camps-interests-title">
+      <h2 id="camps-interests-title" className="camps-h2">What are they into?</h2>
+      <ul className="camps-topics">
+        {TOPICS_PRESENT.map((t) => {
+          const count = TOPIC_COUNTS.get(t) ?? 0;
+          const hasPage = count >= TOPIC_PAGE_MIN;
+          const pressed = active === t;
+          return (
+            <li key={t}>
+              <a
+                className="camps-topic"
+                data-color={TOPIC_COLOR[t] ?? "violet"}
+                href={hasPage ? `/camps/topic/${t}` : `/camps?topic=${t}`}
+                aria-current={pressed ? "true" : undefined}
+                onClick={(e) => {
+                  if (!plainClick(e)) return;
+                  e.preventDefault();
+                  onPick(pressed ? "" : t);
+                }}
+              >
+                <span className="camps-topic-art">
+                  <img src={TOPIC_ART(t)} alt="" width={480} height={480} loading="lazy" decoding="async" />
+                </span>
+                <span className="camps-topic-label">
+                  <span className="camps-topic-name">{TOPIC_LABELS[t]}</span>
+                  <span className="camps-topic-count">{fmt(count)} program{count === 1 ? "" : "s"}</span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Card
 // ---------------------------------------------------------------------------
@@ -189,51 +319,47 @@ function CampCard({ row, todayIso }: { row: Row; todayIso: string }) {
   const latest = row.season === LATEST;
   const price = formatPriceRange(row.price);
   const registration = latest ? formatRegistration(row.opens, row.deadline, todayIso) : null;
+  const topic = artTopic(row.name, row.topics);
+  const dates = row.sessions?.length ? formatSessions(row.sessions, row.season) : null;
 
   return (
-    <article className="camps-card">
-      <header className="camps-card-head">
-        <div className="camps-card-kicker">
-          {CITY_NAME.get(row.city)}
-          <span className="camps-card-sep">{" · "}</span>
-          {operator.name}
-        </div>
-        {!latest && <span className="camps-season">{row.season} details</span>}
-      </header>
-
-      <h3 className="camps-card-title">
-        <a className="camps-card-link" href={`/camps/${row.id}`}>{row.name}</a>
-      </h3>
-
-      <dl className="camps-facts">
-        <div>
-          <dt>Ages</dt>
-          <dd>{row.ages ? formatAges(row.ages, row.grades).replace(/^Ages? /, "") : "Not stated"}</dd>
-        </div>
-        <div>
-          <dt>{latest ? "Dates" : `${row.season} dates`}</dt>
-          <dd>{row.sessions?.length ? formatSessions(row.sessions, row.season) : "Not posted yet"}</dd>
-        </div>
-        <div>
-          <dt>{latest ? "Price" : `${row.season} price`}</dt>
-          <dd className={price ? "camps-fact-price" : undefined}>{price ?? "Not posted yet"}</dd>
-        </div>
-        <div>
-          <dt>Financial aid</dt>
-          <dd>{row.aid ? "Yes" : "Not stated"}</dd>
-        </div>
-      </dl>
-
-      {(row.topics.length > 0 || row.overnight) && (
-        <ul className="camps-card-tags" aria-label="Interests">
-          {row.topics.map((t) => (
-            <li key={t} className="camps-type" data-type={t}>{TOPIC_LABELS[t] ?? t}</li>
-          ))}
-          {row.overnight && <li className="camps-type" data-type="overnight">Overnight</li>}
-        </ul>
+    <article className="camps-card" data-color={(topic && TOPIC_COLOR[topic]) || "violet"}>
+      {topic && (
+        <span className="camps-card-art" aria-hidden="true">
+          <img src={TOPIC_ART(topic)} alt="" width={480} height={480} loading="lazy" decoding="async" />
+        </span>
       )}
+      <div className="camps-card-body">
+        <p className="camps-card-kicker">
+          {row.topics.map((t) => TOPIC_LABELS[t] ?? t).join(" · ")}
+          {row.overnight ? " · Overnight" : ""}
+        </p>
+        <h3 className="camps-card-title">
+          <a className="camps-card-link" href={`/camps/${row.id}`}>{row.name}</a>
+        </h3>
+        <p className="camps-card-where">
+          {operator.name}
+          <span aria-hidden="true"> · </span>
+          {CITY_NAME.get(row.city)}
+        </p>
 
-      {registration && <p className="camps-card-note">{registration}</p>}
+        <ul className="camps-card-facts">
+          <li>{row.ages ? formatAges(row.ages, row.grades) : "Ages not stated"}</li>
+          <li className={dates ? undefined : "is-missing"}>
+            {dates ?? `${LATEST} dates not posted yet`}
+            {!latest && dates ? ` (${row.season})` : ""}
+          </li>
+          {price && (
+            <li className="camps-card-price">
+              {price}
+              {!latest ? ` (${row.season})` : ""}
+            </li>
+          )}
+          {row.aid && <li className="camps-card-aid">Financial aid</li>}
+        </ul>
+
+        {registration && <p className="camps-card-note">{registration}</p>}
+      </div>
     </article>
   );
 }
@@ -242,9 +368,263 @@ function CampCard({ row, todayIso }: { row: Row; todayIso: string }) {
 // Directory
 // ---------------------------------------------------------------------------
 
-function Directory({ todayIso }: { todayIso: string }) {
-  const [filters, setFilters] = useState<Filters>(EMPTY);
+function Directory({
+  filters,
+  set,
+  clear,
+  todayIso,
+}: {
+  filters: Filters;
+  set: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
+  clear: () => void;
+  todayIso: string;
+}) {
   const [shown, setShown] = useState(PAGE);
+  useEffect(() => setShown(PAGE), [filters]);
+
+  const hasFilters = writeFilters({ ...filters, sort: "soonest" }) !== "";
+  const words = useMemo(() => searchWords(filters.q), [filters.q]);
+
+  const base = useMemo(
+    () => SORTED[filters.sort].filter((row) => matchesExceptWeek(row, filters, words)),
+    [filters, words],
+  );
+  const week = INDEX.weeks.find((w) => w.start === filters.week);
+  const results = useMemo(
+    () => (week ? base.filter((row) => row.season === LATEST && runsDuringWeek(row.sessions, week.start, week.end)) : base),
+    [base, week],
+  );
+  const weekCounts = useMemo(
+    () =>
+      INDEX.weeks.map((w) => base.filter((row) => row.season === LATEST && runsDuringWeek(row.sessions, w.start, w.end)).length),
+    [base],
+  );
+  const weekMax = Math.max(1, ...weekCounts);
+  const visible = results.slice(0, shown);
+
+  return (
+    <section className="camps-section camps-finder" id="camps-results" aria-labelledby="camps-finder-title">
+      <div className="camps-finder-head">
+        <h2 id="camps-finder-title" className="camps-h2">Every camp</h2>
+        <p className="camps-finder-count" aria-live="polite">
+          {results.length === 0
+            ? "No programs match"
+            : <><strong>{fmt(results.length)}</strong> program{results.length === 1 ? "" : "s"}{week ? ` running ${week.label}` : ""}</>}
+          {hasFilters && (
+            <button type="button" className="camps-clear" onClick={clear}>Clear all</button>
+          )}
+        </p>
+      </div>
+
+      <div className="camps-toolbar">
+        <label className="camps-field camps-field--q">
+          <span className="camps-sr">Search camps</span>
+          <input
+            type="search"
+            placeholder="Search camps, activities or organizations"
+            value={filters.q}
+            onChange={(e) => set("q", e.target.value)}
+          />
+        </label>
+        <label className="camps-field">
+          <span className="camps-sr">Age</span>
+          <select value={filters.age} onChange={(e) => set("age", e.target.value)}>
+            <option value="">Any age</option>
+            {AGES.map((a) => (
+              <option key={a} value={a}>Age {a}</option>
+            ))}
+          </select>
+        </label>
+        <label className="camps-field">
+          <span className="camps-sr">City</span>
+          <select value={filters.city} onChange={(e) => set("city", e.target.value)}>
+            <option value="">Any city</option>
+            {INDEX.cities.map((c) => (
+              <option key={c.slug} value={c.slug}>{c.name}</option>
+            ))}
+          </select>
+        </label>
+        <label className="camps-field">
+          <span className="camps-sr">Interest</span>
+          <select value={filters.topic} onChange={(e) => set("topic", e.target.value)}>
+            <option value="">Any interest</option>
+            {TOPICS_PRESENT.map((t) => (
+              <option key={t} value={t}>{TOPIC_LABELS[t]}</option>
+            ))}
+          </select>
+        </label>
+        <label className="camps-field">
+          <span className="camps-sr">Sort</span>
+          <select value={filters.sort} onChange={(e) => set("sort", e.target.value as SortKey)}>
+            {(Object.keys(SORTS) as SortKey[]).map((k) => (
+              <option key={k} value={k}>{SORTS[k].label}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="camps-toggles" role="group" aria-label="Only show">
+        <button type="button" className="camps-toggle" aria-pressed={filters.aid} onClick={() => set("aid", !filters.aid)}>
+          Financial aid
+        </button>
+        <button type="button" className="camps-toggle" aria-pressed={filters.posted} onClick={() => set("posted", !filters.posted)}>
+          {LATEST} dates posted
+        </button>
+        <button type="button" className="camps-toggle" aria-pressed={filters.overnight} onClick={() => set("overnight", !filters.overnight)}>
+          Overnight
+        </button>
+      </div>
+
+      {INDEX.weeks.length > 0 && (
+        <div className="camps-weeks" role="group" aria-label={`Weeks of summer ${LATEST}`}>
+          {INDEX.weeks.map((w, i) => (
+            <button
+              key={w.start}
+              type="button"
+              className="camps-week"
+              aria-pressed={filters.week === w.start}
+              aria-label={`${w.label}: ${weekCounts[i]} program${weekCounts[i] === 1 ? "" : "s"}`}
+              onClick={() => set("week", filters.week === w.start ? "" : w.start)}
+            >
+              <span className="camps-week-bar" aria-hidden="true">
+                <span style={{ blockSize: `${Math.max(6, Math.round((weekCounts[i] / weekMax) * 100))}%` }} />
+              </span>
+              <span className="camps-week-count" aria-hidden="true">{weekCounts[i]}</span>
+              <span className="camps-week-label" aria-hidden="true">{w.label}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {results.length === 0 ? (
+        <div className="camps-empty">
+          <h3>No camps match all of those</h3>
+          <p>Try removing a filter or picking another week.</p>
+        </div>
+      ) : (
+        <div className="camps-grid">
+          {visible.map((row) => (
+            <CampCard key={row.id} row={row} todayIso={todayIso} />
+          ))}
+        </div>
+      )}
+
+      {visible.length < results.length && (
+        <button type="button" className="camps-more" onClick={() => setShown((n) => n + PAGE)}>
+          Show {Math.min(PAGE, results.length - visible.length)} more
+          <span> of {fmt(results.length - visible.length)}</span>
+        </button>
+      )}
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Cities, organizations, camps still to check, and where the details come from
+// ---------------------------------------------------------------------------
+
+function Cities() {
+  const cities = CITIES_BY_SIZE.filter((c) => (CITY_COUNTS.get(c.slug) ?? 0) >= CITY_PAGE_MIN);
+  return (
+    <section className="camps-section" aria-labelledby="camps-cities-title">
+      <h2 id="camps-cities-title" className="camps-h2">Camps by city</h2>
+      <ul className="camps-cities">
+        {cities.map((c) => (
+          <li key={c.slug}>
+            <a href={`/camps/city/${c.slug}`}>
+              {c.name}
+              <span>{fmt(CITY_COUNTS.get(c.slug) ?? 0)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function Organizations() {
+  return (
+    <section className="camps-section" aria-labelledby="camps-orgs-title">
+      <h2 id="camps-orgs-title" className="camps-h2">The biggest camp organizations</h2>
+      <ul className="camps-orgs">
+        {BIGGEST_OPERATORS.map((o) => (
+          <li key={o.slug}>
+            <a href={`/camps/operator/${o.slug}`}>
+              <span className="camps-org-name">{o.name}</span>
+              <span className="camps-org-count">{fmt(OPERATOR_COUNTS.get(o.slug) ?? 0)} programs</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <details className="camps-az">
+        <summary>All {OPERATOR_PAGES.length} organizations, A to Z</summary>
+        <ul>
+          {OPERATOR_PAGES.map((o) => (
+            <li key={o.slug}>
+              <a href={`/camps/operator/${o.slug}`}>{o.name}</a> <span>{OPERATOR_COUNTS.get(o.slug)}</span>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </section>
+  );
+}
+
+function StillToCheck() {
+  if (!INDEX.stillToCheck.length) return null;
+  return (
+    <section className="camps-section camps-check" aria-labelledby="camps-check-title">
+      <h2 id="camps-check-title" className="camps-h3">Still on our list for {LATEST}</h2>
+      <p>Last summer's camps we haven't gathered yet. Their own pages have the latest.</p>
+      <ul>
+        {INDEX.stillToCheck.map((c) => (
+          <li key={c.url + c.name}>
+            <a href={c.url} target="_blank" rel="noopener noreferrer">
+              {c.name}
+              <span aria-hidden="true"> ↗</span>
+            </a>
+            <span>{c.city}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// Opens the site's Tips & Feedback panel (ReaderWidget) on a correction; until
+// that island has hydrated, an email does the same job.
+function openFeedback(type: "correction" | "feedback" = "correction") {
+  const w = window as Window & { __sbtFeedbackReady?: boolean };
+  if (w.__sbtFeedbackReady) {
+    window.dispatchEvent(new CustomEvent("sbt:feedback", { detail: { type } }));
+  } else {
+    window.location.href = "mailto:hello@southbaytoday.org?subject=Summer%20camp%20listing";
+  }
+}
+
+function Method() {
+  return (
+    <footer className="camps-method">
+      <p>
+        Every listing links to the camp page it came from and the day we checked it
+        {INDEX.checkedThrough ? ` (latest: ${fullDate(INDEX.checkedThrough)})` : ""}. Camps post next summer's details
+        from December through February, so a listing still showing {LATEST - 1} hasn't posted {LATEST} yet.{" "}
+        <button type="button" className="camps-method-link" data-feedback="correction" onClick={() => openFeedback("correction")}>
+          Spot something off, or a camp we're missing?
+        </button>
+      </p>
+    </footer>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Main view
+// ---------------------------------------------------------------------------
+
+export default function CampsView({ buildDayPt }: { buildDayPt?: string }) {
+  // The build's day while hydrating, then the reader's (useTodayPT).
+  const todayIso = useTodayPT(buildDayPt);
+  const [filters, setFilters] = useState<Filters>(EMPTY);
   const fromUrl = useRef(false);
 
   // Deep links (/camps?city=sunnyvale&topic=stem) apply after mount, so the
@@ -269,315 +649,31 @@ function Directory({ todayIso }: { todayIso: string }) {
     }
   }, [filters]);
 
-  const set = <K extends keyof Filters>(key: K, value: Filters[K]) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
-    setShown(PAGE);
-  };
-  const hasFilters = writeFilters({ ...filters, sort: "soonest" }) !== "";
-  const words = useMemo(() => searchWords(filters.q), [filters.q]);
-
-  const base = useMemo(
-    () => SORTED[filters.sort].filter((row) => matchesExceptWeek(row, filters, words)),
-    [filters, words],
-  );
-  const week = INDEX.weeks.find((w) => w.start === filters.week);
-  const results = useMemo(
-    () => (week ? base.filter((row) => row.season === LATEST && runsDuringWeek(row.sessions, week.start, week.end)) : base),
-    [base, week],
-  );
-  const weekCounts = useMemo(
-    () =>
-      INDEX.weeks.map((w) => base.filter((row) => row.season === LATEST && runsDuringWeek(row.sessions, w.start, w.end)).length),
-    [base],
-  );
-  const visible = results.slice(0, shown);
-
-  return (
-    <section className="camps-browse" aria-labelledby="camps-browse-title">
-      <div className="camps-section-head">
-        <div>
-          <div className="sb-eyebrow camps-kicker">Directory</div>
-          <h2 id="camps-browse-title">Find a camp</h2>
-        </div>
-        <p>Pick an age and a week to see what runs then. Each camp's page shows where every detail came from.</p>
-      </div>
-
-      <div className="camps-toolbar">
-        <label className="camps-field camps-field--search">
-          <span>Search</span>
-          <input
-            type="search"
-            placeholder="Camp, activity or city"
-            value={filters.q}
-            onChange={(e) => set("q", e.target.value)}
-          />
-        </label>
-
-        <label className="camps-field">
-          <span>Age</span>
-          <input
-            type="number"
-            inputMode="numeric"
-            min={3}
-            max={18}
-            placeholder="Any"
-            value={filters.age}
-            onChange={(e) => set("age", e.target.value.replace(/\D/g, "").slice(0, 2))}
-          />
-        </label>
-
-        <label className="camps-field">
-          <span>City</span>
-          <select value={filters.city} onChange={(e) => set("city", e.target.value)}>
-            <option value="">All cities</option>
-            {INDEX.cities.map((c) => (
-              <option key={c.slug} value={c.slug}>{c.name}</option>
-            ))}
-          </select>
-        </label>
-
-        <label className="camps-field">
-          <span>Interest</span>
-          <select value={filters.topic} onChange={(e) => set("topic", e.target.value)}>
-            <option value="">Any interest</option>
-            {TOPICS_PRESENT.map((t) => (
-              <option key={t} value={t}>{TOPIC_LABELS[t]}</option>
-            ))}
-          </select>
-        </label>
-
-        <label className="camps-field">
-          <span>Sort</span>
-          <select value={filters.sort} onChange={(e) => set("sort", e.target.value as SortKey)}>
-            {(Object.keys(SORTS) as SortKey[]).map((k) => (
-              <option key={k} value={k}>{SORTS[k].label}</option>
-            ))}
-          </select>
-        </label>
-      </div>
-
-      <div className="camps-toggles" role="group" aria-label="Only show">
-        <button type="button" className="sb-chip camps-toggle" aria-pressed={filters.aid} onClick={() => set("aid", !filters.aid)}>
-          Financial aid
-        </button>
-        <button type="button" className="sb-chip camps-toggle" aria-pressed={filters.posted} onClick={() => set("posted", !filters.posted)}>
-          {LATEST} dates posted
-        </button>
-        <button
-          type="button"
-          className="sb-chip camps-toggle"
-          aria-pressed={filters.overnight}
-          onClick={() => set("overnight", !filters.overnight)}
-        >
-          Overnight
-        </button>
-      </div>
-
-      {INDEX.weeks.length > 0 && (
-        <div className="camps-weeks">
-          <div className="camps-weeks-head">
-            <span className="camps-weeks-label">Week of summer {LATEST}</span>
-            {week && (
-              <button type="button" className="camps-weeks-clear" onClick={() => set("week", "")}>
-                Any week
-              </button>
-            )}
-          </div>
-          <div className="camps-weeks-strip" role="group" aria-label={`Weeks of summer ${LATEST}`}>
-            {INDEX.weeks.map((w, i) => (
-              <button
-                key={w.start}
-                type="button"
-                className="camps-weekchip"
-                aria-pressed={filters.week === w.start}
-                aria-label={`${w.label}: ${weekCounts[i]} program${weekCounts[i] === 1 ? "" : "s"}`}
-                onClick={() => set("week", filters.week === w.start ? "" : w.start)}
-              >
-                <span className="camps-weekchip-dates">{w.label}</span>
-                <span className="camps-weekchip-count">{weekCounts[i]}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div className="camps-results-head">
-        <span aria-live="polite">
-          {results.length === 0
-            ? "No programs match"
-            : visible.length < results.length
-              ? <>Showing <strong>{visible.length}</strong> of <strong>{results.length}</strong> programs</>
-              : <><strong>{results.length}</strong> program{results.length === 1 ? "" : "s"}</>}
-          {week ? ` running ${week.label}` : ""}
-        </span>
-        {hasFilters && (
-          <button
-            type="button"
-            className="sb-btn sb-btn--quiet"
-            onClick={() => {
-              setFilters({ ...EMPTY, sort: filters.sort });
-              setShown(PAGE);
-            }}
-          >
-            Clear filters
-          </button>
-        )}
-      </div>
-
-      {results.length === 0 ? (
-        <div className="sb-empty camps-empty">
-          <h3 className="sb-empty-title">No camps match all of those</h3>
-          <p className="sb-empty-sub">Try removing a filter or picking another week.</p>
-        </div>
-      ) : (
-        <div className="camps-grid">
-          {visible.map((row) => (
-            <CampCard key={row.id} row={row} todayIso={todayIso} />
-          ))}
-        </div>
-      )}
-
-      {visible.length < results.length && (
-        <button type="button" className="sb-btn camps-show-more" onClick={() => setShown((n) => n + PAGE)}>
-          Show {Math.min(PAGE, results.length - visible.length)} more
-        </button>
-      )}
-    </section>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Browse links, camps still to check, and where the details come from
-// ---------------------------------------------------------------------------
-
-function BrowseLinks() {
-  const cities = INDEX.cities.filter((c) => (CITY_COUNTS.get(c.slug) ?? 0) >= CITY_PAGE_MIN);
-  const topics = TOPICS_PRESENT.filter((t) => (TOPIC_COUNTS.get(t) ?? 0) >= TOPIC_PAGE_MIN);
-  const operators = INDEX.operators.filter((o) => (OPERATOR_COUNTS.get(o.slug) ?? 0) >= OPERATOR_PAGE_MIN);
-  return (
-    <section className="camps-browse" aria-labelledby="camps-links-title">
-      <div className="camps-section-head">
-        <div>
-          <div className="sb-eyebrow camps-kicker">Browse</div>
-          <h2 id="camps-links-title">Camps by city, interest and organization</h2>
-        </div>
-      </div>
-      <div className="camps-links">
-        <nav className="camps-links-group" aria-label="Camps by city">
-          <h3>By city</h3>
-          <ul>
-            {cities.map((c) => (
-              <li key={c.slug}>
-                <a href={`/camps/city/${c.slug}`}>{c.name}</a> <span>{CITY_COUNTS.get(c.slug)}</span>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <nav className="camps-links-group" aria-label="Camps by interest">
-          <h3>By interest</h3>
-          <ul>
-            {topics.map((t) => (
-              <li key={t}>
-                <a href={`/camps/topic/${t}`}>{TOPIC_LABELS[t]}</a> <span>{TOPIC_COUNTS.get(t)}</span>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <nav className="camps-links-group" aria-label="Camps by organization">
-          <h3>By organization</h3>
-          <ul>
-            {operators.map((o) => (
-              <li key={o.slug}>
-                <a href={`/camps/operator/${o.slug}`}>{o.name}</a> <span>{OPERATOR_COUNTS.get(o.slug)}</span>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-    </section>
-  );
-}
-
-function StillToCheck() {
-  if (!INDEX.stillToCheck.length) return null;
-  return (
-    <section className="camps-browse" aria-labelledby="camps-check-title">
-      <div className="camps-section-head">
-        <div>
-          <div className="sb-eyebrow camps-kicker">Also worth a look</div>
-          <h2 id="camps-check-title">More camps to check</h2>
-        </div>
-        <p>We listed these last summer and haven't gathered their {LATEST} details yet. Their own pages will have the latest.</p>
-      </div>
-      <ul className="camps-check-list">
-        {INDEX.stillToCheck.map((c) => (
-          <li key={c.url + c.name}>
-            <a href={c.url} target="_blank" rel="noopener noreferrer">
-              {c.name}
-              <span aria-hidden="true"> ↗</span>
-            </a>
-            <span className="camps-check-city">{c.city}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
-// Opens the site's Tips & Feedback panel (ReaderWidget) on a correction; until
-// that island has hydrated, an email does the same job.
-function openFeedback(type: "correction" | "feedback" = "correction") {
-  const w = window as Window & { __sbtFeedbackReady?: boolean };
-  if (w.__sbtFeedbackReady) {
-    window.dispatchEvent(new CustomEvent("sbt:feedback", { detail: { type } }));
-  } else {
-    window.location.href = "mailto:hello@southbaytoday.org?subject=Summer%20camp%20listing";
-  }
-}
-
-function Method() {
-  return (
-    <section className="camps-method" aria-labelledby="camps-method-title">
-      <h2 id="camps-method-title">Where these details come from</h2>
-      <p>
-        Each listing comes from the camp's own website: the ages, dates, prices, registration dates and financial aid it
-        posts, with a link to the page each one came from and the day we checked it. Camps post next summer's details
-        from December through February, so a listing that still shows {LATEST - 1} means the camp hasn't posted {LATEST} yet.
-      </p>
-      <p>
-        Something out of date, or a camp we're missing?{" "}
-        <button type="button" className="camps-method-link" data-feedback="correction" onClick={() => openFeedback("correction")}>
-          Tell us
-        </button>
-        .
-      </p>
-    </section>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Main view
-// ---------------------------------------------------------------------------
-
-export default function CampsView({ buildDayPt }: { buildDayPt?: string }) {
-  // The build's day while hydrating, then the reader's (useTodayPT).
-  const todayIso = useTodayPT(buildDayPt);
+  const set = <K extends keyof Filters>(key: K, value: Filters[K]) => setFilters((prev) => ({ ...prev, [key]: value }));
+  const clear = () => setFilters((prev) => ({ ...EMPTY, sort: prev.sort }));
 
   return (
     <div className="camps-view">
-      <PageHero
-        eyebrow={`South Bay / Summer ${LATEST}`}
-        title="Summer Camps"
-        description={`Ages, dates, prices and financial aid for summer camps across Santa Clara County, taken from each camp's own pages and linked back to them. We add more as camps post their ${LATEST} details.`}
-        note={INDEX.checkedThrough ? `Checked through ${fullDate(INDEX.checkedThrough)}` : undefined}
-        accent="#B45309"
+      <Hero
+        q={filters.q}
+        age={filters.age}
+        onSearch={(q, age) => {
+          setFilters((prev) => ({ ...prev, q, age }));
+          scrollToResults();
+        }}
       />
-      <div className="camps-directory">
-        <Directory todayIso={todayIso} />
-        <BrowseLinks />
-        <StillToCheck />
-        <Method />
-      </div>
+      <Interests
+        active={filters.topic}
+        onPick={(topic) => {
+          set("topic", topic);
+          if (topic) scrollToResults();
+        }}
+      />
+      <Directory filters={filters} set={set} clear={clear} todayIso={todayIso} />
+      <Cities />
+      <Organizations />
+      <StillToCheck />
+      <Method />
     </div>
   );
 }
