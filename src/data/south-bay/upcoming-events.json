@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-25T00:49:20.157Z",
-  "eventCount": 1570,
+  "eventCount": 1572,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -3673,7 +3673,7 @@
       "venue": "Mitchell Park Community Center (El Palo Alto Room)",
       "address": "3700 Middlefield Road Palo Alto",
       "city": "palo-alto",
-      "category": "outdoor",
+      "category": "community",
       "cost": "free",
       "description": "Celebrate the arrival of spring and new beginnings this Nowruz! Join Palo Alto City Library for a fun-filled Nowruz celebration at the Mitchell Park Community Center. More information to come!",
       "sourceAudiences": [
@@ -25491,13 +25491,15 @@
       "category": "community",
       "cost": "",
       "description": "Interested in leading complex organizations to build a more humane, just and sustainable world? Consider the MA in Social Impact Leadership program at SCU!",
-      "url": "https://events.scu.edu/school-of-education-and-counseling/event/521799-new-ma-in-social-impact-leadership-informational-sess",
+      "url": "https://slate.scu.edu/register/?id=199100ed-053c-4778-bade-bfb6f771e217",
       "source": "Santa Clara University",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1770732165218-aaaf6c5f320d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBldmVudCUyMGdhdGhlcmluZyUyMG91dGRvb3J8ZW58MHwyfHx8MTc3NzIzMDYxNXww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Join an online informational session to learn about Santa Clara University's new MA in Social Impact Leadership program.",
-      "firstSeenAt": "2026-11-25T00:49:20.139Z"
+      "firstSeenAt": "2026-11-25T00:49:20.139Z",
+      "registration": "required",
+      "attendanceNote": "Register with Santa Clara University to attend online."
     },
     {
       "id": "scu-5e22d720f648a3a5",
@@ -31615,10 +31617,10 @@
       "time": "1:00 PM",
       "endTime": null,
       "venue": "Maples Pavilion",
-      "address": "Maples Pavilion, Stanford",
+      "address": "655 Campus Drive, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "sports",
-      "cost": null,
+      "cost": "paid",
       "description": "Stanford hosts Portland in a nonconference men's basketball game at Maples Pavilion. Tickets are available through Stanford Athletics.",
       "url": "https://tickets.gostanford.com/events/mens-basketball-vs-portland-pzvvw2",
       "source": "City Newsletter",
@@ -39447,6 +39449,33 @@
       "firstSeenAt": "2026-11-20T04:23:26.508Z"
     },
     {
+      "id": "tm-G5vYZ_834HDLk",
+      "title": "San Jose Barracuda vs. Chicago Wolves",
+      "date": "2027-02-05",
+      "displayDate": "Fri, Feb 5",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Tech CU Arena",
+      "address": "1500 S Tenth Street",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.ticketmaster.com/san-jose-barracuda-vs-chicago-wolves-san-jose-california-02-05-2027/event/1C00650495F3B7C6",
+      "source": "Ticketmaster",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJJx_xws8zjoARo9omW6ZKHGg/photos/AV-0GLdl3pnNtv0XBkGMVRdzMo0GptvmgdPJk9IEO23THBhsc7Jtr7nS_hDX1ERfbE2U4S1V8pLQnSoUlOhIipSjEp6uYqm3YR3PtrqMFAZtmDrsZuGfrzAqB885OZMEI2JI9Y6zQcIrnSfCglDl9j_8PSv8ZWL_Tkk3Jb1hFh4MhWQ04hPZ4JASllQGulXS5SQV3FdwfeXOPMULq-3dW5n9VeDqWoTVjYa5gAO-rzCNgbb-q3LiFIRrhOVu1Hd7jKx1J-1jlKwGZNEGU6BoLW8PDlcwBOUPzWQRDFHlScKnDbbv79l5InksZ_ZuionN3-RJg7248cXD6NVlDf5kdNRz6ZHFEPfb6EDk-q-awtbukSB5oijCoMHL_4L5yJB12jISaSH1a6J6ypIt0zvKk3Iu3-KpRTsZ",
+      "blurb": "Watch the San Jose Barracuda take on the Chicago Wolves at Tech CU Arena.",
+      "firstSeenAt": "2026-11-20T04:23:26.508Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.ticketmaster.com/san-jose-barracuda-vs-chicago-wolves-san-jose-california-02-05-2027/event/1C00650495F3B7C6",
+        "date": "2027-02-05",
+        "time": "7:00 PM"
+      }
+    },
+    {
       "id": "tm-G5vYZ_pqHlKTz",
       "title": "Mojo Brookzz: Outta Pocket Tour",
       "date": "2027-02-05",
@@ -41723,6 +41752,29 @@
       "image": "https://localist-images.azureedge.net/photos/53552801889176/huge/f6251f853795373bfda33310663746cad25fdd20.jpg",
       "blurb": "View Asian American art pulled from the Cantor Arts Center's permanent collection.",
       "firstSeenAt": "2026-08-27T02:19:57.244Z"
+    },
+    {
+      "id": "stanford-53993437264584",
+      "title": "Branner Library Book & Map Exhibit - Water in the West",
+      "date": "2026-11-24",
+      "displayDate": "Tue, Nov 24",
+      "time": null,
+      "endTime": null,
+      "ongoing": true,
+      "venue": "Mitchell Earth Sciences",
+      "address": "397 Panama Mall, Stanford, CA 94305",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "attendanceNote": "Visitors must present a valid, physical government-issued photo ID and sign in at the front desk. View Monday through Friday during Branner Library hours. Branner Library is closed November 26 and 27 for Thanksgiving.",
+      "description": "",
+      "url": "https://events.stanford.edu/event/branner-library-book-map-exhibit-water",
+      "source": "Stanford Events",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "image": "https://localist-images.azureedge.net/photos/53993508503863/huge/3e08e99def3fbd1aff649846c087c260c42e9ce0.jpg",
+      "blurb": "Browse Branner Library's book and map exhibit on water history in the American West.",
+      "firstSeenAt": "2026-09-19T02:20:13.812Z"
     },
     {
       "id": "sjsu-0d2d871314eccc1d",

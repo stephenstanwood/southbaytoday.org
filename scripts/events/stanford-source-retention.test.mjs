@@ -30,6 +30,40 @@ test("Stanford fetch failures stay rejected outside strict mode without retrying
   assert.equal(requests, 1);
 });
 
+test("Stanford reads the second page when the provider clamps the requested page size", async t => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-24T17:00:00-08:00") });
+  const url = "https://events.stanford.edu/api/2/events?days=60&pp=200";
+  const exhibit = {
+    id: 53993437264584,
+    title: "Branner Library Book & Map Exhibit - Water in the West",
+    location_name: "Mitchell Earth Sciences",
+    localist_url: "https://events.stanford.edu/event/branner-library-book-map-exhibit-water",
+    first_date: "2026-09-18", last_date: "2026-12-18",
+    event_instances: [{ event_instance: { start: "2026-11-30T00:00:00-08:00" } }],
+    filters: { event_types: [{ name: "Exhibition" }] },
+  };
+  const requests = [];
+  t.mock.method(globalThis, "fetch", async input => {
+    requests.push(String(input));
+    if (String(input) === url) return Response.json({ events: [], page: { next_page: 2 } });
+    assert.equal(String(input), url + "&page=2");
+    return Response.json({ events: [{ event: exhibit }], page: { next_page: 3 } });
+  });
+  const [event] = await source().fn();
+  assert.deepEqual(requests, [url, url + "&page=2"]);
+  assert.equal(event.id, "stanford-53993437264584");
+  assert.equal(event.date, "2026-11-24");
+  assert.equal(event.ongoing, true);
+  assert.equal(event.time, null);
+});
+
+test("a malformed Stanford second page leaves the source failure visible", async t => {
+  t.mock.method(globalThis, "fetch", async url => Response.json(
+    String(url).endsWith("&page=2") ? {} : { events: [], page: { next_page: 2 } },
+  ));
+  await assert.rejects(source().fn(), /calendar page 2 has no events array/);
+});
+
 test("the registered Stanford adapter retains verified future occurrences while its timeout remains visible", () => {
   const adapter = source();
   const failure = [{ status: "rejected", reason: new Error("The operation was aborted due to timeout") }];

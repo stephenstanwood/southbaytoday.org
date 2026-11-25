@@ -2459,6 +2459,22 @@ const CORRECTIONS = [
       registration: REGISTRATION_REQUIRED,
     },
   },
+  {
+    // Stanford's game-specific ticket page confirms paid admission and the venue address.
+    date: "2026-11-29",
+    url: "https://tickets.gostanford.com/events/mens-basketball-vs-portland-pzvvw2",
+    facts: { cost: "paid", address: "655 Campus Drive, Stanford, CA 94305" },
+  },
+  {
+    // SCU's calendar links its registration form as the online event location.
+    date: "2026-12-18",
+    url: "https://events.scu.edu/school-of-education-and-counseling/event/521799-new-ma-in-social-impact-leadership-informational-sess",
+    facts: {
+      url: "https://slate.scu.edu/register/?id=199100ed-053c-4778-bade-bfb6f771e217",
+      registration: REGISTRATION_REQUIRED,
+    },
+    appendAttendanceNote: "Register with Santa Clara University to attend online.",
+  },
   // The venues and their ticket calendars confirm these exact showtimes.
   // https://www.ticketmaster.com/the-ritz-tickets-san-jose/venue/342544
   // https://sjbarracuda.com/schedule/home
@@ -2469,6 +2485,10 @@ const CORRECTIONS = [
     {
       date: "2027-01-30", time: "6:00 PM", venue: "Tech CU Arena",
       url: "https://www.ticketmaster.com/san-jose-barracuda-vs-ontario-reign-san-jose-california-01-30-2027/event/1C00650495EEB7B5",
+    },
+    {
+      date: "2027-02-05", time: "7:00 PM", venue: "Tech CU Arena",
+      url: "https://www.ticketmaster.com/san-jose-barracuda-vs-chicago-wolves-san-jose-california-02-05-2027/event/1C00650495F3B7C6",
     },
     {
       date: "2027-01-30", time: "8:00 PM", venue: "The Ritz",

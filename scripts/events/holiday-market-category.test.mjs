@@ -55,3 +55,11 @@ test("Mountain View's Holiday Bazaar is a craft market even with live music", ()
   ), "market");
   assert.equal(inferCategory("Holiday Bazaar Concert", "Live music", "", "Mountain View Senior Center"), "music");
 });
+
+// https://paloalto.bibliocommons.com/v2/events/6ad5440ee06996003a846369
+test("an indoor celebration does not become outdoor because its community center contains Park", () => {
+  const venue = "Mitchell Park Community Center (El Palo Alto Room)";
+  const description = "Join Palo Alto City Library for a Nowruz celebration at the Mitchell Park Community Center.";
+  assert.equal(inferCategory("Nowruz New Year Celebration", description, "", venue), "community");
+  assert.equal(inferCategory("Outdoor nature walk", "Meet at the Mitchell Park Community Center.", "", venue), "outdoor");
+});

@@ -4144,8 +4144,10 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // ("arrive early to find parking", "parking is validated") appears in a huge share of
   // event descriptions and is not a signal about the event (real bug: SJSU's indoor
   // "ISSS Campus Tours" shipped as outdoor, with a nature stock photo, on that word alone).
-  const outdoorHaystack = `${title} ${desc} ${type}`.toLowerCase();
-  const hasOutdoorWord = /\b(hik\w*|outdoor\w*|garden\w*|nature|trail\w*|parks?)\b/.test(outdoorHaystack);
+  // A description can repeat the building's name. "Park Community Center"
+  // alone gives no reason to put an indoor celebration in Outdoors.
+  const outdoorHaystack = `${title} ${cleanDesc} ${type}`.toLowerCase();
+  const hasOutdoorWord = /\b(hik\w*|outdoor\w*|garden\w*|nature|trail\w*|parks?(?!\s+community\s+cent(?:er|re)\b))\b/.test(outdoorHaystack);
   if (!isIndoorVenue && hasOutdoorWord) return "outdoor";
   if (t.includes("book") || t.includes("reading") || t.includes("lecture") || t.includes("workshop") || t.includes("class") || t.includes("learn") || t.includes("seminar") || t.includes("talk") || t.includes("discussion") || t.includes("curator") || t.includes("stem") || t.includes("science") || t.includes("coding") || t.includes("tech")) return "education";
   if (t.includes("food") || t.includes("cooking") || t.includes("taste") || t.includes("chef") || t.includes("wine") || t.includes("beer") || t.includes("culinary") || /\b(pancake|breakfast|brunch|bake sale|food truck|barbecue|bbq|bake-off|chili cook-off)\b/.test(t)) return "food";
@@ -4539,11 +4541,20 @@ function isCampusOnlyLocalistAudience(filters) {
 async function fetchStanfordEvents() {
   console.log("  ⏳ Stanford Events...");
   try {
-    const data = await fetchJson("https://events.stanford.edu/api/2/events?days=60&pp=200");
-    if (!Array.isArray(data?.events)) throw new Error("Stanford calendar has no events array");
+    const url = "https://events.stanford.edu/api/2/events?days=60&pp=200";
+    const first = await fetchJson(url);
+    if (!Array.isArray(first?.events)) throw new Error("Stanford calendar has no events array");
+    let rows = first.events;
+    // Localist currently caps a page at 100 rows. Read the next page to
+    // reach the requested 200 and keep active exhibits past the first page.
+    if (rows.length < 200 && first.page?.next_page === 2) {
+      const second = await fetchJson(`${url}&page=2`);
+      if (!Array.isArray(second?.events)) throw new Error("Stanford calendar page 2 has no events array");
+      rows = [...rows, ...second.events].slice(0, 200);
+    }
     const now = new Date();
     const todayIso = todayPT();
-    const events = (data.events || []).map((e) => {
+    const events = rows.map((e) => {
       const ev = e.event;
       // Localist exposes explicit audience tags. A mix of students, faculty,
       // staff, and alumni is still campus-only unless public access is listed.

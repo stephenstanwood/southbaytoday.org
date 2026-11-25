@@ -87,7 +87,7 @@ test("timed-entry copies with a shared booking page leave room for later Ticketm
   assert.equal(kept.at(-1), later);
 });
 
-test("the Ticketmaster cap preserves verified January 30 shows and the home game", () => {
+test("the Ticketmaster cap preserves verified shows and Barracuda home games", () => {
   const earlier = Array.from({ length: 200 }, (_, index) => ({
     source: "Ticketmaster", date: "2027-01-29", time: "7:30 PM", venue: `Venue ${index}`,
     url: `https://example.com/event/${index}`,
@@ -104,13 +104,17 @@ test("the Ticketmaster cap preserves verified January 30 shows and the home game
     title: "San Jose Barracuda vs. Ontario Reign", time: "6:00 PM", venue: "Tech CU Arena",
     source: "Ticketmaster", date: "2027-01-30", city: "san-jose", category: "sports",
     url: "https://www.ticketmaster.com/san-jose-barracuda-vs-ontario-reign-san-jose-california-01-30-2027/event/1C00650495EEB7B5",
+  }, {
+    title: "San Jose Barracuda vs. Chicago Wolves", time: "7:00 PM", venue: "Tech CU Arena",
+    source: "Ticketmaster", date: "2027-02-05", city: "san-jose", category: "sports",
+    url: "https://www.ticketmaster.com/san-jose-barracuda-vs-chicago-wolves-san-jose-california-02-05-2027/event/1C00650495F3B7C6",
   });
 
   assert.deepEqual(capUpcomingEventSources([...earlier, ...shows]), earlier);
   const verified = shows.map(applyVerifiedEventFacts);
   const changed = [
     { ...shows[2], time: "10:00 PM" },
-    { ...shows.at(-1), time: "7:00 PM" },
+    { ...shows.at(-1), time: "8:00 PM" },
   ].map(applyVerifiedEventFacts);
   assert.ok(changed.every(event => event.occurrenceEvidence === undefined));
   assert.deepEqual(capUpcomingEventSources([...earlier, ...verified, ...changed]), [...earlier, ...verified]);

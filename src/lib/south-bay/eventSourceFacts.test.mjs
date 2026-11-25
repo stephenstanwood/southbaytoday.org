@@ -5684,3 +5684,26 @@ test("Black Mountain's November 24 listing shows the verified signup closure", (
   const laterHike = { ...event, date: "2027-02-20" };
   assert.deepEqual(applyVerifiedEventFacts(laterHike), laterHike);
 });
+
+test("the official Stanford basketball ticket page supplies admission and address", () => {
+  const event = {
+    date: "2026-11-29", venue: "Maples Pavilion", cost: null,
+    url: "https://tickets.gostanford.com/events/mens-basketball-vs-portland-pzvvw2",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.cost, "paid");
+  assert.equal(corrected.address, "655 Campus Drive, Stanford, CA 94305");
+});
+
+test("SCU's online program information session links its official signup form", () => {
+  const event = {
+    date: "2026-12-18", virtual: true,
+    url: "https://events.scu.edu/school-of-education-and-counseling/event/521799-new-ma-in-social-impact-leadership-informational-sess",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.registration, "required");
+  assert.equal(corrected.url, "https://slate.scu.edu/register/?id=199100ed-053c-4778-bade-bfb6f771e217");
+  assert.equal(corrected.virtual, true);
+  assert.equal(applyVerifiedEventFacts({ ...event, registration: "closed" }).registration, "closed");
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+});
