@@ -445,10 +445,9 @@ test("San José's November 18 agenda review names the council date under review"
   assert.equal(polishCivicCopy(refreshedSummary, { cityId: "another-city" }), refreshedSummary);
 });
 
-test("refreshed planning copy separates the preschool address and gives the apartment count once", () => {
+test("refreshed planning copy identifies what the preschool hearing covered and gives the apartment count once", () => {
   const summary = "A hearing continued from November 9 was listed on the November 23 Planning Commission agenda for a 16,000-square-foot, two-story childcare and preschool at 855 E. Homestead Road It would replace a vacant commercial building, and the plan includes a new eight-foot masonry wall along the western property line and part of the southern property line.";
-  const reviewed = summary.replace("childcare and preschool at", "childcare and preschool facility at")
-    .replace("Homestead Road It", "Homestead Road. It");
+  const reviewed = "The November 23 Planning Commission agenda listed a hearing, continued from November 9, on a proposed 16,000-square-foot, two-story childcare and preschool facility at 855 E. Homestead Road. It would replace a vacant commercial building, and the plan includes a new eight-foot masonry wall along the western property line and part of the southern property line.";
   const headline = "Planning Commission agenda: 316-unit apartments at 400 Saratoga Avenue golf course";
   assert.equal(polishCivicCopy(summary, { cityId: "sunnyvale" }), reviewed);
   assert.equal(polishCivicCopy(reviewed, { cityId: "sunnyvale" }), reviewed);
