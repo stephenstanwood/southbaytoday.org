@@ -2044,3 +2044,28 @@ test("cached chess blurbs keep the organizer's independent-play requirement", ()
   const revisedLesson = { ...chess, description: "Library volunteers teach the rules to beginners." };
   assert.deepEqual(polishReviewedEventCopy(revisedLesson), revisedLesson);
 });
+
+test("reviewed Nowruz and watch party descriptions survive refresh", () => {
+  const samples = [
+    {
+      source: "Palo Alto City Library",
+      title: "Nowruz New Year Celebration",
+      description: "Celebrate the arrival of spring and new beginnings this Nowruz! Join Palo Alto City Library for a fun-filled Nowruz celebration at the Mitchell Park Community Center. More information to come!",
+      reviewed: "Welcome spring and new beginnings with Palo Alto City Library's Nowruz celebration at Mitchell Park Community Center. More details to come.",
+    },
+    {
+      source: "City Newsletter",
+      title: "Quakes Game 2 Watch Party",
+      description: "The Quakes lead the best-of-3 series 1-0 and can clinch with a win. The match kicks off at 11:30 a.m. PT in Houston.",
+      reviewed: "The Quakes lead the best-of-three series 1-0 and can clinch it with a win. The match in Houston kicks off at 11:30 a.m. Pacific time.",
+    },
+  ];
+  for (const { source, title, description, reviewed } of samples) {
+    const event = { source, title, description: polishDescription(description), time: "11:30 AM" };
+    const expected = { ...event, description: reviewed };
+    assert.deepEqual(polishReviewedEventCopy(event), expected);
+    assert.deepEqual(polishReviewedEventCopy(expected), expected);
+    const otherPublisher = { ...event, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+  }
+});

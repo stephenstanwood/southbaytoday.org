@@ -1009,6 +1009,14 @@ const EDITS = {
       ["If you do you win a prize! * This program", "If you do, you'll win a prize! This program"],
       ["*Premios disponibles hasta agotar existencias.", "Los premios están disponibles hasta agotar existencias."],
       ["Búsqueda del Tesoro de Winter Reading ¿Puedes", "Búsqueda del tesoro de Winter Reading. ¿Puedes"],
+      [
+        "Prize available while supplies last. Búsqueda del tesoro de Winter Reading.",
+        "Prizes are available while supplies last. Búsqueda del tesoro de Winter Reading.",
+      ],
+      [
+        /¿Puedes ayudarnos a encontrarlos todos\? ¡Si lo logras, ganarás un premio! (¡Justo a tiempo para las fiestas, [^?]+\?) ¿Nos ayudas a encontrarlos\? ¡Si los encuentras, ganarás un premio!/g,
+        "$1 ¿Nos ayudas a encontrarlos todos? ¡Si los encuentras, ganarás un premio!",
+      ],
       [/\bDecember 0([1-9])(?= - (?:Rock Penguins|Glowing Lanterns)\b)/g, "December $1"],
       ["Adults, teens and children welcome.", "Adults, teens, and children are welcome."],
       ["• October – Cardboard Nicho. Recommended items to bring:", "For October's cardboard nicho, consider bringing"],
@@ -2495,6 +2503,10 @@ const EDITS = {
         "Members suggest books and vote on what to read next.",
       ],
       [
+        "Celebrate the arrival of spring and new beginnings this Nowruz! Join Palo Alto City Library for a fun-filled Nowruz celebration at the Mitchell Park Community Center. More information to come!",
+        "Welcome spring and new beginnings with Palo Alto City Library's Nowruz celebration at Mitchell Park Community Center. More details to come.",
+      ],
+      [
         /All materials are provided, and participants receive their very own kit to take home and continue exploring\. This program is for Kids Ages (\d+-\d+) only\. Materials provided!/gi,
         "All materials are provided, and participants get a kit to take home and continue exploring. This program is open only to children ages $1.",
       ],
@@ -2782,6 +2794,10 @@ const EDITS = {
       [
         "NUMU is seeking volunteers for its community table at the Magical Memories event, helping with set-up, breakdown, and craft management.",
         "New Museum Los Gatos is seeking volunteers to set up, run, and take down its community craft table at Magical Memories.",
+      ],
+      [
+        /The Quakes lead the best-of-3 series (\d+-\d+) and can clinch with a win\. The match kicks off at (\d{1,2}:\d{2} [ap]\.m\.) PT in Houston\./g,
+        "The Quakes lead the best-of-three series $1 and can clinch it with a win. The match in Houston kicks off at $2 Pacific time.",
       ],
       ["Shifts run 12:30-2 PM, 2-4 PM, and 4-5:30 PM.", "Shifts run 12:30–2 PM, 2–4 PM, and 4–5:30 PM."],
       [
