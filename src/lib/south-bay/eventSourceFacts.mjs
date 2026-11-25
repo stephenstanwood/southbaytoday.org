@@ -749,14 +749,25 @@ const CORRECTIONS = [
       category: "market",
     },
   },
-  // The library bulletin gives separate instructions for logging volunteer hours.
+  // The dated LibCal listing gives the Teen Space and asks teens to sign up
+  // only for a reminder in its description, but labels booking required in
+  // its signup panel. The November 25 bulletin also calls signup optional.
+  // https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/43243c7
   {
     date: "2026-12-10",
     url: "https://sunnyvale.libcal.com/event/16531841",
-    facts: {
-      description: "Teens age 13 and older can make toys for shelter dogs and cats. Drop in or sign up for a reminder. To earn volunteer hours, apply first if you aren't already a registered library volunteer.",
+    facts: (event) => ({
+      venue: "Sunnyvale Main Library, Teen Space",
+      address: "665 W. Olive Ave., Sunnyvale, CA 94086",
+      sourceAudiences: ["Teens age 13 and up"],
+      audienceAge: "kids",
+      attendanceStatus: "needs-confirmation",
+      ...(event.registration === REGISTRATION_REQUIRED
+        ? { registration: null, registrationClosesBy: null } : {}),
+      description: "Teens age 13 and older can make toys for shelter dogs and cats. To earn volunteer hours, apply first if you aren't already a registered library volunteer.",
       blurb: "Make toys for shelter dogs and cats at this library session for teens age 13 and older.",
-    },
+    }),
+    appendAttendanceNote: "The library's bulletin and event description say signup is optional for an email reminder. The booking panel says registration is required. Check with the library before walking in.",
   },
   // The organizer and its registration page give the same race-day timeline.
   // Normalize both newsletter copies before dedup so pickup does not become a second race.

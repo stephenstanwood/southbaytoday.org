@@ -87,6 +87,33 @@ test("Sunnyvale's dated workshop listings use the booking pages' locations and a
   assert.equal(applyVerifiedEventFacts(laterAi), laterAi);
 });
 
+test("Sunnyvale's December volunteer club keeps its teen audience and discloses conflicting signup instructions", () => {
+  const session = {
+    date: "2026-12-10",
+    url: "https://sunnyvale.libcal.com/event/16531841",
+    venue: "Sunnyvale Main Library",
+    address: "Sunnyvale Main Library, Teen Space",
+    audienceAge: "all",
+    registration: "required",
+    registrationClosesBy: "2026-12-10T23:00:00Z",
+  };
+  const reviewed = applyVerifiedEventFacts(session);
+  assert.equal(reviewed.venue, "Sunnyvale Main Library, Teen Space");
+  assert.equal(reviewed.address, "665 W. Olive Ave., Sunnyvale, CA 94086");
+  assert.equal(reviewed.audienceAge, "kids");
+  assert.deepEqual(reviewed.sourceAudiences, ["Teens age 13 and up"]);
+  assert.equal(reviewed.registration, null);
+  assert.equal(reviewed.registrationClosesBy, null);
+  assert.equal(requiresAttendanceConfirmation(reviewed), true);
+  assert.match(reviewed.attendanceNote, /signup is optional.*booking panel says registration is required/);
+  assert.match(reviewed.description, /volunteer hours, apply first/);
+  assert.doesNotMatch(reviewed.description, /drop.in/i);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  assert.equal(applyVerifiedEventFacts({ ...session, registration: "full" }).registration, "full");
+  const otherDate = { ...session, date: "2027-01-14" };
+  assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
 test("the Berryessa Pokémon session describes the activity without a popularity ranking", () => {
   const session = {
     id: "sjpl-6affa6610ad4ed003a04847f",
