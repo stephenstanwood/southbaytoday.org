@@ -445,7 +445,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     time: "6:30pm",
     cost: "free",
     kidFriendly: true,
-    description: "Evening storytime with songs and stories. Pajamas are welcome and space is limited.",
+    description: "Evening storytime with songs and stories. Pajamas are welcome. Space is limited.",
     url: "https://sccl.bibliocommons.com/v2/events?locations=CA",
     emoji: "🌙",
     startDate: "2026-05-26",
@@ -499,7 +499,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Storytime for children ages 0–5 and their families in the Children's Room, with songs, reading, and movement.",
+      "Children ages 0–5 and their families can enjoy songs, reading, and movement in the Children's Room.",
     url: "https://losgatosca.libcal.com/",
     emoji: "📚",
   },
