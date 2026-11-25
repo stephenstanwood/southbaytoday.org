@@ -416,27 +416,26 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
 
   {
     id: "campbell-library-music-movement",
-    title: "Music & Movement — Campbell Library",
+    title: "Music & Movement Storytime — Campbell Library",
     city: "campbell",
     venue: "Campbell Library",
     address: "77 Harrison Ave, Campbell",
     category: "family",
     recurrence: "weekly",
     days: ["tuesday"],
-    // Fall 2026 schedule: SCCLD lists 10:45–11:15 AM on October 20 and 27.
-    // https://sccl.bibliocommons.com/events/6a9323931c197d11325bbacc
-    // https://sccl.bibliocommons.com/events/6a9323931c197d11325bbacd
+    // The library's series calendar lists Tuesdays at 10:45–11:15 AM.
+    // https://sccl.bibliocommons.com/v2/events?series=6a9323933b6c71003e5c456d
     time: "10:45am",
     cost: "free",
     kidFriendly: true,
-    description: "All-ages music and movement program at the newly reopened Campbell Library. The 30-minute program includes songs, instruments, and dancing.",
-    url: "https://www.sccl.org/campbell",
+    description: "A 30-minute storytime with music, stories, and movement for families with young children.",
+    url: "https://sccl.bibliocommons.com/v2/events?locations=CA",
     emoji: "🎵",
     startDate: "2026-05-26",
   },
   {
     id: "campbell-library-pajama-storytime",
-    title: "Pajama Storytime — Campbell Library",
+    title: "Goodnight, Little Storytime — Campbell Library",
     city: "campbell",
     venue: "Campbell Library",
     address: "77 Harrison Ave, Campbell",
@@ -446,8 +445,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     time: "6:30pm",
     cost: "free",
     kidFriendly: true,
-    description: "Evening storytime for all ages — wear your pajamas. Wind-down stories before bed at the newly reopened Campbell Library.",
-    url: "https://www.sccl.org/campbell",
+    description: "Evening storytime with songs and stories. Pajamas are welcome and space is limited.",
+    url: "https://sccl.bibliocommons.com/v2/events?locations=CA",
     emoji: "🌙",
     startDate: "2026-05-26",
   },
@@ -463,32 +462,30 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     time: "10:30am",
     cost: "free",
     kidFriendly: true,
-    description: "Storytime for ages 18 months – 5 years at the newly reopened Campbell Library.",
-    url: "https://www.sccl.org/campbell",
+    description: "Stories and songs for toddlers. Space is limited.",
+    url: "https://sccl.bibliocommons.com/v2/events?locations=CA",
     emoji: "📚",
     startDate: "2026-05-13",
   },
   {
     id: "campbell-library-baby-bounce",
-    title: "Baby Bounce — Campbell Library",
+    title: "Baby Lapsit for Ages 0–18 Months — Campbell Library",
     city: "campbell",
     venue: "Campbell Library",
     address: "77 Harrison Ave, Campbell",
     category: "family",
     recurrence: "weekly",
     days: ["thursday"],
-    time: "10:30am",
+    time: "10:30am – 11:30am",
     cost: "free",
     kidFriendly: true,
-    description: "Storytime for babies 0–18 months at the newly reopened Campbell Library. Bouncing rhymes, songs, and lap-sit fun.",
-    url: "https://www.sccl.org/campbell",
+    description: "Songs, rhymes, and short stories for pre-walkers and their caregivers, followed by time to play.",
+    url: "https://sccl.bibliocommons.com/v2/events?locations=CA",
     emoji: "👶",
     startDate: "2026-06-04",
   },
 
-  // The fall 2026 calendar lists a combined ages 0–5 program on Tuesday and
-  // Wednesday, without the former Baby Lap-Sit / Wonderful Ones sessions.
-  // https://losgatosca.libcal.com/event/17249574
+  // Link to the live calendar so readers can find the next dated storytime.
   {
     id: "lg-library-preschool-storytime",
     title: "Storytime (Ages 0–5) — Los Gatos Library",
@@ -503,7 +500,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     kidFriendly: true,
     description:
       "Storytime for children ages 0–5 and their families in the Children's Room, with songs, reading, and movement.",
-    url: "https://losgatosca.libcal.com/event/17249574",
+    url: "https://losgatosca.libcal.com/",
     emoji: "📚",
   },
 
