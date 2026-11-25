@@ -3756,7 +3756,7 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (/\blive\s+music\b/.test(titleLower)) return "music";
   // Holiday vendor markets often mention music and family activities in
   // their descriptions. A separately titled concert still counts as music.
-  if (/^holiday\s+(?:market|bazaar)(?:\s*[-–—:]\s*(?:indoor\s+)?(?:handmade\s+)?craft fair)?$/.test(titleLower.trim())) return "market";
+  if (/^holiday\s+(?:market(?:place)?|bazaar)(?:\s*[-–—:]\s*(?:indoor\s+)?(?:handmade\s+)?craft fair)?$/.test(titleLower.trim())) return "market";
   // A ballet company's production remains performing arts even when its
   // title or score contains "symphony" (Nutcracker: Symphony of Lights).
   if (/\bballet\s+(?:presents|performs)\b/.test(titleLower)) return "arts";

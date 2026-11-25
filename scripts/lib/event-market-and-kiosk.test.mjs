@@ -45,6 +45,15 @@ test("unpossessed farmers markets keep working", () => {
   assert.equal(inferCategory("Saratoga Farmers Market", "", "", "West Valley College"), "market");
 });
 
+test("Gamble Garden's Holiday Marketplace is a market", () => {
+  assert.equal(inferCategory(
+    "Holiday Marketplace",
+    "A festival marketplace with 30+ vendors in the Gamble House and garden under a canopy of twinkling lights.",
+    "",
+    "Gamble Garden",
+  ), "market");
+});
+
 test("civic events hosted at a market stay community", () => {
   // The possessive fix moved this title into range of the farmers-market rule,
   // which runs ahead of the government/civic rule that had been claiming it.
