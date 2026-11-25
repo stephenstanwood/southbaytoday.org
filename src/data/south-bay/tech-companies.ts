@@ -954,7 +954,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     stage: "startup",
     tagline: "Agentic AI cybersecurity platform bridging IT and OT security — autonomous threat detection and response at machine speed. $125M in March 2026.",
     color: "#EA580C",
-    url: "https://kai.ai",
+    url: "https://www.kai.security/",
     employeesNote: "~60 employees",
   },
   {
@@ -3281,12 +3281,14 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     name: "Kai",
     city: "San Jose",
     category: "security",
-    round: "Series A",
+    // Evolution Equity Partners, the lead investor, described the $125M as combined seed and Series A funding.
+    // https://www.linkedin.com/posts/evolution-equity-partners_in-2025-alone-ai-startups-raised-76-billion-activity-7445468048062513154-fK85
+    round: "Seed + Series A",
     amount: "$125M",
     date: "2026-03-10",
     tagline: "Agentic AI cybersecurity platform autonomously handling threat detection and response across IT and OT environments. Emerged from stealth March 2026; co-founded by Claroty and SecurityMatters veterans.",
     color: "#EA580C",
-    url: "https://kai.ai",
+    url: "https://www.kai.security/resources/kai-emerges-from-stealth",
   },
   {
     id: "rhoda-ai",

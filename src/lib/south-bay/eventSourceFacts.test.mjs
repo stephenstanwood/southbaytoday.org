@@ -327,7 +327,7 @@ test("TeenHQ uses the linked poster dimensions on raw and normalized studio copy
   }
 });
 
-test("TeenHQ removes the series signup instructions only for the November 25 session without booking", () => {
+test("TeenHQ preserves the confirmed November 25 in-person signup and replaces stale series instructions", () => {
   const event = {
     source: "San Jose Public Library",
     title: "TeenHQ MakerSpace Studio",
@@ -354,8 +354,8 @@ test("TeenHQ removes the series signup instructions only for the November 25 ses
     };
     const fixed = applyVerifiedEventFacts(raw);
     assert.equal(fixed.description, "Up to 5 teens can use the equipment. The program is free for grades 6–12. The area is wheelchair accessible from the Children's Room elevator.");
-    assert.equal(fixed.attendanceNote, "The event page has no signup link. Space is limited to five teens. Check with TeenHQ for availability.");
-    assert.equal(requiresAttendanceConfirmation(fixed), true);
+    assert.equal(fixed.attendanceNote, "In-person sign-up opens at 3:45 PM. The first five teens get a spot.");
+    assert.equal(requiresAttendanceConfirmation(fixed), false);
     assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
     const later = { ...raw, date: "2026-12-02" };
     assert.deepEqual(applyVerifiedEventFacts(later), later);
@@ -364,6 +364,18 @@ test("TeenHQ removes the series signup instructions only for the November 25 ses
       assert.deepEqual(applyVerifiedEventFacts(booking), booking);
     }
   }
+
+  const carried = {
+    ...event,
+    description: "In-person sign-up starts at 3:45 p.m. on the day of the event. The first five teens are guaranteed a spot.",
+    attendanceStatus: "needs-confirmation",
+    attendanceNote: "The event page has no signup link. Space is limited to five teens. Check with TeenHQ for availability.",
+  };
+  const fixed = applyVerifiedEventFacts(carried);
+  assert.equal(fixed.description, carried.description);
+  assert.equal(fixed.attendanceNote, "In-person sign-up opens at 3:45 PM. The first five teens get a spot.");
+  assert.equal(requiresAttendanceConfirmation(fixed), false);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
 });
 
 test("Hillview's Saturday Fun stays open to all ages when the library says so", () => {

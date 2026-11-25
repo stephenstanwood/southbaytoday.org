@@ -2635,14 +2635,22 @@ const CORRECTIONS = [
     facts: { blurb },
     appendAttendanceNote: "Space is limited. Everyone must sign in at the information desk starting 30 minutes before the program.",
   })),
-  // This occurrence has no signup control or registration provider in the
-  // library's listing. Only suppress the series copy while no booking is set.
+  // The November 25 listing confirms same-day, in-person sign-up.
+  // https://sjpl.bibliocommons.com/v2/events/6927797a0886c5530056c25b
   {
     date: "2026-11-25",
     matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6927797a0886c5530056c25b\/?$/.test(event.url || "")
       && (!event.registration || event.registration === REGISTRATION_NONE),
-    facts: { attendanceStatus: "needs-confirmation" },
-    appendAttendanceNote: "The event page has no signup link. Space is limited to five teens. Check with TeenHQ for availability.",
+    facts: event => {
+      const priorNote = "The event page has no signup link. Space is limited to five teens. Check with TeenHQ for availability.";
+      if (!event.attendanceNote?.includes(priorNote)) return {};
+      const remainingNote = event.attendanceNote.replace(priorNote, "").trim();
+      return {
+        attendanceNote: remainingNote || null,
+        ...(!remainingNote && event.attendanceStatus === "needs-confirmation" ? { attendanceStatus: null } : {}),
+      };
+    },
+    appendAttendanceNote: "In-person sign-up opens at 3:45 PM. The first five teens get a spot.",
     copyReplacements: [
       [/\s*Pre-registration is recommended to reserve your spot\.\s*If (?:registered participants have not arrived|not all claimed registration spots have arrived) by 4:30\s*PM,[^.]*\./i, ""],
       [/\s*Pre-registration will start 1 week before the start of the program\.[\s\S]*?Drop-ins will be accepted if not all registration slots are filled and if not all registered individuals arrive by 4:30\s*PM\./i, ""],
