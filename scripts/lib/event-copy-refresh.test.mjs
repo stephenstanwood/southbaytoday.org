@@ -227,6 +227,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 const november24LibraryFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-library-afternoon.json", import.meta.url)));
 audits.push(november24LibraryFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-library-evening.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-24-teenhq-makerspace.json", import.meta.url))));
 
 test("library copy repairs preserve revised contacts and publisher scope", () => {
   for (const row of november24LibraryFixture.cases) {

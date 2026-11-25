@@ -1547,6 +1547,22 @@ const EDITS = {
         "In-person sign-up starts at $1 p.m. on the day of the event. The first five teens are guaranteed a spot.",
       ],
       [
+        /All requested prints must take less than (\d+(?:\.\d+)?) hours to print\. All requested prints will need to be picked up at a later date\. Contact information is required for notification of pick-up\./g,
+        "Each print must take less than $1 hours. Pick up your prints at a later date. Leave contact information so the library can notify you about pickup.",
+      ],
+      [
+        "It is recommended that you bring your own fabric and thread if fabric is special or color is a factor.",
+        "We recommend bringing your own fabric and thread if you need a particular fabric or color.",
+      ],
+      [
+        "Basic Cricut supplies are available, such as construction and cardstock paper. If your project is specialized, such as requiring iron-on, you'll need to bring your own materials.",
+        "Basic Cricut supplies include construction paper and cardstock. Bring your own materials for projects that need specialty supplies such as iron-on.",
+      ],
+      [
+        "If you bring your own printout of buttons, it must be printed on standard printer paper.",
+        "Print any button designs you bring on standard printer paper.",
+      ],
+      [
         /^LEGO Club This will give children the opportunity to get creative and build anything they choose with lots of LEGO bricks\. They can either work on their own creations or build as a team\./g,
         "LEGO Club gives children a chance to build whatever they like with LEGO bricks. They can work on their own or build as a team.",
       ],
