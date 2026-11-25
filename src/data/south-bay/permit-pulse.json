@@ -1,91 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-24T04:11:08.925Z",
+      "generatedAt": "2026-11-25T04:11:51.617Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 16 – Nov 23",
+      "dateRange": "Nov 17 – Nov 24",
       "stats": {
-        "total": 538,
-        "notable": 55,
-        "newUnits": 15,
-        "totalValuation": 49962282
+        "total": 471,
+        "notable": 45,
+        "newUnits": 8,
+        "totalValuation": 44674303
       },
       "permits": [
-        {
-          "id": "2026-138360-RS",
-          "address": "1080 Petroni Wy",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Petroni Plan 1c New Single-Family Residence (Lot 3)",
-          "valuation": 704516,
-          "units": 1,
-          "issueDate": "2026-11-16",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-138365-RS",
-          "address": "6809 Almaden Rd",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Petroni Plan 1c New Single Family Residence (Lot 5)",
-          "valuation": 704516,
-          "units": 1,
-          "issueDate": "2026-11-16",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-138379-RS",
-          "address": "1074 Petroni Wy",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Petroni Plan 2b New Single Family Residence (Lot 4)",
-          "valuation": 668881,
-          "units": 1,
-          "issueDate": "2026-11-16",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-138369-RS",
-          "address": "1092 Petroni Wy",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Petroni Plan 2a Build a New Single Family Residence (Lot 1)",
-          "valuation": 668881,
-          "units": 1,
-          "issueDate": "2026-11-16",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-138381-RS",
-          "address": "6815 Almaden Rd",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Petroni Plan 2a New Single Family Residence (Lot 6)",
-          "valuation": 668881,
-          "units": 1,
-          "issueDate": "2026-11-16",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2025-144991-RS",
-          "address": "847 Foothill Ct",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New 2-Story SFR On Vacant Lot",
-          "valuation": 429579,
-          "units": 1,
-          "issueDate": "2026-11-16",
-          "subtype": "Single-Family"
-        },
         {
           "id": "2026-120848-RS",
           "address": "2432 Quimby Rd #2",
@@ -133,6 +61,78 @@
           "units": 1,
           "issueDate": "2026-11-17",
           "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2025-141605-RS",
+          "address": "3216 Stephanie Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Unit 2 Garage Conversion to ADU",
+          "valuation": 87432,
+          "units": 1,
+          "issueDate": "2026-11-18",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-106770-RS",
+          "address": "2431 Woodland Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached ADU",
+          "valuation": 70720,
+          "units": 1,
+          "issueDate": "2026-11-18",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-126025-RS",
+          "address": "1360 Cristina Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to ADU",
+          "valuation": 56294,
+          "units": 1,
+          "issueDate": "2026-11-18",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-098740-RS",
+          "address": "3216 Stephanie Ct #3",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Unit 3 New JADU",
+          "valuation": 46091,
+          "units": 1,
+          "issueDate": "2026-11-18",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-136447-CI",
+          "address": "910 El Paseo De Saratoga",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Club Studio Tenant Improvement",
+          "valuation": 5400000,
+          "units": 0,
+          "issueDate": "2026-11-18",
+          "subtype": "Health Club"
+        },
+        {
+          "id": "2026-145786-CI",
+          "address": "3625 Cisco Wy",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Cisco Chiller Replacement",
+          "valuation": 1563000,
+          "units": 0,
+          "issueDate": "2026-11-17",
+          "subtype": "Commercial/Industrial"
         }
       ]
     }

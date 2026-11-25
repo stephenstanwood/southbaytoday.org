@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T04:11:08.651Z",
+  "generatedAt": "2026-11-25T04:11:51.397Z",
   "meetings": {
     "san-jose": {
       "date": "2026-12-01",
@@ -13,30 +13,30 @@
       "agendaItems": [
         {
           "title": "Amendment to Agreement with Repario Data, LLC for eDiscovery Software.",
-          "sequence": 41
-        },
-        {
-          "title": "Amendment to Agreement with Talty Court Reporters, Inc. for Court Reporter Services.",
           "sequence": 42
         },
         {
-          "title": "Amendment to Agreement with Baker & Hostetler LLP for Cybersecurity Legal Services.",
+          "title": "Amendment to Agreement with Talty Court Reporters, Inc. for Court Reporter Services.",
           "sequence": 43
         },
         {
+          "title": "Amendment to Agreement with Baker & Hostetler LLP for Cybersecurity Legal Services.",
+          "sequence": 44
+        },
+        {
           "title": "Ordinance Repealing Amendments to Section 3.28.2030, Costs of Dental Insurance, Enacted by Ordinance No. 29904, Retroactive to Their Effective Date of June 16, 2017.",
-          "sequence": 45
+          "sequence": 46
         },
         {
           "title": "Amendment to the Agreement with Renne Public Law Group, LLP for Labor Consulting Services.",
-          "sequence": 46
+          "sequence": 47
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-23T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-24T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
@@ -57,39 +57,83 @@
     },
     "sunnyvale": {
       "date": "2026-12-01",
-      "startTime": "17:30",
       "bodyName": "City Council",
-      "location": "Online and Council Chambers, City Hall",
-      "url": "https://sunnyvaleca.legistar.com/Calendar.aspx",
+      "startTime": "17:30",
       "closedSession": false,
-      "agendaItems": [],
+      "location": "Online and Council Chambers, City Hall",
+      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4530&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
+      "legistarEventId": 4530,
       "displayDate": "Tue, Dec 1",
+      "agendaItems": [
+        {
+          "title": "Proposed Project: Review of potential strategies to encourage Missing Middle Housing in Sunnyvale, as part of Housing Element Program H-21 implementation and City Council Priority Project HO-22",
+          "sequence": 6
+        },
+        {
+          "title": "Ceremonial Oath of Office for Board and Commission Members",
+          "sequence": 13
+        },
+        {
+          "title": "Approve City Council Meeting Minutes of November 10, 2026",
+          "sequence": 16
+        },
+        {
+          "title": "Approve City Council Meeting Minutes of November 17, 2026",
+          "sequence": 17
+        },
+        {
+          "title": "Amend an Existing Contract with Townsend for State and Federal Legislative Funding Advocacy Services to Extend the Term and Increase the Not-To-Exceed Amount to $330,000 (F27-143)",
+          "sequence": 20
+        }
+      ],
       "confirmation": {
         "status": "confirmed",
-        "provider": "legistar-public-calendar",
+        "provider": "legistar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://sunnyvaleca.legistar.com/Calendar.aspx"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-24T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
       "date": "2026-12-01",
-      "startTime": null,
       "bodyName": "City Council",
-      "location": null,
-      "url": "https://cupertino.legistar.com/DepartmentDetail.aspx?GUID=759DE527-B7CF-4B4C-88AB-B83875AB732D&ID=22534",
+      "startTime": "17:45",
       "closedSession": false,
-      "agendaItems": [],
+      "location": "Council Chamber",
+      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5304&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
+      "legistarEventId": 5304,
       "displayDate": "Tue, Dec 1",
+      "agendaItems": [
+        {
+          "title": "Recognition of City Manager's Office (Administration, City Clerk’s Office, Economic Development, Communications, Emergency Management, and Human Resources Divisions)",
+          "sequence": 15
+        },
+        {
+          "title": "Adoption of the Active Transportation Plan (ATP)",
+          "sequence": 28
+        },
+        {
+          "title": "Award of three-year cost pass-through Master Professional/Specialized Services Agreements to LSA Associates, MIG, PlaceWorks, Inc., and David J. Powers & Associates (DJP) for on-call environmental review services, for a total not-to-exceed amount of $1,500,000.",
+          "sequence": 26
+        },
+        {
+          "title": "Declaration of properties as having potential fire hazards from weeds or other potential nuisances for the Cupertino Weed Abatement Program; setting a hearing on March 2, 2027, for the declaration of a public nuisance and consideration of objections for proposed removal.",
+          "sequence": 27
+        },
+        {
+          "title": "Second Reading and enactment of an Ordinance Amending Cupertino Municipal Code Section 2.16.020 Regarding City Council Compensation.",
+          "sequence": 23
+        }
+      ],
       "confirmation": {
         "status": "confirmed",
-        "provider": "legistar-public-calendar",
+        "provider": "legistar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://cupertino.legistar.com/DepartmentDetail.aspx?GUID=759DE527-B7CF-4B4C-88AB-B83875AB732D&ID=22534"
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-24T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "santa-clara": {
       "date": "2026-12-01",
-      "startTime": "17:00",
+      "startTime": "18:00",
       "bodyName": "City Council and Authorities Concurrent",
       "location": "City Hall Council Chambers",
       "url": "https://santaclara.legistar.com/Calendar.aspx",
@@ -132,7 +176,7 @@
         "status": "confirmed",
         "provider": "campbell-city-calendar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://campbellca.gov/m/calendar?cat=22&startDate=11%2F23%2F2026&endDate=01%2F22%2F2027"
+        "sourceUrl": "https://campbellca.gov/m/calendar?cat=22&startDate=11%2F24%2F2026&endDate=01%2F23%2F2027"
       }
     },
     "milpitas": {
@@ -149,7 +193,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-23T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-24T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -166,7 +210,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-08",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-23T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-24T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {

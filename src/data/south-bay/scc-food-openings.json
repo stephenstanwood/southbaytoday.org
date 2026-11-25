@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-24T04:19:31.572Z",
+  "generatedAt": "2026-11-25T04:21:32.961Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-24T04:19:31.572Z",
-    "updatedAt": "2026-11-23T14:36:00.000Z",
+    "checkedAt": "2026-11-25T04:21:32.961Z",
+    "updatedAt": "2026-11-24T14:37:53.000Z",
     "ageDays": 0,
     "newestRawInspection": "2026-11-20",
     "newestEligibleInspection": "2026-11-20",
@@ -18,10 +18,10 @@
       "address": "1026 W Evelyn Ave",
       "cityId": "sunnyvale",
       "cityName": "SUNNYVALE",
+      "inspectionDate": "2026-11-17",
       "sourceId": "SR0886649",
       "status": "opened",
       "date": "2026-11-20",
-      "inspectionDate": "2026-11-17",
       "openingEvidence": {
         "date": "2026-11-20",
         "url": "https://www.vegetarianhouse.com/",
@@ -41,7 +41,7 @@
       "inspectionDate": "2026-11-20",
       "sourceId": "SR0884418",
       "status": "inspection-complete",
-      "blurb": "Bundt cake shop at 3933 Rivermark Pkwy in Santa Clara.",
+      "blurb": "Bundt cake shop at Rivermark Pkwy in Santa Clara.",
       "photoRef": "places/ChIJ9dytoPO2j4ARgn3nQjo7a7A/photos/AV-0GLdPK79Anq_nLTM8Vl2jmZEeV6aRc_NRdJ5NUWsFyJgYGdATFjiD1i_BUlq6-CgY9Me12NG5pk3q9W1vDJWX3PJS2ckHrQFVU6aQN_blwfLs_JnLeTBUzjlI1rJY641dUNR4U88D8l5HdPYPGIKdACSJbfeM3XH3aXMhulI6bEffh849dnIPuvX1ZX3H_ijOZsXZV94N4TY4_uNWkZWJngpbY01L6R990072MI_ApaThNFZ-ZrGJdkOMaa7ZQy1I_3T0BYNWk5dXrQr8uJbnYBWOMif_Pxyjip0wg3WeTUF8g5uQ2Icb7Z8AJyUeb2MBjAiOb0IB4bdgQkWlsRX0IG-9KbYaPlQQW-LVUDmVYTYJFSJOSZLDJdl2gAF4U6YZO2GMsXDnWKnKMhpWX20RVqC2gvuHXN8"
     },
     {
@@ -65,7 +65,7 @@
       "inspectionDate": "2026-11-19",
       "sourceId": "SR0886640",
       "status": "inspection-complete",
-      "blurb": "Bar and kitchen at 17 N San Pedro St in San Jose.",
+      "blurb": "Bar and kitchen on N San Pedro St in San Jose.",
       "photoRef": "places/ChIJ8e8NJwDNj4ARK6ayxMr5paI/photos/AV-0GLd0pGYqr3y6iGCF_7yQgI7_npjR8Z6nS5yeVJiFr3esJp6UZ1gR_qWlwhl2XZg89Rx2kEOfO0XbeaBZ6R9UEqB4pJlbHLfx1HBVOfnYcpmzRlDgWe_jkd1a7ChUtt3RNA9utHJfwhvlJIhcjdcy1QjGNMx0DfNrH-KDqAdpl9kufZbf21ywaGMarF2M2yT7_-H9lIuw3ToHTXZmFurV58p3NcRpwItnA-8bSTVSAvnDbevZ439UZZlRJobXuoGCeols89luMaiWUi8fv2zpA1hEJs4tcYMXbmNE8AQ14K3yECjeIuN13bJQhOE4uI0z5AWqJwOWb48PqdtOs3YbwjAq0Tz9pn0A0HL24jWLyxM0UEJxGcPJIA4_zBEObpWPoAGzX7YyDHi9yDToJNvJDHjXdoHr_9ihll9VPKRJ2iSOww"
     },
     {
@@ -150,7 +150,7 @@
       "sourceId": "SR0881373",
       "status": "inspection-complete",
       "blurb": "Coffee business on Camden Ave in San Jose.",
-      "photoRef": "places/ChIJP38g_WO2j4AR5kDEzKWc1VU/photos/AV-0GLdkT9_HMivZgsxfTyG0UpWP8w43OxQGLKsSx5KJuBNa88MqYf3zszojcOgphW7HYtRKyWokeCD4vpERU968yLXS4QCfnmlWl07L9WHl5yeqHcNsxAWIvBeT5HosQX91QGKjWsz_NGB6a5nnyKF2qz6aL5mdoG9g7juuSsG12VcvyRIdY-oGLWBEA4lK5MasULUzqYFkllkWV7NktjMqk2V3C-R53weQCW8DKBECQxvgN08AFnxybPWy9bhRSekUvJxnTPcH3FkMn0k0RrUMGq8Ei62jhoAL8no-F_VpHUIW_xj4vq_NdDCuy-seCcUGdDDmaFwua6NhXYfhQ35vufPIDNRYR8cOjuLh4h7Dw9PrIR50O7TJezPHY9Yg_o4M4Vhv14IVcgeQlMGOxiu4UwsAO-s"
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881373-450.webp"
     },
     {
       "id": "inspection-SR0886483",
@@ -163,6 +163,18 @@
       "status": "inspection-complete",
       "blurb": null,
       "photoRef": "places/ChIJRY2KqiTJj4AR124_EBuhiwY/photos/AV-0GLegbIpczy0Ab2fKt6bGn0OUn87mCoXnuz2un8tHGo6UNqKrc5rlR3_ZVA5sGqpDTY5NHkpJjGm0FC6yRYCNZGc2SgFaifB3oQbxdLQH3kE8BQFOjSdGpVW24Vw9MOT_Jd9CvDP97XBbf_2iYWJtbHnLXwmuNo6LTsS_yTL8kIOM_EcKOyOnxgHEBgd79c4RbYVAcLwJx0xgRmtiprHWkVLBv74QCQpy5uI9d9T_VfiAcpfRLZOY9iOnpBllHqAZzwpQ-JX9AUwo0O_24prSWxebq2zNzjGAw1DwJzrExqVrzI1FQWqdrPY1zBmOG0YPr8YXcO8by4X1hLxdV0gBbjtyAiVEfQGiZ4gzcYM21cTYQac7E0rh2LhAhyzg15EpOpLnp6J2Jxt-N7o1A19TNCRBQJgCiI13jW8Elw9w-Y4xDw"
+    },
+    {
+      "id": "inspection-SR0881394",
+      "name": "Peet's Coffee",
+      "address": "3904 Middlefield Rd",
+      "cityId": "palo-alto",
+      "cityName": "PALO ALTO",
+      "inspectionDate": "2026-11-04",
+      "sourceId": "SR0881394",
+      "status": "inspection-complete",
+      "blurb": "Coffee business on Middlefield Rd in Palo Alto.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881394-450.webp"
     }
   ],
   "comingSoon": [
