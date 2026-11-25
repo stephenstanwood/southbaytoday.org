@@ -3274,6 +3274,23 @@ export function polishReviewedEventCopy(event) {
       );
     }
   }
+  // The library requires an application and recommends grades 2 and 3 within grades 1–3.
+  // https://sjpl.bibliocommons.com/events/6a7e13412dac6e00371ed9f0
+  if (next.source === "San Jose Public Library" && next.title === "Reading Partners One-on-One Reading Tutoring"
+      && next.venue === "Seven Trees Library" && next.registration === "required"
+      && typeof next.description === "string"
+      && next.description.includes("Free reading help is available for students in grades 1–3. The program is recommended for students in grades 2 and 3.")
+      && next.blurb === "Bring your 2nd or 3rd grader for free one-on-one reading tutoring with trained volunteer tutors from Reading Partners.") {
+    next.blurb = "Apply for free one-on-one reading tutoring at Seven Trees Library for students in grades 1–3. The library recommends it for grades 2 and 3.";
+  }
+  // The club is a drop-in for children who already know how to play.
+  // https://sccl.bibliocommons.com/events/69fa6349caf93436005a035e
+  if (next.source === "Santa Clara County Library" && next.title === "Milpitas Children's Chess Club"
+      && typeof next.description === "string"
+      && next.description.includes("Attendees are expected to know the rules of chess and must be able to play independently.")
+      && next.blurb === "Play chess and meet other young players in a relaxed drop-in setting for grades K-8.") {
+    next.blurb = "Drop in for chess at Milpitas Library. Players in grades K–8 need to know the rules and be able to play on their own.";
+  }
   // The series description lists every topic. Lead with the confirmed lesson for this occurrence.
   if (next.source === "San Jose Public Library" && next.date === "2026-11-28"
       && typeof next.description === "string" && next.description.includes(SJPL_EASY_TECH_VOICE_ASSISTANT_COPY)
