@@ -170,6 +170,7 @@ const EDITS = {
   },
   "San Jose Public Library": {
     title: [
+      [/^Pok[eé]mon TCG \(Trading Card Game\)$/gi, "Pokémon TCG (Trading Card Game)"],
       // The library's full bilingual title ends in “Anh-Việt và Thủ công”.
       [
         /^Music and Movement in Vietnamese and English and Craft \/ Múa Hát Song Ngữ Anh$/g,
@@ -248,6 +249,26 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        "who attended our 3D Design & Printing workshop and now want to try their hands at it.",
+        "who attended our 3D Design & Printing workshop and are ready for hands-on practice.",
+      ],
+      [
+        "The resume review will be a 15-minute one-on-one meeting, during which the Librarian will identify what needs to be improved and can help organize your information.",
+        "During the 15-minute one-on-one review, the librarian will point out what to improve and can help you organize your information.",
+      ],
+      [
+        "Drop-in, hang out and connect with other teens. Each month we'll provide supplies for a different art activity. 2026: December: Iron-on Mini Drawstring Bag: We'll have several designs to choose from Free. No registration required.",
+        "Drop in to hang out and connect with other teens. Each month we'll provide supplies for a different art activity. In December 2026, choose from several iron-on designs for a mini drawstring bag. Free. No registration required.",
+      ],
+      [
+        "Beginner English Class for students who want to improve on basic speaking and listening skills.",
+        "This beginner English class is for students who want to improve their basic speaking and listening skills.",
+      ],
+      [
+        "Details and Requirements: Must arrive promptly to sign in at the Information Desk; Must sign a waiver form provided (parents must sign for those under the age of 18); Anyone under the age of 15 must volunteer alongside a parent/guardian; Must be able to commit to the full session (3:30 PM - 4:30 PM); No experience or special skills necessary; Training and supplies will be provided.",
+        "Arrive on time to sign in at the information desk. A signed waiver is required. A parent must sign for anyone under 18. Anyone under 15 must volunteer with a parent or guardian. Volunteers must commit to the full session (3:30 PM - 4:30 PM). No experience or special skills are necessary. Training and supplies are provided.",
+      ],
       ["Forevery Young by Hayley Mills", "Forever Young by Hayley Mills"],
       [
         "Want to grow in understanding basic math concepts and working on basic competitive math skills? Join us in Santa Teresa Junior Math Club and see your math and problem-solving skills improve!",
@@ -1713,6 +1734,22 @@ const EDITS = {
     ],
     blurb: [
       [
+        "Make an iron-on mini drawstring bag from several designs, with supplies provided free and no registration required, alongside other teens.",
+        "Join other teens to decorate a mini drawstring bag. Choose from several iron-on designs. Supplies are free, and no registration is required.",
+      ],
+      [
+        "Drop by Edenvale Library and ask a tech mentor your computer questions, learning at your own pace in English or Chinese.",
+        "Drop by Edenvale Library for computer help in English or Chinese. A tech mentor can help you learn at your own pace.",
+      ],
+      [
+        "Bring your pre-walking baby to listen to stories and rhymes built for little ones.",
+        "Bring your pre-walking baby for stories and rhymes.",
+      ],
+      [
+        "Join a literary discussion with fellow readers in the library Community Room, where newcomers are welcome at the Willow Glen Library Book Club.",
+        "Join fellow readers for the Willow Glen Library Book Club in the library's Community Room. Newcomers are welcome.",
+      ],
+      [
         "Build towers, spaceships, forts and more from LEGO bricks at Seven Trees Library, a club recommended for children 5 and older.",
         "Build towers, spaceships, forts, and more with LEGO bricks at Seven Trees Library. The club is recommended for children ages 5 and older.",
       ],
@@ -2757,6 +2794,18 @@ const EDITS = {
     ],
     blurb: [
       [
+        "Play free drop-in board games, from strategy to card and family games, on a first-come, first-served basis at any age.",
+        "Drop in for free board and card games, including strategy and family-friendly games. All ages are welcome. Space is available on a first-come, first-served basis.",
+      ],
+      [
+        "Make your own lip balm from all-natural ingredients and learn about beeswax, in a workshop for teens in grades 6-12.",
+        "Teens in grades 6-12 can make their own lip balm from all-natural ingredients and learn about beeswax.",
+      ],
+      [
+        "Browse a one-day sale of books for kids and adults, plus DVDs, Blu-rays and music CDs, supporting library programs and literacy.",
+        "Shop for books for children and adults, DVDs, Blu-rays, and music CDs at this one-day sale. Proceeds support library programs and literacy.",
+      ],
+      [
         "Shop fresh produce, baked goods, local artisan goods and prepared foods at the Hammer Theatre Plaza market's final stand of the season.",
         "Visit Hammer Theatre Plaza for the season's last farmers' market, with fresh produce, baked goods, local artisan goods, and prepared foods.",
       ],
@@ -2791,6 +2840,10 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        "Drop-in free play board games for all ages, including strategy, family-friendly and card games, first-come, first-served. Registration is not required, but space is limited.",
+        "Drop in for free board and card games, including strategy and family-friendly games. All ages are welcome. No registration is required. Space is limited and available on a first-come, first-served basis.",
+      ],
       [
         /^Annual County ceremony marking Human Rights Day, with the theme "Making Humanity Together\." It celebrates the Universal Declaration of Human Rights\.$/g,
         "The county's annual ceremony marks Human Rights Day and celebrates the Universal Declaration of Human Rights. The theme is \"Making Humanity Together.\"",
@@ -3197,6 +3250,11 @@ const EDITS = {
       [/^Luka Sulic (?:of 2Cellos|\(formerly of 2Cellos\))$/gi, "Luka Sulic (formerly of 2CELLOS)"],
     ],
     description: [
+      [
+        "Two major stars of norteño music come together to bring their music, talent, and career to every corner of the United States.",
+        "Two major norteño acts come together to bring their music and talent to audiences across the United States.",
+      ],
+      ["Alex returns to the global stages with Allexcited", "Alex returns to stages around the world with Allexcited"],
       ['"Eterna Tour 2026".', '"Eterna Tour 2026."'],
       ['"Hope For Civilization".', '"Hope For Civilization."'],
       ["! * Tickets go on sale", "! Tickets go on sale"],
