@@ -970,14 +970,20 @@ test("visiting hours stay with an ongoing university exhibition as its date roll
   assert.equal(applyVerifiedEventFacts({ ...branner, date: "2026-12-19" }).attendanceNote, branner.attendanceNote);
 });
 
-test("the Beethoven Center's December 3 concert uses verified free admission when the feed omits it", () => {
+test("the Beethoven Center's December 3 concert uses the verified program and admission", () => {
   const concert = {
     url: "https://events.sjsu.edu/event/noontime-concerts-at-the-beethoven-center-series-december-3",
     date: "2026-12-03", cost: null,
+    description: "Performers: Elizabeth Dorman (fortepiano) and Dorian Bandy (violin) Program: Mozart: Violin Sonata in C major, K.",
   };
-  assert.equal(applyVerifiedEventFacts(concert).cost, "free");
+  const reviewed = applyVerifiedEventFacts(concert);
+  assert.equal(reviewed.cost, "free");
+  assert.match(reviewed.description, /two Mozart sonatas and Beethoven's variations/);
+  assert.match(reviewed.description, /coffee reception and open house/);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
   assert.equal(applyVerifiedEventFacts({ ...concert, cost: "paid" }).cost, "paid");
-  assert.equal(applyVerifiedEventFacts({ ...concert, date: "2026-12-04" }).cost, null);
+  const differentDate = { ...concert, date: "2026-12-04" };
+  assert.equal(applyVerifiedEventFacts(differentDate), differentDate);
 });
 
 test("Jurassic Quest follows the organizer's family format and daily hours", () => {

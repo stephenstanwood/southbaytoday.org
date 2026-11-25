@@ -3450,7 +3450,7 @@ export function polishReviewedEventCopy(event) {
       && next.attendanceNote?.includes("Confirm the room when you reserve your time slot.")
       && typeof next.blurb === "string") {
     next.blurb = next.blurb.replace(
-      /^Read aloud to a quiet therapy pet if you have a kindergarten through fifth grader, with reserved time slots(?: in the Redwood Room)?\.$/,
+      /^Read aloud to a quiet therapy pet (?:if you have a kindergarten through fifth grader, with reserved time slots(?: in the Redwood Room)?|in a reserved time slot, for kids in grades K-5)\.$/,
       "Kids in kindergarten through fifth grade can read aloud to a quiet therapy pet. Reserve a time slot in advance.",
     );
   }

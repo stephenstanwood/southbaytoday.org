@@ -671,6 +671,42 @@ const CORRECTIONS = [
     ["2026-11-21", "inbound-f5f7e6c23507b047"],
     ["2026-11-22", "inbound-dbe8c81d745bff20"],
   ].map(([date, id]) => ({ date, id, facts: { category: "market" } })),
+  // Sunnyvale's December library bulletin confirms the three dates and room.
+  // The city's branch directory gives the street address.
+  // https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/43243c7
+  // https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/42ffcdb
+  ...[
+    ["2026-12-05", "inbound-4af32b7e61ff706b"],
+    ["2026-12-12", "inbound-8112c05abc0c2ee0"],
+    ["2026-12-19", "inbound-a27c44d97a5b2515"],
+  ].map(([date, id]) => ({
+    date, id,
+    facts: {
+      url: "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/43243c7",
+      venue: "Lakewood Branch Library, Program Room",
+      address: "760 Lakechime Drive, Sunnyvale, CA 94089",
+    },
+  })),
+  // The Friends' sale calendar and library bulletin both list this sale.
+  {
+    date: "2026-12-12",
+    id: "inbound-a01f390ec45c1abb",
+    facts: {
+      url: "https://fotsvl.org/book-sales/",
+      venue: "Sunnyvale Main Library, Program Room",
+      address: "665 W. Olive Ave., Sunnyvale, CA 94086",
+      category: "market",
+    },
+  },
+  // The library bulletin gives separate instructions for logging volunteer hours.
+  {
+    date: "2026-12-10",
+    url: "https://sunnyvale.libcal.com/event/16531841",
+    facts: {
+      description: "Teens age 13 and older can make toys for shelter dogs and cats. Drop in or sign up for a reminder. To earn volunteer hours, apply first if you aren't already a registered library volunteer.",
+      blurb: "Make toys for shelter dogs and cats at this library session for teens age 13 and older.",
+    },
+  },
   // The organizer and its registration page give the same race-day timeline.
   // Normalize both newsletter copies before dedup so pickup does not become a second race.
   {
@@ -5094,11 +5130,16 @@ const CORRECTIONS = [
       && event.url === "https://events.sjsu.edu/event/something-sensational",
     appendAttendanceNote: "The Special Collections reading room is open to the public Monday through Wednesday, noon to 5 PM, and by appointment.",
   },
-  // The concert's first-party page states free admission below the feed excerpt.
+  // The Localist excerpt cuts off the program and leaves out free admission.
+  // https://www.sjsu.edu/beethoven/events/upcoming-events.php
   {
     date: "2026-12-03",
     url: "https://events.sjsu.edu/event/noontime-concerts-at-the-beethoven-center-series-december-3",
-    facts: (event) => event.cost == null ? { cost: "free" } : {},
+    facts: (event) => ({
+      ...(event.cost == null ? { cost: "free" } : {}),
+      description: "Fortepianist Elizabeth Dorman and violinist Dorian Bandy perform two Mozart sonatas and Beethoven's variations on a Mozart aria. An informal coffee reception and open house follow.",
+      blurb: "Hear Mozart and Beethoven on violin and fortepiano at this noon concert, followed by coffee and an open house.",
+    }),
   },
   // The School of Music lists this as a concert.
   {

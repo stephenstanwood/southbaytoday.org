@@ -2082,7 +2082,11 @@ test("Reading with Pets blurbs say who reads and keep the verified reservation i
   assert.equal(event.registration, "required");
   assert.equal(event.attendanceNote, "Confirm the room when you reserve your time slot.");
   const oldBlurb = "Read aloud to a quiet therapy pet if you have a kindergarten through fifth grader, with reserved time slots";
-  for (const blurb of [`${oldBlurb}.`, `${oldBlurb} in the Redwood Room.`]) {
+  for (const blurb of [
+    `${oldBlurb}.`,
+    `${oldBlurb} in the Redwood Room.`,
+    "Read aloud to a quiet therapy pet in a reserved time slot, for kids in grades K-5.",
+  ]) {
     assert.deepEqual(polishReviewedEventCopy({ ...event, blurb }), reviewed);
   }
   assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
