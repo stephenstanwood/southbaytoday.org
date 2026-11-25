@@ -99,6 +99,9 @@ export function polishCivicCopy(text, { cityId } = {}) {
         "The agenda listed a proposal to authorize a request for proposals and a local funding contribution")
       .replace("a request to release a Request for Proposals and provide local funding",
         "a proposal to issue a request for proposals and provide local funding")
+      .replace("listed several resolutions honoring longtime city staff, including the retirement of Chief Gary Berg after ",
+        "listed several resolutions honoring longtime city staff, including one recognizing Chief Gary Berg's retirement after ")
+      .replace("two-story childcare and preschool at 855 E. Homestead Road", "two-story childcare and preschool facility at 855 E. Homestead Road")
       .replace("a contract for designing a replacement of the Community Center pool.",
         "a contract to design a replacement for the Community Center pool.")
       .replace("an urgency ordinance to set a temporary moratorium on approving applications for, and the establishment or operation of, detention or custodial detention facilities and custodial processing facilities.",
@@ -128,7 +131,13 @@ export function polishCivicTopic(text, options) {
   // whose abbreviated title came through the November 17 agenda extract.
   // https://meetings.municode.com/adaHtmlDocument/index?cc=LOSGATOS&ip=True&me=3423e578564544c4b346a056e5fd6d16
   if (options?.cityId === "los-gatos" && typeof copy === "string") {
-    copy = copy.replace(/\b2026 Annual Curb project\b/i, "2026 Annual Curb, Gutter, and Sidewalk Maintenance Project");
+    copy = copy.replace(/\b2026 Annual Curb project\b/i, "2026 Annual Curb, Gutter, and Sidewalk Maintenance Project")
+      .replace("The agenda listed an ordinance amending Chapter 29 (Zoning Regulations) of the Town Code for adoption.",
+        "The agenda listed adoption of an ordinance amending Chapter 29 (Zoning Regulations) of the Town Code.")
+      .replace("The agenda listed authorizing a Certificate of Acceptance and Notice of Completion for the ",
+        "The agenda listed a request to authorize a Certificate of Acceptance and Notice of Completion for the ")
+      .replace(", and the Town Manager's authority to execute a certificate of acceptance and notice of completion for another project.",
+        ". It also listed a request to authorize the Town Manager to execute a certificate of acceptance and notice of completion for another project.");
   }
   // San José agenda item ROGC 26-404 names District 1 and Councilmember Kamei.
   // https://sanjose.legistar.com/LegislationDetail.aspx?GUID=944C7922-21AF-4970-8270-CDE7733FDE83&ID=8321451

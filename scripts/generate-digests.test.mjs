@@ -294,6 +294,10 @@ test("refreshed Campbell digest keeps the reviewed transcript and fence wording"
 test("refreshed council summaries keep their reviewed agenda wording", () => {
   const examples = [
     [
+      "The agenda for the November 17, 2026, Campbell City Council meeting listed several resolutions honoring longtime city staff, including the retirement of Chief Gary Berg after more than 32 years.",
+      "The agenda for the November 17, 2026, Campbell City Council meeting listed several resolutions honoring longtime city staff, including one recognizing Chief Gary Berg's retirement after more than 32 years.",
+    ],
+    [
       "The agenda included a contract for designing a replacement of the Community Center pool.",
       "The agenda included a contract to design a replacement for the Community Center pool.",
     ],
@@ -362,6 +366,25 @@ test("Los Gatos digest restores the official name of the 2026 curb maintenance p
   assert.equal(polishCivicTopic(topic, { cityId: "campbell" }), topic);
 });
 
+test("Los Gatos digest keeps the adoption and separate authorizations clear", () => {
+  const options = { cityId: "los-gatos" };
+  const examples = [
+    [
+      "The agenda listed an ordinance amending Chapter 29 (Zoning Regulations) of the Town Code for adoption.",
+      "The agenda listed adoption of an ordinance amending Chapter 29 (Zoning Regulations) of the Town Code.",
+    ],
+    [
+      "The agenda listed authorizing a Certificate of Acceptance and Notice of Completion for the 2026 Annual Curb project, and the Town Manager's authority to execute a certificate of acceptance and notice of completion for another project.",
+      "The agenda listed a request to authorize a Certificate of Acceptance and Notice of Completion for the 2026 Annual Curb, Gutter, and Sidewalk Maintenance Project. It also listed a request to authorize the Town Manager to execute a certificate of acceptance and notice of completion for another project.",
+    ],
+  ];
+  for (const [before, after] of examples) {
+    assert.equal(polishCivicTopic(before, options), after);
+    assert.equal(polishCivicTopic(after, options), after);
+    assert.equal(polishCivicTopic(before, { cityId: "another-city" }), before);
+  }
+});
+
 test("San José's holiday book drive keeps the district in the published agenda", () => {
   const shortTopic = "A proclamation and council-sponsored special event for the Holiday Children Book Drive in Council District 11 (Kamei).";
   const eventApprovals = "Council District 6 (Mulcahy) had an item seeking retroactive approval and approval of various council-sponsored events, and District 11 (Kamei) had an item seeking approval of a proclamation and a Holiday Children Book Drive event";
@@ -402,7 +425,8 @@ test("San José's November 18 agenda review names the council date under review"
 
 test("refreshed planning copy separates the preschool address and gives the apartment count once", () => {
   const summary = "A hearing continued from November 9 was listed on the November 23 Planning Commission agenda for a 16,000-square-foot, two-story childcare and preschool at 855 E. Homestead Road It would replace a vacant commercial building, and the plan includes a new eight-foot masonry wall along the western property line and part of the southern property line.";
-  const reviewed = summary.replace("Homestead Road It", "Homestead Road. It");
+  const reviewed = summary.replace("childcare and preschool at", "childcare and preschool facility at")
+    .replace("Homestead Road It", "Homestead Road. It");
   const headline = "Planning Commission agenda: 316-unit apartments at 400 Saratoga Avenue golf course";
   assert.equal(polishCivicCopy(summary, { cityId: "sunnyvale" }), reviewed);
   assert.equal(polishCivicCopy(reviewed, { cityId: "sunnyvale" }), reviewed);
