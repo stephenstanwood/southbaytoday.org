@@ -105,6 +105,8 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace("listed several resolutions honoring longtime city staff, including the retirement of Chief Gary Berg after ",
         "listed several resolutions honoring longtime city staff, including one recognizing Chief Gary Berg's retirement after ")
       .replace("two-story childcare and preschool at 855 E. Homestead Road", "two-story childcare and preschool facility at 855 E. Homestead Road")
+      .replace("A hearing continued from November 9 was listed on the November 23 Planning Commission agenda for a 16,000-square-foot, two-story childcare and preschool facility at 855 E. Homestead Road.",
+        "The November 23 Planning Commission agenda listed a hearing, continued from November 9, on a proposed 16,000-square-foot, two-story childcare and preschool facility at 855 E. Homestead Road.")
       .replace("a contract for designing a replacement of the Community Center pool.",
         "a contract to design a replacement for the Community Center pool.")
       .replace("an urgency ordinance to set a temporary moratorium on approving applications for, and the establishment or operation of, detention or custodial detention facilities and custodial processing facilities.",
