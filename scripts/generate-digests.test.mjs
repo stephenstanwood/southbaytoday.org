@@ -10,7 +10,7 @@ import { polishCivicCopy, polishCivicModifiers, polishCivicTopic } from "./lib/c
 const scripts = dirname(fileURLToPath(import.meta.url));
 const cities = ["campbell", "saratoga", "los-altos", "los-gatos", "san-jose", "mountain-view", "sunnyvale", "cupertino", "santa-clara", "milpitas", "palo-alto"];
 const CAMPBELL_NOV_17_ID = "2d32a975-87ba-41aa-9897-6233cdfc7e72";
-function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, campbellRecord = null,
+function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, campbellRecord = null, losGatosRecord = null,
   campbellPdEoc = false, santaClaraDate = null,
   keyTopics = ['Review of winter storm preparedness activities', 'Proposed stream corridor protection changes'],
   summary = "The agenda listed winter storm preparedness and proposed changes to stream corridor protection." } = {}) {
@@ -35,7 +35,7 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, camp
     const capture = join(root, "prompts.json");
     const fixture = join(scripts, "fixtures/primegov");
     let fixtureNow = campbellRecord ? "2026-11-16T03:40:00Z" : "2026-10-29T03:40:00Z";
-    if (campbellPdEoc || santaClaraDate) fixtureNow = "2026-11-25T04:40:00Z";
+    if (campbellPdEoc || santaClaraDate || losGatosRecord) fixtureNow = "2026-11-25T04:40:00Z";
     writeFileSync(join(root, "source-mocks.mjs"), `
       import fs from 'node:fs';
       const RealDate = Date;
@@ -52,6 +52,10 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, camp
           const campbell = ${JSON.stringify(campbellRecord)};
           if (url.searchParams.get('city') === 'Campbell' && campbell) {
             return Response.json({records: [campbell]});
+          }
+          const losGatos = ${JSON.stringify(losGatosRecord)};
+          if (url.searchParams.get('city') === 'Los Gatos' && losGatos) {
+            return Response.json({records: [losGatos]});
           }
           const santaClaraDate = ${JSON.stringify(santaClaraDate)};
           if (url.searchParams.get('city') === 'Santa Clara' && santaClaraDate) {
@@ -163,6 +167,21 @@ test("the Campbell transcript keeps the verified agenda link for its record and 
   for (const unrelated of [{ ...record, id: 7380 }, { ...record, date: "2026-11-03" }]) {
     assert.equal(run({ campbellRecord: unrelated }).digests.campbell.sourceUrl, "https://pub-campbell.escribemeetings.com/");
   }
+});
+
+test("the Los Gatos digest cites the exact agenda for its verified regular meeting record", () => {
+  const record = {
+    id: 7412, city: "Los Gatos", date: "2026-11-17", meetingType: "City Council", source: "ingest",
+    title: "Approve the Minutes of the October 28, 2026, Closed Session Town Council Meeting.",
+    excerpt: "Adopt an ordinance on objective design standards and consider adding a full-time Senior Planner to the fiscal year budget.",
+    keywords: ["objective design standards", "Senior Planner"],
+  };
+  const card = run({ losGatosRecord: record }).digests["los-gatos"];
+  assert.equal(card.meetingDateIso, record.date);
+  assert.equal(card.sourceUrl, "https://mccmeetings.blob.core.usgovcloudapi.net/losgatos-pubu/MEET-Agenda-0a1f648faf904226ba2223be87ebbdb8.pdf");
+
+  const unrelated = run({ losGatosRecord: { ...record, id: 7413 } }).digests["los-gatos"];
+  assert.equal(unrelated.sourceUrl, "https://losgatos-ca.municodemeetings.com/");
 });
 
 test("Campbell recovers the November 17 council agenda from the PD EOC meeting type", () => {

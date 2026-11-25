@@ -69,7 +69,7 @@ const CITIES = [
     verifiedAgenda: {
       recordId: 7378,
       date: "2026-11-02",
-      meetingId: "dc3aba52-7cf5-4d1a-b3d6-d8a3315e9ee0",
+      sourceUrl: escribeAgendaUrl("pub-campbell.escribemeetings.com", "dc3aba52-7cf5-4d1a-b3d6-d8a3315e9ee0"),
     },
     escribe: {
       host: "pub-campbell.escribemeetings.com",
@@ -93,7 +93,15 @@ const CITIES = [
   // meeting to summarize and carryForward had nothing left to hold onto.
   { city: "los-altos",     stoaCity: "Los Altos",     cityName: "Los Altos",     schedule: "2nd and 4th Tuesday",   agendaUrl: "https://losaltosca.portal.civicclerk.com/",
     civicclerk: { apiHost: "losaltosca.api.civicclerk.com" } },
-  { city: "los-gatos",     stoaCity: "Los Gatos",     cityName: "Los Gatos",     schedule: "1st and 3rd Tuesday",   agendaUrl: "https://losgatos-ca.municodemeetings.com/", councilBody: "Town Council" },
+  { city: "los-gatos",     stoaCity: "Los Gatos",     cityName: "Los Gatos",     schedule: "1st and 3rd Tuesday",   agendaUrl: "https://losgatos-ca.municodemeetings.com/", councilBody: "Town Council",
+    // The imported agenda excerpt has no source URL. The date also had a
+    // closed session, so cite this agenda only for the regular meeting record.
+    verifiedAgenda: {
+      recordId: 7412,
+      date: "2026-11-17",
+      sourceUrl: "https://mccmeetings.blob.core.usgovcloudapi.net/losgatos-pubu/MEET-Agenda-0a1f648faf904226ba2223be87ebbdb8.pdf",
+    },
+  },
   { city: "san-jose",      stoaCity: "San Jose",      cityName: "San José",      schedule: "Tuesdays",                agendaUrl: "https://sanjose.legistar.com/Calendar.aspx",      legistar: "sanjose",      legistarApi: "sanjose" },
   { city: "mountain-view", stoaCity: "Mountain View", cityName: "Mountain View", schedule: "2nd and 4th Tuesday",   agendaUrl: "https://mountainview.legistar.com/Calendar.aspx", legistar: "mountainview", legistarApi: "mountainview" },
   { city: "sunnyvale",     stoaCity: "Sunnyvale",     cityName: "Sunnyvale",     schedule: "Tuesdays",                agendaUrl: "https://sunnyvaleca.legistar.com/Calendar.aspx",  legistar: "sunnyvaleca",  legistarApi: "sunnyvaleca" },
@@ -631,7 +639,7 @@ async function main() {
         ? bodyLabel : `${config.cityName} ${bodyLabel}`;
       const verifiedAgenda = config.verifiedAgenda;
       const verifiedAgendaUrl = verifiedAgenda && verifiedAgenda.recordId === meeting.id && verifiedAgenda.date === meeting.date
-        ? escribeAgendaUrl(config.escribe.host, verifiedAgenda.meetingId)
+        ? verifiedAgenda.sourceUrl
         : null;
 
       digests[config.city] = {
