@@ -706,7 +706,10 @@ const EDITS = {
       ["This program is meant for Intermediate or Advanced Level Learners, not for Beginners.", "This program is meant for intermediate or advanced-level learners, not for beginners."],
       ["increase English Language and vocabulary skills.", "increase English language and vocabulary skills."],
       ["assist you with: Accessing Wi-Fi; Using email; Web searches; Understanding your e-reader device; Using our library's e-resources.", "assist you with accessing Wi-Fi; using email; searching the web; understanding your e-reader device; and using our library's e-resources."],
-      ["basic computer issues like: Learning the basics of Microsoft Word and Excel; Setting up an email account; Using social networking services like Facebook; Submitting an online job application; downloading an e-book from the library's web site; And much more!", "basic computer issues like learning the basics of Microsoft Word and Excel; setting up an email account; using social networking services like Facebook; submitting an online job application; downloading an e-book from the library's web site; and much more!"],
+      [
+        /Our Tech Mentor volunteer can help you with basic computer issues like:? learning the basics of Microsoft Word and Excel; setting up an email account; using social networking services like Facebook; submitting an online job application[:;] downloading an e-book from the library's web site; and much more!/gi,
+        "Our Tech Mentor volunteer can help you learn the basics of Microsoft Word and Excel, set up an email account, and use social networks like Facebook. You can also get help submitting an online job application or downloading an e-book from the library's website, among other tasks.",
+      ],
       ["in case of incremental weather/facility issues", "in case of inclement weather or facility issues"],
       ["Children can play in a safe environment in the Rose Garden Library Community Room and parents can connect", "Children can play in a safe environment in the Rose Garden Library Community Room, and parents can connect"],
       ["in the Children's area.)", "in the Children's area)."],

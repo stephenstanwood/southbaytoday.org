@@ -2048,6 +2048,12 @@ test("cached chess blurbs keep the organizer's independent-play requirement", ()
 test("reviewed calendar descriptions survive refresh", () => {
   const samples = [
     {
+      source: "San Jose Public Library",
+      title: "One-on-One Computer Help with our Tech Mentor",
+      description: "Stop by the West Valley Branch Library for one-on-one computer help with our experienced, friendly Tech Mentor! Our Tech Mentor volunteer can help you with basic computer issues like: Learning the basics of Microsoft Word and Excel; Setting up an email account; Using social networking services like Facebook; Submitting an online job application: Downloading an e-book from the library's web site; And much more! No appointment necessary. Patrons will be helped on a first-come, first-served basis. Appointment times may be limited depending on patron demand.",
+      reviewed: "Stop by the West Valley Branch Library for one-on-one computer help with our experienced, friendly Tech Mentor! Our Tech Mentor volunteer can help you learn the basics of Microsoft Word and Excel, set up an email account, and use social networks like Facebook. You can also get help submitting an online job application or downloading an e-book from the library's website, among other tasks. No appointment necessary. Patrons will be helped on a first-come, first-served basis. Appointment times may be limited depending on patron demand.",
+    },
+    {
       source: "Palo Alto City Library",
       title: "Nowruz New Year Celebration",
       description: "Celebrate the arrival of spring and new beginnings this Nowruz! Join Palo Alto City Library for a fun-filled Nowruz celebration at the Mitchell Park Community Center. More information to come!",
