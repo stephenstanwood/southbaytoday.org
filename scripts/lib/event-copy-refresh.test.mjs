@@ -2045,6 +2045,37 @@ test("cached chess blurbs keep the organizer's independent-play requirement", ()
   assert.deepEqual(polishReviewedEventCopy(revisedLesson), revisedLesson);
 });
 
+test("Reading with Pets blurbs say who reads and keep the verified reservation instructions", () => {
+  const event = applyVerifiedEventFacts({
+    source: "City Newsletter",
+    title: "Reading with Pets at Central Park Library",
+    url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/115099/",
+    date: "2026-12-01",
+    city: "santa-clara",
+    venue: "Central Park Library - Redwood Room",
+    description: polishDescription("Kids in grades K-5 can practice reading aloud to a quiet therapy pet. Space is limited; reserve a time slot by calling 408-615-2916 during open hours or sign up in person at the Central Park Library children's desk, with sign-ups available 1 month before the event."),
+  });
+  const reviewed = {
+    ...event,
+    blurb: "Kids in kindergarten through fifth grade can read aloud to a quiet therapy pet. Reserve a time slot in advance.",
+  };
+  assert.equal(event.registration, "required");
+  assert.equal(event.attendanceNote, "Confirm the room when you reserve your time slot.");
+  const oldBlurb = "Read aloud to a quiet therapy pet if you have a kindergarten through fifth grader, with reserved time slots";
+  for (const blurb of [`${oldBlurb}.`, `${oldBlurb} in the Redwood Room.`]) {
+    assert.deepEqual(polishReviewedEventCopy({ ...event, blurb }), reviewed);
+  }
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+  for (const revised of [
+    { ...event, blurb: `${oldBlurb} in the Edinger Room.` },
+    { ...event, blurb: `${oldBlurb}.`, description: event.description.replace("K-5", "1-3") },
+    { ...event, blurb: `${oldBlurb} in the Redwood Room.`, venue: "Central Park Library - Redwood Room" },
+    { ...event, blurb: `${oldBlurb}.`, source: "Different publisher" },
+  ]) {
+    assert.deepEqual(polishReviewedEventCopy(revised), revised);
+  }
+});
+
 test("reviewed calendar descriptions survive refresh", () => {
   const samples = [
     {

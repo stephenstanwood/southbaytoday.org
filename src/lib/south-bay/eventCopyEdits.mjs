@@ -3417,6 +3417,17 @@ export function polishReviewedEventCopy(event) {
       && next.blurb === "Play chess and meet other young players in a relaxed drop-in setting for grades K-8.") {
     next.blurb = "Drop in for chess at Milpitas Library. Players in grades K–8 need to know the rules and be able to play on their own.";
   }
+  // Cached Reading with Pets copy can still name the room after fact-checking removed it.
+  if (next.source === "City Newsletter" && next.title === "Reading with Pets at Central Park Library"
+      && next.venue === "Central Park Library" && next.registration === "required"
+      && next.description?.startsWith("Kids in grades K-5 can practice reading aloud to a quiet therapy pet.")
+      && next.attendanceNote?.includes("Confirm the room when you reserve your time slot.")
+      && typeof next.blurb === "string") {
+    next.blurb = next.blurb.replace(
+      /^Read aloud to a quiet therapy pet if you have a kindergarten through fifth grader, with reserved time slots(?: in the Redwood Room)?\.$/,
+      "Kids in kindergarten through fifth grade can read aloud to a quiet therapy pet. Reserve a time slot in advance.",
+    );
+  }
   // The series description lists every topic. Lead with the confirmed lesson for this occurrence.
   if (next.source === "San Jose Public Library" && next.date === "2026-11-28"
       && typeof next.description === "string" && next.description.includes(SJPL_EASY_TECH_VOICE_ASSISTANT_COPY)
