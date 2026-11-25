@@ -6,6 +6,18 @@ const DAY_PATTERN = WEEKDAYS.join("|");
 const WEEKLY = new RegExp(`^every (${DAY_PATTERN})(?: (?:through|to|[-–—]) (${DAY_PATTERN}))?$`, "i");
 const DATED = new RegExp(`^(?:(${DAY_PATTERN}),? )?(${MONTHS.join("|")}) (\\d{1,2})(?:,? (\\d{4}))?$`, "i");
 
+function cdmDate(dated, fallbackYear) {
+  const month = MONTHS.indexOf(dated[2].toLowerCase()) + 1;
+  const year = Number(dated[4] || fallbackYear);
+  const date = `${year}-${String(month).padStart(2, "0")}-${String(Number(dated[3])).padStart(2, "0")}`;
+  try {
+    const { weekday } = isoDateParts(date);
+    return !dated[1] || WEEKDAYS[weekday] === dated[1].toLowerCase() ? date : null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * CDM's calendar mixes dated events with weekly program labels. A weekly label
  * proves an occurrence today only on its stated weekdays; it is never a daily
@@ -32,17 +44,33 @@ export function parseCdmOccurrenceDate(rawDate, today) {
   }
 
   const dated = DATED.exec(text);
-  if (!dated) return null;
-  const month = MONTHS.indexOf(dated[2]) + 1;
-  const year = Number(dated[4] || calendarDay.year);
-  const date = `${year}-${String(month).padStart(2, "0")}-${String(Number(dated[3])).padStart(2, "0")}`;
+  const date = dated && cdmDate(dated, calendarDay.year);
+  return date && date >= today ? date : null;
+}
+
+export function parseCdmExhibitRange(rawDate, today) {
+  const labels = String(rawDate || "").trim().replace(/\s+/g, " ").split(/ [-–—] /);
+  if (labels.length !== 2) return null;
+  const [start, end] = labels.map((label) => DATED.exec(label));
+  if (!start || !end) return null;
+
+  let calendarDay;
   try {
-    const { weekday } = isoDateParts(date);
-    if (dated[1] && WEEKDAYS[weekday] !== dated[1]) return null;
+    calendarDay = isoDateParts(today);
   } catch {
     return null;
   }
-  return date >= today ? date : null;
+  const endMonth = MONTHS.indexOf(end[2].toLowerCase()) + 1;
+  const crossesNewYear = MONTHS.indexOf(start[2].toLowerCase()) + 1 > endMonth;
+  // In January the November–January exhibit still belongs to the preceding
+  // November. If either endpoint says its year, use it instead of inferring.
+  const inferredStartYear = calendarDay.year - Number(crossesNewYear && calendarDay.month <= endMonth);
+  const startYear = Number(start[4]) || (end[4] ? Number(end[4]) - Number(crossesNewYear) : inferredStartYear);
+  const startDate = cdmDate(start, startYear);
+  const endDate = cdmDate(end, startYear + Number(crossesNewYear));
+  if (!startDate || !endDate || endDate < startDate || endDate < today
+      || startDate > addIsoDays(today, 180)) return null;
+  return { startDate, endDate };
 }
 
 export function parseCdmCelebrationDate(rawDate, today) {

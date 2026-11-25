@@ -2182,26 +2182,26 @@ const CORRECTIONS = [
     url: "https://events.stanford.edu/event/shop-smart-eat-well-budget-friendly-grocery-tips-meal-ideas-and-label-reading-strategies",
     copyReplacements: [[/\bCdces\b/g, "CDCES"]],
   },
-  // The museum's calendar and newsletter agree the rink opens November 21
-  // and runs through at least January 9. Its exhibit page says January 10.
-  // Use the shared window for refresh and leave the closing date out of copy.
+  // Both the museum's calendar and its exhibit page confirm November 21
+  // through January 10. The calendar range is authoritative when present.
   // https://www.cdm.org/calendar/
   // https://www.cdm.org/event/iceless-skating-rink/2026-11-21/
   {
-    dateFrom: "2026-11-21", dateThrough: "2027-01-09",
+    dateFrom: "2026-11-21", dateThrough: "2027-01-10",
     matches: event => (event.startDate || event.date) === "2026-11-21"
       && /^(?:Sock Skating at the Children's Discovery Museum|Iceless Skating Rink)$/i.test(event.title || "")
       && /^Children's Discovery Museum(?: of San Jose)?(?:,|$)/i.test(event.venue || ""),
-    facts: {
+    facts: event => ({
       title: "Iceless Skating Rink",
       url: "https://www.cdm.org/event/iceless-skating-rink/2026-11-21/",
       venue: "Children's Discovery Museum, Traveling Exhibit Hall",
       address: "180 Woz Way, San Jose, CA 95110",
-      ongoing: true, startDate: "2026-11-21", endDate: "2027-01-09",
+      ongoing: true, startDate: "2026-11-21",
+      endDate: event.source === "Children's Discovery Museum" && event.endDate ? event.endDate : "2027-01-10",
       time: null, endTime: null, cost: "paid", costNote: "Included with museum admission",
-      description: "The indoor skating exhibit is next to TapeScape in the Traveling Exhibit Hall. The rink opens November 21 and is available during museum hours.",
+      description: "The indoor skating exhibit is next to TapeScape in the Traveling Exhibit Hall and is available during museum hours.",
       blurb: "Skate indoors in socks at the Children's Discovery Museum's iceless rink, open during museum hours.",
-    },
+    }),
   },
   // The first countdown starts at noon. The museum's 9:30 AM clock is doors.
   // https://www.cdm.org/event/noon-years-eve/
@@ -7503,6 +7503,9 @@ function staleEventCopyFor(event) {
 const greenLibraryThanksgivingClosure = ["2026-11-27", "Green Library is closed November 26 and 27 for Thanksgiving."];
 const thompsonGalleryThanksgivingClosure = ["2026-11-27", "Thompson Gallery is closed November 25 through 27."];
 const EXHIBIT_THANKSGIVING_CLOSURES = new Map([
+  // https://www.cdm.org/hours-pricing/
+  ["https://www.cdm.org/event/iceless-skating-rink/2026-11-21/",
+    ["2026-11-26", "The museum is closed Thursday, November 26, for Thanksgiving."]],
   // https://library-hours.stanford.edu/libraries.json?from=2026-11-24&to=2026-11-30
   ["https://events.stanford.edu/event/electric-contrasts-the-art-of-the-detail-7315",
     ["2026-11-29", "Bowes Art & Architecture Library is closed November 26 through 29."]],
@@ -7524,7 +7527,7 @@ const EXHIBIT_THANKSGIVING_CLOSURES = new Map([
   ["https://events.sjsu.edu/event/copy-of-natalie-and-james-thompson-gallery-common-ground", thompsonGalleryThanksgivingClosure],
 ]);
 
-function thanksgivingExhibitClosure(event, venue) {
+function thanksgivingExhibitClosure(event) {
   if (!event?.ongoing || event.time || event.virtual || !event.date || event.date < "2026-11-24") return null;
 
   const closure = EXHIBIT_THANKSGIVING_CLOSURES.get(event.url);
@@ -7537,13 +7540,13 @@ function thanksgivingExhibitClosure(event, venue) {
   // https://museum.stanford.edu/visit and https://anderson.stanford.edu/visit/
   if (event.date <= "2026-11-26" && event.source === "Stanford Events"
       && event.url?.startsWith("https://events.stanford.edu/event/")
-      && (venue === "Cantor Arts Center" || venue === "Anderson Collection")) {
+      && (event.venue === "Cantor Arts Center" || event.venue === "Anderson Collection")) {
     return "The museum is closed Thursday, November 26, for Thanksgiving.";
   }
   // https://library.sjsu.edu/library-hours
   if (event.date <= "2026-11-27" && event.source === "SJSU Events"
       && event.url?.startsWith("https://events.sjsu.edu/event/")
-      && /^King Library\b/.test(venue || "")) {
+      && /^King Library\b/.test(event.venue || "")) {
     return "King Library is closed November 26 and 27 for Thanksgiving.";
   }
   return null;
@@ -7783,9 +7786,9 @@ export function applyVerifiedEventFacts(event) {
   });
   const staleCopy = staleEventCopyFor(event);
   const facts = typeof correction?.facts === "function" ? correction.facts(event) : correction?.facts;
-  const closure = thanksgivingExhibitClosure(event, facts?.venue ?? event?.venue);
-  if (!correction && !staleCopy && !closure) return event;
   const corrected = { ...event, ...facts };
+  const closure = thanksgivingExhibitClosure(corrected);
+  if (!correction && !staleCopy && !closure) return event;
   // A verified signup requirement cannot reopen a session whose current
   // provider metadata says full/closed or replace an appointment gate. A
   // full-seat correction likewise cannot reopen an explicitly closed window.

@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { runInNewContext } from "node:vm";
 
 import { scrapeChildrensDiscoveryMuseum, normalizePlaywrightEvent } from "../playwright-scrapers.mjs";
-import { fetchInboundEvents, isEventTimeBackfillCandidate } from "../generate-events.mjs";
+import { fetchInboundEvents, fetchPlaywrightEvents, isEventTimeBackfillCandidate } from "../generate-events.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
-import { parseCdmOccurrenceDate } from "./cdm-events.mjs";
+import { parseCdmExhibitRange, parseCdmOccurrenceDate } from "./cdm-events.mjs";
 
 const programs = [
   { title: "Toddler Storytime", date: "Every Wednesday through Sunday", time: "11:30 am in the Wonder Cabinet", type: "Ongoing" },
@@ -63,13 +64,57 @@ test("the iceless rink stays listed as an exhibit during its confirmed run", () 
   assert.deepEqual([exhibit.date, exhibit.time, exhibit.endTime, exhibit.ongoing], ["2026-11-21", null, null, true]);
   assert.equal(exhibit.venue, "Children's Discovery Museum, Traveling Exhibit Hall");
   assert.equal(exhibit.url, "https://www.cdm.org/event/iceless-skating-rink/2026-11-21/");
-  const [active] = fetchInboundEvents({ events, today: "2027-01-09" });
+  const [active] = fetchInboundEvents({ events, today: "2027-01-10" });
   assert.equal(active.id, opening.id);
-  assert.equal(active.date, "2027-01-09");
+  assert.equal(active.date, "2027-01-10");
   assert.equal(active.startDate, exhibit.date);
   assert.equal(applyVerifiedEventFacts(active).title, exhibit.title);
-  assert.deepEqual(fetchInboundEvents({ events, today: "2027-01-10" }), []);
+  assert.deepEqual(fetchInboundEvents({ events, today: "2027-01-11" }), []);
   assert.equal(isEventTimeBackfillCandidate(exhibit), false);
+});
+
+test("the museum calendar supplies the rink throughout its public run without a newsletter occurrence", async () => {
+  // https://www.cdm.org/calendar/ and https://www.cdm.org/hours-pricing/
+  const document = {
+    body: { innerText: [
+      "Special Exhibit", "Iceless Skating Rink", "November 21 - January 10", "Museum Hours",
+      "Art Activity", "Autumn Still Life", "November 10 - December 5", "Daily in the Art Studio",
+    ].join("\n") },
+    querySelectorAll: () => [],
+  };
+  const calendar = {
+    ...calendarPage([]),
+    evaluate: async (extract) => runInNewContext(`(${extract})()`, { document }),
+  };
+  const first = Array.from(
+    await scrapeChildrensDiscoveryMuseum(calendar, { today: "2026-11-24" }),
+    normalizePlaywrightEvent,
+  );
+  assert.equal(first.length, 1);
+  assert.equal(first[0].url, "https://www.cdm.org/event/iceless-skating-rink/2026-11-21/");
+  assert.equal(first[0].time, null);
+  assert.equal(first[0].attendanceNote, "The museum is closed Thursday, November 26, for Thanksgiving.");
+  const [rolled] = fetchPlaywrightEvents({ events: first, today: "2026-11-25" });
+  assert.equal(rolled.date, "2026-11-25");
+  assert.equal(rolled.displayDate, "Wed, Nov 25");
+  assert.equal(rolled.id, first[0].id);
+  const [last] = (await scrapeChildrensDiscoveryMuseum(calendar, { today: "2027-01-10" })).map(normalizePlaywrightEvent);
+  assert.deepEqual([last.id, last.date, last.startDate, last.endDate, last.ongoing], [
+    first[0].id, "2027-01-10", "2026-11-21", "2027-01-10", true,
+  ]);
+  assert.equal(last.attendanceNote, undefined);
+  assert.equal((await scrapeChildrensDiscoveryMuseum(calendar, { today: "2027-01-11" })).length, 0);
+  assert.deepEqual(fetchPlaywrightEvents({ events: first, today: "2027-01-11" }), []);
+});
+
+test("museum exhibit ranges preserve written years and reject expired or impossible dates", () => {
+  assert.deepEqual(parseCdmExhibitRange("November 21 – January 10, 2027", "2026-11-20"), {
+    startDate: "2026-11-21",
+    endDate: "2027-01-10",
+  });
+  for (const label of ["November 31 - January 10", "June 18 - June 1", "September through November", "November 21, 2025 - January 10, 2026"]) {
+    assert.equal(parseCdmExhibitRange(label, "2026-11-25"), null, label);
+  }
 });
 
 test("the December robotics demo cannot borrow museum opening time from the newsletter link", () => {

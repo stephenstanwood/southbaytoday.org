@@ -28,7 +28,7 @@ import { fetchJson } from "./lib/http.mjs";
 import { classifyLibCalLocation } from "./lib/libcal-location.mjs";
 import { isClockTime, normalizeClockTime } from "./lib/clock-time.mjs";
 import { libraryEventDetails } from "./lib/library-event-details.mjs";
-import { parseCdmCelebrationDate, parseCdmOccurrenceDate } from "./lib/cdm-events.mjs";
+import { parseCdmCelebrationDate, parseCdmExhibitRange, parseCdmOccurrenceDate } from "./lib/cdm-events.mjs";
 import { normalizeGuadalupeEvent } from "./lib/guadalupe-events.mjs";
 import { parseBooksIncEvents } from "./lib/booksinc-events.mjs";
 import {
@@ -1731,15 +1731,14 @@ export async function scrapeChildrensDiscoveryMuseum(page, { today = TODAY } = {
   const raw = await page.evaluate(() => {
     const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
     const out = [];
-    const labels = /^(Art Activity|Performance|Special Event|Ongoing|Always on)$/i;
+    const labels = /^(Art Activity|Performance|Special Event|Special Exhibit|Ongoing|Always on)$/i;
     for (let i = 0; i < lines.length; i++) {
       const date = lines[i];
       if (!/^(Weekdays|Weekends|Every|Saturday|Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|January|February|March|April|May|June|July|August|September|October|November|December)\b/i.test(date)) continue;
       const title = lines[i - 1];
       const type = lines[i - 2];
       if (!title || labels.test(title) || !labels.test(type || "Special Event")) continue;
-      const time = lines[i + 1] && /\d{1,2}(:\d{2})?\s*(am|pm)/i.test(lines[i + 1]) ? lines[i + 1] : null;
-      out.push({ title, date, time, type });
+      out.push({ title, date, time: lines[i + 1] || null, type });
     }
 
     // The celebration list uses a separate card layout with two title
@@ -1758,20 +1757,24 @@ export async function scrapeChildrensDiscoveryMuseum(page, { today = TODAY } = {
   });
 
   return raw.map((r) => {
-    const date = r.celebration
-      ? parseCdmCelebrationDate(r.date, today)
-      : parseCdmOccurrenceDate(r.date, today);
+    const isExhibit = /^special exhibit$/i.test(r.type || "") && /^museum hours$/i.test(r.time || "");
+    const exhibitRange = isExhibit ? parseCdmExhibitRange(r.date, today) : null;
+    const date = exhibitRange
+      ? (exhibitRange.startDate > today ? exhibitRange.startDate : today)
+      : r.celebration
+        ? parseCdmCelebrationDate(r.date, today)
+        : parseCdmOccurrenceDate(r.date, today);
     if (!date || !isUsefulTitle(r.title)) return null;
     if (r.celebration && !/^https:\/\/www\.cdm\.org\/event\/[^/?#]+/i.test(r.url || "")) return null;
     return {
       title: r.title,
       date,
-      ...clockRangeFromText(r.time),
+      ...(exhibitRange ? { ongoing: true, ...exhibitRange } : clockRangeFromText(r.time)),
       venue: r.celebration ? "Children's Discovery Museum of San Jose" : "Children's Discovery Museum",
       address: "180 Woz Way, San Jose, CA 95110",
       city: "san-jose",
       url: r.celebration ? r.url : "https://www.cdm.org/calendar/",
-      description: r.description,
+      description: exhibitRange ? "Special exhibit available during museum hours." : r.description,
       source: "Children's Discovery Museum",
       category: "family",
       // Celebration cards omit admission terms. Verify them per event.
@@ -2689,16 +2692,18 @@ async function main() {
 }
 
 export function normalizePlaywrightEvent(e) {
-  if (e.source === "San Jose Museum of Art" || e.source === "Peninsula Open Space Trust") {
+  const cdmExhibit = e.source === "Children's Discovery Museum" && e.ongoing;
+  if (cdmExhibit || e.source === "San Jose Museum of Art" || e.source === "Peninsula Open Space Trust") {
     e = applyVerifiedEventFacts(e);
   }
+  const identityDate = (cdmExhibit && e.startDate) || e.date;
   const d = new Date(`${e.date}T12:00:00-07:00`);
   return {
     // Include time: same source/date/title/venue can carry multiple
     // showtimes on one day (e.g. SAP Center's Monster Jam 12pm + 6pm) —
     // omitting it collided two distinct events onto one id and broke
     // React keys downstream.
-    id: h("pw", e.source, e.date, e.title, e.venue, e.time || ""),
+    id: h("pw", e.source, identityDate, e.title, e.venue, e.time || ""),
     title: e.title,
     date: e.date,
     displayDate: displayDate(d),

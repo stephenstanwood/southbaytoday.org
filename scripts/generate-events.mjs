@@ -10790,7 +10790,17 @@ function fetchPlaywrightEvents({ events: suppliedEvents, today = todayPT() } = {
     // waiting for the next browser collection; keep their raw evidence intact.
     let retiredCount = 0;
     const filtered = (events || [])
-      .filter((e) => e.date >= today)
+      .flatMap((e) => {
+        // A recent browser snapshot can cross midnight while an exhibit is
+        // still active. Keep its source window and roll its display day.
+        if (e.ongoing && e.startDate && e.endDate) {
+          if (e.endDate < today) return [];
+          if (e.date < today && e.startDate <= today) {
+            return [{ ...e, date: today, displayDate: displayDate(parseDatePT(today)) }];
+          }
+        }
+        return e.date >= today ? [e] : [];
+      })
       .filter((e) => {
         const retired = e.source === "San Jose Theaters"
           && String(e.url || "").replace(/\/+$/, "") === "https://www.sanjose.org/theaters";
