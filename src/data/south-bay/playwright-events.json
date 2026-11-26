@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-26T04:38:02.837Z",
+    "generatedAt": "2026-11-26T08:46:09.932Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 195,
+    "eventCount": 193,
     "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (9)",
+      "San Jose Jazz (8)",
       "Linden Tree Books (3)",
       "History San Jose (2)",
       "Montalvo Arts Center (5)",
@@ -14,7 +14,7 @@
       "ICA San José (3)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (5)",
-      "Guadalupe River Park Conservancy (4)",
+      "Guadalupe River Park Conservancy (3)",
       "Santana Row (6)",
       "City of Cupertino (39)",
       "Opera San José (6)",
@@ -67,8 +67,8 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 9,
-        "liveCount": 9,
+        "count": 8,
+        "liveCount": 8,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -187,8 +187,8 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 4,
-        "liveCount": 4,
+        "count": 3,
+        "liveCount": 3,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -326,23 +326,6 @@
     ]
   },
   "events": [
-    {
-      "id": "ccb723ca3ba9",
-      "title": "Noah & the Arkiteks",
-      "date": "2026-11-25",
-      "displayDate": "Wed, Nov 25",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "SJZ Break Room",
-      "address": "",
-      "city": "san-jose",
-      "category": "music",
-      "cost": null,
-      "description": "Noah and the Arkiteks bring Bay Area soul, blues & funk, channeling Otis Redding, Sam Cooke & Stevie Wonder with a groove all their own.",
-      "url": "https://sanjosejazz.org/events/noah-the-arkiteks/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
     {
       "id": "6c03b8c73442",
       "title": "COOL YULE: HSAS Full Ensemble & Vocal Ensemble",
@@ -751,10 +734,10 @@
       "kidFriendly": false
     },
     {
-      "id": "85067a00a7dd",
+      "id": "835e0819ff28",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-25",
-      "displayDate": "Wed, Nov 25",
+      "date": "2026-11-26",
+      "displayDate": "Thu, Nov 26",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -771,10 +754,10 @@
       "kidFriendly": false
     },
     {
-      "id": "b21bcfe92554",
+      "id": "9ae97c7b5f45",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-25",
-      "displayDate": "Wed, Nov 25",
+      "date": "2026-11-26",
+      "displayDate": "Thu, Nov 26",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -830,8 +813,8 @@
     {
       "id": "3b8344153fb5",
       "title": "Iceless Skating Rink",
-      "date": "2026-11-25",
-      "displayDate": "Wed, Nov 25",
+      "date": "2026-11-26",
+      "displayDate": "Thu, Nov 26",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -850,10 +833,10 @@
       "kidFriendly": true
     },
     {
-      "id": "ea29305cfc0b",
+      "id": "a89a827ace7b",
       "title": "Toddler Storytime",
-      "date": "2026-11-25",
-      "displayDate": "Wed, Nov 25",
+      "date": "2026-11-26",
+      "displayDate": "Thu, Nov 26",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -916,30 +899,6 @@
       "url": "https://www.cdm.org/event/lunar-new-year/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "40073c1e84f7",
-      "title": "Volunteer in the Historic Orchard with UC Master Gardeners!",
-      "date": "2026-11-25",
-      "displayDate": "Wed, Nov 25",
-      "time": "9:30 AM",
-      "endTime": "11:30 AM",
-      "venue": "Historic Orchard",
-      "address": "",
-      "city": "san-jose",
-      "registration": "required",
-      "category": "outdoor",
-      "cost": null,
-      "description": "The Historic Orchard is a 3.3-acre site planted in 1994 and located in Guadalupe Gardens just south of Taylor Street, adjacent to the Heritage Rose Garden and River Park trails. In the 1930s and ’40s almost everyone who lived here was engaged in the business of fruit production: growing, picking, packing, canning, selling, or otherwise supporting the industry. Today, with very few orchards remaining, this is a place where adults and children can come to experience a piece of local history. Fruit harvested from the Historic Orchard is donated to Second Harvest of Silicon Valley and local shelters. Help us maintain the River Park's Historic Orchard including: - tree planting and pruning- disease diagnosis and treatment- sun scald prevention painting- sheet mulching- experimenting with different types of irrigation or ground cover- grafting for improved pollination Chaperones are required for those age 15 and younger. School groups or corporate teams must contact the Volunteer Coordinator at volunteer@grpg.org to schedule events. Register HERE Please note this event may cancel in the case of inclement weather. Restrooms are available at the Rotary PlayGarden and will require staff assistance. Address for Parking: 438 Coleman Ave. Jose, CA 95110 Meeting Location: Historic Orchard (Refer to registration form for map) Time: 9:30 AM - 11:30 AM Recurring Dates: Every Wednesday",
-      "attendanceNote": "Advance registration is required through Guadalupe River Park Conservancy. Meet at Historic Orchard; see the organizer's registration form for the meeting map. Chaperones are required for those age 15 and younger.",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-25"
-      }
     },
     {
       "id": "94b3de5fed7c",
@@ -1029,7 +988,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-26T04:36:55.664Z"
+        "checkedAt": "2026-11-26T08:45:03.363Z"
       }
     },
     {
@@ -1052,7 +1011,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-26T04:36:55.666Z"
+        "checkedAt": "2026-11-26T08:45:03.363Z"
       }
     },
     {
@@ -1075,7 +1034,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-26T04:36:55.667Z"
+        "checkedAt": "2026-11-26T08:45:03.364Z"
       }
     },
     {
@@ -1098,7 +1057,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-26T04:36:55.667Z"
+        "checkedAt": "2026-11-26T08:45:03.364Z"
       }
     },
     {
@@ -1121,7 +1080,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-26T04:36:55.672Z"
+        "checkedAt": "2026-11-26T08:45:03.367Z"
       }
     },
     {
@@ -1144,7 +1103,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-26T04:36:55.672Z"
+        "checkedAt": "2026-11-26T08:45:03.367Z"
       }
     },
     {
@@ -1832,7 +1791,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1849,7 +1808,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1866,7 +1825,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1883,7 +1842,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic-6",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1900,7 +1859,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3082,7 +3041,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.226Z"
+        "checkedAt": "2026-11-26T08:45:40.294Z"
       }
     },
     {
@@ -3106,7 +3065,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.298Z"
       }
     },
     {
@@ -3147,7 +3106,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.299Z"
       }
     },
     {
@@ -3171,7 +3130,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.299Z"
       }
     },
     {
@@ -3195,7 +3154,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.299Z"
       }
     },
     {
@@ -3219,7 +3178,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.299Z"
       }
     },
     {
@@ -3243,7 +3202,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.299Z"
       }
     },
     {
@@ -3267,7 +3226,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.299Z"
       }
     },
     {
@@ -3291,7 +3250,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-2",
         "date": "2026-12-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.299Z"
       }
     },
     {
@@ -3315,7 +3274,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-3",
         "date": "2026-12-30",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.299Z"
       }
     },
     {
@@ -3339,7 +3298,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-30",
         "date": "2027-01-01",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-26T04:37:32.228Z"
+        "checkedAt": "2026-11-26T08:45:40.299Z"
       }
     },
     {
