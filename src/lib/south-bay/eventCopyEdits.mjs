@@ -2987,6 +2987,10 @@ const EDITS = {
     ],
     blurb: [
       [
+        "Chant the rhythmic words of Bill Martin Jr.'s book, make animal sounds, and act out the zoo animals at this weekly all-ages storytime.",
+        "At this all-ages storytime, chant the rhythmic words of Bill Martin Jr.'s book, make animal sounds, and pretend to be the zoo animals.",
+      ],
+      [
         "Visit the Children's Discovery Museum for holiday-themed programming, with the museum's seasonal activities running through the holiday stretch.",
         "Explore holiday-themed activities at the Children's Discovery Museum.",
       ],
