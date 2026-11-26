@@ -1276,6 +1276,30 @@ const CORRECTIONS = [
     copyReplacements: [[/\s*\bRegistration (?:is )?(?:requested|recommended),? but not required\./gi, ""]],
     appendAttendanceNote: `The signup panel says registration is required. The event description says it is optional. Confirm registration with ${venue}.`,
   })),
+  // https://sjpl.bibliocommons.com/v2/events/6a6265aae9de6536001dc48f
+  {
+    date: "2026-12-02",
+    matches: event => event.registration === REGISTRATION_REQUIRED
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a6265aae9de6536001dc48f\/?$/.test(event.url || "")
+      && /\bregistration (?:is )?not necessary\b/i.test(event.description || "")
+      && /\bwalk-ins okay\b/i.test(event.description || ""),
+    facts: { registration: null, registrationClosesBy: null, attendanceStatus: "needs-confirmation" },
+    copyReplacements: [[
+      /\bRegistration (?:is )?not necessary[,;]?\s+it is used as a headcount for room preparation\.\s*(All teens welcome to the activities\.)\s*Walk-ins okay\./gi,
+      "$1",
+    ]],
+    appendAttendanceNote: "The signup panel requires registration. The event description says that signup is for a headcount and that walk-ins are welcome. Confirm with Educational Park Library before going.",
+  },
+  // King Library's calendar slot ends at 6:15 PM. The program description
+  // gives 6:10 PM as the latest finish.
+  // https://sjpl.bibliocommons.com/v2/events/69fbb1fd43b41b3d0064a3f4
+  {
+    date: "2026-12-02",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/69fbb1fd43b41b3d0064a3f4\/?$/.test(event.url || "")
+      && event.time === "5:30 PM" && event.endTime === "6:15 PM"
+      && /\bprogram finishes by 6:10\s*pm\b/i.test(event.description || ""),
+    facts: { endTime: "6:10 PM" },
+  },
   // The dated Alviso listing says the volunteer reads in Mandarin or English.
   // https://sjpl.bibliocommons.com/v2/events/6ab40cd2da318a10e6363672
   {

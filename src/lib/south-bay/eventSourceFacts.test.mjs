@@ -16,6 +16,44 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Educational Park Teens Reach shows the signup conflict without a reservation badge", () => {
+  const event = {
+    date: "2026-12-02",
+    url: "https://sjpl.bibliocommons.com/v2/events/6a6265aae9de6536001dc48f",
+    registration: "required",
+    registrationClosesBy: "2026-12-03T00:00:00.000Z",
+    description: "Registration is not necessary; it is used as a headcount for room preparation. All teens welcome to the activities. Walk-ins okay.",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(requiresAdvanceRegistration(corrected), false);
+  assert.equal(requiresAttendanceConfirmation(corrected), true);
+  assert.equal(corrected.registrationClosesBy, null);
+  assert.equal(corrected.description, "All teens welcome to the activities.");
+  assert.match(corrected.attendanceNote, /requires registration.*walk-ins are welcome/);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  for (const registration of ["full", "closed"]) {
+    const unavailable = { ...event, registration };
+    assert.equal(applyVerifiedEventFacts(unavailable), unavailable);
+  }
+  const updated = { ...event, description: "Registration is required for this session." };
+  assert.equal(applyVerifiedEventFacts(updated), updated);
+});
+
+test("King Library Music and Movement uses the published program finish", () => {
+  const event = {
+    date: "2026-12-02",
+    url: "https://sjpl.bibliocommons.com/events/69fbb1fd43b41b3d0064a3f4",
+    time: "5:30 PM",
+    endTime: "6:15 PM",
+    description: "Free, with limited capacity. Program finishes by 6:10pm.",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.endTime, "6:10 PM");
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  const changedSlot = { ...event, time: "5:45 PM" };
+  assert.equal(applyVerifiedEventFacts(changedSlot), changedSlot);
+});
+
 test("Joseph uses the production page while keeping both dated Saturday performances", () => {
   const base = {
     title: "Joseph",
