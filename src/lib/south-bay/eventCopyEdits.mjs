@@ -165,6 +165,14 @@ const EDITS = {
       ["95110 Meeting Location:", "95110; Meeting location:"],
       ["(Refer to registration form for map) Time:", "(refer to the registration form for a map); Time:"],
       [/\b(AM|PM) Recurring Dates:/g, "$1; Recurring dates:"],
+      [
+        "Help us revitalize the largest public rose collection in the Western Hemisphere! Tasks include weeding, deadheading, pruning, and seasonal planting.",
+        "Help revitalize the largest public rose collection in the Western Hemisphere by weeding, deadheading, pruning, and planting seasonally.",
+      ],
+      [
+        /Address for parking: ([^;]+); Meeting location: Rose Garden Shed \(refer to the registration form for a map\); Time: (\d{1,2}:\d{2} [AP]M) - (\d{1,2}:\d{2} [AP]M); Recurring dates: Every (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)(?:\.|(?=$| [A-Z]))/g,
+        "Park at $1, and meet at the Rose Garden Shed. See the registration form for a map. The group meets every $4 from $2 to $3.",
+      ],
     ],
     blurb: [
       ["on Wednday mornings", "on Wednesday mornings"],
@@ -1145,6 +1153,23 @@ const EDITS = {
       ],
       ["For more information go to www.sjpl.org/teensreach Registration not necessary, it is used as a headcount for room preparation.", "For more information, go to www.sjpl.org/teensreach. Registration is not necessary; it is used as a headcount for room preparation."],
       ["All teens welcome to the activities.", "All teens are welcome to participate."],
+      [
+        "Get free one-on-one support with everyday tech questions! Our Tech Mentor can help you with: basic smartphone, tablet, and computer help; " +
+          "setting up and using email; downloading and using apps; making video calls (Zoom, FaceTime, Google Meet, etc.); " +
+          "browsing the internet (search engine basics, making simple searches, etc.); navigating the SJPL website and digital resources.",
+        "Get free one-on-one help with basic smartphone, tablet, and computer tasks. A tech mentor can help you set up and use email, " +
+          "download and use apps, make video calls with tools like Zoom, FaceTime, and Google Meet, browse the internet, use search engines, " +
+          "run simple searches, and use the SJPL website and digital resources.",
+      ],
+      [
+        "Eliminate fines/fees related to lost or damaged items by being read to. Attend this program to have $5 deducted from juvenile accounts for every 15 minutes you are read to.",
+        "You can use this program to reduce fines and fees for lost or damaged items. The library deducts $5 from juvenile accounts for every 15 minutes you are read to.",
+      ],
+      ["To join Teens Reach you must", "To join Teens Reach, you must"],
+      [
+        "For more information go to www.sjpl.org/teensreach All teens are welcome to participate.",
+        "For more information, go to www.sjpl.org/teensreach. All teens are welcome to participate.",
+      ],
       ["Free, with limited capacity. Program finishes by ", "Admission is free. Space is limited. The program finishes by "],
       ["Join us in this monthly workshop to learn operate 3D printing and Cricut machine.", "Join us in this monthly workshop to learn to operate a 3D printer and a Cricut machine."],
       [/Course information: Every Wednesday (\d{1,2}:\d{2}-\d{1,2}:\d{2} [AP]M) (\d{1,2}\/\d{1,2}\/\d{2,4}-\d{1,2}\/\d{1,2}\/\d{2,4}) Each week/g, "Course information: Every Wednesday, $1, $2. Each week"],
@@ -2507,6 +2532,10 @@ const EDITS = {
       ["Siblings are welcomed. September 15 October 20 November 17 December 8.", "Siblings are welcome. September 15; October 20; November 17; December 8."],
       ["A long running game of Dungeons", "A long-running game of Dungeons"],
       ["and sometimes shorter oneshots. Teen drop ins to watch the", "and sometimes shorter one-shots. Teen drop-ins to watch the"],
+      [
+        "A long-running game of Dungeons and Dragons, 5th edition and sometimes shorter one-shots. Teen drop-ins to watch the game are welcome.",
+        "The club plays a long-running game of Dungeons and Dragons (5th edition), with occasional shorter one-shots. Teens are welcome to drop in and watch the game.",
+      ],
       // Retain the provider and class logistics from the listing.
       [
         /\bArts Foundation\. Relieve Stress and anxiety; Increase energy and vitality; Improve physical health\. Friday afternoons, 1-3 PM In the Auditorium(?:\.|(?= |$))/g,
@@ -3173,6 +3202,7 @@ const EDITS = {
       ["THE International, Award-Winning SMASH-HIT Musical The Bodyguard Is Back!", "The award-winning international musical The Bodyguard returns."],
       ["The Washington Generals and new lineup of rivals", "The Washington Generals and a new lineup of rivals"],
       ["A ticket hold delivery is in effect for this event.", "A ticket delivery hold is in effect for this event."],
+      [/^VIP ticket holders receive early entry \+ access to a reserved front section\.?$/g, "VIP ticket holders receive early entry and access to a reserved front section."],
       ["court --hungry for a win, and out to prove it!", "court — hungry for a win and out to prove it!"],
       ["Lineup* Shoreline Mafia SOB", "Lineup: Shoreline Mafia SOB"],
       ["Kai Bandz Ny Ny *Lineup subject to change", "Kai Bandz Ny Ny. Lineup subject to change."],
