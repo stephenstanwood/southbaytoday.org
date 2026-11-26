@@ -2776,6 +2776,10 @@ const EDITS = {
         "Matthew TW Huang hosts this monthly meetup for intermediate and advanced photographers. Whether you shoot portraits, landscapes, or something else, you're welcome.",
       ],
       [
+        "Ideas for 5-10 min topics, photo stories, or presentations can be emailed to matthewtwhuang@gmail.com. There will be time for a couple of ideas to be presented at each meeting.",
+        "Email ideas for 5- to 10-minute topics, photo stories, or presentations to matthewtwhuang@gmail.com. There's time to present a couple of ideas at each meeting.",
+      ],
+      [
         /Join Librarian Juliana on Saturdays from (\d{1,2}:\d{2})-(\d{1,2}(?::\d{2})? AM) at Mitchell Park Library/g,
         "Join Librarian Juliana on Saturdays from $1 to $2 at Mitchell Park Library",
       ],
