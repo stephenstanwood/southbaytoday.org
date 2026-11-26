@@ -635,8 +635,8 @@ body {
 
 .sb-footer-copy {
   margin: 6px 0 0;
-  opacity: 0.7;
-  font-size: 11.5px;
+  color: var(--sb-muted);
+  font-size: 12px;
 }
 
 /* ── Tips & Feedback widget (ReaderWidget.tsx) ── */
