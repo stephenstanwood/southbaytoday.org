@@ -1539,7 +1539,7 @@ const EDITS = {
         "Participants should know bridge terminology and have experience playing a hand. No instruction or assistance will be provided.",
       ],
       ["Seating is limited; registration required.", "Seating is limited, and registration is required."],
-      [/Recommended for children ages (\d+) [–-] (\d+) years old\./g, "Recommended for children ages $1–$2."],
+      [/Recommended for children ages (\d+) (?:[–-]|to) (\d+) years old\./g, "Recommended for children ages $1–$2."],
       ["to choose kindness Families are invited", "to choose kindness. Families are invited"],
       [
         /Free, no registration required, all materials will be provided(?:\.|$)/g,
@@ -1885,6 +1885,10 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        "Let your kids play in the Rose Garden Library Community Room while you meet and swap support with other local parents at this weekly playgroup.",
+        "At this weekly playgroup, children can play in the Rose Garden Library Community Room while local parents meet and support one another.",
+      ],
       [
         "Join the whole family for stories, songs, rhymes, fingerplays, and movement activities at this early literacy storytime with a mix of ages.",
         "Children of all ages and their families can enjoy stories, songs, rhymes, fingerplays, and movement that build early literacy skills.",
@@ -2738,6 +2742,10 @@ const EDITS = {
       [/^Documentary Screening-Zora Neale Hurston: Claiming Space$/g, "Documentary Screening – Zora Neale Hurston: Claiming a Space"],
     ],
     description: [
+      [
+        "Join us for a monthly meetup designed for intermediate and advanced photographers hosted by Matthew Tw Huang. Whether you're into portrait, landscape, or any other type of photography, all are welcome!",
+        "Matthew Tw Huang hosts this monthly meetup for intermediate and advanced photographers. Whether you shoot portraits, landscapes, or something else, you're welcome.",
+      ],
       [
         /Join Librarian Juliana on Saturdays from (\d{1,2}:\d{2})-(\d{1,2}(?::\d{2})? AM) at Mitchell Park Library/g,
         "Join Librarian Juliana on Saturdays from $1 to $2 at Mitchell Park Library",
