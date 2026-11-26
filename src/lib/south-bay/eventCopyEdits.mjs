@@ -33,6 +33,14 @@ const SJPL_STORYTIME_TICKET_EDIT = [
   /Seating for [Ss]torytime is available on a first-come, first-served basis\. A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./g,
   SJPL_STORYTIME_TICKET_COPY,
 ];
+const SJPL_CHILD_TICKET_EDIT = [
+  /Seating for storytime is available on a first-come, first-served basis\. A limited number of tickets will be distributed at the information desk (\d+) minutes prior to the start of storytime\. Child must be present to receive a ticket\./gi,
+  "Seating is first come, first served. The library hands out a limited number of tickets at the information desk $1 minutes before storytime. Each child must be present to receive a ticket.",
+];
+const SJPL_COMMUNITY_ROOM_SEATING_EDIT = [
+  /Seating for storytime is available on a first-come, first-served basis in our (\d+(?:st|nd|rd|th)) floor Community Room\./gi,
+  "Seating in the $1-floor Community Room is first come, first served.",
+];
 const SJPL_DESK_TICKET_COPY = "Tickets are available at the desk 30 minutes before the program starts. Everyone attending needs a ticket and must be present to get one.";
 const SJPL_TICKETS_AND_PARTICIPATION_EDIT = ["Tickets and Participation Free.", "Tickets and Participation: Free."];
 const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
@@ -216,6 +224,8 @@ const EDITS = {
     ],
     attendanceNote: [
       ...SJPL_TECH_APPOINTMENT_EDITS,
+      SJPL_CHILD_TICKET_EDIT,
+      SJPL_COMMUNITY_ROOM_SEATING_EDIT,
       SJPL_STORYTIME_TICKET_EDIT,
       [
         /^· All participants will need a storytime ticket\. Tickets are limited and available at the Information Desk (\d+) minutes before the program\./g,
@@ -1333,6 +1343,8 @@ const EDITS = {
       [/(interaction with [\p{L}-]+) who has been trained/gu, "$1, who has been trained"],
       ["Availability of Reading Buddies is on a first-come, first-served basis.", "Reading Buddies are available on a first-come, first-served basis."],
       ...SJPL_READING_SESSION_EDITS,
+      SJPL_CHILD_TICKET_EDIT,
+      SJPL_COMMUNITY_ROOM_SEATING_EDIT,
       SJPL_STORYTIME_TICKET_EDIT,
       [/This intensive, (\d+-day series)/g, "This intensive $1"],
       ["Priority given to registrants followed by walk-ins.", "Registered participants have priority, followed by walk-ins."],
