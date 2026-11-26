@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T04:11:51.397Z",
+  "generatedAt": "2026-11-26T04:12:01.299Z",
   "meetings": {
     "san-jose": {
       "date": "2026-12-01",
@@ -36,7 +36,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-24T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-25T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
@@ -90,7 +90,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-24T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-25T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
@@ -128,23 +128,45 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-24T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-25T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "santa-clara": {
       "date": "2026-12-01",
-      "startTime": "18:00",
       "bodyName": "City Council and Authorities Concurrent",
-      "location": "City Hall Council Chambers",
-      "url": "https://santaclara.legistar.com/Calendar.aspx",
+      "startTime": "18:00",
       "closedSession": false,
-      "agendaItems": [],
+      "location": "City Hall Council Chambers",
+      "url": "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=5057&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63",
+      "legistarEventId": 5057,
       "displayDate": "Tue, Dec 1",
+      "agendaItems": [
+        {
+          "title": "Proclamation of December 2026 as Human Rights Month",
+          "sequence": 17
+        },
+        {
+          "title": "Board, Commissions and Committee Minutes",
+          "sequence": 19
+        },
+        {
+          "title": "Action on Master Agreements with BKF Engineers and Schaaf and Wheeler Consulting Civil Engineers for Design Professional Services to Support Storm Drain System Improvement Projects",
+          "sequence": 20
+        },
+        {
+          "title": "Action on a Resolution Setting the Regular Meeting Schedule and Dates for the Bicycle and Pedestrian Advisory Committee for Calendar Year 2027",
+          "sequence": 24
+        },
+        {
+          "title": "Action on an Agreement with Banksia Landscape, Inc. for Routine and As-Needed Landscape Maintenance Services at City Facilities and Public Areas",
+          "sequence": 21
+        }
+      ],
       "confirmation": {
         "status": "confirmed",
-        "provider": "legistar-public-calendar",
+        "provider": "legistar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://santaclara.legistar.com/Calendar.aspx"
+        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-25T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -163,20 +185,36 @@
         "sourceUrl": "https://www.paloalto.gov/Events-Directory/City-Clerk/2026/113026-City-Council-Special-Meeting"
       }
     },
-    "campbell": {
-      "date": "2026-12-01",
-      "startTime": "19:00",
-      "bodyName": "City Council Regular Meeting",
-      "location": "Council Chamber",
-      "url": "https://campbellca.gov/m/calendar/event/detail/3925",
+    "saratoga": {
+      "date": "2026-12-02",
+      "displayDate": "Wed, Dec 2",
+      "startTime": "18:00",
+      "bodyName": "City Council",
+      "location": "City Hall, Linda Callon Conference Room",
       "closedSession": false,
+      "url": "https://www.saratoga.ca.us/AgendaCenter/ViewFile/Agenda/_12022026-1498",
       "agendaItems": [],
-      "displayDate": "Tue, Dec 1",
       "confirmation": {
         "status": "confirmed",
-        "provider": "campbell-city-calendar",
+        "provider": "civicengage",
+        "observedDate": "2026-12-02",
+        "sourceUrl": "https://www.saratoga.ca.us/AgendaCenter/ViewFile/Agenda/_12022026-1498"
+      }
+    },
+    "campbell": {
+      "date": "2026-12-01",
+      "displayDate": "Tue, Dec 1",
+      "startTime": "19:00",
+      "bodyName": "City Council Regular Session Meeting",
+      "location": "City Hall Council Chamber",
+      "closedSession": false,
+      "url": "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=ff75a7db-bf51-444d-b2ca-bc990d341db4&Agenda=Agenda&lang=English",
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "escribe",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://campbellca.gov/m/calendar?cat=22&startDate=11%2F24%2F2026&endDate=01%2F23%2F2027"
+        "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
       }
     },
     "milpitas": {
@@ -193,7 +231,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-24T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-25T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -210,7 +248,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-08",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-24T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-25T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -257,7 +295,7 @@
     },
     "saratoga": {
       "provider": "CivicEngage",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "campbell": {
       "provider": "eScribe",

@@ -1,22 +1,14 @@
 {
-  "generatedAt": "2026-11-25T04:21:11.245Z",
-  "weekLabel": "Nov 24 – Dec 1",
-  "weekStart": "2026-11-24",
-  "weekEnd": "2026-12-01",
+  "generatedAt": "2026-11-26T04:20:16.572Z",
+  "weekLabel": "Nov 25 – Dec 2",
+  "weekStart": "2026-11-25",
+  "weekEnd": "2026-12-02",
   "cities": {
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell Farmers Market runs Sunday at 9:00 AM downtown, followed by Cinema Sunday: Killers of the Flower Moon at Campbell Library at 2:00 PM, with Toddler Storytime there Wednesday at 10:30 AM.",
+      "summary": "Sunday brings the Campbell Farmers Market in Downtown Campbell at 9:00 AM and Cinema Sunday: Killers of the Flower Moon at Campbell Library at 2:00 PM, with Music & Movement Storytime Tuesday.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Toddler Storytime",
-          "when": "Wed, Nov 25 · 10:30 AM",
-          "venue": "Campbell Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6aecd99af9d28050ccb16871"
-        },
         {
           "type": "event",
           "title": "Cinema Sunday: Killers of the Flower Moon",
@@ -24,31 +16,39 @@
           "venue": "Campbell Library",
           "category": "arts",
           "url": "https://sccl.bibliocommons.com/events/6ada6cfffee2d21deb2520e8"
+        },
+        {
+          "type": "event",
+          "title": "Campbell Farmers Market",
+          "when": "Sun, Nov 29 · 9:00 AM",
+          "venue": "Downtown Campbell",
+          "category": "food",
+          "url": "https://uvfm.org/campbell-sundays"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:20:53.606Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:19:58.962Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino Library has Mini Makers and Family Game Day at 11:00 AM and Bedtime Story Time at 7:00 PM Wednesday, while the City Council agenda for December 1 includes adoption of the Active Transportation Plan.",
+      "summary": "Saturday brings Picchetti Ranch's \"Throw Off that Turkey Torpor\" at 10:00 AM and the McClellan Ranch open house at 11:00 AM, while the City Council's Tuesday, December 1 agenda includes adopting the Active Transportation Plan.",
       "highlights": [
         {
           "type": "event",
-          "title": "Mini Makers",
-          "when": "Wed, Nov 25 · 11:00 AM",
-          "venue": "Cupertino Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6ad110029d27a000455125b3"
+          "title": "Throw Off that Turkey Torpor",
+          "when": "Sat, Nov 28 · 10:00 AM",
+          "venue": "Picchetti Ranch Preserve",
+          "category": "outdoor",
+          "url": "https://www.openspace.org/events/guided-activities/throw-turkey-torpor"
         },
         {
           "type": "event",
-          "title": "Family Game Day",
-          "when": "Wed, Nov 25 · 11:00 AM",
+          "title": "Family Storytime",
+          "when": "Sat, Nov 28 · 10:30 AM",
           "venue": "Cupertino Library",
           "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6adbe1878a335b6ae5ca1c4e"
+          "url": "https://sccl.bibliocommons.com/events/6a08e108e13d3b4603b486f2"
         },
         {
           "type": "council",
@@ -59,13 +59,13 @@
           "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5304&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:20:54.728Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:01.063Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos' weekend centers on Presbyterian Church of Los Gatos, with PCLG Elf Squad Holiday Decorating Saturday at 9 AM and the Advent Craft Faire and Supper Sunday at 4 PM, plus the Farmers Market at Town Plaza Park Sunday at 9 AM.",
+      "summary": "Los Gatos has holiday prep rolling Saturday with PCLG Elf Squad Holiday Decorating at Presbyterian Church of Los Gatos at 9 AM, then Sunday brings the Farmers Market at Town Plaza Park at 9 AM and the church's Advent Craft Faire and Supper at 4 PM.",
       "highlights": [
         {
           "type": "event",
@@ -84,13 +84,13 @@
           "url": "https://www.pclg.org/this-week/2026-11-18.pdf"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:20:57.064Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:03.140Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "The Mountain View Farmers Market moves to Hope Street parking lots 4 and 8 on Sunday, November 29, from 9 AM to 1 PM.",
+      "summary": "Mountain View Farmers Market sets up at Hope St. Lots (Lots 4 & 8) Sunday at 9:00 AM, and the Corso Affordable Housing Public Art Open House follows Wednesday, December 2 at 5:30 PM in City Hall's second-floor Plaza Conference Room.",
       "highlights": [
         {
           "type": "event",
@@ -99,24 +99,24 @@
           "venue": "Hope St. Lots (Lots 4 & 8)",
           "category": "food",
           "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/"
+        },
+        {
+          "type": "event",
+          "title": "Corso Affordable Housing Public Art Open House",
+          "when": "Wed, Dec 2 · 5:30 PM",
+          "venue": "Mountain View City Hall",
+          "category": "arts",
+          "url": "https://www.mountainviewlot12.org/"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:20:58.945Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:05.086Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saratoga's holiday run starts Thursday with the 61st Annual Community Interfaith Thanksgiving Service at Sacred Heart Parish, then Friday brings Candy Cane Village, the Holiday Tree Lighting at Blaney Plaza, and the Holiday Wine Stroll.",
+      "summary": "Saratoga's holiday run starts with the 61st Annual Community Interfaith Thanksgiving Service Thursday, then Friday brings Candy Cane Village, the Annual Holiday Tree Lighting at Blaney Plaza, and the Holiday Wine Stroll in Historic Saratoga Village.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Baby Storytime (12 months & younger)",
-          "when": "Wed, Nov 25 · 11:00 AM",
-          "venue": "Saratoga Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/68aa476f4afabc39de5163a7"
-        },
         {
           "type": "event",
           "title": "61st Annual Community Interfaith Thanksgiving Service",
@@ -124,15 +124,23 @@
           "venue": "Sacred Heart Parish",
           "category": "community",
           "url": "https://www.saratoga.ca.us/Calendar.aspx?EID=2710"
+        },
+        {
+          "type": "event",
+          "title": "Candy Cane Village",
+          "when": "Fri, Nov 27 · 3:00 PM",
+          "venue": "Saratoga Chamber of Commerce",
+          "category": "community",
+          "url": "https://www.saratoga.ca.us/Calendar.aspx?EID=2686"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:21:00.910Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:06.889Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "Sunnyvale’s November 23 Planning Commission agenda listed study sessions on Moffett Park apartments and Golden Oak Court townhomes, and a public hearing on a proposed Primrose preschool. The farmers market runs Saturday at 9 AM on Murphy Avenue.",
+      "summary": "Sunnyvale Farmers Market runs on Murphy Avenue Saturday at 9:00 AM, and the City Council agenda for Tuesday, Dec. 1 includes Missing Middle Housing strategies and extending the Townsend legislative advocacy contract to $330,000.",
       "highlights": [
         {
           "type": "event",
@@ -151,29 +159,29 @@
           "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4530&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:21:02.441Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:08.915Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San José",
-      "summary": "On Wednesday, Santa Teresa Library offers one-on-one tech help in English or Vietnamese at 10 AM, and King Library has a Tech Mentor session at 4 PM.",
+      "summary": "San José's Thanksgiving Day brings the Applied Materials Silicon Valley Turkey Trot downtown at 8:30 AM and a feast with Loaves & Fishes Family Kitchen at St. Frances Cabrini Parish at 11:00 AM, before Christmas in the Park's tree lighting at Plaza de San José Friday at 6:00 PM.",
       "highlights": [
         {
           "type": "event",
-          "title": "One-on-One Tech Help (English or Tiếng Việt)",
-          "when": "Wed, Nov 25 · 10:00 AM",
-          "venue": "Santa Teresa Library",
-          "category": "education",
-          "url": "https://sjpl.bibliocommons.com/events/6a7b58a64cb69d003e20197d"
+          "title": "Thanksgiving Day Feast with Loaves & Fishes Family Kitchen",
+          "when": "Thu, Nov 26 · 11:00 AM",
+          "venue": "St. Frances Cabrini Parish",
+          "category": "community",
+          "url": "https://www.eventbrite.com/e/thanksgiving-day-feast-tickets-2004400906067"
         },
         {
           "type": "event",
-          "title": "Tech Mentor",
-          "when": "Wed, Nov 25 · 4:00 PM",
-          "venue": "King Library",
-          "category": "education",
-          "url": "https://sjpl.bibliocommons.com/events/6a751b2de30fe48459679013"
+          "title": "Applied Materials Silicon Valley Turkey Trot",
+          "when": "Thu, Nov 26 · 8:30 AM",
+          "venue": "Downtown San Jose",
+          "category": "community",
+          "url": "https://www.svturkeytrot.com/general-race-info/"
         },
         {
           "type": "council",
@@ -184,13 +192,13 @@
           "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8126&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:21:04.453Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:10.990Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "The November 18 Planning Commission agenda listed a proposal for 316 apartments at the 400 Saratoga Avenue golf course. The farmers market runs Saturday, and Central Park Library has a local Indigenous history book talk on December 1.",
+      "summary": "Tuesday, December 1 brings Reading with Pets (reserve ahead) at 5:30 PM and the We Will Receive Justice book talk at 6:00 PM, plus a City Council and Authorities Concurrent agenda with storm drain engineering contracts.",
       "highlights": [
         {
           "type": "event",
@@ -209,83 +217,91 @@
           "url": "https://momentumforhealth.org/trust-field-response-program"
         },
         {
-          "type": "cityhall",
-          "title": "Planning Commission agenda: 316 apartments at 400 Saratoga Avenue golf course",
-          "when": "Wed, Nov 18",
+          "type": "council",
+          "title": "Board, Commissions and Committee Minutes",
+          "when": "Tue, Dec 1",
           "venue": null,
           "category": "government",
-          "url": "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=4848&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63"
+          "url": "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=5057&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:21:06.280Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:12.174Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Los Altos Library has Toddler Storytime at 10:30 AM Wednesday (free tickets start at 10 a.m.), Joseph plays at Bus Barn Theater Friday at 8 PM, and Ferns & Other Ancient Plants is Saturday at Monte Bello Preserve.",
+      "summary": "Joseph and the Amazing Technicolor Dreamcoat plays Bus Barn Theater Friday and Saturday at 8 PM, while Saturday also brings Small Business Saturday downtown at 11 AM and Furry Friends Reading Buddies at the Los Altos Library at 2:30 PM.",
       "highlights": [
         {
           "type": "event",
-          "title": "Baby Storytime & Stay and Play",
-          "when": "Wed, Nov 25 · 1:00 PM",
-          "venue": "Los Altos Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a68e77fcca66c2f00a69564"
+          "title": "Joseph and the Amazing Technicolor Dreamcoat",
+          "when": "Fri, Nov 27 · 8:00 PM",
+          "venue": "Bus Barn Theater",
+          "category": "arts",
+          "url": "https://losaltosstage.org/joseph/"
         },
         {
           "type": "event",
-          "title": "Toddler Storytime",
-          "when": "Wed, Nov 25 · 10:30 AM",
-          "venue": "Los Altos Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a7e39424cb69d003e20ac63"
+          "title": "Ferns & Other Ancient Plants",
+          "when": "Sat, Nov 28 · 10:00 AM",
+          "venue": "Monte Bello Preserve",
+          "category": "outdoor",
+          "url": "https://www.openspace.org/events/guided-activities/ferns-other-ancient-plants-3"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:21:07.622Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:13.482Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Wednesday brings Little Ones Storytime at the Children's Library at 10:30 AM, Thursday has Build Your Own Bouquet at the O'Donohue Family Stanford Educational Farm, and Friday offers a first-come, first-served Public Tour | Auguste Rodin at Cantor Arts Center.",
+      "summary": "Thursday brings Build Your Own Bouquet at the O'Donohue Family Stanford Educational Farm, then Friday offers OMAC Coffee & Donuts at Old Union, Drop-In Drawing at the Anderson Collection, and a first-come, first-served Public Tour | Auguste Rodin at Cantor Arts Center.",
       "highlights": [
         {
           "type": "event",
-          "title": "Little Ones Storytime",
-          "when": "Wed, Nov 25 · 10:30 AM",
-          "venue": "Children's Library",
-          "category": "family",
-          "url": "https://paloalto.bibliocommons.com/events/6946001eea69de6e001069b9"
+          "title": "Build Your Own Bouquet: O'Donohue Family Stanford Educational Farm",
+          "when": "Thu, Nov 26 · 10:00 AM",
+          "venue": "The O'Donohue Family Stanford Educational Farm",
+          "category": "community",
+          "url": "https://events.stanford.edu/event/copy-of-build-your-own-bouquet-odonohue-family-stanford-educational-farm-4191"
         },
         {
           "type": "event",
-          "title": "Walk the Labyrinth at MemChu",
-          "when": "Wed, Nov 25 · 9:00 AM",
-          "venue": "Memorial Church",
-          "category": "community",
-          "url": "https://events.stanford.edu/event/walk-the-labyrinth-at-memchu"
+          "title": "Public Tour | Auguste Rodin",
+          "when": "Fri, Nov 27 · 11:30 AM",
+          "venue": "Cantor Arts Center",
+          "category": "arts",
+          "url": "https://events.stanford.edu/event/copy-of-cancelled-public-tour-auguste-rodin-565"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:21:09.578Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:14.898Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Wednesday’s Children’s Chess Club at Milpitas Library is canceled. The free Thanksgiving lunch at Pavalkis Hall runs Thursday from 11 AM to 3 PM. Reading Buddies meets at Milpitas Library on Saturday.",
+      "summary": "Milpitas serves up the 48th Annual Free Thanksgiving Lunch with Knights of Columbus Council 5796 at St. John the Baptist Church's Pavalkis Hall Thursday at 11 AM, then Reading Buddies for Grades K-5 at the library Saturday.",
       "highlights": [
         {
           "type": "event",
-          "title": "ESL Conversation Club",
-          "when": "Wed, Nov 25 · 2:45 PM",
+          "title": "48th Annual Free Thanksgiving Lunch with Knights of Columbus Council 5796",
+          "when": "Thu, Nov 26 · 11:00 AM",
+          "venue": "St. John the Baptist Church (Pavalkis Hall)",
+          "category": "community",
+          "url": "https://www.sjbparish.org/"
+        },
+        {
+          "type": "event",
+          "title": "Reading Buddies for Grades K-5",
+          "when": "Sat, Nov 28 · 2:00 PM",
           "venue": "Milpitas Library",
-          "category": "education",
-          "url": "https://sccl.bibliocommons.com/events/65baea6ef664ce330023ea57"
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/6a68e7ebe9de6536001ed073"
         }
       ],
-      "weekLabel": "Nov 24 – Dec 1",
-      "generatedAt": "2026-11-25T04:21:10.943Z"
+      "weekLabel": "Nov 25 – Dec 2",
+      "generatedAt": "2026-11-26T04:20:16.270Z"
     }
   }
 }
