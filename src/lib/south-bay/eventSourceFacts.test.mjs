@@ -47,15 +47,23 @@ test("Joseph uses the production page while keeping both dated Saturday performa
   assert.equal(applyVerifiedEventFacts(later), later);
 });
 
-test("the Saratoga wine stroll keeps check-in details and the booking age condition", () => {
+test("the Saratoga wine stroll distinguishes advance tickets from door sales", () => {
   const event = {
     date: "2026-11-27",
     url: "https://www.eventbrite.com/e/saratogas-holiday-wine-experience-tickets-2001268102768?aff=oddtdtcreator",
   };
   const oldNote = "Check-in opens at 5 PM at the Saratoga Chamber of Commerce, 14460 Big Basin Way. Bring photo ID and your ticket confirmation.";
+  const ageRule = "Guests under 21 must attend with a parent or legal guardian.";
   const reviewed = applyVerifiedEventFacts(event);
-  assert.equal(reviewed.attendanceNote, `${oldNote} Guests under 21 must attend with a parent or legal guardian.`);
+  assert.match(reviewed.attendanceNote, /^Check-in opens at 5 PM at the Saratoga Chamber of Commerce, 14460 Big Basin Way\./);
+  assert.match(reviewed.attendanceNote, /Everyone needs photo ID\. Bring your confirmation if you bought tickets online\./);
+  assert.match(reviewed.attendanceNote, /Online sales close at noon\. Any remaining tickets are sold at the door until 7:30 PM\./);
+  assert.ok(reviewed.attendanceNote.endsWith(ageRule));
   assert.deepEqual(applyVerifiedEventFacts({ ...event, attendanceNote: oldNote }), reviewed);
+  assert.deepEqual(applyVerifiedEventFacts({ ...event, attendanceNote: `${oldNote} ${ageRule}` }), reviewed);
+  const availability = "Check the organizer for remaining ticket availability.";
+  assert.equal(applyVerifiedEventFacts({ ...event, attendanceNote: `${oldNote} ${ageRule} ${availability}` }).attendanceNote,
+    `${availability} ${reviewed.attendanceNote}`);
   assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
 });
 

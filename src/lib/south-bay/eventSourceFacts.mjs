@@ -3375,24 +3375,26 @@ const CORRECTIONS = [
       kidFriendly: true,
     },
   },
-  // The Chamber lists 6–9 PM with 5 PM check-in. Its linked Eventbrite
-  // booking page gives the parent or guardian requirement for guests under 21.
+  // The Chamber lists 6–9 PM with 5 PM check-in and door sales until 7:30 PM.
+  // Its linked Eventbrite page lists the noon online cutoff and under-21 rule.
   // https://members.saratogachamber.org/events/details/saratoga-s-holiday-wine-experience-10853
   {
     date: "2026-11-27",
     matches: event => /^https:\/\/www\.eventbrite\.com\/e\/saratogas-holiday-wine-experience-tickets-2001268102768(?:[?#]|$)/.test(event.url || ""),
-    facts: {
+    facts: event => ({
       time: "6:00 PM", endTime: "9:00 PM", cost: "paid", costNote: "$60 advance or $70 day-of, plus fees and tax",
-    },
+      attendanceNote: event.attendanceNote?.replace(
+        /Check-in opens at 5 PM at the Saratoga Chamber of Commerce, 14460 Big Basin Way\. Bring photo ID and your ticket confirmation\.(?: Guests under 21 must attend with a parent or legal guardian\.)?/,
+        "",
+      ).trim(),
+    }),
     copyReplacements: [
       [/^The Saratoga Chamber of Commerce['’]s Holiday Wine Experience, a wine stroll through downtown during the holiday kickoff\./,
         "The Saratoga Chamber of Commerce hosts a wine stroll through downtown during the holiday kickoff."],
       [/ on the afternoon and evening of November 27/i, " on the evening of November 27"],
       [/; the newsletter gives no start time\.|, and the start time isn['’]t given in the newsletter\./gi, "."],
-      [/Bring photo ID and your ticket confirmation\.(?! Guests under 21\b)/,
-        "Bring photo ID and your ticket confirmation. Guests under 21 must attend with a parent or legal guardian."],
     ],
-    appendAttendanceNote: "Check-in opens at 5 PM at the Saratoga Chamber of Commerce, 14460 Big Basin Way. Bring photo ID and your ticket confirmation.",
+    appendAttendanceNote: "Check-in opens at 5 PM at the Saratoga Chamber of Commerce, 14460 Big Basin Way. Everyone needs photo ID. Bring your confirmation if you bought tickets online. Online sales close at noon. Any remaining tickets are sold at the door until 7:30 PM. Guests under 21 must attend with a parent or legal guardian.",
   },
   // The athletics schedule verifies the first day's two games and venue.
   // https://gostanford.com/sports/softball/schedule
