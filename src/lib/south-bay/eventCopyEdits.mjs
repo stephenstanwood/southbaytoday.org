@@ -1182,6 +1182,10 @@ const EDITS = {
         "Eliminate fines/fees related to lost or damaged items by being read to. Attend this program to have $5 deducted from juvenile accounts for every 15 minutes you are read to.",
         "You can use this program to reduce fines and fees for lost or damaged items. The library deducts $5 from juvenile accounts for every 15 minutes you are read to.",
       ],
+      [
+        "Tell a story to a Furry Friend! Children are invited to practice reading to gentle, trained assistance dogs who love books! Practice reading skills while relaxing next to a cute Furry Friend.",
+        "Children can practice reading aloud to gentle, trained assistance dogs.",
+      ],
       ["To join Teens Reach you must", "To join Teens Reach, you must"],
       [
         "For more information go to www.sjpl.org/teensreach All teens are welcome to participate.",
@@ -1885,6 +1889,26 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        "Bring the kids to Music and Movement in the King Library Children's Room, held every Wednesday.",
+        "On Wednesdays, bring the kids to the King Library Children's Room for stories, songs, and movement.",
+      ],
+      [
+        "Join a Wednesday afternoon STEAM session with activities ranging from robots to engineering, science and making.",
+        "Make things, try robotics, or explore engineering and science at this Wednesday afternoon STEAM Club.",
+      ],
+      [
+        "Join a leadership and volunteer service group for teens ages 13-18, meeting Wednesday afternoons to earn volunteer hours and take on leader roles in the library.",
+        "Teens ages 13–18 can earn volunteer hours and take on leadership roles at the library. The group meets on Wednesday afternoons.",
+      ],
+      [
+        "Practice reading skills aloud to gentle, trained assistance dogs at the library.",
+        "Practice reading aloud to gentle, trained assistance dogs at the library.",
+      ],
+      [
+        "Hang out with other teens making crafts and new friends at Calabazas Library.",
+        "Make crafts and meet other teens at Calabazas Library.",
+      ],
       [
         "Let your kids play in the Rose Garden Library Community Room while you meet and swap support with other local parents at this weekly playgroup.",
         "At this weekly playgroup, children can play in the Rose Garden Library Community Room while local parents meet and support one another.",
@@ -3008,6 +3032,10 @@ const EDITS = {
     blurb: [
       [
         "Chant the rhythmic words of Bill Martin Jr.'s book, make animal sounds, and act out the zoo animals at this weekly all-ages storytime.",
+        "At this all-ages storytime, chant the rhythmic words of Bill Martin Jr.'s book, make animal sounds, and pretend to be the zoo animals.",
+      ],
+      [
+        "Chant the rhythmic words of Bill Martin Jr.'s storytime book with your kids, make animal sounds, and act out the zoo animals together.",
         "At this all-ages storytime, chant the rhythmic words of Bill Martin Jr.'s book, make animal sounds, and pretend to be the zoo animals.",
       ],
       [
