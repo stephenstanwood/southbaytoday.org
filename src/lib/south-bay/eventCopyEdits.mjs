@@ -2870,6 +2870,10 @@ const EDITS = {
     ],
     blurb: [
       [
+        "Stroll through the shops and restaurants of Historic Saratoga Village on a Friday evening wine walk, with tickets sold through Eventbrite.",
+        "Take a Friday evening wine stroll through the shops and restaurants of Historic Saratoga Village. Tickets are sold through Eventbrite.",
+      ],
+      [
         "Play free drop-in board games, from strategy to card and family games, on a first-come, first-served basis at any age.",
         "Drop in for free board and card games, including strategy and family-friendly games. All ages are welcome. Space is available on a first-come, first-served basis.",
       ],

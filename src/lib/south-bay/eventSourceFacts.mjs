@@ -3314,7 +3314,7 @@ const CORRECTIONS = [
       title: "Saratoga Celebration of Light", url: "https://www.saratoga.ca.us/m/calendar/event/detail/2705",
       venue: "Blaney Plaza", address: "Blaney Plaza, Historic Saratoga Village, Saratoga, CA 95070",
       time: "6:00 PM", endTime: "9:00 PM", category: "community",
-      description: "The Saratoga Ministerial Association hosts an evening celebrating the community's diversity at Blaney Plaza.",
+      description: "The Saratoga Ministerial Association hosts an evening at Blaney Plaza to celebrate the community's diversity.",
       blurb: "Join the Saratoga Ministerial Association's Celebration of Light at Blaney Plaza.",
     },
   },

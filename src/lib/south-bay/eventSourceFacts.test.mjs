@@ -257,6 +257,9 @@ test("the San José holiday opening has one free ceremony and one public route",
 });
 
 test("Saratoga's Celebration of Light and Community Carol Sing retain their own venues and clocks", () => {
+  const { verifiedCase } = JSON.parse(readFileSync(new URL(
+    "../../../scripts/lib/fixtures/reviewed-event-copy-2026-11-25-saratoga.json", import.meta.url,
+  )));
   const plaza = {
     date: "2026-12-05", city: "saratoga", source: "City Newsletter",
     title: "Saratoga Celebration of Light", venue: "Blaney Park", time: "6:00 PM",
@@ -276,6 +279,8 @@ test("Saratoga's Celebration of Light and Community Carol Sing retain their own 
   assert.notEqual(singing.url, ceremony.url);
   assert.deepEqual(fuzzyDedupEvents(deduplicateEventSlots([ceremony, applyVerifiedEventFacts(plaza), singing])).kept,
     [ceremony, singing]);
+  assert.equal(ceremony.description, verifiedCase.reviewed);
+  assert.deepEqual(applyVerifiedEventFacts({ ...ceremony, description: verifiedCase.refreshed }), ceremony);
   assert.deepEqual(applyVerifiedEventFacts(ceremony), ceremony);
   assert.deepEqual(applyVerifiedEventFacts(singing), singing);
 });
