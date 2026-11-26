@@ -244,6 +244,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-library-readers-and-eligibility.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-playgroups-and-photography.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-afternoon-refresh.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-printing-and-storytime.json", import.meta.url))));
 
 test("library copy repairs preserve revised contacts and publisher scope", () => {
   for (const row of november24LibraryFixture.cases) {
@@ -473,8 +474,11 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
       && candidate.field === row.field && candidate.refreshed === reviewed);
     if (revision) reviewed = revision.reviewed;
     for (const phrase of later.priorPhraseEdits ?? []) {
-      if (phrase.source === row.source && phrase.field === row.field) {
+      if (phrase.source !== row.source || phrase.field !== row.field) continue;
+      if (!phrase.atStart) {
         reviewed = reviewed.replaceAll(phrase.before, phrase.after);
+      } else if (reviewed.startsWith(phrase.before)) {
+        reviewed = phrase.after + reviewed.slice(phrase.before.length);
       }
     }
   }

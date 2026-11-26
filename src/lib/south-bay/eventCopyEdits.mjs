@@ -1891,8 +1891,36 @@ const EDITS = {
         "Spanish Language Learners are welcome to join and practice conversational skills.",
         "Spanish language learners are welcome to practice conversation.",
       ],
+      [
+        "Need help with 3D printing or looking for guided, hands-on experience? This session is ideal for beginners seeking practical experience, guided support, and confidence in using 3D printing technology. This is also a good opportunity for those who attended our 3D Design & Printing workshop and are ready for hands-on practice. Participants will have the opportunity to print a simple model under supervision.",
+        "Need help with 3D printing or want hands-on practice? This guided session helps beginners build confidence using a 3D printer. It's also a chance to practice if you've taken the library's 3D Design & Printing workshop. You can print a simple model under supervision.",
+      ],
+      [
+        "Final approval of printability will be determined by the program lead. SJPL reserves the right to refuse any print request. One appointment per month per person.",
+        "The program lead decides whether a design can be printed. SJPL reserves the right to refuse any print request. Each person is limited to one appointment per month.",
+      ],
+      [
+        /^Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities\. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages\. This program is geared for children of all ages and their parents\/caregivers!/g,
+        "Children of all ages and their families or caregivers can build early literacy skills through stories, songs, rhymes, fingerplays, and movement.",
+      ],
+      [
+        /^Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities\. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages\./g,
+        "Children of all ages and their families can build early literacy skills through stories, songs, rhymes, fingerplays, and movement.",
+      ],
     ],
     blurb: [
+      [
+        "Get one-on-one, hands-on help with 3D printing at Calabazas Library, with guided support aimed at beginners.",
+        "Practice 3D printing with one-on-one help at Calabazas Library. The session is designed for beginners.",
+      ],
+      [
+        "Sing, move, and listen to stories together at Seven Trees Library, where early literacy activities are set up for families with children of mixed ages.",
+        "Families with children of all ages can sing, move, and listen to stories at Seven Trees Library.",
+      ],
+      [
+        "Join the whole family for stories, songs, rhymes, fingerplays, and movement activities at Alum Rock Library, with ages mixed together.",
+        "Bring the whole family to Alum Rock Library for stories, songs, rhymes, fingerplays, and movement.",
+      ],
       [
         "Bring the kids to Music and Movement in the King Library Children's Room, held every Wednesday.",
         "On Wednesdays, bring the kids to the King Library Children's Room for stories, songs, and movement.",
