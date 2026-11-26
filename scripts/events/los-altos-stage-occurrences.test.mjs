@@ -4,6 +4,8 @@ import test from "node:test";
 import { fetchLosAltosStageEvents } from "../generate-events.mjs";
 import { deduplicateEventSlots, deduplicateEventTitles } from "../lib/event-url-dedup.mjs";
 import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
+import { buildEventSlugs } from "../../src/lib/south-bay/eventSlug.ts";
+import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
 test("Los Altos Stage Company keeps dated repeat performances after opening night", async () => {
   const pageUrl = "https://losaltosstage.org/events/joseph/";
@@ -44,6 +46,14 @@ test("Los Altos Stage Company keeps dated repeat performances after opening nigh
   const bySlotAndTitle = deduplicateEventTitles(deduplicateEventSlots(events));
   assert.deepEqual(fuzzyDedupEvents(bySlotAndTitle).kept, events);
   const [matinee, evening] = events;
+  const corrected = events.map(applyVerifiedEventFacts);
+  const correctedSlots = deduplicateEventTitles(deduplicateEventSlots(corrected));
+  assert.deepEqual(fuzzyDedupEvents(correctedSlots).kept, corrected);
+  const showSlugs = buildEventSlugs([
+    { ...corrected[1], id: "first-id" },
+    { ...corrected[0], id: "second-id" },
+  ]);
+  assert.deepEqual([...showSlugs.values()].map((event) => event.time), ["3:00 PM", "8:00 PM"]);
   const unverifiedEvening = {
     ...evening,
     occurrenceEvidence: { ...evening.occurrenceEvidence, sourceUrl: "https://losaltosstage.org/calendar/" },

@@ -16,10 +16,13 @@ export function showtimeEvidenceMatchesUrl(event) {
     return sourceUrl === TECH_INTERACTIVE_CALENDAR_URL
       && /^https:\/\/tickets\.thetech\.org\/events\/[0-9a-f-]+\/?$/i.test(event.url);
   }
-  // The stage company's scraper checks the production page against the URL
-  // declared inside its linked iCal feed before recording each showtime.
-  return event.source === "Los Altos Stage Company"
-    && /^https:\/\/(?:www\.)?losaltosstage\.org\/events\/[^/?#]+\/?$/i.test(event.url)
+  if (event.source !== "Los Altos Stage Company") return false;
+  // The full Joseph production page links to the calendar entry backed by
+  // this iCal feed. Other productions still use their calendar entry URLs.
+  if (event.url === "https://losaltosstage.org/joseph/") {
+    return sourceUrl === "https://losaltosstage.org/?rhc_action=get_icalendar_events&ID=11179";
+  }
+  return /^https:\/\/(?:www\.)?losaltosstage\.org\/events\/[^/?#]+\/?$/i.test(event.url)
     && isLosAltosStageCalendarUrl(sourceUrl);
 }
 

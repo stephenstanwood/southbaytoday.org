@@ -15,6 +15,49 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Joseph uses the production page while keeping both dated Saturday performances", () => {
+  const base = {
+    title: "Joseph",
+    date: "2026-12-12",
+    url: "https://losaltosstage.org/events/joseph/",
+    source: "Los Altos Stage Company",
+    kidFriendly: false,
+  };
+
+  for (const time of ["3:00 PM", "8:00 PM"]) {
+    const occurrence = {
+      ...base, time,
+      occurrenceEvidence: {
+        kind: "first-party-occurrence-page",
+        sourceUrl: "https://losaltosstage.org/?rhc_action=get_icalendar_events&ID=11179",
+        date: base.date,
+        time,
+      },
+    };
+    const reviewed = applyVerifiedEventFacts(occurrence);
+    assert.equal(reviewed.title, "Joseph and the Amazing Technicolor Dreamcoat");
+    assert.equal(reviewed.url, "https://losaltosstage.org/joseph/");
+    assert.equal(reviewed.kidFriendly, true);
+    assert.equal(reviewed.time, time);
+    assert.deepEqual(reviewed.occurrenceEvidence, occurrence.occurrenceEvidence);
+    assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  }
+  const later = { ...base, date: "2027-11-27" };
+  assert.equal(applyVerifiedEventFacts(later), later);
+});
+
+test("the Saratoga wine stroll keeps check-in details and the booking age condition", () => {
+  const event = {
+    date: "2026-11-27",
+    url: "https://www.eventbrite.com/e/saratogas-holiday-wine-experience-tickets-2001268102768?aff=oddtdtcreator",
+  };
+  const oldNote = "Check-in opens at 5 PM at the Saratoga Chamber of Commerce, 14460 Big Basin Way. Bring photo ID and your ticket confirmation.";
+  const reviewed = applyVerifiedEventFacts(event);
+  assert.equal(reviewed.attendanceNote, `${oldNote} Guests under 21 must attend with a parent or legal guardian.`);
+  assert.deepEqual(applyVerifiedEventFacts({ ...event, attendanceNote: oldNote }), reviewed);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+});
+
 test("Reading with Pets shows the required reservation and uses the verified library address", () => {
   const session = {
     date: "2026-12-01",

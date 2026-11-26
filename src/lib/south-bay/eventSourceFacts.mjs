@@ -3269,7 +3269,26 @@ const CORRECTIONS = [
       endTime: "6:30 PM",
     },
   },
-  // The organizer lists 6–9 PM, with ticket check-in from 5 PM.
+  // The calendar uses a short title and links to its timing page. The
+  // production page gives the full title, family audience and ticket link.
+  // Keep each calendar occurrence and its separate iCal evidence.
+  {
+    dateFrom: "2026-11-27",
+    dateThrough: "2026-12-20",
+    url: "https://losaltosstage.org/events/joseph/",
+    aliasUrls: ["https://losaltosstage.org/joseph/"],
+    facts: {
+      title: "Joseph and the Amazing Technicolor Dreamcoat",
+      url: "https://losaltosstage.org/joseph/",
+      description: "Los Altos Stage Company presents Andrew Lloyd Webber and Tim Rice's musical for the whole family.",
+      blurb: "See Andrew Lloyd Webber and Tim Rice's family musical at Bus Barn Theater.",
+      sourceAudiences: ["Families"],
+      audienceAge: "all",
+      kidFriendly: true,
+    },
+  },
+  // The Chamber lists 6–9 PM with 5 PM check-in. Its linked Eventbrite
+  // booking page gives the parent or guardian requirement for guests under 21.
   // https://members.saratogachamber.org/events/details/saratoga-s-holiday-wine-experience-10853
   {
     date: "2026-11-27",
@@ -3281,6 +3300,8 @@ const CORRECTIONS = [
       [/^The Saratoga Chamber of Commerce['’]s Holiday Wine Experience, a wine stroll through downtown during the holiday kickoff\./,
         "The Saratoga Chamber of Commerce hosts a wine stroll through downtown during the holiday kickoff."],
       [/; the newsletter gives no start time\.|, and the start time isn['’]t given in the newsletter\./gi, "."],
+      [/Bring photo ID and your ticket confirmation\.(?! Guests under 21\b)/,
+        "Bring photo ID and your ticket confirmation. Guests under 21 must attend with a parent or legal guardian."],
     ],
     appendAttendanceNote: "Check-in opens at 5 PM at the Saratoga Chamber of Commerce, 14460 Big Basin Way. Bring photo ID and your ticket confirmation.",
   },
