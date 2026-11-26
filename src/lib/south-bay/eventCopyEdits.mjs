@@ -1144,6 +1144,8 @@ const EDITS = {
         "meets at $1 on the first Wednesday of each month, or on the second Wednesday if the library is closed on the first.",
       ],
       ["For more information go to www.sjpl.org/teensreach Registration not necessary, it is used as a headcount for room preparation.", "For more information, go to www.sjpl.org/teensreach. Registration is not necessary; it is used as a headcount for room preparation."],
+      ["All teens welcome to the activities.", "All teens are welcome to participate."],
+      ["Free, with limited capacity. Program finishes by ", "Admission is free. Space is limited. The program finishes by "],
       ["Join us in this monthly workshop to learn operate 3D printing and Cricut machine.", "Join us in this monthly workshop to learn to operate a 3D printer and a Cricut machine."],
       [/Course information: Every Wednesday (\d{1,2}:\d{2}-\d{1,2}:\d{2} [AP]M) (\d{1,2}\/\d{1,2}\/\d{2,4}-\d{1,2}\/\d{1,2}\/\d{2,4}) Each week/g, "Course information: Every Wednesday, $1, $2. Each week"],
       ["application process and practice new skills No class ", "application process and practice new skills. No class "],
