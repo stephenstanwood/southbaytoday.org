@@ -24,6 +24,15 @@ test("explicit adult-only library audiences outrank children mentioned in the de
   assert.equal(inferCategory("Family Storytime", "Read books with children.", "", "Cupertino Library"), "family");
 });
 
+test("Spanish-language titles for English classes are education", () => {
+  assert.equal(inferCategory(
+    "Clases de inglés para hispanos - Nivel 1",
+    "Esta clase es solo para personas cuyo primer idioma es el español.",
+    "",
+    "Educational Park Library",
+  ), "education");
+});
+
 // Both fixtures below are real strings that reached upcoming-events.json on
 // 2026-08-29 and were surfaced on southbaytoday.org city briefings.
 

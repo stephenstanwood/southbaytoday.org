@@ -3902,7 +3902,7 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // descriptions mention boilerplate like a "Classical Arts Foundation" sponsor or
   // "language arts" framing. Anchor on the title and short-circuit before the arts
   // heuristic so a stray "art" in the description can't override the actual subject.
-  if (/\b(esl|literacy|english\s+(class|conversation|tutoring))\b/i.test(titleLower)) return "education";
+  if (/\b(?:esl|literacy|english\s+(?:class|conversation|tutoring)|clases?\s+de\s+ingl[eé]s)\b/i.test(titleLower)) return "education";
   // Library travel-talk series ("Tuesday Travel Nights - Mexico: Exploring Cabo
   // and the Baja Peninsula") are presentations about a destination, but the
   // blurbs sell that destination's cuisine and wine — which the broad food rule

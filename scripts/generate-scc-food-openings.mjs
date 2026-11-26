@@ -185,6 +185,7 @@ const NAME_OVERRIDES = {
 
 const BLURB_OVERRIDES = {
   "SR0886649": "Vegan pickup and delivery only from Sunny's Food Hub.",
+  "SR0886600": "County records show a restaurant planned at 374 South First Street in San José.",
   // Permit filings whose name gave the model nothing to go on, so it invented a
   // cuisine anyway — "Anne Doan" (an applicant's name) came out as "Vietnamese
   // restaurant". Pinned to location-only until someone confirms the concept.
@@ -507,6 +508,11 @@ export function cleanName(raw) {
 export function cleanAddress(raw) {
   if (!raw) return null;
   let s = raw.trim();
+
+  // County plan check SR0886600 lists "WS 1ST ST." The city's property record
+  // identifies the building at 374 South First Street.
+  // https://gis.sanjoseca.gov/docs/historicresources/DPR/1037.pdf
+  s = s.replace(/^374\s+WS\s+1ST\s+ST\.?(?=,\s*SAN JOSE\b)/i, "374 S 1ST ST");
 
   // Some rows append the city with no comma before it, or with no "CA" after
   // it, so a comma-only rule doesn't fire and the city ships inside the street
