@@ -1183,6 +1183,10 @@ const EDITS = {
       ["*Additional titles to be selected in November Free.", "Additional titles to be selected in November. Free."],
       ["Have your resume reviewed by a SJPL Works", "Have your resume reviewed by an SJPL Works"],
       ["Parking validation for garage at", "Parking validation for the garage at"],
+      [
+        "Parking validation for the garage at 88 S. 4th Street will be provided at the program.",
+        "The program offers parking validation for the garage at 88 S. 4th Street.",
+      ],
       ["E Newsletter Signup Get the inside", "E-newsletter Signup: Get the inside"],
       ["E-newsletter signup Get the inside", "E-newsletter Signup: Get the inside"],
       ["pause and reflect about how", "pause and reflect on how"],
@@ -1361,6 +1365,8 @@ const EDITS = {
       [/family-friendly, volunteer ((?:drop-in )?event where participants)/g, "family-friendly volunteer $1"],
       ["Reminder: This is NOT a craft to take home. All dog toys are created for donation to local shelters!", "All dog toys made at the event go to local shelters."],
       ["If you are here to Volunteer Away Your Fines, please be sure to bring your library card and sign in so that we can track your hour(s.)", "To take part in Volunteer Away Your Fines, bring your library card and sign in so the library can track your hours."],
+      ["gaining service hours for school/work", "gaining service hours for school or work"],
+      ["For more information email ", "For more information, email "],
       [/Anyone under the age of (\d+) must volunteer alongside a parent\/guardian; No experience or special skills necessary; Training and supplies will be provided\./g, "Anyone under $1 must volunteer with a parent or guardian. No experience or special skills are needed. Training and supplies will be provided."],
       [
         /Details and Requirements: Must be able to commit to a (\d+)-minute session; Anyone under the age of (\d+) must volunteer alongside a parent\/guardian; No experience or special skills necessary; Supplies will be provided\./g,
