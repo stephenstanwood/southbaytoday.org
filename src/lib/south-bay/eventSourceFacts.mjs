@@ -113,6 +113,7 @@ const SJSU_NOVEMBER_METROPOLIS = {
   attendanceNote: "The event page lists a 6 PM finish, while the organizer's poster lists 6:30 PM. Confirm the finish with SJSU's Humanities Honors Program before going.",
 };
 export const PCLG_NOVEMBER_18_BULLETIN = "https://www.pclg.org/this-week/2026-11-18.pdf";
+const PCLG_NOVEMBER_25_BULLETIN = "https://www.pclg.org/this-week/2026-11-25.pdf";
 const PALO_ALTO_ART_CENTER_MEDITATION_URL = "https://paloalto.bibliocommons.com/events/68faeb383cbc052f00816108";
 const MERRY_ACHI_COPY = {
   description: "José Hernández and Mariachi Sol de México present a holiday mariachi concert at Hammer Theatre.",
@@ -174,18 +175,28 @@ const CORRECTIONS = [
       },
     },
   },
-  // The downtown opening ceremony is a free community event for families.
-  // https://christmasinthepark.com/ and https://christmasinthepark.com/events/
+  // The organizer lists one 6–7 PM opening ceremony. The city's November 25
+  // advisory calls the all-electric house a return. Normalize both newsletter
+  // rows to the ceremony so slot deduplication retains one public listing.
+  // https://christmasinthepark.com/events/
+  // https://www.sanjoseca.gov/Home/Components/News/News/7684/4699
   {
     date: "2026-11-27",
     matches: event => event.source === "City Newsletter" && event.city === "san-jose"
-      && event.title === "Christmas in the Park Opening Night Ceremony and Tree Lighting"
-      && event.url === "https://christmasinthepark.com/events/",
+      && (
+        (event.title === "Christmas in the Park Opening Night Ceremony and Tree Lighting"
+          && event.url === "https://christmasinthepark.com/events/")
+        || (/^Christmas in the Park Tree-Lighting and Santa['’]s All-Electric Home Debut$/.test(event.title || "")
+          && event.url === "https://christmasinthepark.com/")
+      ),
     facts: {
-      cost: "free", category: "community", kidFriendly: true,
+      title: "Christmas in the Park Opening Night Ceremony and Tree Lighting",
+      time: "6:00 PM", endTime: "7:00 PM", url: "https://christmasinthepark.com/events/",
+      cost: "free", category: "community", kidFriendly: true, audienceAge: "all",
       venue: "Plaza de San José", address: "Plaza de San José, Downtown San José",
+      description: "Christmas in the Park opens with a free tree-lighting ceremony and holiday displays. Santa's all-electric house returns this season.",
+      blurb: "Watch the free opening-night tree lighting at Plaza de San José.",
     },
-    copyReplacements: [[/Plaza de San Jose/g, "Plaza de San José"]],
   },
   // Milpitas Library's description invites readers of all ages. Its catalog
   // audience tags only list children, which otherwise excludes adult readers.
@@ -1122,6 +1133,27 @@ const CORRECTIONS = [
       && /^Presbyterian Church of Los Gatos\b/i.test(event.venue || ""),
     // The bulletin invites all ages to help with indoor and outdoor tasks.
     facts: { url: PCLG_NOVEMBER_18_BULLETIN, category: "community", kidFriendly: true, audienceAge: "all" },
+  },
+  // The November 25 church bulletin lists the sanctuary and the three
+  // service times. Supply the source page for the unlinked newsletter rows.
+  {
+    date: "2026-12-09",
+    matches: event => event.source === "City Newsletter" && event.city === "los-gatos"
+      && event.title === "Blue Christmas Service"
+      && (event.venue === "Sanctuary" || event.venue === "Presbyterian Church of Los Gatos")
+      && (!event.url || event.url === PCLG_NOVEMBER_25_BULLETIN),
+    facts: {
+      url: PCLG_NOVEMBER_25_BULLETIN, venue: "Presbyterian Church of Los Gatos",
+      address: "16575 Shannon Rd, Los Gatos, CA 95032", category: "community",
+      blurb: "Gather in the church sanctuary for a service of remembrance with music, prayers and candles.",
+    },
+  },
+  {
+    date: "2026-12-24",
+    matches: event => event.source === "City Newsletter" && event.city === "los-gatos"
+      && /^Christmas Eve Service \((?:4|10):00 p\.m\.\)$/.test(event.title || "")
+      && event.venue === "Presbyterian Church of Los Gatos" && !event.url,
+    facts: { url: PCLG_NOVEMBER_25_BULLETIN },
   },
   // A co-sponsor publishes the host, finish time, free admission and livestream RSVP.
   // The denomination's church directory confirms the street spelling.
@@ -3269,6 +3301,62 @@ const CORRECTIONS = [
       endTime: "6:30 PM",
     },
   },
+  // Saratoga's calendar gives two concurrent programs at different venues.
+  // Map the combined newsletter copy to the Plaza event, and let the separately
+  // received carol sing keep its later start and church parking-lot location.
+  {
+    date: "2026-12-05",
+    url: "https://www.saratoga.ca.us/m/calendar/event/detail/2705",
+    matches: event => event.source === "City Newsletter" && event.city === "saratoga"
+      && /^(?:Saratoga )?Celebration of Light(?: & Community Carol Sing)?$/.test(event.title || "")
+      && /^Blaney (?:Park|Plaza)\b/.test(event.venue || "") && !event.url,
+    facts: {
+      title: "Saratoga Celebration of Light", url: "https://www.saratoga.ca.us/m/calendar/event/detail/2705",
+      venue: "Blaney Plaza", address: "Blaney Plaza, Historic Saratoga Village, Saratoga, CA 95070",
+      time: "6:00 PM", endTime: "9:00 PM", category: "community",
+      description: "The Saratoga Ministerial Association hosts an evening celebrating the community's diversity at Blaney Plaza.",
+      blurb: "Join the Saratoga Ministerial Association's Celebration of Light at Blaney Plaza.",
+    },
+  },
+  {
+    date: "2026-12-05",
+    url: "https://www.saratoga.ca.us/m/calendar/event/detail/2681",
+    matches: event => event.source === "City Newsletter" && event.city === "saratoga"
+      && /^(?:Saratoga Federated Church )?Community Carol Sing$/.test(event.title || "")
+      && /^Saratoga Federated Church\b/.test(event.venue || "") && !event.url,
+    facts: {
+      title: "Saratoga Federated Church Community Carol Sing", url: "https://www.saratoga.ca.us/m/calendar/event/detail/2681",
+      venue: "Saratoga Federated Church parking lot", address: "20390 Park Place, Saratoga, CA 95070",
+      time: "6:30 PM", endTime: null, category: "music", kidFriendly: true, audienceAge: "all",
+      description: "Sing carols around the Christmas tree in the Saratoga Federated Church parking lot. Free cocoa and snacks are available.",
+      blurb: "Sing carols around the tree in the church parking lot, with free cocoa and snacks.",
+    },
+  },
+  // Use the city's dated office-hours listing, which gives the exact lot.
+  {
+    date: "2026-12-05",
+    url: "https://www.saratoga.ca.us/m/calendar/event/detail/2548",
+    matches: event => event.source === "City Newsletter" && event.city === "saratoga"
+      && /^Join the Mayor(?: at the Saratoga Farmers['’] Market)?$/.test(event.title || "")
+      && event.url === "https://www.cafarmersmkts.com/saratoga-farmers-market",
+    facts: {
+      title: "Mayor's Office Hours at the Saratoga Farmers' Market",
+      url: "https://www.saratoga.ca.us/m/calendar/event/detail/2548",
+      address: "West Valley College Parking Lot 3, 14000 Fruitvale Ave, Saratoga, CA 95070",
+    },
+  },
+  // The choir's dated event and ticket link provide admission and end time.
+  {
+    date: "2026-12-18",
+    url: "https://events.scu.edu/center-for-spirituality-and-faith/event/517369-isings-holiday-concert",
+    aliasUrls: ["https://isingsv.com/whatson/2024/12/21/holidays-the-mission-5smhb-jxcm2"],
+    facts: {
+      url: "https://isingsv.com/whatson/2024/12/21/holidays-the-mission-5smhb-jxcm2",
+      endTime: "8:30 PM", cost: "paid", address: "500 El Camino Real, Santa Clara, CA 95053",
+      description: "Three iSing Silicon Valley choirs perform holiday carols with a chamber orchestra at Mission Santa Clara de Asís.",
+      blurb: "Hear iSing Silicon Valley's choirs sing carols with a chamber orchestra at Mission Santa Clara de Asís.",
+    },
+  },
   // The calendar uses a short title and links to its timing page. The
   // production page gives the full title, family audience and ticket link.
   // Keep each calendar occurrence and its separate iCal evidence.
@@ -3299,6 +3387,7 @@ const CORRECTIONS = [
     copyReplacements: [
       [/^The Saratoga Chamber of Commerce['’]s Holiday Wine Experience, a wine stroll through downtown during the holiday kickoff\./,
         "The Saratoga Chamber of Commerce hosts a wine stroll through downtown during the holiday kickoff."],
+      [/ on the afternoon and evening of November 27/i, " on the evening of November 27"],
       [/; the newsletter gives no start time\.|, and the start time isn['’]t given in the newsletter\./gi, "."],
       [/Bring photo ID and your ticket confirmation\.(?! Guests under 21\b)/,
         "Bring photo ID and your ticket confirmation. Guests under 21 must attend with a parent or legal guardian."],

@@ -11,6 +11,7 @@ import {
   rotationActivityForOccurrence,
 } from "./eventSourceFacts.mjs";
 import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
+import { fuzzyDedupEvents } from "./eventFuzzyDedup.mjs";
 import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
@@ -226,23 +227,74 @@ test("ICA exhibits show regular gallery hours without changing run dates or time
   assert.equal(applyVerifiedEventFacts(workshop), workshop);
 });
 
-test("identifies the downtown holiday opening as free family admission", () => {
+test("the San José holiday opening has one free ceremony and one public route", () => {
   const ceremony = {
-    source: "City Newsletter", city: "san-jose", date: "2026-11-27",
+    source: "City Newsletter", city: "san-jose", date: "2026-11-27", id: "opening",
     title: "Christmas in the Park Opening Night Ceremony and Tree Lighting",
-    url: "https://christmasinthepark.com/events/", category: "outdoor",
+    url: "https://christmasinthepark.com/events/", category: "outdoor", time: "6:00 PM",
     venue: "Plaza de San Jose", cost: null, kidFriendly: false,
-    blurb: "See the tree lighting at Plaza de San Jose.",
+  };
+  const cityAdvisory = {
+    ...ceremony, id: "advisory", time: "5:45 PM",
+    title: "Christmas in the Park Tree-Lighting and Santa's All-Electric Home Debut",
+    url: "https://christmasinthepark.com/",
   };
   const verified = applyVerifiedEventFacts(ceremony);
   assert.equal(verified.cost, "free");
   assert.equal(verified.category, "community");
   assert.equal(verified.kidFriendly, true);
   assert.equal(verified.venue, "Plaza de San José");
-  assert.equal(verified.blurb, "See the tree lighting at Plaza de San José.");
+  assert.equal(verified.time, "6:00 PM");
+  assert.equal(verified.endTime, "7:00 PM");
+  assert.match(verified.description, /all-electric house returns/);
+  assert.deepEqual(deduplicateEventSlots([verified, applyVerifiedEventFacts(cityAdvisory)]), [verified]);
+  const ledger = retireSlugs(null, [cityAdvisory], [verified], "2026-11-25");
+  const retired = resolveRetired(ledger, [verified], [], "2026-11-25");
+  assert.deepEqual([...retired.redirects.values()], ["2026-11-27-christmas-in-the-park-opening-night-ceremony-and-tree-lighting"]);
   assert.deepEqual(applyVerifiedEventFacts(verified), verified);
   const vipParty = { ...ceremony, title: "Opening Night VIP Party" };
   assert.equal(applyVerifiedEventFacts(vipParty), vipParty);
+});
+
+test("Saratoga's Celebration of Light and Community Carol Sing retain their own venues and clocks", () => {
+  const plaza = {
+    date: "2026-12-05", city: "saratoga", source: "City Newsletter",
+    title: "Saratoga Celebration of Light", venue: "Blaney Park", time: "6:00 PM",
+  };
+  const combined = { ...plaza, title: "Saratoga Celebration of Light & Community Carol Sing" };
+  const carols = {
+    ...plaza, title: "Community Carol Sing", time: "6:30 PM", venue: "Saratoga Federated Church parking lot",
+  };
+  const ceremony = applyVerifiedEventFacts(combined);
+  const singing = applyVerifiedEventFacts(carols);
+  assert.deepEqual(applyVerifiedEventFacts(plaza), ceremony);
+  assert.equal(ceremony.venue, "Blaney Plaza");
+  assert.equal(ceremony.endTime, "9:00 PM");
+  assert.equal(singing.venue, "Saratoga Federated Church parking lot");
+  assert.equal(singing.time, "6:30 PM");
+  assert.equal(singing.endTime, null);
+  assert.notEqual(singing.url, ceremony.url);
+  assert.deepEqual(fuzzyDedupEvents(deduplicateEventSlots([ceremony, applyVerifiedEventFacts(plaza), singing])).kept,
+    [ceremony, singing]);
+  assert.deepEqual(applyVerifiedEventFacts(ceremony), ceremony);
+  assert.deepEqual(applyVerifiedEventFacts(singing), singing);
+});
+
+test("the church bulletin links Blue Christmas and both Christmas Eve services", () => {
+  const blue = {
+    title: "Blue Christmas Service", date: "2026-12-09", time: "7:00 PM", category: "music",
+    city: "los-gatos", source: "City Newsletter", venue: "Sanctuary",
+  };
+  const verified = applyVerifiedEventFacts(blue);
+  assert.equal(verified.venue, "Presbyterian Church of Los Gatos");
+  assert.equal(verified.category, "community");
+  assert.equal(verified.url, "https://www.pclg.org/this-week/2026-11-25.pdf");
+  const services = ["4", "10"].map(hour => applyVerifiedEventFacts({
+    ...blue, date: "2026-12-24", venue: verified.venue,
+    title: `Christmas Eve Service (${hour}:00 p.m.)`, time: `${hour}:00 PM`,
+  }));
+  assert.ok(services.every(event => event.url === verified.url));
+  assert.deepEqual(deduplicateEventSlots(services), services);
 });
 
 test("ongoing Stanford and King Library exhibits show verified Thanksgiving closures", () => {
