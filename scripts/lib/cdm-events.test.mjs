@@ -5,6 +5,8 @@ import { runInNewContext } from "node:vm";
 import { scrapeChildrensDiscoveryMuseum, normalizePlaywrightEvent } from "../playwright-scrapers.mjs";
 import { fetchInboundEvents, fetchPlaywrightEvents, isEventTimeBackfillCandidate } from "../generate-events.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
+import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
+import { snapshotEvent } from "../../src/lib/south-bay/eventSlugLedger.mjs";
 import { parseCdmExhibitRange, parseCdmOccurrenceDate } from "./cdm-events.mjs";
 
 const programs = [
@@ -50,6 +52,44 @@ test("museum keeps dated special events and rejects unrecognized recurrence", as
   assert.deepEqual(events.map(({ title, date, time, endTime }) => ({ title, date, time, endTime })), [
     { title: "Mars Expedition with VEX Robotics", date: "2026-10-17", time: "10:30 am", endTime: "12:00 pm" },
   ]);
+});
+
+test("the Purple Museum's holiday season cannot become a timed opening on December 12", () => {
+  const newsletter = {
+    id: "purple-museum-holiday-newsletter",
+    title: '"Discover the Holidays" at the Purple Museum',
+    startsAt: "2026-12-12T00:00:00-08:00",
+    cityKey: "san-jose",
+    location: "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+    sourceUrl: "https://www.cdm.org/recurring-event/discover-the-holidays-at-the-purple-museum/",
+  };
+  const [event] = fetchInboundEvents({ events: [newsletter], today: "2026-11-26" });
+  assert.equal(isEventTimeBackfillCandidate(event), false);
+  const misdatedOpening = { ...event, time: "9:30 AM" };
+  assert.equal(isEventPublishable(misdatedOpening), false);
+  const retired = snapshotEvent(misdatedOpening);
+  assert.equal(retired.time, undefined);
+  assert.match(retired.description, /December 12 through January 10/);
+  assert.equal(retired.url, newsletter.sourceUrl);
+  assert.equal(isEventPublishable({ ...misdatedOpening, title: "Holiday craft session" }), true);
+});
+
+test("December 1 Polar Bear storytime keeps its all-ages audience and named book", () => {
+  const listing = {
+    date: "2026-12-01",
+    title: "Polar Bear, Polar Bear, What Do You Hear? All Ages Storytime",
+    url: "https://www.cdm.org/recurring-event/all-ages-storytime/",
+    time: "11:30 AM",
+    kidFriendly: true,
+    audienceAge: "kids",
+    description: "Weekly all-ages storytime featuring Bill Martin Jr.'s book. Children make animal sounds.",
+  };
+  const reviewed = applyVerifiedEventFacts(listing);
+  assert.equal(reviewed.audienceAge, "all");
+  assert.equal(reviewed.kidFriendly, true);
+  assert.equal(reviewed.time, "11:30 AM");
+  assert.equal(reviewed.description, "The December 1 all-ages storytime features Bill Martin Jr.'s book. Children make animal sounds.");
+  assert.deepEqual(applyVerifiedEventFacts({ ...listing, date: "2026-12-08" }), { ...listing, date: "2026-12-08" });
 });
 
 test("the iceless rink stays listed as an exhibit during its confirmed run", () => {

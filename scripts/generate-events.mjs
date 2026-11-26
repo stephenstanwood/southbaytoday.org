@@ -128,7 +128,7 @@ import {
 } from "./lib/dates.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
 import { deduplicateEventSlots, deduplicateEventTitles, deduplicateEventUrls, eventClockKey } from "./lib/event-url-dedup.mjs";
-import { hasUnconfirmedStartTime, isEventExplicitlyInactive, isEventPublishable, isLosAltosStageCalendarUrl } from "../src/lib/south-bay/eventOccurrence.mjs";
+import { hasUnconfirmedStartTime, isEventExplicitlyInactive, isEventPublishable, isLosAltosStageCalendarUrl, isNonEventOffer } from "../src/lib/south-bay/eventOccurrence.mjs";
 import {
   marketOccurrenceEvidence,
   MOUNTAIN_VIEW_MARKET_RELOCATIONS,
@@ -9290,7 +9290,7 @@ function extractTimeFromHtml(html, eventDate, sourceUrl) {
 }
 
 export function isEventTimeBackfillCandidate(event) {
-  if (event.time || event.ongoing || !event.url) return false;
+  if (event.time || event.ongoing || !event.url || isNonEventOffer(event)) return false;
   // A reviewed source conflict needs confirmation from the organizer. Reading
   // one of those same pages (or its old cache) cannot resolve the conflict.
   if (event.attendanceStatus === "needs-confirmation" || hasUnconfirmedStartTime(event)) return false;

@@ -4125,6 +4125,18 @@ const CORRECTIONS = [
       blurb: "Join an all-ages storytime in the museum's Brandenburg Theatre.",
     },
   },
+  // The museum's November 26 newsletter names this book for December 1.
+  // Its recurring program page confirms the all-ages audience.
+  {
+    date: "2026-12-01",
+    matches: event => /^Polar Bear, Polar Bear, What Do You Hear\? All Ages Storytime$/i.test(event.title || "")
+      && event.url === "https://www.cdm.org/recurring-event/all-ages-storytime/",
+    facts: { audienceAge: "all" },
+    copyReplacements: [[
+      /^Weekly all-ages storytime featuring Bill Martin Jr\.'s book\./,
+      "The December 1 all-ages storytime features Bill Martin Jr.'s book.",
+    ]],
+  },
   // This occurrence's booking panel conflicts with its no-registration prose.
   // Preserve the gate, disclose the conflict, and use the current published
   // November 7, 4 PM deadline rather than the stale November 5 cutoff.

@@ -184,6 +184,13 @@ export function nonEventOfferNotice(event) {
       && /^https:\/\/(?:www\.)?santanarow\.com\/event\/on-your-mark-get-set-shop-black-friday\/?$/i.test(event.url || "")) {
     return "Santana Row’s Black Friday guide lists offers from individual shops. Hours and terms vary by store.";
   }
+  // The museum's November 26 newsletter lists a season of activities.
+  // The backfill picked up the museum's opening hours as an event start.
+  if (event?.source === "City Newsletter" && event.date === "2026-12-12"
+      && /^["“]?Discover the Holidays["”]? at the Purple Museum$/i.test(event.title || "")
+      && event.url === "https://www.cdm.org/recurring-event/discover-the-holidays-at-the-purple-museum/") {
+    return "The museum announced holiday programming from December 12 through January 10. Check the museum’s schedule for individual activities.";
+  }
   return null;
 }
 
