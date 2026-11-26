@@ -111,6 +111,10 @@ const SCCLD_OPEN_MIC_EDITS = [
   ],
 ];
 
+// Palo Alto City Library credits the host as Matthew TW Huang.
+// https://paloalto.bibliocommons.com/events/6a397278c7d3cd5800621210
+const PALO_ALTO_PHOTOGRAPHY_NAME_EDIT = [/\bMatthew Tw Huang\b/g, "Matthew TW Huang"];
+
 // https://www.scu.edu/missionchurch/
 const SCU_MISSION_NAME_EDIT = [/\bMission Santa Clara de Asis\b/g, "Mission Santa Clara de Asís"];
 
@@ -2742,9 +2746,10 @@ const EDITS = {
       [/^Documentary Screening-Zora Neale Hurston: Claiming Space$/g, "Documentary Screening – Zora Neale Hurston: Claiming a Space"],
     ],
     description: [
+      PALO_ALTO_PHOTOGRAPHY_NAME_EDIT,
       [
-        "Join us for a monthly meetup designed for intermediate and advanced photographers hosted by Matthew Tw Huang. Whether you're into portrait, landscape, or any other type of photography, all are welcome!",
-        "Matthew Tw Huang hosts this monthly meetup for intermediate and advanced photographers. Whether you shoot portraits, landscapes, or something else, you're welcome.",
+        "Join us for a monthly meetup designed for intermediate and advanced photographers hosted by Matthew TW Huang. Whether you're into portrait, landscape, or any other type of photography, all are welcome!",
+        "Matthew TW Huang hosts this monthly meetup for intermediate and advanced photographers. Whether you shoot portraits, landscapes, or something else, you're welcome.",
       ],
       [
         /Join Librarian Juliana on Saturdays from (\d{1,2}:\d{2})-(\d{1,2}(?::\d{2})? AM) at Mitchell Park Library/g,
@@ -2921,6 +2926,7 @@ const EDITS = {
       ],
     ],
     blurb: [
+      PALO_ALTO_PHOTOGRAPHY_NAME_EDIT,
       [
         "Hear local author Raj Oza talk about writing Double Play on the Red Line and how he came to write the novel.",
         "Hear local author Raj Oza discuss how he came to write Double Play on the Red Line.",
