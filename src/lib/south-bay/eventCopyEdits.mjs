@@ -2908,6 +2908,7 @@ const EDITS = {
       ["Raffle winner must", "The raffle winner must"],
       ["Register Registration will open", "Registration will open"],
       ["Deaf and hard of hearing children, along with", "Deaf and hard-of-hearing children, along with"],
+      ["Santa only communicates using sign language but an interpreter will be on-site to help translate for friends and family.", "Santa communicates only in sign language, but an interpreter will be on-site to help translate for friends and family."],
       ["about early Cupertino history, the craft of blacksmithing, and learn from our experienced", "about early Cupertino history and the craft of blacksmithing. Learn from our experienced"],
     ],
     blurb: [
