@@ -1400,6 +1400,10 @@ const EDITS = {
         "Our English Language Learners (ELL) Conversation Club offers a respectful environment for adult learners of English to practice their English-speaking & conversation skills used in everyday settings. All levels of English-speaking skills are welcome!",
         "Our English Language Learners (ELL) Conversation Club gives adults a respectful setting to practice everyday English conversation. All skill levels are welcome.",
       ],
+      [
+        "The presenter is bilingual in both English and Chinese Mandarin. Other English language learners are welcome.",
+        "The presenter speaks English and Mandarin Chinese. English learners who speak other languages are welcome, too.",
+      ],
       ["such as laptops, smartphones, e-readers, etc.", "such as laptops, smartphones, and e-readers."],
       ["Duplo bricks are also available for our younger friends.", "DUPLO bricks are also available for younger children."],
       [
@@ -3050,6 +3054,10 @@ const EDITS = {
         "Runs 25–40 minutes; free with museum admission. Advance registration is required and each performance is capped at 20 tickets; late entry is not allowed.",
         "The 25–40-minute performance is included with museum admission. Advance registration is required. Each performance is limited to 20 tickets. Entry closes when the performance starts.",
       ],
+      [
+        /\bFree for Triton members, (\$\d+(?:\.\d{2})?) suggested donation for non-members\./g,
+        "Admission is free for Triton members. The museum suggests a $1 donation for nonmembers.",
+      ],
       ["Free admission and all ages are welcome; cash is recommended because many vendors may not accept cards.", "Admission is free and all ages are welcome. Cash is recommended because many vendors may not accept cards."],
       [
         "Annual holiday toy drive where families who donate a toy get a fire truck ride around the block. Also features",
@@ -3288,6 +3296,10 @@ const EDITS = {
     ],
     description: [
       ["Abstract Future society needs a sustainable energy supply", "Future society needs a sustainable energy supply"],
+      [
+        /Grab a donut and meet the folks from the Office for Military-Affiliated Communities\s*[-–—]\s*no agendas, just conversation\./g,
+        "Grab a donut and chat with the team from the Office for Military-Affiliated Communities. There's no agenda.",
+      ],
       [
         "Come to The O'Donohue Family Stanford Educational Farm to build your own seasonal, organic, flower bouquet using flowers grown on the campus farm. Follow provided directions to make your bouquet.",
         "Make a bouquet from seasonal, organic flowers grown at the O'Donohue Family Stanford Educational Farm. Instructions are provided.",
