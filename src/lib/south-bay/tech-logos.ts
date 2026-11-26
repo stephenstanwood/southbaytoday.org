@@ -69,6 +69,8 @@ export const LOGO_DOMAIN_BY_ID: Record<string, string> = {
   "western-digital": "westerndigital.com",
   "palo-alto": "paloaltonetworks.com",
   "supermicro": "supermicro.com",
+  "naive": "usenaive.ai",
+  "primemas": "primemas.com",
   "sun-microsystems": "oracle.com",
   "netscape": "mozilla.org",
   "yahoo": "yahoo.com",

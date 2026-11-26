@@ -2580,7 +2580,8 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     tagline:
       "A coding agent can build an app in an afternoon, but turning that app into an actual business still means incorporating, opening payment processing, getting a phone number and email domain, and standing up cloud infrastructure — weeks of paperwork an agent can't do on its own. Naïve puts all of it behind one API and a config file, so software can incorporate a company, take payments, and run its own infrastructure, with capability policies and audit logs bounding what any given agent is allowed to do. Nexus Venture Partners led the $28.5M Series A, with Y Combinator, Zetta Venture Partners, and Liquid 2 Ventures joining, plus angels Gokul Rajaram, Apollo co-founder Tim Zheng, former HubSpot COO JD Sherman, Amazon's Gert Lanckriet, DocuSign's Robert Chatwani, and Codecademy co-founder Zachary Sims. Founders Sean Dorje and Dennis Zax are 20-year-old Berkeley dropouts who have built together since they were 14 and sold an earlier machine-learning company, ezML, before going through Y Combinator. The money funds four research tracks: serverless runtimes, inference optimization, shared memory, and multi-agent orchestration.",
     color: "#7c3aed",
-    url: "https://usenaive.ai",
+    // The company's funding announcement is accessible while its homepage returns HTTP 402.
+    url: "https://www.webwire.com/ViewPressRel.asp?aId=358555",
   },
   {
     id: "volta",
@@ -3570,7 +3571,8 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     date: "2026-01-13",
     tagline: "Fabless semiconductor company building 'Hublet' chiplets — a new class of hub chip that bridges compute and memory over CXL for AI training and inference. Claims 40x TCO improvement in AI data centers. Backed by Micron Technology and Korea Development Bank.",
     color: "#7c3aed",
-    url: "https://primemas.com",
+    // The company's financing counsel confirms the round. The company site fails TLS validation on some clients.
+    url: "https://www.sidley.com/en/newslanding/newsannouncements/2026/01/sidley-represents-primemas-in-us-72-million-series-b-financing",
   },
   {
     id: "hyfix",

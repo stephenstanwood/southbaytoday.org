@@ -249,6 +249,8 @@ function matchField(item, field) {
 export const LOGO_SITE_OVERRIDES = {
   tabapay: "https://tabapay.com", // card links FTV Capital's release
   piston: "https://www.piston.com", // card links the ACCESS Newswire release
+  naive: "https://usenaive.ai", // card links the WebWire release
+  primemas: "https://www.primemas.com/", // card links counsel’s financing announcement
   "overlord-labs": "https://overlord-labs.com", // card links the PR Newswire release
   "sima-ai-series-c": "https://sima.ai", // card links the SiliconANGLE write-up
 };
@@ -265,6 +267,7 @@ export const WIRE_SERVICE_HOSTS = new Set([
   "newswire.com",
   "prnewswire.com",
   "prweb.com",
+  "webwire.com",
 ]);
 
 export function urlHost(u) {
