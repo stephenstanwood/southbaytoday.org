@@ -1737,6 +1737,29 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Systems (Herndon, VA), and Sante (New York); a broader search only
   // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
   // all already entered.
+  // Note on the Nov 23-26 2026 sweep: Avicena is the one in-coverage round.
+  // Near-misses so the next cycle doesn't re-verify them: Marlowe AI ($227M
+  // seed, Nov 24) is reported via GeekWire as a Seattle company; Zipher, Corma,
+  // Reflect Orbital, Peak Energy's Series B extension, and Myriota (Australia)
+  // carry no Santa Clara County HQ in their Nov 24 coverage.
+  // Avicena's Nov 24 Business Wire release datelines "SUNNYVALE, Calif." and
+  // says "over $100 million in Series C funding" led by InterVest. It gives no
+  // cumulative total, so the card states none. Kevin Pope succeeds Marco
+  // Chisari as CEO.
+  // Release mirror: https://www.01net.it/avicena-raises-100-million-series-c-to-accelerate-commercialization-of-microled-optical-interconnects-for-ai-infrastructure/
+  {
+    id: "avicena-series-c",
+    name: "Avicena",
+    city: "Sunnyvale",
+    category: "chip",
+    round: "Series C",
+    amount: "$100M+",
+    date: "2026-11-24",
+    tagline:
+      "Sunnyvale's Avicena raised more than $100M in a Series C led by InterVest for LightBundle, its laser-free optical links that use tiny microLEDs to move data between AI processors, memory, and switches. Tiger Global, Cerberus Capital Management, SK hynix Ventures, Samsung Catalyst Fund, AMD Ventures, Prosperity7 Ventures, Diamond Edge Ventures, and Hitachi Ventures also invested. The money goes toward a bigger team and the company's first commercial product next year, with Kevin Pope taking over as CEO from Marco Chisari.",
+    color: "#2563EB",
+    url: "https://avicena.tech",
+  },
   // Note on the Nov 11-22 2026 sweep: BrightAI is the one in-coverage round.
   // Near-misses recorded so the next cycle doesn't re-verify them: Postround's
   // week-of-Nov-15 Series A list and AlleyWatch's 11/23 weekly report carry
