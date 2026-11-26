@@ -16,6 +16,20 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Stanford's coffee hour retains the organizer's intended audience", () => {
+  const event = {
+    date: "2026-11-27",
+    url: "https://events.stanford.edu/event/office-for-military-affiliated-communities-coffee-donuts",
+    description: "Grab a donut and meet the folks from the Office for Military-Affiliated Communities.",
+  };
+  const reviewed = applyVerifiedEventFacts(event);
+  assert.equal(reviewed.attendanceNote, "The coffee hour is intended for veterans, active-duty service members, reservists, and military-connected students.");
+  assert.equal(reviewed.registration, undefined);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  const outsideRun = { ...event, date: "2026-12-18" };
+  assert.equal(applyVerifiedEventFacts(outsideRun), outsideRun);
+});
+
 test("Educational Park Teens Reach shows the signup conflict without a reservation badge", () => {
   const event = {
     date: "2026-12-02",

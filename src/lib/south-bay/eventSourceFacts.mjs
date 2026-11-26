@@ -496,10 +496,12 @@ const CORRECTIONS = [
     facts: { category: "arts", kidFriendly: true },
   },
   {
-    // Stanford lists this as a social event on Old Union's second floor.
+    // Stanford's full description names the intended audience after the
+    // excerpt carried by the event feed.
     dateFrom: "2026-11-06", dateThrough: "2026-12-11",
     url: "https://events.stanford.edu/event/office-for-military-affiliated-communities-coffee-donuts",
     facts: { category: "community", venue: "Old Union, 2nd Floor" },
+    appendAttendanceNote: "The coffee hour is intended for veterans, active-duty service members, reservists, and military-connected students.",
   },
   // The museum's occurrence page describes a housing-policy talk and names
   // the speakers. The calendar feed supplies the generic museum category.

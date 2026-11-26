@@ -192,7 +192,7 @@ Important rules:
 - Match the source's framing. If a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement" or any other specific subtype unless the data uses that word.
 - Do not state event totals or counts, including ordinary numbers like "three events", repeat counts like "performs twice", or group-count nouns like "trio." The supplied events are a limited selection, not the full calendar; similar listings may describe the same performance. Name the programs instead; retain a number only when it belongs to an event's actual title.
 - No unsupported rankings or superlatives such as "the week's biggest development story". State the sourced project or event without ranking it.
-- No audience labels — don't write "for the intellectually curious," "for foodies," "for nature lovers," or similar. Describe what's happening, not who would like it.
+- Preserve the organizer's stated audience or eligibility requirements when mentioning an event. Skip editorial labels such as "for the intellectually curious," "for foodies," or "for nature lovers."
 - Use neutral verbs for legal or council items ("discussed," "approved," "weighs," "considers"). Avoid sensational framing like "faces legal heat," "battles," "fights," or "tackles" when the source describes a routine agenda item.
 - Match the verb to the source summary. If a city hall summary says the council "held a public hearing," your verb is "heard" or "reviewed" — not "approved." If the summary says "approved," "adopted," or "filed," use that exact verb. Never upgrade a hearing to an approval.
 - A hearing alone does not establish whether approval is still pending. Do not add "approvals pending" or an outcome unless the data explicitly states it.
