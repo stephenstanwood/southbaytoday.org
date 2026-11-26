@@ -88,7 +88,7 @@ interface Props {
 
 const { event, passed: dateHasPassed, retired, updatedAt } = Astro.props;
 const dateUnconfirmed = retired && event.dateUnconfirmed === true;
-const passed = dateHasPassed && !dateUnconfirmed;
+const passed = dateHasPassed && !retired;
 const cityName = event.locality || (event.city ? CITIES.find((c) => c.id === event.city)?.name ?? null : null);
 const pageUrl = `https://southbaytoday.org${Astro.url.pathname}`;
 
@@ -326,7 +326,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
   </Fragment>
 
   <nav class="cal-daynav evx-daynav" aria-label="Breadcrumb">
-    {passed || dateUnconfirmed ? (
+    {dateHasPassed || dateUnconfirmed ? (
       <a class="evx-backlink" href="/events"><span aria-hidden="true">←</span> Upcoming events</a>
     ) : (
       <a class="evx-backlink" href={`/events/${event.date}`}><span aria-hidden="true">←</span> {dayLabel}</a>
@@ -340,7 +340,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
       This event has passed — it happened {dayLabel}. <a href="/events">See what's coming up →</a>
     </p>
   )}
-  {retired && !passed && (
+  {retired && (
     <p class="cal-passed">
       This listing is no longer in South Bay Today's calendar.
       {event.url ? <>Check <a href={event.url} rel="noopener noreferrer">the source</a> before you go, or </>: <>Check with the organizer before you go, or </>}

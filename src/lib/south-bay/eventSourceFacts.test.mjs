@@ -420,6 +420,8 @@ test("Thanksgiving closures follow the library or gallery's own hours", () => {
       "2026-11-27", "Almaden Library is closed November 26 and 27 for Thanksgiving."],
     ["https://events.sjsu.edu/event/copy-of-natalie-and-james-thompson-gallery-common-ground",
       "2026-11-27", "Thompson Gallery is closed November 25 through 27."],
+    ["https://events.stanford.edu/event/touch-me-not-12th-annual-undergraduate-juried-exhibition",
+      "2026-11-27", "Stanford Art Gallery is closed November 23 through 27."],
   ];
   for (const [url, date, note] of rows) {
     const event = { url, date, ongoing: true, attendanceNote: "Check visiting hours." };
@@ -431,6 +433,22 @@ test("Thanksgiving closures follow the library or gallery's own hours", () => {
     const online = { ...event, virtual: true };
     assert.equal(applyVerifiedEventFacts(online).attendanceNote, event.attendanceNote);
   }
+});
+
+test("the museum's Thanksgiving closure supersedes its weekly toddler storytime", () => {
+  const storytime = {
+    date: "2026-11-26", time: "11:30 AM", title: "Toddler Storytime",
+    city: "san-jose", venue: "Children's Discovery Museum", source: "Children's Discovery Museum",
+    url: "https://www.cdm.org/calendar/",
+  };
+  const corrected = applyVerifiedEventFacts(storytime);
+  assert.equal(isEventPublishable(corrected), false);
+  assert.equal(isEventPublishable(applyVerifiedEventFacts({ ...storytime, date: "2026-11-27" })), true);
+  const ledger = retireSlugs({}, [storytime], [], "2026-11-26");
+  const { orphans } = resolveRetired(ledger, [], [], "2026-11-27");
+  assert.equal(orphans.length, 1);
+  assert.equal(orphans[0].event.time, undefined);
+  assert.match(orphans[0].event.description, /closed for Thanksgiving.*no storytime/);
 });
 
 test("East Asia Library exhibit identifies both visitor entry and Thanksgiving closure", () => {
@@ -3407,32 +3425,51 @@ test("the sold-out Monte Sereno CPR class retains its age limit and ticket terms
   }
 });
 
-test("November 25 Pearl Avenue Storytime qualifies pickup and keeps the confirmed ticket policy", () => {
+test("Pearl Avenue Storytime qualifies pickup and keeps the confirmed ticket policy on both dates", () => {
   const policy = "Free, with limited capacity of 50 participants. Tickets are required to enter. Seating for Storytime is available on a first-come, first-served basis.";
   const pickupAtOpening = "A limited number of tickets will be distributed at the Information Desk when the Library opens. Try to arrive early to get your tickets.";
   const pickupBeforeStart = "A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime.";
-  const raw = {
-    id: "sjpl-695477f8cba30d92b60b3b7e",
-    date: "2026-11-25", time: "11:00 AM", cost: "free",
-    title: "Indoor Family Storytime", venue: "Pearl Avenue Library",
-    url: "https://sjpl.bibliocommons.com/v2/events/695477f8cba30d92b60b3b7e",
-    description: policy + " " + pickupAtOpening,
-    attendanceNote: [policy, pickupAtOpening, pickupBeforeStart].join(" "),
-  };
-  const corrected = applyVerifiedEventFacts(raw);
-  assert(requiresAttendanceConfirmation(corrected));
-  assert.equal(corrected.cost, "free");
-  assert.equal(corrected.time, "11:00 AM");
-  for (const field of ["description", "attendanceNote"]) {
-    assert(corrected[field].startsWith(policy));
-    assert.match(corrected[field], /opens.*30 minutes before storytime.*Confirm the pickup time with Pearl Avenue Library/);
-    assert.doesNotMatch(corrected[field], /try to arrive early|tickets will be distributed/i);
+  for (const [date, id] of [["2026-11-25", "695477f8cba30d92b60b3b7e"], ["2026-12-02", "695477f8cba30d92b60b3b7f"]]) {
+    const raw = {
+      id: `sjpl-${id}`, date, time: "11:00 AM", cost: "free",
+      title: "Indoor Family Storytime", venue: "Pearl Avenue Library",
+      url: `https://sjpl.bibliocommons.com/v2/events/${id}`,
+      description: policy + " " + pickupAtOpening,
+      attendanceNote: [policy, pickupAtOpening, pickupBeforeStart].join(" "),
+    };
+    const corrected = applyVerifiedEventFacts(raw);
+    assert(requiresAttendanceConfirmation(corrected));
+    assert.equal(corrected.cost, "free");
+    assert.equal(corrected.time, "11:00 AM");
+    for (const field of ["description", "attendanceNote"]) {
+      assert(corrected[field].startsWith(policy));
+      assert.match(corrected[field], /opens.*30 minutes before storytime.*Confirm the pickup time with Pearl Avenue Library/);
+      assert.doesNotMatch(corrected[field], /try to arrive early|tickets will be distributed/i);
+    }
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    const agreeing = { ...raw, attendanceNote: raw.description };
+    assert.equal(applyVerifiedEventFacts(agreeing), agreeing);
+    const otherDate = { ...raw, date: "2026-12-09" };
+    assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
   }
+});
+
+test("December 2 Almaden tech help keeps verified booking contacts and current resources", () => {
+  const event = {
+    date: "2026-12-02",
+    time: "11:00 AM",
+    registration: "appointment-only",
+    url: "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6ff3",
+    description: "At the Almaden Branch, you can make a 30-minute appointment for assistance with: Accessing non-OverDrive e-books and audiobooks from Boundless, Cloud Library, and Enki; Using Hoopla to read, listen and watch; Connecting to Wi-Fi.",
+    attendanceNote: "Appointments are required. Each person can book one appointment per week. Call (408) 808-3040 or email ab.sjpl@sjlibrary.org.",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.registration, "appointment-only");
+  assert.match(corrected.description, /make an appointment.*Enki.*Wi-Fi/);
+  assert.doesNotMatch(corrected.description, /30-minute|Boundless|Cloud Library|Hoopla/);
+  assert.match(corrected.attendanceNote, /808-3040.*Confirm session length and how often you can book/);
+  assert.doesNotMatch(corrected.attendanceNote, /once per|one appointment per/);
   assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
-  const agreeing = { ...raw, attendanceNote: raw.description };
-  assert.equal(applyVerifiedEventFacts(agreeing), agreeing);
-  const otherDate = { ...raw, date: "2026-12-02" };
-  assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
 });
 
 test("March 6 Rinconada Chair Yoga qualifies conflicting signup instructions", () => {

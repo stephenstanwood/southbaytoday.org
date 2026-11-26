@@ -22,10 +22,11 @@ const ALMADEN_TECH_HELP_COPY = [
   [/\b(Checking out a 7-day pass to access Great Courses from Libby) or Hoopla\b/gi, "$1"],
 ];
 
-// The November 25 booking panel and description give different session
-// lengths and limits. Keep the agreed appointment requirement and contacts.
+// These booking panels and descriptions give different session lengths and
+// limits. Keep the agreed appointment requirement and contacts.
 // https://sjpl.bibliocommons.com/v2/events/69f10f4bfb87a3c2e2ac6ff0
-const ALMADEN_NOVEMBER_25_BOOKING_COPY = [
+// https://sjpl.bibliocommons.com/v2/events/69f10f4bfb87a3c2e2ac6ff3
+const ALMADEN_CONFLICTING_BOOKING_COPY = [
   [
     "The Almaden Branch offers 30-minute tech help appointments.",
     "The Almaden Branch offers one-on-one tech help by appointment.",
@@ -1682,7 +1683,7 @@ const CORRECTIONS = [
     url: `https://sjpl.bibliocommons.com/events/${id}`,
     aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${id}`],
     copyReplacements: date === "2026-11-25"
-      ? [...ALMADEN_TECH_HELP_COPY, ...ALMADEN_NOVEMBER_25_BOOKING_COPY]
+      ? [...ALMADEN_TECH_HELP_COPY, ...ALMADEN_CONFLICTING_BOOKING_COPY]
       : ALMADEN_TECH_HELP_COPY,
   })),
   // The December 1 panel and description agree on appointments by phone.
@@ -1701,6 +1702,13 @@ const CORRECTIONS = [
         attendanceNote: "Appointments are required. Call Almaden Library at (408) 808-3040 to book.",
       }),
     }),
+  },
+  {
+    date: "2026-12-02",
+    url: "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6ff3",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/69f10f4bfb87a3c2e2ac6ff3"],
+    copyReplacements: [...ALMADEN_TECH_HELP_COPY, ...ALMADEN_CONFLICTING_BOOKING_COPY],
+    appendAttendanceNote: "Confirm session length and how often you can book with Almaden Library.",
   },
   // The sold-out occurrence page confirms a workshop fee and supplies. It
   // gives no price amount. Leave the waitlist and any current price intact.
@@ -4589,11 +4597,15 @@ const CORRECTIONS = [
       [/ ?A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./gi, ""],
     ],
   },
-  // The separately verified November 25 page repeats both pickup times.
+  // Both dated library pages repeat the conflicting pickup times.
   // The desk, required free tickets and 50-person limit agree.
-  {
-    date: "2026-11-25",
-    matches: (event) => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/695477f8cba30d92b60b3b7e\/?$/.test(event.url || "")
+  ...[
+    ["2026-11-25", "695477f8cba30d92b60b3b7e"],
+    ["2026-12-02", "695477f8cba30d92b60b3b7f"],
+  ].map(([date, id]) => ({
+    date,
+    matches: (event) => [`https://sjpl.bibliocommons.com/events/${id}`, `https://sjpl.bibliocommons.com/v2/events/${id}`]
+      .includes(event.url?.replace(/\/$/, ""))
       && /\bwhen the library opens\b/i.test(event.description || "")
       && /\b30 minutes prior to the start of storytime\b/i.test(event.attendanceNote || ""),
     facts: { attendanceStatus: "needs-confirmation" },
@@ -4602,7 +4614,7 @@ const CORRECTIONS = [
         "The event description says ticket pickup at the Information Desk starts when the library opens. The signup instructions say 30 minutes before storytime. Confirm the pickup time with Pearl Avenue Library."],
       [/ ?A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./gi, ""],
     ],
-  },
+  })),
   // The authenticated newsletter invites reservations. The dated 11:30 AM
   // booking page confirms a paid reserved seating: $70 meal + $5 fees.
   // On November 17 the exact page says the seating is not currently on sale
@@ -7825,6 +7837,9 @@ const EXHIBIT_THANKSGIVING_CLOSURES = new Map([
   // https://www.cdm.org/hours-pricing/
   ["https://www.cdm.org/event/iceless-skating-rink/2026-11-21/",
     ["2026-11-26", "The museum is closed Thursday, November 26, for Thanksgiving."]],
+  // https://art.stanford.edu/events/touch-me-not-12th-annual-undergraduate-juried-exhibition
+  ["https://events.stanford.edu/event/touch-me-not-12th-annual-undergraduate-juried-exhibition",
+    ["2026-11-27", "Stanford Art Gallery is closed November 23 through 27."]],
   // https://library-hours.stanford.edu/libraries.json?from=2026-11-24&to=2026-11-30
   ["https://events.stanford.edu/event/electric-contrasts-the-art-of-the-detail-7315",
     ["2026-11-29", "Bowes Art & Architecture Library is closed November 26 through 29."]],
@@ -7923,9 +7938,16 @@ export function applyVerifiedEventFacts(event) {
   // room and age group, and does not advertise songs or other activities.
   if (event?.source === "Children's Discovery Museum" && event.title === "Toddler Storytime"
       && /^https:\/\/www\.cdm\.org\/(?:calendar|recurring-event\/toddler-storytime)\/?$/.test(event.url || "")) {
+    const url = "https://www.cdm.org/recurring-event/toddler-storytime/";
+    // The calendar's Wednesday–Sunday cadence omits the museum's holiday closure.
+    // https://www.cdm.org/hours-pricing/
+    if (event.date === "2026-11-26") {
+      const closure = "The museum is closed for Thanksgiving on November 26, so there is no storytime that day.";
+      return { ...event, url, eventStatus: "EventCancelled", description: closure, blurb: closure };
+    }
     event = {
       ...event,
-      url: "https://www.cdm.org/recurring-event/toddler-storytime/",
+      url,
       description: "Storytime in the Wonder Cabinet Forest for children ages 4 and under.",
       blurb: "Bring children ages 4 and under to storytime in the Wonder Cabinet Forest.",
     };
