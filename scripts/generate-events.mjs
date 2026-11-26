@@ -6953,14 +6953,20 @@ function mapTicketmasterEvent(e) {
   const rawInfo = (e.info || "").trim();
   const rawNote = (e.pleaseNote || "").trim();
   // Admission age gates are facts even when the surrounding venue policy is
-  // unsuitable for a description. Preserve only an explicit 18+/21+ rule;
-  // a comedy venue or legalAgeEnforced boolean does not establish that age.
+  // unsuitable for a description. A venue or legalAgeEnforced boolean
+  // alone does not establish an age limit or an ID requirement.
   const minimumAge = `${rawInfo}\n${rawNote}`.match(
     /\b(?:this\s+(?:event|show)\s+is\s+|must\s+be\s+|ages?\s+)(18|21)\s*(?:\+|(?:and|or|&)\s+(?:over|up|older))(?=\s|[.!:;,)]|$)/i,
   )?.[1];
+  const ageIdRequirement = /\bAny ticket holder unable to present valid identification(?: indicating that they are at least (18|21) years of age)? will not be admitted\b/i;
+  const requiresAgeId = minimumAge && [rawInfo, rawNote].some((field) => {
+    const requirement = field.match(ageIdRequirement);
+    return requirement && (!requirement[1] || requirement[1] === minimumAge);
+  });
   const attendanceNotes = [
     soldOut && "Tickets are sold out according to the ticket seller.",
     minimumAge && `Ages ${minimumAge}+.`,
+    requiresAgeId && "Valid ID required.",
     ticketmasterItemMinimum(rawInfo, rawNote),
   ].filter(Boolean);
   let descCandidate = "";

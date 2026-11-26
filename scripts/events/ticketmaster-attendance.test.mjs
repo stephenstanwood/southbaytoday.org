@@ -72,6 +72,20 @@ test("fresh source text can remove the requirement without a dated or venue-base
   assert.equal(mapped.venue, "San Jose Improv");
 });
 
+test("an explicit ticket holder ID requirement survives alongside event copy", () => {
+  // Ticketmaster Discovery, Shrek Rave at The Ritz on February 6, 2027.
+  const info = "VIP ticket holders receive early entry and access to a reserved front section.";
+  const ageOnly = "This event is 18 and over.";
+  const idRequired = "Any ticket holder unable to present valid identification indicating that they are at least 18 years of age will not be admitted to this event.";
+  const event = mapTicketmasterEvent({ ...source, info, pleaseNote: `${ageOnly} ${idRequired}` });
+
+  assert.equal(event.description, info);
+  assert.equal(event.attendanceNote, "Ages 18+. Valid ID required.");
+  assert.equal(mapTicketmasterEvent({ ...source, info, pleaseNote: ageOnly }).attendanceNote, "Ages 18+.");
+  const conflictingAge = idRequired.replace("18 years", "21 years");
+  assert.equal(mapTicketmasterEvent({ ...source, info, pleaseNote: `${ageOnly} ${conflictingAge}` }).attendanceNote, "Ages 18+.");
+});
+
 test("the Ritz's booth and room rentals do not establish an admission price", () => {
   const ritz = {
     ...source,
