@@ -2095,6 +2095,9 @@ function maskDomainAndDecimalDots(text) {
   // starting a new sentence. Leave other following words for sentence casing.
   t = t.replace(/\b(Bros|Jr|Sr|[A-Z])\.(?=\s+(?:and|or|y|e|o|u)\b)/g,
     `$1${DOT_PLACEHOLDER}`);
+  // Protect a name's possessive ending from the sentence splitter, and
+  // repair any space inserted by a prior pass ("Jr.' s").
+  t = t.replace(/\b(Jr|Sr|[A-Z])\.(['’])\s*(?=s\b)/g, `$1${DOT_PLACEHOLDER}$2`);
   // A company suffix followed by a continuing verb is part of the subject,
   // not a sentence boundary ("Puppet Art Theater Co. presents Super Tommy").
   t = t.replace(/\b(Co|Inc|Ltd|Corp)\.(?=\s+(?:presents|performs|hosts|offers|provides|invites|brings)\b)/g,

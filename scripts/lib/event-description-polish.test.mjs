@@ -506,6 +506,15 @@ test("name abbreviations preserve English and Spanish list continuations, then c
     "Meet Martin Luther King Jr. and his family. Bring a book.");
 });
 
+test("keeps the apostrophe attached to possessive name abbreviations", () => {
+  const reviewed = "Read Bill Martin Jr.'s book or J. R.'s story. Meet Bill Martin Sr. Bring a book.";
+  assert.equal(
+    polishDescription("Read Bill Martin Jr.’s book or J. R.' s story. Meet Bill Martin Sr. bring a book."),
+    reviewed,
+  );
+  assert.equal(polishDescription(reviewed), reviewed);
+});
+
 test("preserves OpenAI in prose while leaving source links byte-identical", () => {
   for (const source of [
     "Read OpenAI's Model Spec.",

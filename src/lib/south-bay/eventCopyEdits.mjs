@@ -1154,6 +1154,8 @@ const EDITS = {
         "Join us for a class series covering: The naturalization process; U.S. history and government; English language skills for the citizenship interview.",
         "Join us for a class series on the naturalization process, U.S. history and government, and English skills for the citizenship interview.",
       ],
+      // Hyphenate the library source before matching the longer Sphero passage.
+      ["simple, beginner friendly activities", "simple, beginner-friendly activities"],
       [
         "Learn the basics of Sphero. Learn to roll, aim, control the LEDs, change heading, and detect collisions. Once you have the basics down, " +
           "you can practice coding through simple, beginner-friendly activities. Students will be introduced to coding and robotics using the iPad and Sphero robots.",
@@ -1234,7 +1236,6 @@ const EDITS = {
       ["the four core language skills - Speaking, Listening, Reading and Writing aligned with", "the four core language skills—speaking, listening, reading, and writing—in alignment with"],
       ["As an added challenge participants", "As an added challenge, participants"],
       ["a balloon popping battle", "a balloon-popping battle"],
-      ["simple, beginner friendly activities", "simple, beginner-friendly activities"],
       [/held on the (1st|2nd|3rd|4th|5th) (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) at (\d{1,2}(?::\d{2})? [AP]M) of the month in /g, "held on the $1 $2 of the month at $3 in "],
       ["in Pearl Ave Branch Library Community Room.", "in the Pearl Ave Branch Library Community Room."],
       ["Learn the fun of collecting stamps", "Discover the fun of collecting stamps"],
@@ -1884,6 +1885,10 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        "Join the whole family for stories, songs, rhymes, fingerplays, and movement activities at this early literacy storytime with a mix of ages.",
+        "Children of all ages and their families can enjoy stories, songs, rhymes, fingerplays, and movement that build early literacy skills.",
+      ],
       ["Play bingo for a chance at a variety of prizes; this session is for adults 18 and older.", "Adults 18 and older can play bingo for a chance to win a variety of prizes."],
       [
         "Play Pokémon TCG with tutorial decks that teach the rules, and build a deck from library cards.",
@@ -2982,6 +2987,10 @@ const EDITS = {
     ],
     blurb: [
       [
+        "Visit the Children's Discovery Museum for holiday-themed programming, with the museum's seasonal activities running through the holiday stretch.",
+        "Explore holiday-themed activities at the Children's Discovery Museum.",
+      ],
+      [
         "Stroll through the shops and restaurants of Historic Saratoga Village on a Friday evening wine walk, with tickets sold through Eventbrite.",
         "Take a Friday evening wine stroll through the shops and restaurants of Historic Saratoga Village. Tickets are sold through Eventbrite.",
       ],
@@ -3052,6 +3061,10 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        /^Holiday-themed programming at Children's Discovery Museum running ([A-Z][a-z]+ \d{1,2} through [A-Z][a-z]+ \d{1,2})\. The newsletter gives no daily times or other details\.$/g,
+        "The Children's Discovery Museum offers holiday-themed activities from $1.",
+      ],
       [
         /^(The Saratoga Chamber of Commerce hosts a wine stroll through the shops and restaurants of Historic Saratoga Village on the evening of November 27\.) Tickets are sold through Eventbrite\./g,
         "$1 Advance tickets are sold through Eventbrite.",
