@@ -16,6 +16,26 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Small Business Saturday's timed listing describes the plaza giveaway", () => {
+  const allDay = {
+    title: "Small Business Saturday",
+    date: "2026-11-28",
+    url: "https://downtownlosaltos.org/event/small-business-saturday/",
+    time: null,
+    endTime: null,
+    venue: "Downtown Los Altos",
+  };
+
+  const reviewed = applyVerifiedEventFacts(allDay);
+  assert.equal(reviewed.venue, "Veterans Community Plaza");
+  assert.equal(reviewed.time, "11:00 AM");
+  assert.equal(reviewed.endTime, "2:00 PM");
+  assert.match(reviewed.attendanceNote, /hours are for the plaza giveaway/);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  const nextYear = { ...allDay, date: "2027-11-27" };
+  assert.equal(applyVerifiedEventFacts(nextYear), nextYear);
+});
+
 test("Stanford's coffee hour retains the organizer's intended audience", () => {
   const event = {
     date: "2026-11-27",

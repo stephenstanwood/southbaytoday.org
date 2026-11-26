@@ -333,6 +333,20 @@ const CORRECTIONS = [
       "Online registration for 10-minute sessions opens Wednesday, November 25 at 8:00 AM",
     ]],
   },
+  // The organizer's calendar marks Small Business Saturday as all-day. Its
+  // 11 AM–2 PM hours apply to the giveaway at Veterans Community Plaza.
+  {
+    date: "2026-11-28",
+    url: "https://downtownlosaltos.org/event/small-business-saturday/",
+    facts: {
+      time: "11:00 AM",
+      endTime: "2:00 PM",
+      venue: "Veterans Community Plaza",
+      description: "The Los Altos Village Association hosts a giveaway at Veterans Community Plaza from 11 AM to 2 PM for Small Business Saturday. Visit downtown shops throughout the day.",
+      blurb: "Stop by the Small Business Saturday giveaway at Veterans Community Plaza between 11 AM and 2 PM.",
+    },
+    appendAttendanceNote: "The 11 AM–2 PM hours are for the plaza giveaway.",
+  },
   // The organizer names the plaza in the event body. The local chamber
   // confirms free admission: https://business.losaltoschamber.org/events/details/holiday-tree-celebration-5987
   {
