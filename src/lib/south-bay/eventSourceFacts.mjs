@@ -135,6 +135,18 @@ const HISTORY_PARK_HOLIDAY_TEA_FACTS = {
   image: "https://www.sanjose.org/sites/default/files/styles/listing_detail_image/public/holiday-tea-square_7E07C13C-0D75-325C-4D57FD8380D1522C_7e083ab9-c961-5569-dc44c85a623d74a0.png.webp?itok=FJz4l4tn",
 };
 
+function gambleGardenAdmissionFacts(event, cost, costNote) {
+  if (event.costNote) return {};
+  return {
+    cost,
+    costNote,
+    // Event cards and detail pages display attendance notes.
+    attendanceNote: event.attendanceNote?.includes(costNote)
+      ? event.attendanceNote
+      : [event.attendanceNote, costNote].filter(Boolean).join(" "),
+  };
+}
+
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
@@ -7058,14 +7070,40 @@ const CORRECTIONS = [
       attendanceNote: "Limit two items per household. Check-in closes at 2:30 PM and may close earlier if capacity is reached.",
     },
   },
-  // The Winter Festival program requires reservations for all four seatings.
-  // Gamble Garden's individual occurrence pages omit that requirement.
+  // The 2026 Winter Festival program and its ticket seller supply admission
+  // terms that are missing from the individual calendar pages.
   // https://www.gamblegarden.org/winter/winter-festival-2026/
+  // https://events.humanitix.com/winter-festival-2026/tickets
+  {
+    date: "2026-12-03", url: "https://www.gamblegarden.org/event/opening-party/",
+    facts: event => ({
+      ...gambleGardenAdmissionFacts(event, "paid", "$100 general admission. $80 for Gamble Garden members."),
+      audienceAge: "adult",
+      kidFriendly: false,
+    }),
+    appendAttendanceNote: "Adults only.",
+  },
+  ...["2026-12-04", "2026-12-05"].map(date => ({
+    date, url: `https://www.gamblegarden.org/event/holiday-marketplace/${date}/`,
+    facts: event => ({
+      ...gambleGardenAdmissionFacts(event, "low", "$10 admission covers both days. Free for children ages 12 and under."),
+      kidFriendly: true,
+      audienceAge: "all",
+    }),
+  })),
+  {
+    date: "2026-12-04", url: "https://www.gamblegarden.org/event/once-upon-a-garden/",
+    facts: event => gambleGardenAdmissionFacts(event, "paid",
+      "$45 general admission. $36 for Gamble Garden members. Free for children under 12 months."),
+  },
   {
     dateFrom: "2026-12-04", dateThrough: "2026-12-05",
     matches: event => event.source === "Gamble Garden" && event.title === "Holiday Tea"
       && event.url?.startsWith(`https://www.gamblegarden.org/event/holiday-tea/${event.date}/`),
-    facts: { registration: REGISTRATION_REQUIRED },
+    facts: event => ({
+      ...gambleGardenAdmissionFacts(event, "paid", "$85 general admission. $68 for Gamble Garden members."),
+      registration: REGISTRATION_REQUIRED,
+    }),
   },
   {
     date: "2026-12-05", title: /^History Park Heritage Holiday Tea$/i,

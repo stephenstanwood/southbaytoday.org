@@ -5017,19 +5017,60 @@ test("MOAH's verified free repair session keeps its check-in deadline and item l
   }
 });
 
-test("Gamble Garden's four 2026 Holiday Tea seatings require reservations", () => {
+test("Gamble Garden's 2026 holiday marketplace pass covers both dates and kids 12 and under are free", () => {
+  const admission = "$10 admission covers both days. Free for children ages 12 and under.";
+  for (const date of ["2026-12-04", "2026-12-05"]) {
+    const event = {
+      date, url: `https://www.gamblegarden.org/event/holiday-marketplace/${date}/`,
+      cost: null, kidFriendly: false,
+    };
+    const reviewed = applyVerifiedEventFacts(event);
+    assert.deepEqual(reviewed, {
+      ...event, cost: "low", costNote: admission, attendanceNote: admission,
+      kidFriendly: true, audienceAge: "all",
+    });
+    assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+    const reticketed = {
+      ...reviewed, cost: "paid", costNote: "Updated organizer pricing", attendanceNote: "Updated organizer pricing",
+    };
+    assert.deepEqual(applyVerifiedEventFacts(reticketed), reticketed);
+    const nextYear = { ...event, date: date.replace("2026", "2027") };
+    assert.equal(applyVerifiedEventFacts(nextYear), nextYear);
+  }
+});
+
+test("Gamble Garden separates adults-only opening-night admission from family-night admission", () => {
+  const opening = { date: "2026-12-03", url: "https://www.gamblegarden.org/event/opening-party/", cost: null };
+  const familyNight = { date: "2026-12-04", url: "https://www.gamblegarden.org/event/once-upon-a-garden/", cost: null };
+  const openingPrice = "$100 general admission. $80 for Gamble Garden members.";
+  const familyPrice = "$45 general admission. $36 for Gamble Garden members. Free for children under 12 months.";
+  assert.deepEqual(applyVerifiedEventFacts(opening), {
+    ...opening, cost: "paid", costNote: openingPrice,
+    audienceAge: "adult", kidFriendly: false, attendanceNote: `${openingPrice} Adults only.`,
+  });
+  assert.deepEqual(applyVerifiedEventFacts(familyNight), {
+    ...familyNight, cost: "paid", costNote: familyPrice, attendanceNote: familyPrice,
+  });
+});
+
+test("Gamble Garden's four 2026 Holiday Tea seatings are paid and require reservations", () => {
   const raw = {
     date: "2026-12-04", title: "Holiday Tea", source: "Gamble Garden", cost: null,
     url: "https://www.gamblegarden.org/event/holiday-tea/2026-12-04/1/",
   };
+  const costNote = "$85 general admission. $68 for Gamble Garden members.";
   for (const date of ["2026-12-04", "2026-12-05"]) {
     for (const seating of ["1", "3"]) {
       const event = { ...raw, date, url: `https://www.gamblegarden.org/event/holiday-tea/${date}/${seating}/` };
-      assert.deepEqual(applyVerifiedEventFacts(event), { ...event, registration: "required" });
+      assert.deepEqual(applyVerifiedEventFacts(event), {
+        ...event, cost: "paid", costNote, attendanceNote: costNote, registration: "required",
+      });
     }
   }
   const closed = { ...raw, registration: "closed", attendanceNote: "Booking window closed." };
-  assert.deepEqual(applyVerifiedEventFacts(closed), closed);
+  assert.deepEqual(applyVerifiedEventFacts(closed), {
+    ...closed, cost: "paid", costNote, attendanceNote: `Booking window closed. ${costNote}`,
+  });
   for (const other of [
     { ...raw, date: "2027-12-04", url: raw.url.replace("2026", "2027") },
     { ...raw, url: "https://www.gamblegarden.org/event/another-tea/" },
