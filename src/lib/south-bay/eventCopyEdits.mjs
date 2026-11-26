@@ -2255,6 +2255,10 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
     ],
     description: [
+      [
+        "a friendly dog or cat -- your very own furry audience!",
+        "a friendly dog or cat — your very own furry audience!",
+      ],
       SCCLD_BABY_SIGN_AGE_EDIT,
       [
         /By the end of the program, attendees will be able to: Differentiate between library collections and identify which collections are best for their child\. Leverage printed and digital reader's advisory aids to find items for their children\. Search for items in the catalog and use search facets to narrow results\./gi,
@@ -2656,6 +2660,14 @@ const EDITS = {
       SCCLD_SENSORY_PLAY_AUDIENCE_EDIT,
     ],
     blurb: [
+      [
+        "Join a Dungeons & Dragons campaign, grabbing a premade character sheet or bringing your own, with snacks provided for ages 13 and up.",
+        "Players ages 13 and up can join the Dungeons & Dragons campaign. Pick up a premade character sheet or bring your own. Snacks are provided.",
+      ],
+      [
+        "Try a new art technique and make a piece to take home at this art therapy session for kids 10 and up with their caregivers.",
+        "At this art therapy session, try a new technique and make a piece to take home. Kids ages 10 and up and their adult caregivers are welcome.",
+      ],
       SCCLD_READERS_ADVISORY_EDIT,
       [
         "Bring K-5 homework and work with volunteer tutors who provide basic school supplies as space allows.",
