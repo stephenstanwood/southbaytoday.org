@@ -6,11 +6,18 @@ export const prerender = false;
 // GET /api/place-photo?ref=places/xxx/photos/yyy&w=400&h=300
 // Proxies Google Places photos with API key server-side.
 // Returns the image directly with caching headers.
+//
+// Vercel keys its CDN cache by deployment, and this site deploys many times a
+// day, so a photo cached here is downloaded from Google again after every
+// deploy. Requests therefore go to the photo cache first: its own Vercel
+// project (photo-cache/) that redeploys only when the loader changes. The
+// local loader below is the fallback. See docs/place-photos.md.
 // ---------------------------------------------------------------------------
 
 import type { APIRoute } from "astro";
 import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
-import { canonicalPhotoSearch, createPhotoLoader, parsePhotoRequest } from "../../lib/placePhoto.mjs";
+import { canonicalPhotoSearch, createPhotoLoader, parsePhotoRequest, photoResponse } from "../../lib/placePhoto.mjs";
+import { forwardToPhotoCache } from "../../lib/photoCache.mjs";
 
 const loadPhoto = createPhotoLoader();
 
@@ -32,28 +39,11 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
     });
   }
 
-  try {
-    const image = await loadPhoto(photo, import.meta.env.GOOGLE_PLACES_API_KEY);
-    const headers: Record<string, string> = {
-      "Content-Type": image.contentType,
-      "Cache-Control": "public, max-age=86400, s-maxage=604800",
-      "X-SBT-Photo-Source": image.source,
-    };
-    if (image.sourcePage) headers.Link = `<${image.sourcePage}>; rel="describedby"`;
-    return new Response(image.body, {
-      status: 200,
-      headers,
-    });
-  } catch (error) {
-    // A photo that is gone even after the current-photo lookup stays gone for
-    // a while; let the CDN answer repeats instead of re-asking Google.
-    if (error instanceof Error && error.message === "Photo not found") {
-      return new Response("Photo not found", {
-        status: 404,
-        headers: { "Cache-Control": "public, max-age=3600, s-maxage=86400" },
-      });
-    }
-    if (error instanceof Error && error.message === "Server config error") return new Response("Server config error", { status: 500 });
-    return new Response("Photo fetch failed", { status: 502 });
-  }
+  const relayed = await forwardToPhotoCache(search, {
+    origin: import.meta.env.PHOTO_CACHE_ORIGIN,
+    secret: import.meta.env.PHOTO_CACHE_SECRET,
+  });
+  if (relayed) return relayed;
+
+  return photoResponse(loadPhoto, photo, import.meta.env.GOOGLE_PLACES_API_KEY);
 };

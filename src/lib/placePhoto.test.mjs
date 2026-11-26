@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import sharp from "sharp";
 import venuePhotos from "../data/south-bay/venue-photos.json" with { type: "json" };
-import { canonicalPhotoSearch, createPhotoLoader, parsePhotoRequest } from "./placePhoto.mjs";
+import { canonicalPhotoSearch, createPhotoLoader, parsePhotoRequest, photoResponse } from "./placePhoto.mjs";
 
 const rinconada = "places/ChIJ44hkHAW7j4ARgHyd2BdSyN8/photos/opaque-token";
 const other = "places/another-place/photos/opaque-token";
@@ -238,6 +238,45 @@ test("a refreshed name must belong to the same place; a gone place stays not fou
     });
     await assert.rejects(load(request(other), "test-key"), /Photo not found/);
     assert.equal(mediaCalls, 1);
+  }
+});
+
+test("a capped, refused or failing Google answer is unavailable, never a missing photo", async () => {
+  for (const status of [401, 403, 429, 500, 503]) {
+    const calls = [];
+    const load = createPhotoLoader({
+      fetchImpl: async (url) => { calls.push(String(url)); return new Response(null, { status }); },
+      log: quiet,
+    });
+    await assert.rejects(load(request(other), "test-key"), /Photo upstream unavailable/, String(status));
+    assert.equal(calls.filter((url) => !url.includes("/media")).length, 0, `${status}: no expired-name lookup`);
+  }
+});
+
+test("a capped or failing place lookup during an expired-name refresh is unavailable, not missing", async () => {
+  for (const lookup of [() => new Response(null, { status: 429 }), () => { throw new Error("socket hang up"); }]) {
+    const load = createPhotoLoader({
+      fetchImpl: async (url) => (String(url).includes("/media") ? new Response(null, { status: 400 }) : lookup()),
+      log: quiet,
+    });
+    await assert.rejects(load(request(other), "test-key"), /Photo upstream unavailable/);
+  }
+});
+
+test("photos cache for a week, a missing photo for a day, and a capped or failed answer not at all", async () => {
+  const found = await photoResponse(async () => ({ body: new Uint8Array([1]), contentType: "image/jpeg", source: "google-places" }), request(other), "k");
+  assert.equal(found.status, 200);
+  assert.equal(found.headers.get("cache-control"), "public, max-age=86400, s-maxage=604800");
+  assert.equal(found.headers.get("x-sbt-photo-source"), "google-places");
+  const answers = {
+    "Photo not found": [404, "public, max-age=3600, s-maxage=86400"],
+    "Photo upstream unavailable": [503, "no-store"],
+    "socket hang up": [502, "no-store"],
+  };
+  for (const [message, [status, cacheControl]] of Object.entries(answers)) {
+    const response = await photoResponse(async () => { throw new Error(message); }, request(other), "k");
+    assert.equal(response.status, status, message);
+    assert.equal(response.headers.get("cache-control"), cacheControl, message);
   }
 });
 

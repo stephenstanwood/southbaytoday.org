@@ -1,10 +1,14 @@
 {
   "framework": "astro",
-  "ignoreCommand": "[ \"$VERCEL_ENV\" = \"preview\" ] && exit 0 || exit 1",
+  "ignoreCommand": "node scripts/vercel-ignore-build.mjs",
   "crons": [
     {
       "path": "/api/admin/lookout/reconcile",
       "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/admin/deploy-flush",
+      "schedule": "20 * * * *"
     }
   ]
 }

@@ -1,0 +1,11 @@
+{
+  "name": "sbt-photo-cache",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "sharp": "^0.35.5"
+  }
+}

@@ -16,8 +16,48 @@ export function canonicalPhotoSearch(photo) {
   return new URLSearchParams({ ref: photo.ref, w: String(photo.width), h: String(photo.height) }).toString();
 }
 
+export const PHOTO_CACHE_CONTROL = "public, max-age=86400, s-maxage=604800";
+export const MISSING_PHOTO_CACHE_CONTROL = "public, max-age=3600, s-maxage=86400";
+
+/** The HTTP answer for one canonical photo request, shared by the site route and the photo cache. */
+export async function photoResponse(loadPhoto, photo, apiKey) {
+  try {
+    const image = await loadPhoto(photo, apiKey);
+    const headers = {
+      "Content-Type": image.contentType,
+      "Cache-Control": PHOTO_CACHE_CONTROL,
+      "X-SBT-Photo-Source": image.source,
+    };
+    if (image.sourcePage) headers.Link = `<${image.sourcePage}>; rel="describedby"`;
+    return new Response(image.body, { status: 200, headers });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    // A photo that is gone even after the current-photo lookup stays gone for
+    // a while; let the CDN answer repeats instead of re-asking Google.
+    if (message === "Photo not found") {
+      return new Response("Photo not found", { status: 404, headers: { "Cache-Control": MISSING_PHOTO_CACHE_CONTROL } });
+    }
+    if (message === "Server config error") return new Response("Server config error", { status: 500 });
+    // A quota cap, outage or timeout is temporary. Never cache it, so the
+    // photo returns as soon as Google answers again; cards show their fallback.
+    return new Response("Photo fetch failed", {
+      status: message === "Photo upstream unavailable" ? 503 : 502,
+      headers: { "Cache-Control": "no-store", "Retry-After": "300" },
+    });
+  }
+}
+
+/** A refusal that says nothing about the photo itself: quota cap, key problem or outage. */
+function upstreamUnavailable(status) {
+  return status === 401 || status === 403 || status === 429 || status >= 500;
+}
+
 async function imageBytes(response) {
   const type = response.headers.get("content-type") || "";
+  // Only a real miss may be cached as "not found". A daily quota cap answers
+  // 429 until midnight, and caching that as a missing photo would hide the
+  // photo for a day after Google starts serving it again.
+  if (!response.ok && upstreamUnavailable(response.status)) throw new Error("Photo upstream unavailable");
   if (!response.ok || !/^image\/(jpeg|png|webp|gif|avif)(?:;|$)/i.test(type)) {
     throw new Error("Photo not found");
   }
@@ -108,12 +148,21 @@ export function createPhotoLoader({ fetchImpl = fetch, resize = resizeVenuePhoto
 
   /** This place's current first photo name, or null when Places has none. */
   async function currentPhotoName(placeId, apiKey) {
+    let response;
     try {
-      const response = await fetchImpl(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`, {
+      response = await fetchImpl(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`, {
         headers: { "X-Goog-Api-Key": apiKey, "X-Goog-FieldMask": "photos" },
         signal: AbortSignal.timeout(5000),
       });
-      if (!response.ok) { response.body?.cancel().catch(() => {}); return null; }
+    } catch {
+      throw new Error("Photo upstream unavailable");
+    }
+    if (!response.ok) {
+      response.body?.cancel().catch(() => {});
+      if (upstreamUnavailable(response.status)) throw new Error("Photo upstream unavailable");
+      return null;
+    }
+    try {
       const name = (await response.json())?.photos?.[0]?.name;
       return typeof name === "string" && name.startsWith(`places/${placeId}/photos/`) ? name : null;
     } catch {
