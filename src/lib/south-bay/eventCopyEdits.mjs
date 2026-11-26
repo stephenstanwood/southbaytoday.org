@@ -1735,6 +1735,54 @@ const EDITS = {
         "¿Estás cansado de no poder hacer cosas tecnológicas por ti mismo? ¿Cansado de esperar a que los miembros de tu familia te ayuden o hagan las cosas por ti? ¡Ahora puedes aprender a hacer todo eso por ti mismo!",
         "¿Quieres aprender a usar la tecnología por tu cuenta?",
       ],
+      [
+        "This workshop will include how to highlight your accomplishments and transferable skills in your resume, and what to include and what not to include in your cover letter.",
+        "Learn how to highlight your accomplishments and transferable skills on your resume and decide what belongs in your cover letter.",
+      ],
+      [
+        "Baby/Toddler Storytime invites children and their caregivers",
+        "Baby / Toddler Storytime invites children and their caregivers",
+      ],
+      [
+        "This program runs concurrently with our Baby & Toddler Storytime and offers young ones a quieter/low-energy alternative.",
+        "This program runs at the same time as Baby & Toddler Storytime and offers children a quieter, lower-energy option.",
+      ],
+      [
+        "Join us for an interview workshop focusing on interview strategies specifically in closing statements with an emphasis on what to do and what to avoid.",
+        "Join us for a workshop on what to do and what to avoid in a job interview's closing statement.",
+      ],
+      [
+        "Sometimes we are having a great interview and yet fall short at the end. Based on the principle of recency--how the last thing you say is what your interviewers may remember the most--we provide strategies to help you make that lasting positive impression.",
+        "Interviewers may remember your last words best. Learn how to leave a lasting positive impression.",
+      ],
+      [
+        "This programs is followed immediately by: Navigating difficult conversations at work In partnership with SJSU Department of Communication Studies Free.",
+        "Navigating Difficult Conversations at Work follows immediately. Presented in partnership with the SJSU Department of Communication Studies. Free.",
+      ],
+      [
+        "We can help learn strategies to communicate calmly and respectfully during challenging conversations such as giving and receiving feedback at work and managing disagreements. We will focus on empathic listening and dialogue, and providing constructive feedback.",
+        "Learn to communicate calmly and respectfully when giving or receiving feedback and managing disagreements at work. We'll focus on empathic listening, dialogue, and constructive feedback.",
+      ],
+      [
+        "This program is immediately preceded by Seal the Deal: Closing statements in job interviews. In partnership with SJSU Department of Communication Studies Free.",
+        "Seal the Deal: Closing Statements in Job Interviews takes place immediately before this workshop. Presented in partnership with the SJSU Department of Communication Studies. Free.",
+      ],
+      [
+        "Would you like to connect with other members in your community? Join us in-person. We will provide a welcoming and respectful gathering space for members of the community to talk, and build positive community member relationships.",
+        "Join us in person for a welcoming, respectful gathering where neighbors can talk and get to know one another.",
+      ],
+      [
+        "Two leaders will guide the group in weekly topics. Basic understanding of English required. The purpose of this group is to practice speaking and to increase a learner's facility and comfort in speaking.",
+        "Two group leaders guide discussions on weekly topics. A basic understanding of English is required. The group helps learners practice speaking and feel more comfortable using English.",
+      ],
+      [
+        "Parents & caregivers: bring your little ones ages 5 and younger to a playdate at the Library! Kids will discover new toys and activities while adults will have a chance to chat and get acquainted while sipping tea.",
+        "Parents and caregivers can bring kids ages 5 and younger to a library playdate. Kids can try new toys and activities while adults sip tea and get to know one another.",
+      ],
+      [
+        "Spanish Language Learners are welcome to join and practice conversational skills.",
+        "Spanish language learners are welcome to practice conversation.",
+      ],
     ],
     blurb: [
       [
@@ -2258,6 +2306,10 @@ const EDITS = {
         "for an afternoon of action, adventure and comedy in this motion capture version of the well-known Tintin series by Herge.",
         "for an afternoon of action, adventure, and comedy in this motion-capture adaptation of Hergé's Tintin series.",
       ],
+      [
+        "Find out on Sunday, December 13th for an afternoon of action, adventure, and comedy in this motion-capture adaptation of Hergé's Tintin series.",
+        "Find out on Sunday, December 13, at an afternoon screening of this motion-capture adaptation of Hergé's Tintin series, which blends action, adventure, and comedy.",
+      ],
       ["early walkers, 1s, and 2s in the Orchard Room", "early walkers and 1- and 2-year-olds in the Orchard Room"],
       [
         "A small number of strollers may be parked outside the Children's Room; no strollers in storytime, please.",
@@ -2478,6 +2530,14 @@ const EDITS = {
       [
         "Bring your unfinished artwork, sketchbook or journal and your curiosity.",
         "Bring your curiosity along with your unfinished artwork, sketchbook, or journal.",
+      ],
+      [
+        "at Cupertino library with Alyanna Poniente, pediatric occupational therapist",
+        "at Cupertino Library with Alyanna Poniente, a pediatric occupational therapist",
+      ],
+      [
+        "For babies and toddlers with their parent/caregivers.",
+        "The program is for babies and toddlers with their parents or caregivers.",
       ],
     ],
     blurb: [
@@ -2715,6 +2775,14 @@ const EDITS = {
       ["Charles Rangel (D-NY.),", "Charles Rangel (D-NY),"],
       ["Danièle Archambault, Ph. D. (Linguistics)", "Danièle Archambault, Ph.D. (Linguistics)"],
       ["Appointments are limited to a single two-hour appointment per week per person.", "Each person can book one two-hour appointment per week."],
+      [
+        "Here are links to a few videos from Nathan's YouTube channel to put you in the mood: The Vision by Rob Reich, May 2025; Comes Love, October 2022; House of the Rising Sun, December 2024.",
+        "Nathan's YouTube channel has recordings of The Vision by Rob Reich (May 2025), Comes Love (October 2022), and House of the Rising Sun (December 2024).",
+      ],
+      [
+        "No need to register, but registering means you will receive a reminder email the day before.",
+        "Registration is optional. Sign up to get a reminder email the day before.",
+      ],
     ],
     blurb: [
       [
@@ -2846,6 +2914,22 @@ const EDITS = {
         "Paint a winter-themed piece in a guided workshop at the Triton, with materials and up to two glasses of wine included for ages 21+.",
         "This guided winter-themed painting workshop at the Triton is for adults ages 21 and up. Materials and up to two glasses of wine are included.",
       ],
+      [
+        "Make your own lip balm from simple tools and all-natural ingredients while learning about beeswax, in a workshop for grades 6-12.",
+        "In this workshop for grades 6–12, learn about beeswax and make your own lip balm using simple tools and all-natural ingredients.",
+      ],
+      [
+        "Play drop-in board games, from strategy to card games and family favorites, on a first-come, first-served basis at Lakewood Branch Library.",
+        "Drop in at Lakewood Branch Library for strategy games, card games, and family favorites. Space is first come, first served.",
+      ],
+      [
+        "Hang Christmas lights and decorations around the Presbyterian Church of Los Gatos campus with other volunteers, with warm drinks and treats provided.",
+        "Join other volunteers to hang Christmas lights and decorations around the Presbyterian Church of Los Gatos campus. Warm drinks and treats are provided.",
+      ],
+      [
+        "Attend a Blue Christmas service of Scripture, music, prayers, and remembrance candles, with the names of loved ones who have died read aloud.",
+        "Gather for Scripture, music, prayers, and candles of remembrance at the Blue Christmas service. The names of loved ones who have died are read aloud.",
+      ],
     ],
     description: [
       [
@@ -2926,6 +3010,14 @@ const EDITS = {
       ["All levels welcome, $", "All levels are welcome. The cost is $"],
       ["Raindrop Plop! By", "Raindrop Plop! by"],
       [/(\b[ap]\.m\.) proceeds support Library programs and literacy\./g, "$1 Proceeds support Library programs and literacy."],
+      [
+        "Warm drinks and treats are provided, with indoor and outdoor tasks.",
+        "There are indoor and outdoor tasks. Warm drinks and treats are provided.",
+      ],
+      [
+        "An annual service for those with a weary or hurting heart during the holidays, with Scripture, music, prayers, and candles of remembrance.",
+        "This annual service is for anyone feeling weary or hurting during the holidays. It includes Scripture, music, prayers, and candles of remembrance.",
+      ],
     ],
   },
   "SJSU Events": {
@@ -3366,6 +3458,10 @@ const EDITS = {
       ["By Oscar Wilde Directed by Kimberly Mohne Hill November", "By Oscar Wilde. Directed by Kimberly Mohne Hill. November"],
       [/November 6 - 15 \(Thu-Sat 8 PM, Sun 2 PM\)$/g, "November 6 - 15 (Thu-Sat 8 PM, Sun 2 PM)."],
       [/^"So, if you want to really hurt me, talk badly about my language\. Ethnic identity is twin skin to linguistic identity\. I am my language\.$/g, '"So, if you want to really hurt me, talk badly about my language. Ethnic identity is twin skin to linguistic identity. I am my language."'],
+      [
+        /^I Sing's December Concert - Night One\.?$/g,
+        "The first night of iSing's December concert.",
+      ],
     ],
     blurb: [
       SCU_MISSION_NAME_EDIT,
@@ -3505,7 +3601,7 @@ export function polishReviewedEventCopy(event) {
         "Kids can drop in for a story with volunteer Janani or practice reading aloud, one-on-one or in a small group.",
       )
       .replace(
-        /^Read one-on-one or in small groups with adult volunteers to build reading confidence and a love of books\.$/,
+        /^(?:Read one-on-one or in small groups with adult volunteers to build reading confidence and a love of books|Bring your child to read one-on-one or in a small group with a volunteer reader)\.$/,
         "Kids can drop in to hear a story from a volunteer or practice reading aloud, one-on-one or in a small group.",
       );
   }
