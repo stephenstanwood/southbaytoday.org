@@ -2874,6 +2874,10 @@ const EDITS = {
         "Take a Friday evening wine stroll through the shops and restaurants of Historic Saratoga Village. Tickets are sold through Eventbrite.",
       ],
       [
+        /^(Take a Friday evening wine stroll through the shops and restaurants of Historic Saratoga Village\.) Tickets are sold through Eventbrite\./g,
+        "$1 Advance tickets are sold through Eventbrite.",
+      ],
+      [
         "Play free drop-in board games, from strategy to card and family games, on a first-come, first-served basis at any age.",
         "Drop in for free board and card games, including strategy and family-friendly games. All ages are welcome. Space is available on a first-come, first-served basis.",
       ],
@@ -2936,6 +2940,10 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        /^(The Saratoga Chamber of Commerce hosts a wine stroll through the shops and restaurants of Historic Saratoga Village on the evening of November 27\.) Tickets are sold through Eventbrite\./g,
+        "$1 Advance tickets are sold through Eventbrite.",
+      ],
       [
         "Drop-in free play board games for all ages, including strategy, family-friendly and card games, first-come, first-served. Registration is not required, but space is limited.",
         "Drop in for free board and card games, including strategy and family-friendly games. All ages are welcome. No registration is required. Space is limited and available on a first-come, first-served basis.",
