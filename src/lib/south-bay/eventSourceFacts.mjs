@@ -503,6 +503,17 @@ const CORRECTIONS = [
     facts: { category: "community", venue: "Old Union, 2nd Floor" },
     appendAttendanceNote: "The coffee hour is intended for veterans, active-duty service members, reservists, and military-connected students.",
   },
+  {
+    // The library's description explicitly welcomes learners who speak
+    // languages other than Mandarin, although the event title names Mandarin.
+    date: "2026-11-28",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a67cc6b7b79214226abb925\/?$/.test(event.url || "")
+      && /\b(?:bilingual in both English and Chinese Mandarin|speaks English and Mandarin Chinese)\b/i.test(event.description || "")
+      && /\b(?:Other English language learners are welcome|English learners who speak other languages are welcome, too)\b/i.test(event.description || ""),
+    facts: {
+      blurb: "Practice English conversation with a facilitator who speaks English and Mandarin. Adults who speak other languages are welcome, too.",
+    },
+  },
   // The museum's occurrence page describes a housing-policy talk and names
   // the speakers. The calendar feed supplies the generic museum category.
   {

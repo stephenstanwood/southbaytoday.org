@@ -30,6 +30,31 @@ test("Stanford's coffee hour retains the organizer's intended audience", () => {
   assert.equal(applyVerifiedEventFacts(outsideRun), outsideRun);
 });
 
+test("Berryessa conversation club's blurb retains the library's welcome to other language learners", () => {
+  const event = {
+    date: "2026-11-28",
+    title: "ELL Conversation Club for Mandarin Speakers",
+    url: "https://sjpl.bibliocommons.com/v2/events/6a67cc6b7b79214226abb925",
+    description: "The presenter is bilingual in both English and Chinese Mandarin. Other English language learners are welcome.",
+    blurb: "Practice English at an in-person club for Mandarin speakers.",
+  };
+  const reviewed = applyVerifiedEventFacts(event);
+  assert.equal(reviewed.title, event.title);
+  assert.match(reviewed.blurb, /Adults who speak other languages are welcome/);
+  const editedCopy = {
+    ...event,
+    description: "The presenter speaks English and Mandarin Chinese. English learners who speak other languages are welcome, too.",
+  };
+  assert.equal(applyVerifiedEventFacts(editedCopy).blurb, reviewed.blurb);
+  for (const description of [
+    "The presenter speaks English and Mandarin Chinese.",
+    "Other English language learners are welcome.",
+  ]) {
+    const changedSource = { ...event, description };
+    assert.equal(applyVerifiedEventFacts(changedSource), changedSource);
+  }
+});
+
 test("Educational Park Teens Reach shows the signup conflict without a reservation badge", () => {
   const event = {
     date: "2026-12-02",
