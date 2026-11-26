@@ -205,10 +205,10 @@ export const GET: APIRoute = async ({ params, url }) => {
   }
 
   const canonical = `${origin}/plan/${id}`;
-  const firstPhotoRef = plan.cards?.find((c: any) => c.photoRef)?.photoRef;
-  const ogImage = firstPhotoRef
-    ? `${origin}/api/place-photo?ref=${encodeURIComponent(firstPhotoRef)}&w=1200&h=630`
-    : `${origin}/images/og-image.png`;
+  // The site card, never a Google venue photo: link-preview crawlers re-fetch
+  // og:image often, and every fetch of a Google photo is a paid download
+  // (docs/place-photos.md). The plan's cards still show their photos.
+  const ogImage = `${origin}/images/og-image.png`;
 
   // Detect bucket vs. legacy. Bucket plans have at least one card with a
   // bucket field — those render as a 2×3 grid, no past-time hiding.

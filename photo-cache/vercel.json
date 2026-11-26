@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node build.mjs",
+  "outputDirectory": "public",
+  "ignoreCommand": "node ignore-build.mjs",
+  "functions": {
+    "api/place-photo.mjs": {
+      "maxDuration": 20,
+      "includeFiles": "data/**"
+    }
+  }
+}

@@ -182,9 +182,11 @@ test("a virtual event drops the venue place-photo but keeps its own art", () => 
     title: "Jazz on the Plazz",
     date: "2026-08-05",
     venue: "Los Gatos Town Plaza Park",
+    city: "los-gatos",
     photoRef,
   });
-  assert.match(String(inPerson?.image), /\/api\/place-photo\?ref=/);
+  assert.equal(inPerson?.image, "https://southbaytoday.org/og/og-city-los-gatos.jpg", "SBT's city card, never a paid Google photo");
+  assert.doesNotMatch(JSON.stringify(inPerson), /place-photo/);
 });
 
 test("a virtual-flagged event is never MixedEventAttendanceMode", () => {
@@ -256,6 +258,7 @@ test("eventToSchema rejects concatenated image origins and falls back safely", (
     title: "Habitat Restoration",
     date: "2026-08-01",
     image: malformed,
+    city: "cupertino",
     photoRef: "places/rancho/photo",
   });
   const withoutFallback = eventToSchema({
@@ -266,6 +269,6 @@ test("eventToSchema rejects concatenated image origins and falls back safely", (
 
   assert.ok(withFallback);
   assert.ok(withoutFallback);
-  assert.equal(withFallback.image, "https://southbaytoday.org/api/place-photo?ref=places%2Francho%2Fphoto&w=640&h=480");
+  assert.equal(withFallback.image, "https://southbaytoday.org/og/og-city-cupertino.jpg");
   assert.equal(withoutFallback.image, undefined);
 });

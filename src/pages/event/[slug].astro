@@ -14,6 +14,7 @@ import { resolveRetired } from "../../lib/south-bay/eventSlugLedger.mjs";
 import { eventToSchema, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
 import { isVirtualEvent, registrationLabel, requiresAttendanceConfirmation } from "../../lib/south-bay/eventFilters.mjs";
 import { normalizeAbsoluteHttpUrl } from "../../lib/south-bay/httpUrl.mjs";
+import { cityShareCard } from "../../lib/south-bay/shareCards";
 
 interface RawEvent {
   id?: string | null;
@@ -307,11 +308,11 @@ const moreAtVenue = eventVenueKey && !isVirtual
       .slice(0, 4)
   : [];
 
-const absoluteOgImage = imageUrl
-  ? imageUrl.startsWith("http")
-    ? imageUrl
-    : `https://southbaytoday.org${imageUrl}`
-  : undefined;
+// Link previews use the event's own art or SBT's city card, never the Google
+// venue photo: preview crawlers (Meta's above all) re-fetch og:image often,
+// and every fetch of a Google photo is a paid download (docs/place-photos.md).
+// The page itself still shows the venue photo.
+const absoluteOgImage = directImageUrl ?? cityShareCard(event.city) ?? undefined;
 
 // Body copy: blurb leads; description follows only when it adds something new.
 const blurb = (event.blurb ?? "").trim();

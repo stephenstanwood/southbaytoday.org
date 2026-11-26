@@ -81,6 +81,8 @@ enforces this in CI.
 - Vercel project connected to this repo
 - Custom domain: southbaytoday.org
 - stanwood.dev/south-bay redirects here permanently
+- **Automated edits deploy in batches (2026-11-25).** Every deploy starts Vercel's caches empty and costs a build, and the fact-check and copy-edit jobs land about twice an hour. `scripts/vercel-ignore-build.mjs` (vercel.json `ignoreCommand`) holds a production build while every commit since the live deployment is a `fact-check:` or `copy-edit:` commit younger than two hours. Any other commit deploys at once and carries the held edits; the hourly `/api/admin/deploy-flush` cron (deploy hook `batched-deploy-flush`, env `DEPLOY_FLUSH_HOOK_URL`) builds main whenever the live deployment is behind it. A "Canceled" production deployment whose log says "holding" is this step working, not a failure. Previews stay skipped. Crons authenticate with `CRON_SECRET`.
+- **Place photos come from a second Vercel project.** `photos.southbaytoday.org` (`sbt-photo-cache`, root `photo-cache/`) serves `/api/place-photo` misses so a cached Google photo survives the site's deploys; it redeploys only when its sources change. Edit the photo code in `src/lib/placePhoto.mjs` and `src/lib/photoCache.mjs`, never in `photo-cache/lib/`. Previews and structured data never use a Google photo: they cost a paid download per crawler fetch (`docs/place-photos.md`).
 - NEVER create files in a root `api/` directory — Vercel treats that as legacy serverless functions and routes all `/api/*` traffic away from Astro's `_render`, breaking every API route. All API routes must live in `src/pages/api/`.
 
 ## Prebuild gates (both must pass or Vercel fails the build)

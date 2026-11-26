@@ -7,8 +7,7 @@
 import { parseClockTime } from "./calendarLink";
 import { VIRTUAL_WORD } from "./eventFilters.mjs";
 import { normalizeAbsoluteHttpUrl, normalizeImageUrl } from "./httpUrl.mjs";
-
-const SITE = "https://southbaytoday.org";
+import { cityShareCard } from "./shareCards";
 
 /** True when an ISO calendar date (PT) is strictly before today in Pacific time. */
 export function isPastEventDate(isoDate: string, ref: Date = new Date()): boolean {
@@ -81,12 +80,11 @@ function isoDateTime(date: string, clock: { h: number; m: number }, offset: stri
 function absoluteImage(e: SchemaEventRecord): string | null {
   const image = normalizeImageUrl(e.image);
   if (image) return image;
-  // photoRef is a Google Places photo of the venue. Attaching one to an
-  // online-only event puts a picture of an unreachable building in the
-  // structured data; the event's own art is still used when it has any.
-  if (e.photoRef && e.virtual !== true) {
-    return `${SITE}/api/place-photo?ref=${encodeURIComponent(e.photoRef)}&w=640&h=480`;
-  }
+  // Where an in-person event once fell back to its Google venue photo, it now
+  // points at SBT's card for its city. Every crawler reading structured data
+  // fetched that photo, and each fetch was a paid Google download. Online-only
+  // events still get no venue picture.
+  if (e.photoRef && e.virtual !== true) return cityShareCard(e.city);
   return null;
 }
 
