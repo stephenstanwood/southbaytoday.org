@@ -10,6 +10,11 @@ const SCCLD_BABY_SIGN_AGE_EDIT = [
   "This program is for infants and prewalking babies ages $1–$2 months only.",
 ];
 
+const SCCLD_SENSORY_PLAY_AUDIENCE_EDIT = [
+  "For babies and toddlers with their parent/caregivers.",
+  "The program is for babies and toddlers with their parents or caregivers.",
+];
+
 const SCCLD_BOOK_DISCUSSION_EDITS = [
   ["our monthly book club meeting, as we discuss", "our monthly book club meeting to discuss"],
   ["Space is limited, and regular/ongoing attendees do not need to register.", "Space is limited. Regular attendees do not need to register."],
@@ -2222,6 +2227,7 @@ const EDITS = {
     ],
     attendanceNote: [
       SCCLD_BABY_SIGN_AGE_EDIT,
+      SCCLD_SENSORY_PLAY_AUDIENCE_EDIT,
       ...SCCLD_OPEN_MIC_EDITS,
       ...SCCLD_BOOK_DISCUSSION_EDITS,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
@@ -2487,6 +2493,7 @@ const EDITS = {
       ["Komi Can't Communicate Available as a: Book and e Book (Libby)", "Komi Can't Communicate. Available as a book and e-book (Libby)."],
       ["bring your own items to mend, project to work on, or practice basic stitches with our fabric scraps!", "bring your own items to mend or a project to work on, or practice basic stitches with our fabric scraps!"],
       ["Hercule Poirot's Christmas by Agatha Christie (1938) A family reunion", "Hercule Poirot's Christmas by Agatha Christie (1938). A family reunion"],
+      ["CDs: (music and software) ", "CDs (music and software): "],
       ["Audio books, DVDs, VCDs and Blu Ray discs", "Audiobooks, DVDs, VCDs and Blu-ray discs"],
       ["Other Ongoing Friends of the Milpitas Library Sales The Book Nook We have", "Other ongoing Friends of the Milpitas Library sales include the Book Nook. We have"],
       ["Amazon Sales We have", "Amazon sales: We have"],
@@ -2641,10 +2648,7 @@ const EDITS = {
         "at Cupertino library with Alyanna Poniente, pediatric occupational therapist",
         "at Cupertino Library with Alyanna Poniente, a pediatric occupational therapist",
       ],
-      [
-        "For babies and toddlers with their parent/caregivers.",
-        "The program is for babies and toddlers with their parents or caregivers.",
-      ],
+      SCCLD_SENSORY_PLAY_AUDIENCE_EDIT,
     ],
     blurb: [
       SCCLD_READERS_ADVISORY_EDIT,
