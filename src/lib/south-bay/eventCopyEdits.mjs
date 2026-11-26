@@ -3,6 +3,8 @@
 // through unchanged. No event-ID lookup or historical description restore.
 // Apply after prose casing and cached/generated blurbs have been selected, so
 // raw capitalization and cache hits cannot undo an approved grammar repair.
+const SCCLD_READERS_ADVISORY_EDIT = [/\breader's advisory aids\b/gi, "readers' advisory tools"];
+
 const SCCLD_BABY_SIGN_AGE_EDIT = [
   /This program is for infants and prewalking babies only, ages (\d+)[-–](\d+) months\./g,
   "This program is for infants and prewalking babies ages $1–$2 months only.",
@@ -202,6 +204,7 @@ const EDITS = {
       ["One-On-One Tech Help (English or Tiếng Việt)", "One-on-One Tech Help (English or Tiếng Việt)"],
       ["Wacky Wednesdays: Coffee Filter Turkey craft", "Wacky Wednesdays: Coffee Filter Turkey Craft"],
       [/^Cambrian Pokemon Club$/g, "Cambrian Pokémon Club"],
+      [/^Bingo for adults and seniors$/g, "Bingo for Adults and Seniors"],
     ],
     attendanceNote: [
       ...SJPL_TECH_APPOINTMENT_EDITS,
@@ -1095,9 +1098,51 @@ const EDITS = {
       [/No registration required, Materials Will Be Provided$/g, "No registration required. Materials will be provided."],
       [/Free\. No registration required$/g, "Free. No registration required."],
       [/Free, No registration required$/g, "Free. No registration required."],
+      [
+        "digital design files. You can also watch these tutorial videos ahead of time to get a better idea of how to use the Cricut machine and Design Space.",
+        "digital design files. You can also watch tutorials on using the Cricut machine and Design Space before the workshop.",
+      ],
+      [
+        "Recommended for: Children in grades K–3 and their caregivers. Please note: Caregivers must remain in the Children's Area during the program.",
+        "Recommended for children in grades K–3 and their caregivers. Caregivers must remain in the Children's Area during the program.",
+      ],
+      [
+        "Join us every 1st Wednesday of the month for Music & Movement! Music & Movement is designed to accommodate a mix of ages and " +
+          "invites the entire family to participate in early literacy activities through songs, rhymes, finger plays, and movement activities. " +
+          "Music & Movement is a fun and interactive experience for the whole family that promotes the joys of learning for all ages. " +
+          "This program is geared for children of all ages and their parents/caregivers.",
+        "Join us on the first Wednesday of each month for Music & Movement. Children of all ages and their parents or caregivers " +
+          "can build early literacy skills together through songs, rhymes, fingerplays, and movement.",
+      ],
+      [
+        "Music and Movement at the King Library Children's Room. Music and Movement is designed to accommodate a mix of ages; " +
+          "we invite the entire family to participate in early literacy activities and develop motor skills through song and movement activities - " +
+          "sometimes with scarves, shaky eggs, and rhythm sticks! Music and Movement is a high-energy storytime - a fun and interactive experience " +
+          "for the whole family that promotes the joys of learning and movement. We'll start with a story, then move and groove to our monthly playlist.",
+        "Music and Movement in the King Library Children's Room. Families with children of different ages can build early literacy and motor skills " +
+          "with songs and movement, sometimes using scarves, shaky eggs, and rhythm sticks. This high-energy storytime starts with a story, " +
+          "followed by movement to a monthly playlist.",
+      ],
+      [
+        /(Junior STEAM \(Thursdays\) or Family STEAM \(Saturdays\) may be a better fit\.) Tickets available at the desk 30 minutes before the program starts\. All individuals \(of any age\) attending need a ticket and must be present to receive their ticket\./g,
+        `$1 ${SJPL_DESK_TICKET_COPY}`,
+      ],
+      [
+        "Join us for a class series covering: The naturalization process; U.S. history and government; English language skills for the citizenship interview.",
+        "Join us for a class series on the naturalization process, U.S. history and government, and English skills for the citizenship interview.",
+      ],
+      [
+        "Learn the basics of Sphero. Learn to roll, aim, control the LEDs, change heading, and detect collisions. Once you have the basics down, " +
+          "you can practice coding through simple, beginner-friendly activities. Students will be introduced to coding and robotics using the iPad and Sphero robots.",
+        "Learn the basics of coding and robotics with an iPad and Sphero robots. Practice rolling, aiming, controlling the LEDs, changing direction, " +
+          "and detecting collisions. Then try simple, beginner-friendly coding activities.",
+      ],
       ["between 3 p.m. and 4:30 pm.", "between 3 p.m. and 4:30 p.m."],
       [/Until (\d{1,2}(?::\d{2})? [APap][Mm]) the Storytime librarian/g, "Until $1, the Storytime librarian"],
-      ["first [or 2nd if lands on closure] Wednesday", "first [or 2nd if it falls on a closure] Wednesday"],
+      [
+        /meets on the first \[or 2nd if (?:lands on closure|it falls on a closure)\] Wednesday of each month at (\d{1,2}:\d{2} [AP]M)\./g,
+        "meets at $1 on the first Wednesday of each month, or on the second Wednesday if the library is closed on the first.",
+      ],
       ["For more information go to www.sjpl.org/teensreach Registration not necessary, it is used as a headcount for room preparation.", "For more information, go to www.sjpl.org/teensreach. Registration is not necessary; it is used as a headcount for room preparation."],
       ["Join us in this monthly workshop to learn operate 3D printing and Cricut machine.", "Join us in this monthly workshop to learn to operate a 3D printer and a Cricut machine."],
       [/Course information: Every Wednesday (\d{1,2}:\d{2}-\d{1,2}:\d{2} [AP]M) (\d{1,2}\/\d{1,2}\/\d{2,4}-\d{1,2}\/\d{1,2}\/\d{2,4}) Each week/g, "Course information: Every Wednesday, $1, $2. Each week"],
@@ -1785,6 +1830,7 @@ const EDITS = {
       ],
     ],
     blurb: [
+      ["Play bingo for a chance at a variety of prizes; this session is for adults 18 and older.", "Adults 18 and older can play bingo for a chance to win a variety of prizes."],
       [
         "Play Pokémon TCG with tutorial decks that teach the rules, and build a deck from library cards.",
         "Learn the Pokémon Trading Card Game with a tutorial deck or build your own with the cards provided.",
@@ -2150,6 +2196,13 @@ const EDITS = {
     ],
     description: [
       SCCLD_BABY_SIGN_AGE_EDIT,
+      [
+        /By the end of the program, attendees will be able to: Differentiate between library collections and identify which collections are best for their child\. Leverage printed and digital reader's advisory aids to find items for their children\. Search for items in the catalog and use search facets to narrow results\./gi,
+        "By the end of the program, attendees will be able to tell the collections apart and choose the best ones for their children, " +
+          "use print and digital readers' advisory tools to find materials, and narrow catalog searches with filters.",
+      ],
+      SCCLD_READERS_ADVISORY_EDIT,
+      ["If you have specific questions you would like answered during the program please email", "If you have specific questions you'd like answered during the program, please email"],
       ["Join the Children's Librarians for a fun, interactive", "Join the children's librarians for a fun, interactive"],
       ["learn basic American Sign Language signs to communicate", "learn basic signs in American Sign Language to communicate"],
       [
@@ -2541,6 +2594,7 @@ const EDITS = {
       ],
     ],
     blurb: [
+      SCCLD_READERS_ADVISORY_EDIT,
       [
         "Bring K-5 homework and work with volunteer tutors who provide basic school supplies as space allows.",
         "Bring K–5 homework for help from volunteer tutors. Walk-ins are welcome as space allows, and basic school supplies are provided.",
@@ -2943,6 +2997,11 @@ const EDITS = {
       [
         /^(The Saratoga Chamber of Commerce hosts a wine stroll through the shops and restaurants of Historic Saratoga Village on the evening of November 27\.) Tickets are sold through Eventbrite\./g,
         "$1 Advance tickets are sold through Eventbrite.",
+      ],
+      [
+        /^Saratoga Chamber of Commerce wine stroll through the shops and restaurants of Historic Saratoga Village, held during the afternoon and evening holiday kickoff\. Tickets are sold through Eventbrite\./g,
+        "The Saratoga Chamber of Commerce hosts a wine stroll through the shops and restaurants of Historic Saratoga Village " +
+          "as part of the afternoon and evening holiday kickoff. Advance tickets are sold through Eventbrite.",
       ],
       [
         "Drop-in free play board games for all ages, including strategy, family-friendly and card games, first-come, first-served. Registration is not required, but space is limited.",

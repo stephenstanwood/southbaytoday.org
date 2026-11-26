@@ -438,7 +438,7 @@ test("San José's November 18 agenda review names the council date under review"
   const refreshedSummary = "The committee listed several proposals. It listed the November 24, 2026, final agenda as cancelled and the December 1, 2026, draft agenda for review.";
   const refreshedTopic = "The November 24, 2026, final agenda was listed as cancelled; the December 1, 2026, draft agenda was listed for review, including adding new items and setting 'time certain' slots for specific items.";
   const expectedSummary = `The committee listed several proposals. ${clarified} It also listed the December 1, 2026, draft agenda for review.`;
-  const expectedTopic = clarified + ' It also listed the December 1, 2026, draft agenda for review, including adding new items and setting "time certain" slots for specific items.';
+  const expectedTopic = clarified + " It also listed the December 1, 2026, draft agenda for review, including adding new items and scheduling specific items at set times.";
   assert.equal(polishCivicCopy(refreshedSummary, options), expectedSummary);
   assert.equal(polishCivicTopic(refreshedTopic, options), expectedTopic);
   assert.equal(polishCivicTopic(expectedTopic, options), expectedTopic);

@@ -77,7 +77,11 @@ export function polishCivicCopy(text, { cityId } = {}) {
         (original) => cityId === "san-jose"
           ? "The agenda listed the committee's review of the November 24, 2026, City Council agenda as canceled"
           : original)
-      .replace("setting 'time certain' slots for specific items", 'setting "time certain" slots for specific items')
+      .replace(/setting ["']time certain["'] slots for specific items/g, "scheduling specific items at set times")
+      .replace("The agenda listed a joint session of San José's Rules and Open Government Committee and the Committee of the Whole, which sets what the City Council will take up at upcoming meetings.",
+        "The agenda listed a joint session of San José's Rules and Open Government Committee and the Committee of the Whole to plan what the City Council would take up at upcoming meetings.")
+      .replace("It asks city staff to draft a resolution establishing a cultural district along Alum Rock Avenue",
+        "The proposal asks city staff to draft a resolution establishing a cultural district along Alum Rock Avenue")
       .replace(/ It also listed an agreement with a vendor whose name is cut off in the excerpt\./g,
         (original) => cityId === "los-gatos" ? "" : original)
       .replace("Also listed were several council-sponsored community events seeking approval to spend city funds and accept donations, and a proposal to establish the La Avenida Cultural District.",
