@@ -584,6 +584,39 @@ test("upcoming shows publish in the event shape the refresh expects", async () =
   assert.equal(new Set(events.map((e) => e.id)).size, events.length);
 });
 
+test("theater listings retain explicit admission ages beyond the short description", async () => {
+  const night = dayPT(5);
+  const venue = "Center for the Performing Arts";
+  const categories = "Comedy, Kids &amp; Family";
+  const listings = [
+    listing({ title: "Allexcited", slug: "allexcited-0", start: night, venue, categories }),
+    listing({ title: "Family Improv", slug: "family-improv", start: night, venue, categories }),
+  ];
+  const details = {
+    focus: longDate(night),
+    time: "04:00 PM",
+    venue,
+    street: "255 South Almaden Boulevard",
+  };
+  const { events } = await runWith({
+    [SAN_JOSE_THEATERS_LISTINGS_URL]: JSON.stringify(listings),
+    "https://www.sanjose.org/theaters/events/allexcited-0": detailPage({
+      ...details,
+      copy: `<p>${"Alex returns with a musical stand-up special. ".repeat(6)}</p><p>Strictly for audiences aged 13 and above!</p>`,
+    }),
+    "https://www.sanjose.org/theaters/events/family-improv": detailPage({
+      ...details,
+      copy: "<p>Recommended for audiences aged 13 and above.</p>",
+    }),
+  });
+  const [allexcited, familyImprov] = events;
+  assert.doesNotMatch(allexcited.description, /13 and above/);
+  assert.equal(allexcited.attendanceNote, "Admission is limited to ages 13 and up.");
+  assert.equal(allexcited.kidFriendly, false);
+  assert.equal(familyImprov.attendanceNote, undefined);
+  assert.equal(familyImprov.kidFriendly, true);
+});
+
 test("specific theater source categories survive generic stage tags and incidental prose", async () => {
   const night = dayPT(5);
   const cases = [

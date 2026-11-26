@@ -10064,8 +10064,10 @@ async function fetchSanJoseTheatersEvents({ previousEvents = readJsonFile(OUT_PA
         const eventUrl = verifiedSource?.url ?? url;
         const description = truncate(stripBareUrls(copy));
         const categories = stripHtml(item.categories || "");
-        const kidFriendly = /\bKids\s*&\s*Family\b/i.test(categories)
-          || /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|cmt|bluey|disney)\b/i.test(title);
+        // The venue lists admission restrictions after the short description.
+        const minimumAge = Number(copy.match(/\bstrictly for audiences aged (\d{1,2}) and (?:above|older|up)\b/i)?.[1] ?? 0);
+        const kidFriendly = minimumAge < 13 && (/\bKids\s*&\s*Family\b/i.test(categories)
+          || /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|cmt|bluey|disney)\b/i.test(title));
         for (const { date, time } of performances) {
           if (date < today || date > horizon) continue;
           events.push({
@@ -10082,6 +10084,8 @@ async function fetchSanJoseTheatersEvents({ previousEvents = readJsonFile(OUT_PA
               title, categories, fallback: inferCategory(title, description, "", venue),
             }),
             cost: "paid",
+            ...(minimumAge ? { attendanceNote: `Admission is limited to ages ${minimumAge} and up.` } : {}),
+            ...(minimumAge >= 18 ? { sourceAudiences: [`Adults, ages ${minimumAge}+`] } : {}),
             description,
             url: eventUrl,
             source: "San Jose Theaters",
