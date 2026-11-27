@@ -33,8 +33,6 @@ export const CATEGORY_LABELS: Record<TechCategory, string> = {
   ai: "AI",
 };
 
-export type TechTrend = "up" | "flat" | "down";
-
 export interface TechCompany {
   id: string;
   name: string;
@@ -45,8 +43,8 @@ export interface TechCompany {
   // Dated local employment estimate in thousands. Cite the source and identify
   // its period and geographic coverage. Omit this field without a local estimate.
   sccEmployeesK?: number;
-  trend: TechTrend;
-  trendNote: string;
+  // Cite dated evidence for local jobs, layoff notices, or a company update.
+  workforceNote: string;
   highlights: string[];
   description: string;
   color: string; // brand-adjacent color for charts
@@ -72,8 +70,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // https://www.mountainview.gov/home/showpublisheddocument/12666/639056544370000000
     // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
     sccEmployeesK: 38,
-    trend: "flat",
-    trendNote: "Mountain View estimated 23,100 Google jobs in FY 2024–25. Sunnyvale listed 14,498 in December 2025. WARN notices cover 127 Sunnyvale positions effective November 2025 and March–April 2026.",
+    workforceNote: "Mountain View estimated 23,100 Google jobs in FY 2024–25. Sunnyvale listed 14,498 in December 2025. WARN notices cover 127 Sunnyvale positions effective November 2025 and March–April 2026.",
     highlights: [
       "Gemini AI driving search, Cloud, and device integration across all products",
       "Waymo robotaxi service expanding commercially to multiple US cities",
@@ -95,8 +92,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // https://www.caltrain.com/media/36986/download
     // https://files.santaclaracounty.gov/exjcpb1271/2025-05/fy-25-26-recommended_budget.pdf
     sccEmployeesK: 10.9,
-    trend: "flat",
-    trendNote: "Caltrain's financing disclosure estimates 10,936 Apple jobs in Santa Clara County in 2025. WARN notices cover 147 Cupertino and Sunnyvale positions effective Oct. 19, 2026.",
+    workforceNote: "Caltrain's financing disclosure estimates 10,936 Apple jobs in Santa Clara County in 2025. WARN notices cover 147 Cupertino and Sunnyvale positions effective Oct. 19, 2026.",
     highlights: [
       "Apple Intelligence on-device AI rolling out across iPhone, Mac, and iPad",
       // https://www.apple.com/newsroom/2026/09/the-new-mac-mini-and-mac-studio-are-available-today/
@@ -118,8 +114,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // Santa Clara's draft FY 2025–26 financial report, Table 18, p. 230:
     // https://santaclara.legistar.com/View.ashx?GUID=0924F60F-11FB-4B12-93D6-75409FC8FC52&ID=16166429&M=F
     sccEmployeesK: 7,
-    trend: "down",
-    trendNote: "Santa Clara's draft FY 2025–26 financial report lists 7,001 Intel employees in the city. WARN notices cover 212 Santa Clara positions from August through November 2026, including 57 effective Nov. 15.",
+    workforceNote: "Santa Clara's draft FY 2025–26 financial report lists 7,001 Intel employees in the city. WARN notices cover 212 Santa Clara positions from August through November 2026, including 57 effective Nov. 15.",
     highlights: [
       // Intel's filings give the September 2025 stake, the shares still in
       // escrow in September 2026, and the NVIDIA closing date, respectively.
@@ -152,8 +147,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // https://www.milpitas.gov/ArchiveCenter/ViewFile/Item/1490
     // https://edd.ca.gov/siteassets/files/jobs_and_training/warn/warn-report-for-7-1-25-to-6-30-26.pdf
     sccEmployeesK: 11.1,
-    trend: "down",
-    trendNote: "San José listed 7,500 Cisco jobs for FY 2025. Milpitas carried forward 3,600 in its FY 2025 report. WARN notices cover 547 positions in those cities effective October 2025 and July 2026.",
+    workforceNote: "San José listed 7,500 Cisco jobs for FY 2025. Milpitas carried forward 3,600 in its FY 2025 report. WARN notices cover 547 positions in those cities effective October 2025 and July 2026.",
     highlights: [
       "Splunk acquisition ($28B) transforms Cisco into a major security + observability platform",
       "A May 2026 restructuring cuts close to 4,000 roles globally — under 5% of staff — to move spending toward silicon, optics, security, and AI; 236 of the cuts hit the Tasman Drive headquarters",
@@ -174,8 +168,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // 2025 employer list. The list also reports a separate Facebook entry.
     // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
     sccEmployeesK: 3,
-    trend: "down",
-    trendNote: "Sunnyvale listed 3,062 jobs under Meta Platforms in December 2025. WARN notices cover 439 Sunnyvale positions effective March–July 2026.",
+    workforceNote: "Sunnyvale listed 3,062 jobs under Meta Platforms in December 2025. WARN notices cover 439 Sunnyvale positions effective March–July 2026.",
     highlights: [
       "Llama open-source AI models advancing Meta AI across Facebook, Instagram, and WhatsApp",
       "Ray-Ban Meta smart glasses remain the consumer bright spot, but the Sunnyvale cuts landed mostly on Reality Labs and the wearables and XR teams behind them",
@@ -195,8 +188,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // Santa Clara draft FY 2025–26 financial report, Table 18, p. 230.
     // https://santaclara.legistar.com/View.ashx?GUID=0924F60F-11FB-4B12-93D6-75409FC8FC52&ID=16166429&M=F
     sccEmployeesK: 2.5,
-    trend: "up",
-    trendNote: "Santa Clara’s draft FY 2025–26 financial report estimates 2,500 NVIDIA jobs in the city.",
+    workforceNote: "Santa Clara’s draft FY 2025–26 financial report estimates 2,500 NVIDIA jobs in the city.",
     highlights: [
       "Blackwell GPUs now deployed across every major cloud; the next-generation Vera Rubin platform ramps through 2026, with Jensen Huang projecting $1 trillion in Blackwell and Rubin orders by 2027",
       // https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm
@@ -219,10 +211,9 @@ export const TECH_COMPANIES: TechCompany[] = [
     // Adobe employees in the city. Use that figure as the local estimate.
     // https://www.flysanjose.com/sites/default/files/financial/Airport%20ACFR%20FY25%2011.12.25_0.pdf
     sccEmployeesK: 3,
-    trend: "flat",
     // Adobe's 8-K gives the effective date of the CEO appointment.
     // https://www.sec.gov/Archives/edgar/data/796343/000079634326000144/adbe-20260902.htm
-    trendNote: "San José's FY 2025 figures list 2,604 Adobe employees in the city. Adobe named Anil Chakravarthy CEO effective December 1, 2026.",
+    workforceNote: "San José's FY 2025 figures list 2,604 Adobe employees in the city. Adobe named Anil Chakravarthy CEO effective December 1, 2026.",
     highlights: [
       "Firefly generative AI now integrated throughout Creative Cloud product line",
       // https://www.sec.gov/Archives/edgar/data/796343/000079634324000006/adbe-20231201.htm
@@ -244,8 +235,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // San José FY 2025 airport financial report, Schedule J, lists 2,748.
     // https://www.sanjoseca.gov/home/showpublisheddocument/127017/639003723781700000
     sccEmployeesK: 2.7,
-    trend: "down",
-    trendNote: "San José listed 2,748 PayPal employees for FY 2025. A WARN notice covers 251 positions at the San José headquarters effective Oct. 30, 2026.",
+    workforceNote: "San José listed 2,748 PayPal employees for FY 2025. A WARN notice covers 251 positions at the San José headquarters effective Oct. 30, 2026.",
     highlights: [
       "Enrique Lores became CEO on March 1, 2026, succeeding Alex Chriss — the board moved after branded checkout, roughly half of PayPal's profit, grew just 1% in the fourth quarter",
       "Reorganized in April 2026 into three operating units, with Venmo carved out as a standalone business for the first time",
@@ -268,8 +258,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // https://santaclara.legistar.com/View.ashx?GUID=0924F60F-11FB-4B12-93D6-75409FC8FC52&ID=16166429&M=F
     // https://www.sanjoseca.gov/home/showpublisheddocument/120890/638812607480530000
     sccEmployeesK: 5,
-    trend: "up",
-    trendNote: "Santa Clara's draft FY 2025–26 report lists 3,000 AMD employees. San José separately estimated about 1,800 in 2024. MI350 GPUs and multi-year OpenAI and Meta deals drive data center growth.",
+    workforceNote: "Santa Clara's draft FY 2025–26 report lists 3,000 AMD employees. San José separately estimated about 1,800 in 2024. MI350 GPUs and multi-year OpenAI and Meta deals drive data center growth.",
     highlights: [
       "MI355X AI GPU competes head-to-head with NVIDIA's Blackwell B200; the MI400 series ramps in 2026",
       "EPYC server CPUs dominant across major cloud providers — AWS, Azure, Google Cloud",
@@ -286,10 +275,9 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "NOW",
     city: "Santa Clara",
     category: "saas",
-    trend: "up",
     // EDD WARN reports: 54 on Aug. 17, 154 on Sep. 28, 2 on Dec. 14, and 37 on Jan. 4.
     // https://edd.ca.gov/en/jobs_and_training/layoff_services_warn/
-    trendNote: "WARN notices cover 208 Lawson Lane positions in August and September 2026 and 39 scheduled for December 2026 and January 2027.",
+    workforceNote: "WARN notices cover 208 Lawson Lane positions in August and September 2026 and 39 scheduled for December 2026 and January 2027.",
     highlights: [
       "Now Platform AI Agents automating enterprise IT, HR, and customer workflows at scale",
       "AI agents expanding across IT, HR, customer service, and other Now Platform workflows",
@@ -310,8 +298,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // https://www.mountainview.gov/home/showpublisheddocument/12666/639056544370000000
     // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
     sccEmployeesK: 3,
-    trend: "down",
-    trendNote: "Mountain View estimated 2,500 LinkedIn jobs in FY 2024–25. Sunnyvale listed 716 in December 2025. WARN notices cover 477 local positions effective July 13, 2026.",
+    workforceNote: "Mountain View estimated 2,500 LinkedIn jobs in FY 2024–25. Sunnyvale listed 716 in December 2025. WARN notices cover 477 local positions effective July 13, 2026.",
     highlights: [
       "May 2026 WARN notices cover 606 California positions effective July 13, including 411 at the Mountain View and Sunnyvale offices and 66 Mountain View home-office roles.",
       "B2B advertising and Premium subscriptions driving revenue growth for Microsoft",
@@ -330,8 +317,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // Sunnyvale’s December 2025 employer list gives 587 under Juniper Networks.
     // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
     sccEmployeesK: 0.6,
-    trend: "flat",
-    trendNote: "Sunnyvale listed 587 jobs under Juniper Networks in December 2025, after Hewlett Packard Enterprise acquired the company in July.",
+    workforceNote: "Sunnyvale listed 587 jobs under Juniper Networks in December 2025, after Hewlett Packard Enterprise acquired the company in July.",
     highlights: [
       "HPE acquisition closed July 2025 after a DOJ antitrust settlement — Juniper now part of the HPE networking portfolio",
       "Mist AI-driven networking platform being integrated into HPE product suite",
@@ -352,8 +338,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // https://www.sanjoseca.gov/home/showpublisheddocument/127017/639003723781700000
     // https://edd.ca.gov/siteassets/files/jobs_and_training/warn/warn-report-for-7-1-25-to-6-30-26.pdf
     sccEmployeesK: 2.2,
-    trend: "flat",
-    trendNote: "San José listed 2,221 Western Digital employees for FY 2025. WARN notices cover 134 Great Oaks Parkway positions effective January 2026.",
+    workforceNote: "San José listed 2,221 Western Digital employees for FY 2025. WARN notices cover 134 Great Oaks Parkway positions effective January 2026.",
     highlights: [
       "SanDisk spin-off completed February 2025 — WD now a focused hard drive company",
       "Hard drive demand rising again with AI data center storage needs driving enterprise sales",
@@ -373,8 +358,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // San José FY 2025 airport financial report, Schedule J, lists 2,364.
     // https://www.sanjoseca.gov/home/showpublisheddocument/127017/639003723781700000
     sccEmployeesK: 2.4,
-    trend: "down",
-    trendNote: "San José listed 2,364 eBay employees for FY 2025. WARN notices cover 243 San José headquarters positions in February 2026 and 229 more in October.",
+    workforceNote: "San José listed 2,364 eBay employees for FY 2025. WARN notices cover 243 San José headquarters positions in February 2026 and 229 more in October.",
     highlights: [
       "Cut 800 jobs — 6% of the company — in February 2026, a week after agreeing to buy resale app Depop for $1.2B; 243 of those were at the San Jose headquarters",
       "Authenticity Guarantee expanding to more collectible and luxury product categories",
@@ -391,9 +375,8 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "PANW",
     city: "Santa Clara",
     category: "security",
-    trend: "up",
     // FY 2026 Form 10-K, Item 2: https://investors.paloaltonetworks.com/static-files/f2f15200-725b-44cc-9988-4fdacf624c98
-    trendNote: "Palo Alto Networks extended its Santa Clara headquarters leases through July 2040.",
+    workforceNote: "Palo Alto Networks extended its Santa Clara headquarters leases through July 2040.",
     highlights: [
       "'Platformization' strategy winning large enterprise security consolidation deals from point-product vendors",
       "Precision AI features now embedded across the full security product portfolio",
@@ -410,9 +393,8 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "ZM",
     city: "San Jose",
     category: "saas",
-    trend: "flat",
     // FY 2026 Form 10-K: https://investors.zoom.us/static-files/7370d7ce-5293-4f6f-b91e-6eb90c9a37b3
-    trendNote: "Zoom reported 4.4% year-over-year revenue growth in fiscal 2026.",
+    workforceNote: "Zoom reported 4.4% year-over-year revenue growth in fiscal 2026.",
     highlights: [
       "Zoom Workplace platform adds AI Companion for meeting summaries and conversation intelligence",
       // Zoom's July 2026 Form 10-Q gives the closing date and cash price.
@@ -436,8 +418,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // https://santaclara.legistar.com/View.ashx?GUID=0924F60F-11FB-4B12-93D6-75409FC8FC52&ID=16166429&M=F
     // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
     sccEmployeesK: 11,
-    trend: "flat",
-    trendNote: "Santa Clara's draft FY 2025–26 report lists 8,500 Applied Materials employees. Sunnyvale listed 2,919 in December 2025. October 2025 WARN filings cover 363 county positions effective Dec. 23, 2025.",
+    workforceNote: "Santa Clara's draft FY 2025–26 report lists 8,500 Applied Materials employees. Sunnyvale listed 2,919 in December 2025. October 2025 WARN filings cover 363 county positions effective Dec. 23, 2025.",
     highlights: [
       "Deposition, etch, and inspection equipment used to produce advanced logic and HBM memory",
       "Equipment backlog driven by TSMC, Samsung, and Intel expanding AI chip capacity",
@@ -457,8 +438,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     // Caltrain's financing disclosure, Appendix B, p. B-9: 2025 county estimate.
     // https://www.caltrain.com/media/36986/download
     sccEmployeesK: 3.1,
-    trend: "up",
-    trendNote: "Caltrain's financing disclosure estimates 3,073 Supermicro jobs in Santa Clara County in 2025.",
+    workforceNote: "Caltrain's financing disclosure estimates 3,073 Supermicro jobs in Santa Clara County in 2025.",
     highlights: [
       "Supplier of NVIDIA GPU server systems used for AI training and inference",
       "Revenue surged with AI infrastructure boom; resolved SEC filing delays and auditor issues in 2024-25",
@@ -481,7 +461,6 @@ export const CHART_DATA = RANKED_TECH_EMPLOYERS
     name: c.chartName,
     headcount: c.sccEmployeesK,
     color: c.color,
-    trend: c.trend,
   }));
 
 // ---------------------------------------------------------------------------

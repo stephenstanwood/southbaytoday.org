@@ -18,7 +18,6 @@ import {
   TECH_CONFERENCES,
   type TechCompany,
   type TechCompanyWithJobsEstimate,
-  type TechTrend,
   type SccTechSpotlight,
   type RecentlyFunded,
   type TechMilestone,
@@ -80,19 +79,6 @@ function logoForConference(c: TechConference): LogoInfo {
   };
 }
 
-// ── Trend badge ────────────────────────────────────────────────────────────
-
-const TREND_WORD: Record<TechTrend, string> = { up: "Growing", flat: "Stable", down: "Shrinking" };
-const TREND_GLYPH: Record<TechTrend, string> = { up: "▲", flat: "—", down: "▼" };
-
-function TrendBadge({ trend }: { trend: TechTrend }) {
-  return (
-    <span className={`tech-chip tech-chip--${trend}`}>
-      <span aria-hidden="true">{TREND_GLYPH[trend]}</span> {TREND_WORD[trend]}
-    </span>
-  );
-}
-
 // ── Top Employers Leaderboard (replaces recharts bar chart) ────────────────
 
 function TopEmployersLeaderboard() {
@@ -127,21 +113,11 @@ function TopEmployersLeaderboard() {
               </span>
               <span className="tech-leaderboard-bar-wrap" aria-hidden="true">
                 <span
-                  className={`tech-leaderboard-bar${c.trend === "down" ? " is-down" : ""}`}
+                  className="tech-leaderboard-bar"
                   style={{ width: `${widthPct}%` }}
                 />
               </span>
-              <span className="tech-leaderboard-num">
-                <span className="tech-leaderboard-num-value">{c.sccEmployeesK.toLocaleString()}K</span>
-                <span
-                  className={`tech-leaderboard-arrow is-${c.trend}`}
-                  role="img"
-                  aria-label={TREND_WORD[c.trend]}
-                  title={TREND_WORD[c.trend]}
-                >
-                  {TREND_GLYPH[c.trend]}
-                </span>
-              </span>
+              <span className="tech-leaderboard-num">{c.sccEmployeesK.toLocaleString()}K</span>
             </>
           );
           return (
@@ -195,7 +171,6 @@ function CompanyCard({ company }: { company: TechCompanyWithJobsEstimate }) {
             <span className="tech-card-category">{CATEGORY_LABELS[company.category]}</span>
           </div>
         </div>
-        <TrendBadge trend={company.trend} />
       </header>
 
       <p className="tech-card-desc">{company.description}</p>
@@ -205,7 +180,7 @@ function CompanyCard({ company }: { company: TechCompanyWithJobsEstimate }) {
           <span className="tech-card-stat-value">{company.sccEmployeesK.toLocaleString()}K</span>
           <span className="tech-card-stat-label">SCC jobs (est.)</span>
         </div>
-        <p className="tech-card-trend-note">{company.trendNote}</p>
+        <p className="tech-card-workforce-note">{company.workforceNote}</p>
       </div>
 
       <ul className="tech-card-highlights">
@@ -264,12 +239,7 @@ function SpotlightCard({ company }: { company: SccTechSpotlight }) {
   );
 }
 
-// ── Hiring Pulse row ──────────────────────────────────────────────────────
-
-// Status lives on each column's heading; rows don't repeat it.
-const HIRING_GLYPH: Record<TechTrend, string> = { up: "▲", flat: "→", down: "▼" };
-
-function HiringRow({ company }: { company: TechCompany }) {
+function WorkforceRow({ company }: { company: TechCompany }) {
   const content = (
     <>
       <CompanyLogo
@@ -278,16 +248,16 @@ function HiringRow({ company }: { company: TechCompany }) {
         size={32}
         fallbackColor={company.color}
         borderRadius={6}
-        className="tech-hiring-logo"
+        className="tech-workforce-logo"
       />
-      <span className="tech-hiring-title">
-        <span className="tech-hiring-name">
+      <span className="tech-workforce-title">
+        <span className="tech-workforce-name">
           {company.name}
-          {company.careersUrl ? <span className="tech-hiring-out" aria-hidden="true">↗</span> : null}
+          {company.careersUrl ? <span className="tech-workforce-out" aria-hidden="true">↗</span> : null}
         </span>
-        <span className="tech-hiring-city">{company.city}</span>
+        <span className="tech-workforce-city">{company.city}</span>
       </span>
-      <span className="tech-hiring-note">{company.trendNote}</span>
+      <span className="tech-workforce-note">{company.workforceNote}</span>
     </>
   );
 
@@ -296,12 +266,12 @@ function HiringRow({ company }: { company: TechCompany }) {
       href={company.careersUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="tech-hiring-row"
+      className="tech-workforce-row"
     >
       {content}
     </a>
   ) : (
-    <div className="tech-hiring-row">{content}</div>
+    <div className="tech-workforce-row">{content}</div>
   );
 }
 
@@ -1464,38 +1434,19 @@ function FundingHighlightsSection({ todayIso }: { todayIso: string }) {
   );
 }
 
-interface HiringGroup {
-  label: string;
-  note: string;
-  trend: TechTrend;
-  companies: TechCompany[];
-}
-
-function HiringSnapshot({ groups }: { groups: HiringGroup[] }) {
+function WorkforceUpdates() {
   return (
-    <section className="tech-section" aria-labelledby="tech-hiring-title">
+    <section className="tech-section" aria-labelledby="tech-workforce-title">
       <div className="tech-section-head">
-        <h2 id="tech-hiring-title" className="tech-section-title">Hiring Pulse</h2>
-        <span className="tech-section-note">A quick read, not every open role</span>
+        <h2 id="tech-workforce-title" className="tech-section-title">Workforce and Company Updates</h2>
       </div>
-      <div className="tech-hiring-grid">
-        {groups.map((group) => (
-          <div key={group.label} className={`tech-hiring-column is-${group.trend}`}>
-            <h3 className="tech-hiring-label">
-              <span className="tech-hiring-glyph" aria-hidden="true">{HIRING_GLYPH[group.trend]}</span>
-              {group.label}
-            </h3>
-            <p className="tech-hiring-lead">{group.note}</p>
-            <ul className="tech-hiring-list" role="list">
-              {group.companies.slice(0, 4).map((company) => (
-                <li key={company.id}>
-                  <HiringRow company={company} />
-                </li>
-              ))}
-            </ul>
-          </div>
+      <ul className="tech-workforce-grid" role="list">
+        {TECH_COMPANIES.map((company) => (
+          <li key={company.id} className="tech-workforce-column">
+            <WorkforceRow company={company} />
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
@@ -1538,30 +1489,6 @@ export default function TechnologyView({ buildDayPt }: { buildDayPt?: string }) 
   // reader's (useTodayPT).
   const todayIso = useTodayPT(buildDayPt);
   const topCompanies = RANKED_TECH_EMPLOYERS.slice(0, 8);
-  const hiringCompanies = [...TECH_COMPANIES].sort(
-    (a, b) => (b.sccEmployeesK ?? -1) - (a.sccEmployeesK ?? -1),
-  );
-
-  const hiringGroups: HiringGroup[] = [
-    {
-      label: "Actively Hiring",
-      note: "Growing headcount — AI hardware demand lifting chipmakers and server builders, with security and SaaS also expanding",
-      trend: "up",
-      companies: hiringCompanies.filter((c) => c.trend === "up"),
-    },
-    {
-      label: "Selective Hiring",
-      note: "Stable or post-restructuring — open roles but no broad expansion",
-      trend: "flat",
-      companies: hiringCompanies.filter((c) => c.trend === "flat"),
-    },
-    {
-      label: "Reduced Hiring",
-      note: "Shrinking or restructuring locally — limited openings, cautious on headcount",
-      trend: "down",
-      companies: hiringCompanies.filter((c) => c.trend === "down"),
-    },
-  ];
   const pulseStats = [TECH_PULSE[0], TECH_PULSE[1], PULSE_RAISED_STAT, TECH_PULSE[2]];
 
   return (
@@ -1605,7 +1532,7 @@ export default function TechnologyView({ buildDayPt }: { buildDayPt?: string }) 
         </div>
       </section>
 
-      <HiringSnapshot groups={hiringGroups} />
+      <WorkforceUpdates />
       <SpotlightHighlightsSection />
 
       <p className="tech-footer-note">

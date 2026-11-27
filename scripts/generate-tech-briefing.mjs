@@ -71,20 +71,6 @@ function extractRecentlyFunded(tsContent) {
   return entries;
 }
 
-/**
- * Extract hiring trend counts from TECH_COMPANIES array in tech-companies.ts.
- */
-function extractHiringTrends(tsContent) {
-  // Only look in the TECH_COMPANIES block (before RECENTLY_FUNDED)
-  const endIdx = tsContent.indexOf("export const RECENTLY_FUNDED");
-  const block = endIdx !== -1 ? tsContent.substring(0, endIdx) : tsContent;
-
-  const up   = (block.match(/trend:\s*"up"/g)   || []).length;
-  const down = (block.match(/trend:\s*"down"/g) || []).length;
-  const flat = (block.match(/trend:\s*"flat"/g) || []).length;
-  return { up, down, flat };
-}
-
 async function callClaude(prompt) {
   const text = await callClaudeApi(prompt, { maxTokens: 800, label: "tech-briefing" });
   return text.trim();
@@ -119,7 +105,6 @@ async function main() {
   // --- Data gathering ---
   const tsContent = readFileSync(TECH_TS_PATH, "utf8");
   const funded = extractRecentlyFunded(tsContent);
-  const trends = extractHiringTrends(tsContent);
 
   const { events: allEvents } = JSON.parse(readFileSync(EVENTS_PATH, "utf8"));
   const techEvents = allEvents
@@ -128,7 +113,6 @@ async function main() {
     .slice(0, 5);
 
   console.log(`  Found ${funded.length} recent funding rounds`);
-  console.log(`  Hiring trends: ${trends.up} growing, ${trends.flat} stable, ${trends.down} reducing`);
   console.log(`  Tech events this week: ${techEvents.length}`);
 
   // Only include recent funding (last 45 days), sorted newest first so the
@@ -160,7 +144,7 @@ Write a concise "This Week in South Bay Tech" briefing for the week of ${label}.
 CRITICAL — structure and timing:
 - LEAD with what's happening this week: the tech events below, or the freshest funding (rounds dated within the last 14 days of today). Do not open the briefing with a backward-looking month recap ("April saw…") when there's fresher news available.
 - The funding rounds below span up to 45 days. Older rounds belong in a supporting sentence at the END, not the lede. Never say "this week" or "today" about rounds that are weeks old — say "earlier this spring", "over the past month", or just give the company name with no time claim.
-- Only the events list represents "this week" — funding rounds do not.
+- Only the events list represents "this week" — funding rounds do not. Use only the facts in these two lists.
 
 CRITICAL — editorial voice:
 - Never characterize the week or its calendar as quiet, slow, thin, light, sparse, sleepy, soft, or weak, and never apologize for what isn't happening. There is always something worth a resident's time; lead with the strongest thing on the list instead of grading the list.
@@ -168,8 +152,6 @@ CRITICAL — editorial voice:
 
 Recent funding rounds in the South Bay (last 45 days, newest first):
 ${fundedLines}
-
-Hiring pulse: ${trends.up} South Bay companies actively growing headcount, ${trends.flat} stable, ${trends.down} pulling back.
 
 Tech events in the South Bay this week (${label}):
 ${eventLines}

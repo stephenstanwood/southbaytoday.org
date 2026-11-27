@@ -1,10 +1,5 @@
-/* Tech tab — the tech desk.
-   Rendered order: hero stats → Anchor Employers → Recently Funded →
-   Major Company Profiles → Hiring Pulse → Smaller, But Notable.
-   One system: token radii, hairline cards, a readable type scale (nothing
-   under 10.5px), and color only where it carries meaning — teal for the
-   desk accent, green/amber for hiring trend, three calm tiers for funding
-   stage. Company brand colors stay on the logos, not on bars and borders. */
+/* Tech tab. Anchor employers and funding highlights lead, followed by
+   company profiles, workforce updates, and local startup spotlights. */
 
 /* ── Frame ── */
 .tech-view {
@@ -75,7 +70,7 @@
   }
 }
 
-/* ── Chips (trend, funding round, stage, NEW) ── */
+/* ── Chips (funding round, stage, NEW) ── */
 .tech-chip {
   display: inline-flex;
   align-items: center;
@@ -94,19 +89,6 @@
   white-space: nowrap;
 }
 
-.tech-chip--up {
-  --tech-chip-bg: #ecf8ef;
-  --tech-chip-ink: #166534;
-  --tech-chip-line: rgba(22, 101, 52, 0.2);
-}
-
-.tech-chip--down {
-  --tech-chip-bg: #fff4e5;
-  --tech-chip-ink: #9a4a0b;
-  --tech-chip-line: rgba(180, 83, 9, 0.24);
-}
-
-.tech-chip--flat,
 .tech-chip--neutral {
   --tech-chip-bg: #fff;
   --tech-chip-ink: var(--sb-ink-2);
@@ -236,15 +218,10 @@ a.tech-leaderboard-row:hover .tech-leaderboard-arrow-out {
   transition: width 0.4s var(--sb-ease);
 }
 
-.tech-leaderboard-bar.is-down {
-  opacity: 0.5;
-}
-
 .tech-leaderboard-num {
   display: flex;
   align-items: baseline;
   justify-content: flex-end;
-  gap: 6px;
   font-family: var(--sb-mono);
   font-size: 14px;
   font-weight: 700;
@@ -252,16 +229,6 @@ a.tech-leaderboard-row:hover .tech-leaderboard-arrow-out {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
-
-.tech-leaderboard-arrow {
-  width: 12px;
-  font-size: 11px;
-  text-align: center;
-}
-
-.tech-leaderboard-arrow.is-up { color: #166534; }
-.tech-leaderboard-arrow.is-down { color: #b45309; }
-.tech-leaderboard-arrow.is-flat { color: var(--sb-light); }
 
 .tech-leaderboard-footnote {
   margin: 6px 8px 4px;
@@ -619,7 +586,7 @@ a.tech-leaderboard-row:hover .tech-leaderboard-arrow-out {
   color: var(--sb-muted);
 }
 
-.tech-card-trend-note {
+.tech-card-workforce-note {
   margin: 0;
   font-size: 13.5px;
   line-height: 1.5;
@@ -657,88 +624,26 @@ a.tech-leaderboard-row:hover .tech-leaderboard-arrow-out {
   opacity: 0.6;
 }
 
-/* ── Hiring Pulse ── */
-.tech-hiring-grid {
+/* ── Workforce and company updates ── */
+.tech-workforce-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.tech-hiring-column {
-  --tech-tone: var(--sb-light);
-  --tech-tone-bg: rgba(19, 7, 47, 0.05);
+.tech-workforce-column {
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 18px 18px 6px;
+  padding: 0 18px;
   border: 1px solid var(--sb-line);
   border-radius: var(--sb-radius-md);
   background: var(--sb-card);
   box-shadow: var(--sb-shadow-sm);
 }
 
-.tech-hiring-column.is-up {
-  --tech-tone: #166534;
-  --tech-tone-bg: #ecf8ef;
-}
-
-.tech-hiring-column.is-down {
-  --tech-tone: #b45309;
-  --tech-tone-bg: #fff4e5;
-}
-
-.tech-hiring-column.is-flat {
-  --tech-tone: var(--sb-muted);
-}
-
-.tech-hiring-label {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0;
-  font-family: var(--sb-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--sb-ink);
-}
-
-.tech-hiring-glyph {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--tech-tone-bg);
-  color: var(--tech-tone);
-  font-family: var(--sb-sans);
-  font-size: 10.5px;
-  letter-spacing: 0;
-}
-
-.tech-hiring-lead {
-  margin: 10px 0 4px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--sb-line);
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--sb-muted);
-  text-wrap: pretty;
-}
-
-.tech-hiring-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.tech-hiring-list > li + li {
-  border-top: 1px solid var(--sb-line);
-}
-
-.tech-hiring-row {
+.tech-workforce-row {
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr);
   grid-template-areas:
@@ -751,12 +656,12 @@ a.tech-leaderboard-row:hover .tech-leaderboard-arrow-out {
   text-decoration: none;
 }
 
-.tech-hiring-logo {
+.tech-workforce-logo {
   grid-area: logo;
   margin-top: 1px;
 }
 
-.tech-hiring-title {
+.tech-workforce-title {
   grid-area: title;
   min-width: 0;
   display: flex;
@@ -765,38 +670,38 @@ a.tech-leaderboard-row:hover .tech-leaderboard-arrow-out {
   gap: 0 8px;
 }
 
-.tech-hiring-name {
+.tech-workforce-name {
   font-size: 14.5px;
   font-weight: 700;
   line-height: 1.35;
   color: var(--sb-ink);
 }
 
-.tech-hiring-out {
+.tech-workforce-out {
   margin-left: 4px;
   font-size: 11px;
   font-weight: 600;
   color: var(--sb-light);
 }
 
-a.tech-hiring-row:hover .tech-hiring-name {
+a.tech-workforce-row:hover .tech-workforce-name {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 
-a.tech-hiring-row:hover .tech-hiring-out {
+a.tech-workforce-row:hover .tech-workforce-out {
   color: var(--tech-accent);
 }
 
-.tech-hiring-city {
+.tech-workforce-city {
   font-size: 12.5px;
   color: var(--sb-muted);
 }
 
-.tech-hiring-note {
+.tech-workforce-note {
   grid-area: note;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--sb-muted);
   text-wrap: pretty;
@@ -902,7 +807,7 @@ a.tech-hiring-row:hover .tech-hiring-out {
 
 /* ── Tablet ── */
 @media (max-width: 860px) {
-  .tech-hiring-grid,
+  .tech-workforce-grid,
   .tech-spotlight-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -961,7 +866,7 @@ a.tech-hiring-row:hover .tech-hiring-out {
     margin-top: 2px;
   }
 
-  .tech-hiring-grid,
+  .tech-workforce-grid,
   .tech-spotlight-grid,
   .tech-grid {
     grid-template-columns: 1fr;
@@ -1028,7 +933,7 @@ a.tech-hiring-row:hover .tech-hiring-out {
     padding: 16px 16px 14px;
   }
 
-  .tech-hiring-row {
+  .tech-workforce-row {
     padding: 10px 0;
   }
 
@@ -1040,8 +945,8 @@ a.tech-hiring-row:hover .tech-hiring-out {
     font-size: 20px;
   }
 
-  .tech-hiring-column {
-    padding: 16px 16px 4px;
+  .tech-workforce-column {
+    padding: 0 16px;
   }
 }
 
