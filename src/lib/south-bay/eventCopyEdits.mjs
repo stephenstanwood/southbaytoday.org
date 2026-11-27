@@ -2438,6 +2438,10 @@ const EDITS = {
         "Non-walking babies (ages 0-1) and their caregivers can join a 20-minute program with catchy songs, silly rhymes, gentle movement, baby sign language, and short books.",
       ],
       [
+        "When: Wednesdays, 1:00 PM – 2:00 PM; Where: Los Altos Library, Orchard Room.",
+        "The program runs Wednesdays from 1:00 PM to 2:00 PM in the Orchard Room at Los Altos Library.",
+      ],
+      [
         /Baby Bouncers Lapsit \(for non-walking babies\) up to (\d+) months old\./g,
         "Baby Bouncers Lapsit (for non-walking babies up to $1 months old).",
       ],
@@ -2581,6 +2585,10 @@ const EDITS = {
         "Starting Time: 2:30 pm; Ending Time: 4:00 pm; Check with Cupertino Library for the meeting room.",
         "The group meets from 2:30 PM to 4:00 PM. Check with Cupertino Library for the meeting room.",
       ],
+      [
+        /^Starting Time: (\d{1,2}:\d{2}) pm; Ending Time: (\d{1,2}:\d{2}) pm; (Community Room \d+[A-Z]?)\. On the first Friday of each month we will meet in (Room \d+[A-Z]?)\./gi,
+        "The group meets from $1 PM to $2 PM in $3. On the first Friday of each month, it meets in $4.",
+      ],
       ...SCCLD_BOOK_DISCUSSION_EDITS,
       [
         "A Sheriff's Deputy will read books and share safety tips. Please arrive on time and seating is limited.",
@@ -2636,6 +2644,10 @@ const EDITS = {
       ["If you are just here for the vibes there is no need to register!", "If you are just here for the vibes, there is no need to register!"],
       [". *We will be holding ongoing weekly meetings", ". We will be holding ongoing weekly meetings"],
       [". *We can supply some knitting and crochet supplies,", ". We can supply some knitting and crochet supplies,"],
+      [
+        "We can supply some knitting and crochet supplies, but everyone is encouraged to bring their own knitting needles, crochet hooks and yarn.",
+        "Some knitting and crochet supplies are available. Please bring your own knitting needles, crochet hooks, and yarn if you can.",
+      ],
       ["For Kindergarten through", "For kindergarten through"],
       [/\bEach (\d+) minute session\b/g, "Each $1-minute session"],
       [
@@ -2786,6 +2798,10 @@ const EDITS = {
       SCCLD_SENSORY_PLAY_AUDIENCE_EDIT,
     ],
     blurb: [
+      [
+        "Bring your non-walking baby to sing, move, and play with caregivers at Los Altos Library.",
+        "Babies who aren't walking yet and their caregivers can enjoy songs, movement, and playtime at Los Altos Library.",
+      ],
       [
         "Bring your knitting or crochet project to the Cupertino Library and work alongside other adult makers on Friday afternoons, with no sign-up needed.",
         "Bring your knitting or crochet project to Cupertino Library on Friday afternoons and work on it with other adults. No sign-up is needed.",

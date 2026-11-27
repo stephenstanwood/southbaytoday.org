@@ -497,6 +497,10 @@ test("refreshed council topics keep the reviewed parallel wording and preserve a
       "Proposed $417,400 contract with ELECCO of Milpitas, plus a contingency of up to 15%, to replace the Police Department's back-up generator",
     ],
     [
+      "Discussion of a potential annexation of the Mountain Winery property, with Council asked to direct staff on any additional work it wants done",
+      "Discussion of a potential annexation of the Mountain Winery property, with the Council asked to direct staff on any additional work it wanted done",
+    ],
+    [
       "Cal Water presentation on water conservation measures, and a proposed Transit Signal Priority Policy on behalf of VTA",
       "Cal Water presentation on water conservation measures and a proposed Transit Signal Priority Policy on behalf of VTA",
     ],

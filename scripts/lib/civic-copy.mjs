@@ -151,6 +151,8 @@ export function polishCivicTopic(text, options) {
         "Proposed contract with Lignum Mellis of San Francisco to complete the Building B Park Expansion Project for up to $1, plus a contingency of up to $2")
       .replace(/^(Proposed \$[\d,]+ contract with ELECCO of Milpitas, plus )up to (\d+(?:\.\d+)?%) contingency,/,
         "$1a contingency of up to $2,")
+      .replace("Discussion of a potential annexation of the Mountain Winery property, with Council asked to direct staff on any additional work it wants done",
+        "Discussion of a potential annexation of the Mountain Winery property, with the Council asked to direct staff on any additional work it wanted done")
       .replace("Cal Water presentation on water conservation measures, and a proposed Transit Signal Priority Policy",
         "Cal Water presentation on water conservation measures and a proposed Transit Signal Priority Policy")
       .replace("S & H Construction, Inc. for the Plaza del Sol Phase II ReBid Project",
