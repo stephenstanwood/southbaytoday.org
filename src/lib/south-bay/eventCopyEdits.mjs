@@ -1965,6 +1965,14 @@ const EDITS = {
         /^Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities\. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages\./g,
         "Children of all ages and their families can build early literacy skills through stories, songs, rhymes, fingerplays, and movement.",
       ],
+      [
+        "This program promotes the joys of reading and learning for children of all ages and their parents/caregivers!",
+        "Children of all ages and their parents or caregivers can enjoy reading and learning together.",
+      ],
+      [
+        "This program is geared for children of all ages and their parents/caregivers.",
+        "The program welcomes children of all ages and their parents or caregivers.",
+      ],
     ],
     blurb: [
       [
@@ -2824,6 +2832,10 @@ const EDITS = {
         "at Cupertino Library with Alyanna Poniente, a pediatric occupational therapist",
       ],
       SCCLD_SENSORY_PLAY_AUDIENCE_EDIT,
+      [
+        "Parents/caregivers must stay and participate with their children.",
+        "Parents or caregivers must stay and participate with their children.",
+      ],
     ],
     blurb: [
       [
