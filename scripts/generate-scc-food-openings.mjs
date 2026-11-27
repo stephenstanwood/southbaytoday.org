@@ -188,6 +188,9 @@ const NAME_OVERRIDES = {
 const BLURB_OVERRIDES = {
   "SR0886649": "Vegan pickup and delivery only from Sunny's Food Hub.",
   "SR0886600": "County records show a restaurant planned at 374 South First Street in San José.",
+  // The county plan approval identifies the concept and address for this branch.
+  // https://data.sccgov.org/resource/skd7-7ix3.json?record_id=SR0883952
+  "SR0883952": "County records show plans for a Brazilian steakhouse on Blossom Hill Road in San José.",
   // Permit filings whose name gave the model nothing to go on, so it invented a
   // cuisine anyway — "Anne Doan" (an applicant's name) came out as "Vietnamese
   // restaurant". Pinned to location-only until someone confirms the concept.
@@ -238,7 +241,6 @@ const BLURB_OVERRIDES = {
   "SR0884243": "Toastique — upscale avocado toast and cold-pressed juice bar — opening downtown San Jose on W Santa Clara St.",
   "SR0880648": "Crepe Shibuya — Japanese-style street crepes — coming to Ranch Dr in Milpitas.",
   "SR0880855": "Johnny Donuts coming to Santana Row area — handcrafted doughnuts and coffee at Olin Ave.",
-  "SR0883952": "Chama Nativa Brazilian Steakhouse — rodizio churrasco with tableside carving service — opening on Blossom Hill Rd in San Jose.",
   "SR0884604": "Sushi restaurant opening at 15650 Los Gatos Blvd in Los Gatos.",
   "SR0880082": "Seafood restaurant focusing on crab dishes, now open at 625 Coleman Ave in San Jose.",
   "SR0884303": "Boba tea shop opening at De Anza Blvd in Cupertino's shopping district.",
