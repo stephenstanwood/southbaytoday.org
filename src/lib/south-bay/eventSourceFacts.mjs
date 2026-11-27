@@ -7943,18 +7943,26 @@ function staleEventCopyFor(event) {
   return null;
 }
 
+const stanfordThanksgivingReopening = {
+  date: "2026-11-30",
+  displayDate: "Mon, Nov 30",
+};
 const greenLibraryThanksgivingClosure = ["2026-11-27", "Green Library is closed November 26 and 27 for Thanksgiving."];
 const thompsonGalleryThanksgivingClosure = ["2026-11-27", "Thompson Gallery is closed November 25 through 27."];
+// The optional third field is the start of a closure with a verified November
+// 30 reopening. Include regular weekend closures when choosing the next date.
 const EXHIBIT_THANKSGIVING_CLOSURES = new Map([
   // https://www.cdm.org/hours-pricing/
   ["https://www.cdm.org/event/iceless-skating-rink/2026-11-21/",
     ["2026-11-26", "The museum is closed Thursday, November 26, for Thanksgiving."]],
   // https://art.stanford.edu/events/touch-me-not-12th-annual-undergraduate-juried-exhibition
+  // https://events.stanford.edu/art_gallery
   ["https://events.stanford.edu/event/touch-me-not-12th-annual-undergraduate-juried-exhibition",
-    ["2026-11-27", "Stanford Art Gallery is closed November 23 through 27."]],
+    ["2026-11-27", "Stanford Art Gallery is closed November 23 through 27.", "2026-11-23"]],
   // https://library-hours.stanford.edu/libraries.json?from=2026-11-24&to=2026-11-30
+  // Stanford's exhibit pages confirm the next visiting date for Bowes and Branner.
   ["https://events.stanford.edu/event/electric-contrasts-the-art-of-the-detail-7315",
-    ["2026-11-29", "Bowes Art & Architecture Library is closed November 26 through 29."]],
+    ["2026-11-29", "Bowes Art & Architecture Library is closed November 26 through 29.", "2026-11-26"]],
   ["https://events.stanford.edu/event/korean-indigenous-futures",
     ["2026-11-29", "East Asia Library is closed November 26 through 29."]],
   ["https://events.stanford.edu/event/emergent-properties",
@@ -7962,7 +7970,7 @@ const EXHIBIT_THANKSGIVING_CLOSURES = new Map([
   ["https://events.stanford.edu/event/text-machines-scarlet-thread-of-the-digital-order-1883-2026", greenLibraryThanksgivingClosure],
   ["https://events.stanford.edu/event/a-vision-of-paris-the-roxane-debuisson-collection-at-stanford", greenLibraryThanksgivingClosure],
   ["https://events.stanford.edu/event/branner-library-book-map-exhibit-water",
-    ["2026-11-27", "Branner Library is closed November 26 and 27 for Thanksgiving."]],
+    ["2026-11-27", "Branner Library is closed November 26 and 27 for Thanksgiving.", "2026-11-26"]],
   // https://www.sjpl.org/holidays/
   ["https://sjpl.bibliocommons.com/events/6ac02d7dde300e004517d401",
     ["2026-11-27", "Almaden Library is closed November 26 and 27 for Thanksgiving."]],
@@ -7974,26 +7982,33 @@ const EXHIBIT_THANKSGIVING_CLOSURES = new Map([
 ]);
 
 function thanksgivingExhibitClosure(event) {
-  if (!event?.ongoing || event.time || event.virtual || !event.date || event.date < "2026-11-24") return null;
+  if (!event?.ongoing || event.time || event.virtual || !event.date) return null;
 
   const closure = EXHIBIT_THANKSGIVING_CLOSURES.get(event.url);
   if (closure) {
-    const [through, note] = closure;
-    return event.date <= through ? note : null;
+    const [through, note, closedFrom] = closure;
+    // Ongoing rows often use the refresh date. A known closure must also
+    // change the date that day plans and weekend filters use.
+    if (closedFrom && event.date >= closedFrom && event.date <= stanfordThanksgivingReopening.date) {
+      return { note, nextVisit: stanfordThanksgivingReopening };
+    }
+    return event.date >= "2026-11-24" && event.date <= through ? { note } : null;
   }
+
+  if (event.date < "2026-11-24") return null;
 
   // These calendars carry exhibition runs through days the buildings close.
   // https://museum.stanford.edu/visit and https://anderson.stanford.edu/visit/
   if (event.date <= "2026-11-26" && event.source === "Stanford Events"
       && event.url?.startsWith("https://events.stanford.edu/event/")
       && (event.venue === "Cantor Arts Center" || event.venue === "Anderson Collection")) {
-    return "The museum is closed Thursday, November 26, for Thanksgiving.";
+    return { note: "The museum is closed Thursday, November 26, for Thanksgiving." };
   }
   // https://library.sjsu.edu/library-hours
   if (event.date <= "2026-11-27" && event.source === "SJSU Events"
       && event.url?.startsWith("https://events.sjsu.edu/event/")
       && /^King Library\b/.test(event.venue || "")) {
-    return "King Library is closed November 26 and 27 for Thanksgiving.";
+    return { note: "King Library is closed November 26 and 27 for Thanksgiving." };
   }
   return null;
 }
@@ -8259,9 +8274,13 @@ export function applyVerifiedEventFacts(event) {
       || (facts?.registration === REGISTRATION_FULL && event.registration === REGISTRATION_CLOSED)) {
     corrected.registration = event.registration;
   }
+  if (closure?.nextVisit) Object.assign(corrected, closure.nextVisit);
   // Entry conditions supplement current booking/availability notices; never
   // replace a later sold-out, closed or organizer-confirmation message.
-  for (const note of [correction?.appendAttendanceNote, closure]) {
+  for (const note of [
+    correction?.appendAttendanceNote, closure?.note,
+    closure?.nextVisit ? "Visits resume Monday, November 30." : null,
+  ]) {
     if (!note || corrected.attendanceNote?.includes(note)) continue;
     // Replace a saved copy with curly apostrophes before checking for duplicates.
     const attendance = (corrected.attendanceNote || "").replace(note.replaceAll("'", "’"), () => note);

@@ -524,8 +524,6 @@ test("Thanksgiving closures follow the library or gallery's own hours", () => {
       "2026-11-27", "Almaden Library is closed November 26 and 27 for Thanksgiving."],
     ["https://events.sjsu.edu/event/copy-of-natalie-and-james-thompson-gallery-common-ground",
       "2026-11-27", "Thompson Gallery is closed November 25 through 27."],
-    ["https://events.stanford.edu/event/touch-me-not-12th-annual-undergraduate-juried-exhibition",
-      "2026-11-27", "Stanford Art Gallery is closed November 23 through 27."],
   ];
   for (const [url, date, note] of rows) {
     const event = { url, date, ongoing: true, attendanceNote: "Check visiting hours." };
@@ -536,6 +534,42 @@ test("Thanksgiving closures follow the library or gallery's own hours", () => {
     assert.equal(applyVerifiedEventFacts(later).attendanceNote, event.attendanceNote);
     const online = { ...event, virtual: true };
     assert.equal(applyVerifiedEventFacts(online).attendanceNote, event.attendanceNote);
+  }
+});
+
+test("ongoing Stanford exhibits use the first verified visiting date after Thanksgiving closures", () => {
+  const exhibits = [
+    ["touch-me-not-12th-annual-undergraduate-juried-exhibition", "2026-11-23", /Stanford Art Gallery is closed/],
+    ["electric-contrasts-the-art-of-the-detail-7315", "2026-11-26", /Bowes Art & Architecture Library is closed November/],
+    ["branner-library-book-map-exhibit-water", "2026-11-26", /Branner Library is closed/],
+  ];
+
+  for (const [slug, closedFrom, closedNote] of exhibits) {
+    const event = {
+      url: new URL(slug, "https://events.stanford.edu/event/").href,
+      source: "Stanford Events", date: closedFrom, ongoing: true, time: null,
+    };
+
+    for (const date of [closedFrom, "2026-11-27", "2026-11-29"]) {
+      const fixed = applyVerifiedEventFacts({ ...event, date });
+      assert.equal(fixed.date, "2026-11-30");
+      assert.equal(fixed.displayDate, "Mon, Nov 30");
+      assert.match(fixed.attendanceNote, closedNote);
+      assert.match(fixed.attendanceNote, /Visits resume Monday, November 30/);
+      assert.equal(fixed.time, null);
+      assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    }
+
+    for (const other of [
+      { ...event, date: "2026-11-22" },
+      { ...event, date: "2026-12-01" },
+      { ...event, time: "2:00 PM" },
+      { ...event, virtual: true },
+    ]) {
+      const fixed = applyVerifiedEventFacts(other);
+      assert.equal(fixed.date, other.date);
+      assert.doesNotMatch(fixed.attendanceNote || "", /Visits resume/);
+    }
   }
 });
 
