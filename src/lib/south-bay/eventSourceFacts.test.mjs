@@ -883,17 +883,33 @@ test("Hillview's Saturday Fun stays open to all ages when the library says so", 
   assert.deepEqual(applyVerifiedEventFacts(childProgram), childProgram);
 });
 
-test("Give Thanks Saturday distinguishes the single-day GA sellout from VIP options", () => {
-  const event = {
-    date: "2026-11-28",
-    id: "tm-Z7r9jZ1AAAb0x",
-    attendanceNote: "General admission is 18+ and VIP is 21+. Check the official ticket guide for current availability.",
+test("Give Thanks marks Friday sold out and preserves Saturday VIP as an option", () => {
+  const friday = {
+    date: "2026-11-27", id: "tm-Z7r9jZ1AAA_jS", source: "Ticketmaster",
+    attendanceNote: "Friday single-day and two-day passes are sold out. Check the official ticket guide for three-day passes. General admission is 18+ and VIP is 21+.",
   };
-  const fixed = applyVerifiedEventFacts(event);
-  assert.match(fixed.attendanceNote, /Saturday single-day general admission and two-day passes were sold out/);
-  assert.match(fixed.attendanceNote, /Saturday VIP and three-day passes/);
-  assert.equal(fixed.attendanceNote.match(/General admission is 18\+/g).length, 1);
-  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const soldOut = applyVerifiedEventFacts(friday);
+  assert.equal(soldOut.registration, "full");
+  assert.match(soldOut.attendanceNote, /all passes for Friday were sold out/);
+  assert.doesNotMatch(soldOut.attendanceNote, /three-day/);
+  assert.deepEqual(applyVerifiedEventFacts(soldOut), soldOut);
+  assert.equal(applyVerifiedEventFacts({ ...friday, registration: "closed" }).registration, "closed");
+
+  const saturday = applyVerifiedEventFacts({
+    ...friday, date: "2026-11-28", id: "tm-Z7r9jZ1AAAb0x",
+    attendanceNote: "General admission is 18+ and VIP is 21+. Check the official ticket guide for current availability.",
+  });
+  assert.equal(saturday.registration, undefined);
+  assert.match(saturday.attendanceNote, /Saturday general admission and multiday passes were sold out/);
+  assert.match(saturday.attendanceNote, /Saturday VIP/);
+  assert.doesNotMatch(saturday.attendanceNote, /three-day/);
+  assert.equal(saturday.attendanceNote.match(/General admission is 18\+/g).length, 1);
+  assert.deepEqual(applyVerifiedEventFacts(saturday), saturday);
+  const fullSaturday = applyVerifiedEventFacts({
+    ...saturday, registration: "full", attendanceNote: "Tickets are sold out according to the ticket seller.",
+  });
+  assert.equal(fullSaturday.registration, "full");
+  assert.match(fullSaturday.attendanceNote, /Tickets are sold out according to the ticket seller/);
 });
 
 test("Easy Tech Seniors retains conditional walk-ins without reopening a full class", () => {

@@ -194,7 +194,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "software",
     // San José's FY 2025 airport financial report, Schedule J, lists 2,604
     // Adobe employees in the city. Use that figure as the local estimate.
-    // https://www.sanjoseca.gov/home/showpublisheddocument/127017/639003723781700000
+    // https://www.flysanjose.com/sites/default/files/financial/Airport%20ACFR%20FY25%2011.12.25_0.pdf
     sccEmployeesK: 3,
     trend: "flat",
     // Adobe's 8-K gives the effective date of the CEO appointment.

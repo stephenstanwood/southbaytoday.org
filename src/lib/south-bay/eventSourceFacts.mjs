@@ -2884,26 +2884,31 @@ const CORRECTIONS = [
     facts: { occurrenceEvidence: { kind: "first-party-occurrence-page", sourceUrl: url, date, time } },
     appendAttendanceNote,
   })),
-  // https://givethanksfestival.com/tickets and the festival's Front Gate shop.
-  // The November 22 check confirmed sellouts by pass type, with other options listed.
+  // The official ticket guide marked all Friday and multiday passes sold out on
+  // November 26. Saturday VIP still links to the ticket shop.
   ...[
     ["2026-11-25", "tm-Z7r9jZ1AAA_js", "Zeds Dead and Levity"],
-    ["2026-11-27", "tm-Z7r9jZ1AAA_jS", "SLANDER and Seven Lions", "Friday single-day and two-day passes are sold out. Check the official ticket guide for three-day passes."],
-    ["2026-11-28", "tm-Z7r9jZ1AAAb0x", "Crankdat and Wooli", "As of November 22, Saturday single-day general admission and two-day passes were sold out. Check the official ticket guide for Saturday VIP and three-day passes."],
-  ].map(([date, id, headliners, ticketNote]) => ({
+    ["2026-11-27", "tm-Z7r9jZ1AAA_jS", "SLANDER and Seven Lions",
+      "As of November 26, all passes for Friday were sold out.", { registration: REGISTRATION_FULL }],
+    ["2026-11-28", "tm-Z7r9jZ1AAAb0x", "Crankdat and Wooli",
+      "As of November 26, Saturday general admission and multiday passes were sold out. Check the official ticket guide for Saturday VIP."],
+  ].map(([date, id, headliners, ticketNote, availability]) => ({
     date, id,
     facts: {
       category: "music", cost: "paid", address: "150 W San Carlos St, San Jose, CA 95113",
       url: "https://givethanksfestival.com/tickets", audienceAge: "adult", kidFriendly: false,
       description: `${headliners} headline this night of the electronic music festival. It runs from 6 PM to 1 AM the next morning.`,
       blurb: `Hear ${headliners} at the Give Thanks electronic music festival.`,
+      ...availability,
     },
     appendAttendanceNote: ticketNote
       ? `${ticketNote} General admission is 18+ and VIP is 21+.`
       : "General admission is 18+ and VIP is 21+. Check the official ticket guide for current availability.",
-    copyReplacements: ticketNote ? [[
-      /General admission is 18\+ and VIP is 21\+\. Check the official ticket guide for current availability\.\s*/g, "",
-    ]] : [],
+    copyReplacements: ticketNote ? [
+      [/Friday single-day and two-day passes are sold out\. Check the official ticket guide for three-day passes\. General admission is 18\+ and VIP is 21\+\.\s*/g, ""],
+      [/As of November 22, Saturday single-day general admission and two-day passes were sold out\. Check the official ticket guide for Saturday VIP and three-day passes\. General admission is 18\+ and VIP is 21\+\.\s*/g, ""],
+      [/General admission is 18\+ and VIP is 21\+\. Check the official ticket guide for current availability\.\s*/g, ""],
+    ] : [],
   })),
   {
     date: "2026-12-05",
