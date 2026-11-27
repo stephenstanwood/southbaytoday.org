@@ -3761,6 +3761,16 @@ const EDITS = {
   },
   "South Bay Musical Theatre": {
     title: [COME_FROM_AWAY_NAME_EDIT],
+    description: [
+      [
+        "Music by: Leonard Bernstein. Book adapted from Voltaire by: Hugh Wheeler.",
+        "Music by Leonard Bernstein. Book adapted from Voltaire by Hugh Wheeler.",
+      ],
+      [
+        /^At (\d{1,2}:\d{2} [ap]\.m\.) Created and directed by Brad Handshy\. From Brad Handshy, the creator of SBMT's beloved "Broadway By The Decade" series, comes a new concert with a twist: every song will be funny\./g,
+        'At $1, South Bay Musical Theatre presents a concert of comic songs created and directed by Brad Handshy. He also created the company\'s "Broadway By The Decade" series.',
+      ],
+    ],
     blurb: [
       COME_FROM_AWAY_NAME_EDIT,
       [
