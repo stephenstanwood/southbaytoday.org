@@ -1,19 +1,31 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-26T04:12:01.497Z",
+      "generatedAt": "2026-11-27T00:12:38.632Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 18 – Nov 25",
+      "dateRange": "Nov 19 – Nov 26",
       "stats": {
-        "total": 426,
-        "notable": 40,
-        "newUnits": 5,
-        "totalValuation": 39978205
+        "total": 438,
+        "notable": 24,
+        "newUnits": 3,
+        "totalValuation": 22535710
       },
       "permits": [
+        {
+          "id": "2026-127982-RS",
+          "address": "3148 Kermath Dr",
+          "category": "residential-new",
+          "categoryLabel": "Accessory Dwelling Unit",
+          "workType": "New Construction",
+          "description": "Unit 2 Detached ADU",
+          "valuation": 131887,
+          "units": 1,
+          "issueDate": "2026-11-24",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
         {
           "id": "2026-139434-RS",
           "address": "3072 Delta Rd #2",
@@ -27,64 +39,16 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-141605-RS",
-          "address": "3216 Stephanie Ct #2",
+          "id": "2025-142571-RS",
+          "address": "15062 Brewster Av #3",
           "category": "residential-new",
           "categoryLabel": "Accessory Dwelling Unit",
           "workType": "New Construction",
-          "description": "Unit 2 Garage Conversion to ADU",
-          "valuation": 87432,
+          "description": "JADU - Convert Bedroom Into JADU",
+          "valuation": 77363,
           "units": 1,
-          "issueDate": "2026-11-18",
+          "issueDate": "2026-11-24",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-106770-RS",
-          "address": "2431 Woodland Av #2",
-          "category": "residential-new",
-          "categoryLabel": "Accessory Dwelling Unit",
-          "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 70720,
-          "units": 1,
-          "issueDate": "2026-11-18",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-126025-RS",
-          "address": "1360 Cristina Av #2",
-          "category": "residential-new",
-          "categoryLabel": "Accessory Dwelling Unit",
-          "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 56294,
-          "units": 1,
-          "issueDate": "2026-11-18",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-098740-RS",
-          "address": "3216 Stephanie Ct #3",
-          "category": "residential-new",
-          "categoryLabel": "Accessory Dwelling Unit",
-          "workType": "New Construction",
-          "description": "Unit 3 New JADU",
-          "valuation": 46091,
-          "units": 1,
-          "issueDate": "2026-11-18",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-136447-CI",
-          "address": "910 El Paseo De Saratoga",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Club Studio Tenant Improvement",
-          "valuation": 5400000,
-          "units": 0,
-          "issueDate": "2026-11-18",
-          "subtype": "Health Club"
         },
         {
           "id": "2026-148001-CI",
@@ -111,18 +75,6 @@
           "subtype": "Church"
         },
         {
-          "id": "2026-147371-CI",
-          "address": "102 Poughkeepsie Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Be 100%) Underground Tank Replacement",
-          "valuation": 800000,
-          "units": 0,
-          "issueDate": "2026-11-18",
-          "subtype": "Service Station"
-        },
-        {
           "id": "2026-148279-CI",
           "address": "180 Oakland Av",
           "category": "commercial-large",
@@ -133,6 +85,54 @@
           "units": 0,
           "issueDate": "2026-11-19",
           "subtype": "Church"
+        },
+        {
+          "id": "2026-147956-CI",
+          "address": "303 Almaden Bl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Mershops Tenant Improvement",
+          "valuation": 500000,
+          "units": 0,
+          "issueDate": "2026-11-23",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-145575-MF",
+          "address": "5350 Monterey Rd",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Additions/Alterations",
+          "description": "Eden Palms Rehab Project",
+          "valuation": 1221941,
+          "units": 5,
+          "issueDate": "2026-11-19",
+          "subtype": "Apartment"
+        },
+        {
+          "id": "2026-145580-MF",
+          "address": "5352 Monterey Rd",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Additions/Alterations",
+          "description": "Eden Palms Rehab Project",
+          "valuation": 1221941,
+          "units": 5,
+          "issueDate": "2026-11-19",
+          "subtype": "Apartment"
+        },
+        {
+          "id": "2026-145583-MF",
+          "address": "5354 Monterey Rd",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Additions/Alterations",
+          "description": "Eden Palms Rehab Project",
+          "valuation": 1221941,
+          "units": 3,
+          "issueDate": "2026-11-19",
+          "subtype": "Apartment"
         }
       ]
     }
