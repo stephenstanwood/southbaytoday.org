@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-27T04:11:07.088Z",
+      "generatedAt": "2026-11-27T21:15:04.407Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 19 – Nov 26",
+      "dateRange": "Nov 20 – Nov 27",
       "stats": {
-        "total": 438,
-        "notable": 24,
-        "newUnits": 3,
-        "totalValuation": 22535710
+        "total": 401,
+        "notable": 11,
+        "newUnits": 4,
+        "totalValuation": 8284472
       },
       "permits": [
         {
@@ -39,6 +39,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-126472-RS",
+          "address": "1145 Littlejohn Wy",
+          "category": "residential-new",
+          "categoryLabel": "Accessory Dwelling Unit",
+          "workType": "New Construction",
+          "description": "Attached JADU",
+          "valuation": 87689,
+          "units": 1,
+          "issueDate": "2026-11-25",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2025-142571-RS",
           "address": "15062 Brewster Av #3",
           "category": "residential-new",
@@ -51,40 +63,16 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-148001-CI",
-          "address": "5220 Prospect Rd",
+          "id": "2026-149405-CI",
+          "address": "2115 O'Nel Dr",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Westgate Church (Be 100%) New Parking Lot",
-          "valuation": 1439600,
+          "description": "Lattice Semi-Conductor Corp Tenant Improvement",
+          "valuation": 2875320,
           "units": 0,
-          "issueDate": "2026-11-19",
-          "subtype": "Church"
-        },
-        {
-          "id": "2026-148276-CI",
-          "address": "1905 E San Antonio St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "New Construction",
-          "description": "Meditation Center",
-          "valuation": 1400000,
-          "units": 0,
-          "issueDate": "2026-11-19",
-          "subtype": "Church"
-        },
-        {
-          "id": "2026-148279-CI",
-          "address": "180 Oakland Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "New Construction",
-          "description": "Master Zen House",
-          "valuation": 500000,
-          "units": 0,
-          "issueDate": "2026-11-19",
-          "subtype": "Church"
+          "issueDate": "2026-11-25",
+          "subtype": "Office"
         },
         {
           "id": "2026-147956-CI",
@@ -99,40 +87,52 @@
           "subtype": "Office"
         },
         {
-          "id": "2026-145575-MF",
-          "address": "5350 Monterey Rd",
+          "id": "2026-122710-RS",
+          "address": "1145 Littlejohn Wy",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
           "workType": "Additions/Alterations",
-          "description": "Eden Palms Rehab Project",
-          "valuation": 1221941,
-          "units": 5,
-          "issueDate": "2026-11-19",
-          "subtype": "Apartment"
+          "description": "Rebuild & Addition",
+          "valuation": 788232,
+          "units": 1,
+          "issueDate": "2026-11-24",
+          "subtype": "Single-Family"
         },
         {
-          "id": "2026-145580-MF",
-          "address": "5352 Monterey Rd",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Additions/Alterations",
-          "description": "Eden Palms Rehab Project",
-          "valuation": 1221941,
-          "units": 5,
-          "issueDate": "2026-11-19",
-          "subtype": "Apartment"
+          "id": "2026-148468-CI",
+          "address": "705 Capitol Ex Auto Mall #50",
+          "category": "commercial",
+          "categoryLabel": "Commercial",
+          "workType": "Tenant Improvement",
+          "description": "Srp Caffeine Depot",
+          "valuation": 125000,
+          "units": 0,
+          "issueDate": "2026-11-20",
+          "subtype": "Restaurant"
         },
         {
-          "id": "2026-145583-MF",
-          "address": "5354 Monterey Rd",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Additions/Alterations",
-          "description": "Eden Palms Rehab Project",
-          "valuation": 1221941,
-          "units": 3,
-          "issueDate": "2026-11-19",
-          "subtype": "Apartment"
+          "id": "2026-148535-CI",
+          "address": "171 Branham Ln",
+          "category": "commercial",
+          "categoryLabel": "Commercial",
+          "workType": "Tenant Improvement",
+          "description": "Srp Teriyaki City Grill #3",
+          "valuation": 85000,
+          "units": 0,
+          "issueDate": "2026-11-23",
+          "subtype": "Restaurant"
+        },
+        {
+          "id": "2026-145304-CI",
+          "address": "3019 Meridian Av",
+          "category": "commercial",
+          "categoryLabel": "Commercial",
+          "workType": "Tenant Improvement",
+          "description": "Srp (Bep100%) Marianne'S Ice Cream",
+          "valuation": 70000,
+          "units": 0,
+          "issueDate": "2026-11-24",
+          "subtype": "Restaurant"
         }
       ]
     }
