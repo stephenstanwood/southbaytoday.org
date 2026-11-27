@@ -280,6 +280,14 @@ const EDITS = {
     ],
     description: [
       [
+        "This program meets every other Monday from 8/24 - 11/30 from 4:15 PM-5:15 PM",
+        "This program meets every other Monday from 8/24 to 11/30. Sessions run from 4:15 PM to 5:15 PM",
+      ],
+      [
+        "every Monday afternoon from 1:00-6:30 PM in the lobby of Bascom Library",
+        "every Monday afternoon from 1:00 to 6:30 PM in the lobby of Bascom Library",
+      ],
+      [
         "Practice playing the Pokémon Trading Card Game. We will have tutorial decks that teach you how to play and cards that you can use to construct and play a deck.",
         "Practice playing the Pokémon Trading Card Game. Use a tutorial deck to learn the rules. You can also build your own deck with the cards provided and try it out.",
       ],
@@ -2316,6 +2324,18 @@ const EDITS = {
     ],
     description: [
       [
+        "Monday, Tuesday, Wednesday and Thursday from 4 p.m. - 5:30 p.m.",
+        "Monday, Tuesday, Wednesday and Thursday from 4 p.m. to 5:30 p.m.",
+      ],
+      [
+        "on Wednesday and Thursday from 3:30 p.m. - 4:30 p.m.",
+        "on Wednesday and Thursday from 3:30 p.m. to 4:30 p.m.",
+      ],
+      [
+        "every Tuesday and Thursday from 4:30 p.m. - 6:00 p.m.",
+        "every Tuesday and Thursday from 4:30 p.m. to 6:00 p.m.",
+      ],
+      [
         "a friendly dog or cat -- your very own furry audience!",
         "a friendly dog or cat — your very own furry audience!",
       ],
@@ -2979,6 +2999,22 @@ const EDITS = {
       [
         "No need to register, but registering means you will receive a reminder email the day before.",
         "Registration is optional. Sign up to get a reminder email the day before.",
+      ],
+      [
+        "Thursdays from 10:30-11 AM. Storytime may be held",
+        "Thursdays from 10:30 to 11 AM. Storytime may be held",
+      ],
+      [
+        "Jueves de 10:30-11 AM. La Hora de Cuentos",
+        "Los jueves de 10:30 a 11 AM. La Hora de Cuentos",
+      ],
+      [
+        "Our quizzes take place from 2-6 PM",
+        "Our quizzes take place from 2 to 6 PM",
+      ],
+      [
+        "The group meets every 1st Saturday from 10 AM–6 PM.",
+        "The group meets every 1st Saturday from 10 AM to 6 PM.",
       ],
     ],
     blurb: [
