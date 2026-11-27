@@ -266,6 +266,16 @@ const CORRECTIONS = [
     appendAttendanceNote: "Confirm the room when you reserve your time slot.",
     copyReplacements: [[/\s+in the Redwood Room\b/gi, ""]],
   },
+  // The city lists the in-person address separately from the Zoom option.
+  {
+    date: "2026-12-09",
+    matches: event => event.url === "https://www.santaclaraca.gov/Home/Components/Calendar/Event/115515/"
+      && event.address === "275 Saratoga Avenue, Santa Clara, CA 95050 (also online via Zoom)",
+    facts: event => ({
+      address: "275 Saratoga Avenue, Santa Clara, CA 95050",
+      onlineUrl: event.onlineUrl || "https://santaclaraca.zoom.us/j/85644360374",
+    }),
+  },
   // Supervisor Otto Lee's November 20 county newsletter embeds the flyer
   // for this ceremony. Use it when the newsletter extraction omits a URL.
   {

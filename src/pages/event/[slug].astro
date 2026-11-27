@@ -40,6 +40,7 @@ interface RawEvent {
   category?: string | null;
   source?: string | null;
   virtual?: boolean | null;
+  onlineUrl?: string | null;
   registration?: "none" | "required" | "appointment-only" | "full" | "closed" | null;
 }
 
@@ -183,9 +184,8 @@ const imageUrl = directImageUrl
     ? `/api/place-photo?ref=${encodeURIComponent(event.photoRef)}&w=760&h=420`
     : null;
 
-const mapsQuery = [event.venue, event.address, cityName ? `${cityName}, CA` : null]
-  .filter(Boolean)
-  .join(", ");
+const mapsCity = cityName && !addressNamesCity(event.address ?? "", cityName) ? `${cityName}, CA` : null;
+const mapsQuery = [event.venue, event.address, mapsCity].filter(Boolean).join(", ");
 const mapsUrl = !isVirtual && mapsQuery
   ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`
   : null;
@@ -216,11 +216,9 @@ function addressNamesCity(address: string, city: string | null): boolean {
   const escaped = fold(city).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return new RegExp(`\\b${escaped}\\b`, "i").test(fold(address));
 }
-const whereLine = [
-  event.venue,
-  displayAddress ? ` — ${displayAddress}` : "",
-  cityName && !addressNamesCity(displayAddress, cityName) ? `, ${cityName}` : "",
-].join("");
+const whereLabel = [event.venue, displayAddress].filter(Boolean).join(" — ");
+const whereLine = [whereLabel, cityName && !addressNamesCity(displayAddress, cityName) ? cityName : null]
+  .filter(Boolean).join(", ");
 
 const calendarUrl = buildGoogleCalendarUrl({
   title: event.title ?? "",
@@ -411,7 +409,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
           location; check the listing for the link.
         </dd>
       </div>
-    ) : event.venue && (
+    ) : whereLabel && (
       <div>
         <dt>Where</dt>
         <dd>

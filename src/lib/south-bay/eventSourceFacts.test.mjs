@@ -16,6 +16,29 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Santa Clara's hybrid outreach meeting uses only the street address for directions", () => {
+  const event = {
+    date: "2026-12-09",
+    url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/115515/",
+    address: "275 Saratoga Avenue, Santa Clara, CA 95050 (also online via Zoom)",
+    description: "City Ventures hosts an in-person and online community meeting.",
+  };
+  const corrected = {
+    ...event,
+    address: "275 Saratoga Avenue, Santa Clara, CA 95050",
+    onlineUrl: "https://santaclaraca.zoom.us/j/85644360374",
+  };
+
+  assert.deepEqual(applyVerifiedEventFacts(event), corrected);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  const updatedUrl = "https://example.org/updated-webinar";
+  assert.deepEqual(applyVerifiedEventFacts({ ...event, onlineUrl: updatedUrl }), { ...corrected, onlineUrl: updatedUrl });
+  const relocated = { ...event, address: "1500 Warburton Avenue, Santa Clara, CA 95050" };
+  assert.deepEqual(applyVerifiedEventFacts(relocated), relocated);
+  const otherDate = { ...event, date: "2026-12-16" };
+  assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
 test("Santa Teresa's math club signup is for reminders and still honors availability", () => {
   const event = {
     date: "2026-11-30",

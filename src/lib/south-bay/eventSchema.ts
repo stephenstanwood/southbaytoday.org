@@ -44,6 +44,7 @@ export interface SchemaEventRecord {
   // "paid" admission alone cannot establish a minimum (e.g. "From $30").
   costNote?: string | null;
   virtual?: boolean | null; // set at ingest from the source's own location type
+  onlineUrl?: string | null; // public link the organizer provides for remote attendance
   // Advance-registration gate, set at ingest from the source's own
   // registration fields. Absent means unconfirmed, not verified walk-up
   // admission; explicit "none" records no registration requirement.
@@ -121,8 +122,11 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
   // event is never "mixed" — the flag means online-only by construction.
   const attendanceText = [e.title, e.venue, e.address].filter(Boolean).join(" ");
   const flaggedVirtual = e.virtual === true;
-  const isOnline = flaggedVirtual || VIRTUAL_WORD.test(attendanceText) || /\b(?:online|zoom)\b/i.test(attendanceText);
-  const isMixed = !flaggedVirtual && isOnline && /\b(?:hybrid|in[ -]person)\b/i.test(attendanceText);
+  const onlineUrl = absoluteHttpUrl(e.onlineUrl);
+  const isOnline = flaggedVirtual || Boolean(onlineUrl) || VIRTUAL_WORD.test(attendanceText)
+    || /\b(?:online|zoom)\b/i.test(attendanceText);
+  const isMixed = !flaggedVirtual && isOnline
+    && (Boolean(onlineUrl && e.address?.trim()) || /\b(?:hybrid|in[ -]person)\b/i.test(attendanceText));
 
   const schema: Record<string, unknown> = {
     "@type": "Event",
@@ -154,13 +158,14 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
     name: e.venue || locality || "South Bay",
     ...(e.address || locality ? { address } : {}),
   };
+  const virtualLocationUrl = onlineUrl ?? e.url;
   const virtualLocation = {
     // When the flag (not the text) is what makes this virtual, `venue` holds a
     // physical campus name — naming the VirtualLocation after it would just
     // move the false geography into the structured data.
     "@type": "VirtualLocation",
-    name: flaggedVirtual ? "Online" : e.venue || "Online",
-    ...(e.url ? { url: e.url } : {}),
+    name: flaggedVirtual || onlineUrl ? "Online" : e.venue || "Online",
+    ...(virtualLocationUrl ? { url: virtualLocationUrl } : {}),
   };
   schema.location = isMixed ? [place, virtualLocation] : isOnline ? virtualLocation : place;
 

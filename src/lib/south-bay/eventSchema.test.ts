@@ -131,6 +131,27 @@ test("eventToSchema describes explicitly online events as virtual", () => {
   });
 });
 
+test("eventToSchema preserves the address and public join link for a hybrid event", () => {
+  const address = "275 Saratoga Avenue, Santa Clara, CA 95050";
+  const onlineUrl = "https://example.org/meeting";
+  const event = { title: "Community outreach meeting", date: "2026-12-09", address, onlineUrl, cityName: "Santa Clara" };
+
+  const schema = eventToSchema(event);
+  assert.equal(schema?.eventAttendanceMode, "https://schema.org/MixedEventAttendanceMode");
+  assert.deepEqual(schema?.location, [
+    {
+      "@type": "Place",
+      name: "Santa Clara",
+      address: { "@type": "PostalAddress", addressRegion: "CA", addressCountry: "US", streetAddress: address, addressLocality: "Santa Clara" },
+    },
+    { "@type": "VirtualLocation", name: "Online", url: onlineUrl },
+  ]);
+
+  const virtual = eventToSchema({ ...event, virtual: true });
+  assert.equal(virtual?.eventAttendanceMode, "https://schema.org/OnlineEventAttendanceMode");
+  assert.deepEqual(virtual?.location, { "@type": "VirtualLocation", name: "Online", url: onlineUrl });
+});
+
 test("a source-flagged virtual event emits no physical Place, whatever its venue says", () => {
   // The 2026-08-05 defect in structured-data form: SJSU's RSS gives every
   // event a "San Jose State University" venue, so text matching alone emitted
