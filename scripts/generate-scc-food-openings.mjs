@@ -574,6 +574,19 @@ export function cleanAddress(raw) {
   return s || null;
 }
 
+export function permitLocation({ record_id: sourceId, site_location: siteLocation, city }) {
+  const address = cleanAddress(siteLocation);
+  // County plan check SR0886880 lists San José and ZIP 95006. Campbell's
+  // permit record identifies 90 N San Tomas Aquino Rd in San Tomas Plaza.
+  // https://www.campbellca.gov/AgendaCenter/ViewFile/Minutes/173
+  if (sourceId === "SR0886880" && /^90 (?:N )?San Tomas Aquino Rd$/.test(address ?? "")) {
+    return { address: "90 N San Tomas Aquino Rd", cityId: "campbell", cityName: "CAMPBELL" };
+  }
+
+  const cityName = (city ?? "").toUpperCase();
+  return { address, cityId: CITY_ID_MAP[cityName] ?? null, cityName };
+}
+
 /**
  * Build a dedup key for an item's location. The same physical suite is often
  * written different ways across permits ("...Blvd, Ste. 1891" vs "...Blvd #1891"),
@@ -1111,13 +1124,10 @@ async function main() {
       const cleaned = cleanName(item.business_name);
       if (!cleaned) return null;
       const name = (item.record_id && NAME_OVERRIDES[item.record_id]) ?? cleaned;
-      const city = (item.city ?? "").toUpperCase();
       return classifyFinalInspection({
         id: item.record_id ?? item.business_name?.toLowerCase().replace(/\W+/g, "-"),
         name,
-        address: cleanAddress(item.site_location),
-        cityId: CITY_ID_MAP[city] ?? null,
-        cityName: city,
+        ...permitLocation(item),
         inspectionDate: item.final_inspection?.slice(0, 10) ?? null,
         sourceId: item.record_id ?? null,
       }, item.record_id ? VERIFIED_OPENING_EVIDENCE[item.record_id] : null);
@@ -1149,13 +1159,10 @@ async function main() {
       const cleaned = cleanName(item.business_name);
       if (!cleaned) return null;
       const name = (item.record_id && NAME_OVERRIDES[item.record_id]) ?? cleaned;
-      const city = (item.city ?? "").toUpperCase();
       return {
         id: `soon-${item.record_id ?? item.business_name?.toLowerCase().replace(/\W+/g, "-")}`,
         name,
-        address: cleanAddress(item.site_location),
-        cityId: CITY_ID_MAP[city] ?? null,
-        cityName: city,
+        ...permitLocation(item),
         date: item.date_plan_approved?.slice(0, 10) ?? null,
         status: "coming-soon",
         sourceId: item.record_id ?? null,

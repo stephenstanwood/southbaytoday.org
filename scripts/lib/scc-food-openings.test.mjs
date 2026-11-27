@@ -11,7 +11,7 @@ import {
   normalizeComingSoonDiscovery,
   placeMatchesFoodItem,
 } from "./scc-food-openings.mjs";
-import { cleanAddress, cleanName, shouldSkip } from "../generate-scc-food-openings.mjs";
+import { cleanAddress, cleanName, permitLocation, shouldSkip } from "../generate-scc-food-openings.mjs";
 
 test("county addresses retain food-court and lettered suites when removing city/state", () => {
   // Live county records SR0882555 and SR0884438, verified November 5, 2026.
@@ -22,6 +22,23 @@ test("county addresses retain food-court and lettered suites when removing city/
   assert.equal(cleanAddress("1 SAN JOSE AVE"), "1 San Jose Ave");
   assert.equal(cleanAddress("P2020 W EL CAMINO REAL, MOUNTAIN VIEW, CA 94040"), "2020 W El Camino Real");
   assert.equal(cleanAddress("374 WS 1ST ST., SAN JOSE, CA 95113"), "374 S 1st St");
+});
+
+test("Fourfold's bad county locality is corrected for the confirmed Campbell address", () => {
+  const countyRow = {
+    record_id: "SR0886880",
+    site_location: "90 SAN TOMAS AQUINO RD., SAN JOSE, CA 95006",
+    city: "SAN JOSE",
+  };
+  assert.deepEqual(permitLocation(countyRow), {
+    address: "90 N San Tomas Aquino Rd", cityId: "campbell", cityName: "CAMPBELL",
+  });
+  assert.deepEqual(permitLocation({ ...countyRow, record_id: "another-record" }), {
+    address: "90 San Tomas Aquino Rd", cityId: "san-jose", cityName: "SAN JOSE",
+  });
+  assert.deepEqual(permitLocation({ ...countyRow, site_location: "100 N FIRST ST, SAN JOSE, CA 95113" }), {
+    address: "100 N First St", cityId: "san-jose", cityName: "SAN JOSE",
+  });
 });
 
 test("county business names retain meaningful trailing numbers", () => {
