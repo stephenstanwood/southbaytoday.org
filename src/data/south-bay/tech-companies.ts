@@ -192,9 +192,14 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "ADBE",
     city: "San Jose",
     category: "software",
-    sccEmployeesK: 5,
+    // San José's FY 2025 airport financial report, Schedule J, lists 2,604
+    // Adobe employees in the city. Use that figure as the local estimate.
+    // https://www.sanjoseca.gov/home/showpublisheddocument/127017/639003723781700000
+    sccEmployeesK: 3,
     trend: "flat",
-    trendNote: "5K at SJ HQ; steady headcount as Anil Chakravarthy prepares to become CEO on Dec. 1",
+    // Adobe's 8-K gives the effective date of the CEO appointment.
+    // https://www.sec.gov/Archives/edgar/data/796343/000079634326000144/adbe-20260902.htm
+    trendNote: "San José's FY 2025 figures list 2,604 Adobe employees in the city. Adobe named Anil Chakravarthy CEO effective December 1, 2026.",
     highlights: [
       "Firefly generative AI now integrated throughout Creative Cloud product line",
       // https://www.sec.gov/Archives/edgar/data/796343/000079634324000006/adbe-20231201.htm
@@ -232,9 +237,14 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "AMD",
     city: "Santa Clara",
     category: "chip",
+    // Rounded from city figures of different years: Santa Clara's draft FY 2025–26
+    // financial report (Table 18, p. 230) counts 3,000, and San José's capital
+    // budget (p. 38) cites its April 2024 estimate of 1,777 for AMD (formerly Xilinx).
+    // https://santaclara.legistar.com/View.ashx?GUID=0924F60F-11FB-4B12-93D6-75409FC8FC52&ID=16166429&M=F
+    // https://www.sanjoseca.gov/home/showpublisheddocument/120890/638812607480530000
     sccEmployeesK: 5,
     trend: "up",
-    trendNote: "5K at Santa Clara HQ; MI350 GPUs plus multi-year OpenAI and Meta deals drive data center growth",
+    trendNote: "Santa Clara's draft FY 2025–26 report lists 3,000 AMD employees. San José separately estimated about 1,800 in 2024. MI350 GPUs and multi-year OpenAI and Meta deals drive data center growth.",
     highlights: [
       "MI355X AI GPU competes head-to-head with NVIDIA's Blackwell B200; the MI400 series ramps in 2026",
       "EPYC server CPUs dominant across major cloud providers — AWS, Azure, Google Cloud",
@@ -3840,7 +3850,7 @@ export const TECH_PULSE = [
   {
     value: `~${Math.round(trackedJobsK)}K`,
     label: "Jobs at tracked companies",
-    note: "Santa Clara County, est. Q1–Q2 2026",
+    note: "Santa Clara County estimate",
   },
   {
     value: "Google & Apple",

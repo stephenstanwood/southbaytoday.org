@@ -1575,10 +1575,7 @@ export default function TechnologyView({ buildDayPt }: { buildDayPt?: string }) 
         eyebrow="South Bay / Tech Desk"
         title="Technology"
         description="A readable snapshot of the companies, jobs, and funding rounds shaping the local tech economy."
-        // The Q1–Q2 vintage belongs to the employment estimates only — the
-        // funding stat beside it is derived live and already runs into Q3, so
-        // say which number the date applies to instead of stamping the whole page.
-        note="Santa Clara County employment estimates · Q1–Q2 2026 · Funding tracked through today · Not affiliated with any company listed"
+        note="Santa Clara County employment estimates · Funding tracked through today · Not affiliated with any company listed"
         // --sb-teal (#22C6D3) is only ~2.1:1 on the hero background as text —
         // darkened within the same teal family to #0E7490 (~5.4:1) for the kicker.
         accent="#0E7490"
@@ -1593,7 +1590,7 @@ export default function TechnologyView({ buildDayPt }: { buildDayPt?: string }) 
         <div className="tech-section-head">
           <h2 id="tech-anchor-title" className="tech-section-title">Anchor Employers</h2>
           <span className="tech-section-note">
-            Ranked by Santa Clara County local jobs · Q1–Q2 2026
+            Ranked by estimated jobs in Santa Clara County
           </span>
         </div>
         <TopEmployersLeaderboard />
@@ -1617,8 +1614,8 @@ export default function TechnologyView({ buildDayPt }: { buildDayPt?: string }) 
       <SpotlightHighlightsSection />
 
       <p className="tech-footer-note">
-        Employment figures are Santa Clara County estimates as of Q1–Q2 2026, derived from campus
-        headcount reports, company filings, EDD data, and news coverage. Global headcounts are
+        Employment figures are Santa Clara County estimates based on sources from different years,
+        including city and campus headcount reports, company filings, EDD data, and news coverage. Global headcounts are
         much larger. South Bay Today is not affiliated with any company listed and this is not
         investment advice.
       </p>
