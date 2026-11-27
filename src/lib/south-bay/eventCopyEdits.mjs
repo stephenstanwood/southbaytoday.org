@@ -409,6 +409,14 @@ const EDITS = {
       ["Best for children ages 0-8 with their caregivers; all families welcome!", "This program is best for children ages 0–8 and their caregivers. All families are welcome."],
       ["This program is geared for children of all ages and their parents/caregivers! After Storytime concludes, we invite you to Stay & Play!", "After storytime, families are invited to Stay & Play."],
       ["Storytime: 4:00-4:30 PM; Stay & Play: 4:30 PM-5:00 PM.", "Storytime runs from 4:00 to 4:30 PM. Stay & Play runs from 4:30 to 5:00 PM."],
+      [
+        /This program is geared for children (\d+) to (\d+) years of age and their parents\/caregivers, but all children are welcome!/g,
+        "The program is designed for children ages $1 to $2 and their parents or caregivers. Children of all ages are welcome.",
+      ],
+      [
+        /Storytime: (\d{1,2}:\d{2})[-–](\d{1,2}:\d{2} [AP]M); Stay & Play: (\d{1,2}:\d{2} [AP]M)[-–](\d{1,2}:\d{2} [AP]M)\./g,
+        "Storytime runs from $1 to $2. Stay & Play runs from $3 to $4.",
+      ],
       ["This experience aims to set your child's curiosity of light aglow and presents 3 unique activities.", "The workshop includes 3 activities that encourage curiosity about light."],
       [
         "This workshop is an adults-only craft program; all skill levels are welcome to join and sign up. Registration not required.",
@@ -1421,6 +1429,14 @@ const EDITS = {
       [/family-friendly, volunteer ((?:drop-in )?event where participants)/g, "family-friendly volunteer $1"],
       ["Reminder: This is NOT a craft to take home. All dog toys are created for donation to local shelters!", "All dog toys made at the event go to local shelters."],
       ["If you are here to Volunteer Away Your Fines, please be sure to bring your library card and sign in so that we can track your hour(s.)", "To take part in Volunteer Away Your Fines, bring your library card and sign in so the library can track your hours."],
+      [
+        /Register to take part in this opportunity to Volunteer Away Your Fines at a rate of (\$\d+(?:\.\d{2})?) per hour\./g,
+        "Sign up to volunteer. The library credits $1 toward your fines for each hour you volunteer.",
+      ],
+      [
+        /Volunteers must commit to the full session \((\d{1,2}:\d{2} [AP]M) [-–] (\d{1,2}:\d{2} [AP]M)\)\./g,
+        "Volunteers must commit to the full session, from $1 to $2.",
+      ],
       ["gaining service hours for school/work", "gaining service hours for school or work"],
       ["For more information email ", "For more information, email "],
       [/Anyone under the age of (\d+) must volunteer alongside a parent\/guardian; No experience or special skills necessary; Training and supplies will be provided\./g, "Anyone under $1 must volunteer with a parent or guardian. No experience or special skills are needed. Training and supplies will be provided."],

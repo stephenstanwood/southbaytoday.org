@@ -251,6 +251,7 @@ audits.push(bilingualStorytimeFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-reading-and-music.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-knitting-and-trivia-blurbs.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-library-schedules.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-storytime-and-volunteer-credit.json", import.meta.url))));
 
 test("library copy repairs preserve revised contacts and publisher scope", () => {
   for (const row of november24LibraryFixture.cases) {
