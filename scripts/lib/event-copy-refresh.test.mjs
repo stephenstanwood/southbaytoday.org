@@ -246,8 +246,10 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-afternoon-refresh.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-printing-and-storytime.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-library-hours.json", import.meta.url))));
-audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-bilingual-and-knitting.json", import.meta.url))));
+const bilingualStorytimeFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-bilingual-and-knitting.json", import.meta.url)));
+audits.push(bilingualStorytimeFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-reading-and-music.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-26-knitting-and-trivia-blurbs.json", import.meta.url))));
 
 test("library copy repairs preserve revised contacts and publisher scope", () => {
   for (const row of november24LibraryFixture.cases) {
@@ -530,6 +532,21 @@ test("restored Ticketmaster copy drops the clipped warning and keeps ticket deta
   assert.deepEqual(polishReviewedEventCopy(complete), complete);
   const otherPublisher = { ...event, source: "Different publisher" };
   assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
+
+test("Evergreen bilingual storytime keeps its reviewed copy after the refresh removes the conflicting schedule", () => {
+  const [listing] = bilingualStorytimeFixture.cases;
+  const description = listing.refreshed
+    .replace("every Friday. Free. No registration is required.", "every Friday, plus a special bilingual session on the fourth Tuesday of each month. Free, no registration is required.")
+    .replace("thủ công tiếng Việt.", "thủ công tiếng Việt; riêng thứ Ba tuần thứ tư hằng tháng sẽ có chương trình kể chuyện song ngữ đặc biệt.");
+  const event = {
+    ...listing.events[0], source: listing.source, date: "2026-12-01", description: polishDescription(description),
+  };
+  const verified = applyVerifiedEventFacts(event);
+  assert.equal(verified.description, listing.refreshed.replace("Free. No registration is required.", "Free, no registration is required."));
+  const reviewed = { ...verified, description: listing.reviewed };
+  assert.deepEqual(polishReviewedEventCopy(verified), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
 });
 
 test("Almaden's source facts and copy survive description normalization", () => {
