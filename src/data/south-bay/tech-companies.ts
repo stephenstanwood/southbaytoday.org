@@ -62,9 +62,14 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "GOOGL",
     city: "Mountain View",
     category: "cloud",
-    sccEmployeesK: 25,
+    // Use the rounded sum of the two city estimates. Mountain View's
+    // FY 2024–25 financial report, Schedule 15, p. 193, lists 23,100. Sunnyvale's
+    // December 2025 employer list gives 14,498.
+    // https://www.mountainview.gov/home/showpublisheddocument/12666/639056544370000000
+    // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
+    sccEmployeesK: 38,
     trend: "flat",
-    trendNote: "25K at Googleplex + SCC offices; 127 local jobs cut on WARN filings since mid-2025, down from 752 in FY2023-24",
+    trendNote: "Mountain View estimated 23,100 Google jobs in FY 2024–25. Sunnyvale listed 14,498 in December 2025. WARN notices cover 127 Sunnyvale positions effective November 2025 and March–April 2026.",
     highlights: [
       "Gemini AI driving search, Cloud, and device integration across all products",
       "Waymo robotaxi service expanding commercially to multiple US cities",
@@ -152,9 +157,12 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "META",
     city: "Menlo Park",
     category: "social",
-    sccEmployeesK: 2,
+    // Base the local estimate on the Meta Platforms line of Sunnyvale's December
+    // 2025 employer list. The list also reports a separate Facebook entry.
+    // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
+    sccEmployeesK: 3,
     trend: "down",
-    trendNote: "HQ is in San Mateo County; 2K in SCC, where three 2026 rounds cut 439 Sunnyvale jobs",
+    trendNote: "Sunnyvale listed 3,062 jobs under Meta Platforms in December 2025. WARN notices cover 439 Sunnyvale positions effective March–July 2026.",
     highlights: [
       "Llama open-source AI models advancing Meta AI across Facebook, Instagram, and WhatsApp",
       "Ray-Ban Meta smart glasses remain the consumer bright spot, but the Sunnyvale cuts landed mostly on Reality Labs and the wearables and XR teams behind them",
@@ -279,9 +287,13 @@ export const TECH_COMPANIES: TechCompany[] = [
     chartName: "LinkedIn",
     city: "Sunnyvale",
     category: "social",
-    sccEmployeesK: 8,
+    // Mountain View's FY 2024–25 financial report, Schedule 15, p. 193, lists
+    // 2,500 employees. Sunnyvale's December 2025 employer list gives 716.
+    // https://www.mountainview.gov/home/showpublisheddocument/12666/639056544370000000
+    // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
+    sccEmployeesK: 3,
     trend: "down",
-    trendNote: "8K across the Sunnyvale–Mountain View campus; 477 jobs cut effective July 13, 2026, a fourth straight year of filings",
+    trendNote: "Mountain View estimated 2,500 LinkedIn jobs in FY 2024–25. Sunnyvale listed 716 in December 2025. WARN notices cover 477 local positions effective July 13, 2026.",
     highlights: [
       "May 2026 WARN notices cover 606 California positions effective July 13, including 411 at the Mountain View and Sunnyvale offices and 66 Mountain View home-office roles.",
       "B2B advertising and Premium subscriptions driving revenue growth for Microsoft",
@@ -394,9 +406,13 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "AMAT",
     city: "Santa Clara",
     category: "chip",
-    sccEmployeesK: 12,
+    // Santa Clara's draft FY 2025–26 financial report, Table 18, p. 230, lists
+    // 8,500 employees. Sunnyvale's December 2025 employer list gives 2,919.
+    // https://santaclara.legistar.com/View.ashx?GUID=0924F60F-11FB-4B12-93D6-75409FC8FC52&ID=16166429&M=F
+    // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
+    sccEmployeesK: 11,
     trend: "flat",
-    trendNote: "12K at Santa Clara HQ + SCC campus; 363 local jobs cut in October 2025, its first Santa Clara WARN round in twelve years",
+    trendNote: "Santa Clara's draft FY 2025–26 report lists 8,500 Applied Materials employees. Sunnyvale listed 2,919 in December 2025. October 2025 WARN filings cover 363 county positions effective Dec. 23, 2025.",
     highlights: [
       "Deposition, etch, and inspection equipment used to produce advanced logic and HBM memory",
       "Equipment backlog driven by TSMC, Samsung, and Intel expanding AI chip capacity",

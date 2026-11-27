@@ -757,15 +757,17 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     id: "cinequest-film-festival",
     title: "Cinequest Film Festival",
     city: "san-jose",
-    venue: "Downtown San Jose theaters",
+    // Cinequest's 2026 guide lists screenings in both cities.
+    // https://mobile.cinequest.org/sites/default/files/media/CQMiniguide.pdf
+    venue: "Theaters in San José and Mountain View",
     category: "arts",
     recurrence: "seasonal",
     months: [3],
     cost: "paid",
-    costNote: "Individual films ~$15; passes available",
+    costNote: "Individual tickets and festival passes",
     kidFriendly: false,
     description:
-      "Downtown San Jose film festival held each March, with independent films and premieres.",
+      "Annual March film festival with independent films and premieres in San José and Mountain View.",
     url: "https://cinequest.org",
     emoji: "🎬",
   },
@@ -787,17 +789,20 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
   },
   {
     id: "los-gatos-fiesta-artes",
-    title: "Fiesta de Artes — Los Gatos",
+    title: "Los Gatos Art & Wine Festival",
     city: "los-gatos",
-    venue: "Downtown Los Gatos",
+    venue: "Civic Center Lawn",
+    address: "110 E Main St, Los Gatos",
     category: "arts",
     recurrence: "seasonal",
-    months: [8],
+    // The organizer and town list September 26–27 for the 2026 edition.
+    // https://www.losgatosca.gov/Calendar.aspx?EID=6259
+    months: [9],
     days: ["saturday", "sunday"],
     cost: "free",
     kidFriendly: true,
     description:
-      "Annual August arts festival in downtown Los Gatos with juried artists, live music, and local food.",
+      "The Kiwanis Club of Los Gatos holds this annual festival on the Civic Center lawn, with local art, live music, food, and wine. Check the organizer for dates.",
     url: "https://losgatosfiesta.com/",
     emoji: "🎨",
   },
