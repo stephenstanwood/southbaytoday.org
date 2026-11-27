@@ -101,9 +101,12 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "INTC",
     city: "Santa Clara",
     category: "chip",
-    sccEmployeesK: 14,
+    // Use the published city figure as a conservative county estimate.
+    // Santa Clara's draft FY 2025–26 financial report, Table 18, p. 230:
+    // https://santaclara.legistar.com/View.ashx?GUID=0924F60F-11FB-4B12-93D6-75409FC8FC52&ID=16166429&M=F
+    sccEmployeesK: 7,
     trend: "down",
-    trendNote: "About 14K local jobs. WARN notices cover 212 Santa Clara positions from August through November 2026, including 57 effective Nov. 15.",
+    trendNote: "Santa Clara's draft FY 2025–26 financial report lists 7,001 Intel employees in the city. WARN notices cover 212 Santa Clara positions from August through November 2026, including 57 effective Nov. 15.",
     highlights: [
       // Intel's filings give the September 2025 stake, the shares still in
       // escrow in September 2026, and the NVIDIA closing date, respectively.
@@ -3830,13 +3833,14 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
 
 // Pulse stats for the header strip. The third slot ("Raised in Q1–Q2 …") is
 // computed at render time in TechnologyView from RECENTLY_FUNDED, so it stays
-// accurate as new rounds land. The remaining three are stable enough to live
-// here as hand-maintained copy.
+// accurate as new rounds land.
+const trackedJobsK = TECH_COMPANIES.reduce((total, company) => total + company.sccEmployeesK, 0);
+
 export const TECH_PULSE = [
   {
-    value: "140K+",
-    label: "Local tech jobs",
-    note: "Santa Clara County, est. Q1 2026",
+    value: `~${Math.round(trackedJobsK)}K`,
+    label: "Jobs at tracked companies",
+    note: "Santa Clara County, est. Q1–Q2 2026",
   },
   {
     value: "Google & Apple",
