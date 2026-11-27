@@ -276,7 +276,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Wednesday morning market on Paseo de San Antonio with produce, packaged foods, and prepared meals. Check the organizer for date-specific closures.",
+      "Wednesday morning market on Paseo de San Antonio with produce, packaged foods, and prepared meals. Check the market website for closures.",
     url: "https://sjdowntown.com/downtown-farmers-market/",
     emoji: "🏙️",
   },
@@ -802,7 +802,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "The Kiwanis Club of Los Gatos holds this annual festival on the Civic Center lawn, with local art, live music, food, and wine. Check the organizer for dates.",
+      "The Kiwanis Club of Los Gatos hosts this annual festival on the Civic Center Lawn. The festival features local art, live music, food, and wine. Check the festival website for dates.",
     url: "https://losgatosfiesta.com/",
     emoji: "🎨",
   },
