@@ -410,7 +410,7 @@ const EDITS = {
       ["This program is geared for children of all ages and their parents/caregivers! After Storytime concludes, we invite you to Stay & Play!", "After storytime, families are invited to Stay & Play."],
       ["Storytime: 4:00-4:30 PM; Stay & Play: 4:30 PM-5:00 PM.", "Storytime runs from 4:00 to 4:30 PM. Stay & Play runs from 4:30 to 5:00 PM."],
       [
-        /This program is geared for children (\d+) to (\d+) years of age and their parents\/caregivers, but all children are welcome!/g,
+        /This program is geared for children (\d+) to (\d+) years of age and their parents\/caregivers, but all children are welcome[.!](?=\s|$)/g,
         "The program is designed for children ages $1 to $2 and their parents or caregivers. Children of all ages are welcome.",
       ],
       [
@@ -981,6 +981,18 @@ const EDITS = {
       [
         /^Family Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities\. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning\./g,
         "Families can enjoy stories, songs, rhymes, fingerplays, and movement that build early literacy skills for children of different ages.",
+      ],
+      [
+        "Storytime A begins at 11 a.m. For those who want a quieter experience, Storytime B at 11:45 a.m. is recommended. Both are identical in content.",
+        "Storytime A starts at 11 a.m. and Storytime B starts at 11:45 a.m. Both sessions have the same content. The library recommends Storytime B for families who prefer a quieter session.",
+      ],
+      [
+        /^Do you need help using a computer or one of our e-resources\? Want to set up an email account\? Get some one-on-one computer help with our Tech Mentor volunteer! Our Tech Mentor volunteer will do their best to assist you with (?:common tasks such as setting up an email account, sending email, searching the web, and printing|your tech dilemmas such as setting up an email account and sending an email, web searches, printing, etc)\./g,
+        "A volunteer Tech Mentor can help one-on-one with computers and library e-resources. Examples include setting up an email account, sending email, searching the web, and printing.",
+      ],
+      [
+        "Practice and improve your English-speaking skills in a group setting with a volunteer facilitator, discussing a variety of topics. A basic understanding of English is required. The purpose of this group is to help learners practice speaking and build confidence and comfort when communicating in English.",
+        "Build confidence speaking English by discussing a variety of topics in a group led by a volunteer facilitator. A basic understanding of English is required.",
       ],
       [
         /^Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities\. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages\. This program is geared for children of all ages and their parents\/caregivers! To prevent overcrowding, there are two storytimes at Calabazas on Wednesday morning\. The same storytime will be held twice,/g,
