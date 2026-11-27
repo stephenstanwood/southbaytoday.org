@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-26T04:20:48.422Z",
+  "generatedAt": "2026-11-27T04:19:36.580Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-27T00:18:02.387Z",
+    "checkedAt": "2026-11-27T04:19:36.579Z",
     "updatedAt": "2026-11-26T14:31:32.000Z",
     "ageDays": 0,
     "newestRawInspection": "2026-11-24",
@@ -45,6 +45,18 @@
       "photoRef": "places/ChIJ7bP7KF2xj4ARMaNXyffXJ6Q/photos/Ab43m-tqPihPd3Z8Y7-W0ML4EBHcoiJfMC6wmWKqVwqmV4MmvZTvjQmoifwaFM18u-6N9CVECvV6gCes9ck-RS5c7DjVV8O3m1Bwg3z5eWmju1NOVWZGWzDH_AEv60FA8EQ_S2VEn_11XMxsk3XQOXqol272TtdXZholUZyOJyf1h11usrvNhlM4rXwpeMATR3pDmZoti1NbV95FMiQwsuFK6_cyAVjmKhlV53EwZ1kq4Q7HQ9hxVFm1LyX0OR1AubxEJ7XUkdCf87ZRG15nrGPLVC1x1rOrgnx6_NY7fyY1EgG40A"
     },
     {
+      "id": "inspection-SR0878962",
+      "name": "Yafa Hummus",
+      "address": "132 Sunnyvale Saratoga Rd",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
+      "inspectionDate": "2026-11-20",
+      "sourceId": "SR0878962",
+      "status": "inspection-complete",
+      "blurb": null,
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0878962-450.webp"
+    },
+    {
       "id": "inspection-SR0886625",
       "name": "Restaurante Yoschimy",
       "address": "82 E Santa Clara St",
@@ -65,7 +77,7 @@
       "inspectionDate": "2026-11-20",
       "sourceId": "SR0884418",
       "status": "inspection-complete",
-      "blurb": "Bundt cake shop on Rivermark Pkwy in Santa Clara.",
+      "blurb": "Bundt cake business on Rivermark Pkwy in Santa Clara.",
       "photoRef": "places/ChIJ9dytoPO2j4ARgn3nQjo7a7A/photos/AV-0GLf-cGRsvBKy5b3jlit89PzwOOI8XMeLMNkJRm0faIjOhMLZ5YyxREWK1FE95Ch0LA5oivmVVkFt8j0gYw9nn6lzq_-C1WGsmOxo-lkumSGL4NuZDyHzS_lx0cbdoQGG4WcXmo_XziSj1cSNnKIG6DCW7IUDCMhK564Iz5ivTlU90mDf3hOzdif_Af77bjo2MhbO9gd0YJ5jL5Brwf_WuR94StFQm0dxl1oMuIpWAGXHuh4PD3SxUgUhvRBBun0WB5IprOOUm04hGMZO6UJpf05AQaY_SRiVdhbvr20WeYlYiROW2oudgzIraASQUEPnx2U5bfkhGrGXzyUhPEbABymbI80msk4fVF1l-JUfA_NvgtEFjayBjLVh6NXUj_nLBAVGu44J7crA4y9cQ9NDyWm37xKY_wE"
     },
     {
@@ -113,7 +125,7 @@
       "inspectionDate": "2026-11-12",
       "sourceId": "SR0882351",
       "status": "inspection-complete",
-      "blurb": "Kitchen on West Bayshore Dr in Palo Alto.",
+      "blurb": "Kitchen business on West Bayshore Dr in Palo Alto.",
       "photoRef": "places/ChIJTamC_qi7j4ARMAC_ZB2hHMI/photos/AV-0GLf4IxYllB1Ih1qr0KKvDooNZFUWmjPO4BDf0A-HpfpPUKACX4feZcOTQVLq65KNEig48eU-yn5eS76XeaDfTpbnxGCGKEP3avh0TCXmi5JV3dKFaHciafBKMJtEza2x8Wp-Zrv7E5_tlQMXUdNCE43Kqy440GcykuPlw0-eQLcqh9ts8v0aFnKfVGSg7jIU-m6Eedc4MpP-haroSLuUDcmhBjmzTbAcoOmBhBs-7ftnedmYU-HOhyWSk68IribWi0A4v6au-ndNs_HJL2QhJwoXn8ivzV9VdxseJOQJxRDryFVdsagtlPSuDekTeiD4n2JijQzW8BvIC1Qfk-xTbQKqfzoy3QvrNiWTEHhEvku6q79d5g6WnNLrixZj0htbPhxwfJP_6pjZTxW-dBHvhUI2lBn_Unw"
     },
     {
@@ -141,18 +153,6 @@
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0885856-450.webp"
     },
     {
-      "id": "inspection-SR0878199",
-      "name": "Jin Jin Gourmet",
-      "address": "927 E Arques Ave # 141",
-      "cityId": "sunnyvale",
-      "cityName": "SUNNYVALE",
-      "inspectionDate": "2026-11-06",
-      "sourceId": "SR0878199",
-      "status": "inspection-complete",
-      "blurb": "Food business on East Arques Ave in Sunnyvale.",
-      "photoRef": "places/ChIJeWd8gD22j4ARAhzHtIe-rKY/photos/AVoNoXSia--f7CwEIYU1f_I-MpAK_z45FS4VLuUIrTdCjdf-YgWmfHX8hxVJus8A8XfXIsZAXl38qg0Zjbppty7PQBoQTsCGdZmTbFBeC93e2N7t9Ky9wwcU5eNyOzOpDSmajaywGerouKpmMZWkQXjwtUMcs6k6VKpJqe8ncuSIwh0VVgKZ2qNxvRy8kbdrOI3PZsNrUnYsFwgC_c6DgPEtDxVauvyKYndhsNX327znhERgakWCErU9aSIeQpcpCkOO_otZvMrJr8hlYVKzpPGt1rXg155zcTG07XR4COZuIfIaafVJ42bwjIz5oWa1y9izQyiRPxa3PmRUtRcdHre9tFitIISXa6XAtqid3fGut7t8kOA4MQZkzD1SYw_d69i_PSlP1z0IXRPjJZ1kEnd5KQer70ziTDAYqDuTyyzTBsxWsho"
-    },
-    {
       "id": "inspection-SR0881373",
       "name": "Peet's Coffee",
       "address": "2035 Camden Ave",
@@ -165,19 +165,31 @@
       "photoRef": "places/ChIJP38g_WO2j4AR5kDEzKWc1VU/photos/AV-0GLc3PO1R5qvGe67QhsDC090AUXFNXVI5yqZJAQZigZ_GIfLSKsUMi5QF099x71V5JyfAlDwOQWxgeLEQ3YZmymLQuS2CsV9xNyIYFkGZflJ6aG36EsvWbqSznB84GSxQwlsYHWdGoabD39kkOfE0MuBYHdOoeuWYrjPLxl3inqVF4NE3oyOVZZg5eh1TRO8x667dWGbyB-o1cHlG1GwtPSoHuGCms01nXYJNk82rrl-RA9X6PtR-vRFNbNCY_vFQprSB7U8wO-MQCqAOycMKuMNt2SZIo-XQWOl2Ny4HYmMR0NQ177ZUqhCYmHPAi57Fq8UwdlvDcYe3z9rU6C8wUo27PmXGCnPXEetGhDWT_1HRc-Ekd-aiwT9YX3c3NRRdrGo0GWRfomLUzsp9b2dpJk6kdBo"
     },
     {
-      "id": "inspection-SR0886483",
-      "name": "Pho Lucky 7",
-      "address": "3730 N 1st St., Ste. 145",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
+      "id": "inspection-SR0878199",
+      "name": "Jin Jin Gourmet",
+      "address": "927 E Arques Ave # 141",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
       "inspectionDate": "2026-11-06",
-      "sourceId": "SR0886483",
+      "sourceId": "SR0878199",
       "status": "inspection-complete",
-      "blurb": null,
-      "photoRef": "places/ChIJRY2KqiTJj4AR124_EBuhiwY/photos/AV-0GLegbIpczy0Ab2fKt6bGn0OUn87mCoXnuz2un8tHGo6UNqKrc5rlR3_ZVA5sGqpDTY5NHkpJjGm0FC6yRYCNZGc2SgFaifB3oQbxdLQH3kE8BQFOjSdGpVW24Vw9MOT_Jd9CvDP97XBbf_2iYWJtbHnLXwmuNo6LTsS_yTL8kIOM_EcKOyOnxgHEBgd79c4RbYVAcLwJx0xgRmtiprHWkVLBv74QCQpy5uI9d9T_VfiAcpfRLZOY9iOnpBllHqAZzwpQ-JX9AUwo0O_24prSWxebq2zNzjGAw1DwJzrExqVrzI1FQWqdrPY1zBmOG0YPr8YXcO8by4X1hLxdV0gBbjtyAiVEfQGiZ4gzcYM21cTYQac7E0rh2LhAhyzg15EpOpLnp6J2Jxt-N7o1A19TNCRBQJgCiI13jW8Elw9w-Y4xDw"
+      "blurb": "Food business on East Arques Ave in Sunnyvale.",
+      "photoRef": "places/ChIJeWd8gD22j4ARAhzHtIe-rKY/photos/AVoNoXSia--f7CwEIYU1f_I-MpAK_z45FS4VLuUIrTdCjdf-YgWmfHX8hxVJus8A8XfXIsZAXl38qg0Zjbppty7PQBoQTsCGdZmTbFBeC93e2N7t9Ky9wwcU5eNyOzOpDSmajaywGerouKpmMZWkQXjwtUMcs6k6VKpJqe8ncuSIwh0VVgKZ2qNxvRy8kbdrOI3PZsNrUnYsFwgC_c6DgPEtDxVauvyKYndhsNX327znhERgakWCErU9aSIeQpcpCkOO_otZvMrJr8hlYVKzpPGt1rXg155zcTG07XR4COZuIfIaafVJ42bwjIz5oWa1y9izQyiRPxa3PmRUtRcdHre9tFitIISXa6XAtqid3fGut7t8kOA4MQZkzD1SYw_d69i_PSlP1z0IXRPjJZ1kEnd5KQer70ziTDAYqDuTyyzTBsxWsho"
     }
   ],
   "comingSoon": [
+    {
+      "id": "soon-SR0886880",
+      "name": "Fourfold Campbell",
+      "address": "90 San Tomas Aquino Rd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-11-24",
+      "status": "coming-soon",
+      "sourceId": "SR0886880",
+      "blurb": "Food business planned on San Tomas Aquino Road in San Jose.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886880-450.webp"
+    },
     {
       "id": "soon-SR0883952",
       "name": "Chama Nativa Brazilian Steakhouse",
@@ -223,7 +235,7 @@
       "date": "2026-11-20",
       "status": "coming-soon",
       "sourceId": "SR0886645",
-      "blurb": "Kitchen planned on West El Camino Real in Sunnyvale.",
+      "blurb": "Momo kitchen planned on West El Camino Real in Sunnyvale.",
       "photoRef": "places/ChIJ631vKGG3j4AR-QJWJEv3ipI/photos/AV-0GLcPjXT7c6k1CZZGUwIGaDo0RYnW6Z65-2weY2qUHDLKbfL8AsQawzFYTyz7dut5jpmghjOBTw7XieyvaqC5JCdlpwt_QGr0kRI0s37pT8Yxo78UpwCMLFbIdxYPUaCP166AEXSYEK-D24qL4uL07BDJ8aSvE-vX_OBJ5lnAH7brz4WhOZtya3gU65ehMAj3PhYMn9eVVYjBymZ9LanqeeuzAPKQvyKv5uri0TDYNMAz6sSAxdTLUdY5lrkVYI4yOj2P1Lr7zy6Zkh_MyySG5SvLPvgaalrb-qiC6VcBGioVksCcDSDje2VHr6nxrqYIbLKfiwCm3z0PlXYJKDfE7p6iep7L8F_zHki3krmP9OSn3PJyh-b6TSpEztTfZqm1iMVTLfwdSv2CBDlDLc8FLBnPpFNmSIZV_wavzz3cXdXDlw"
     },
     {
@@ -309,18 +321,6 @@
       "sourceId": "SR0886411",
       "blurb": "Food business planned on Monterey Road in San Jose.",
       "photoRef": "places/ChIJ_ymLOQAxjoARjSFwGH68a1s/photos/AV-0GLca8YeP2Xs8zBf5GR7I0qYnYtmVHBj8a1j3JxcsCfkL_jq_jJLvXtozMq5QTXq7Q4M2QbI0Yt5iWe5KLvSJws77yKc4vyCOPP7wvIrGT998bMPUA5xe6Rp94Js2crO9lJXMWov-KNcNMG0ekE6lthpe9aaCE10Xr3yuoOBnc20oMoR_DtjehbIAnrMbtsllVUmYxvCW6ZmytOJDW4KXTc2-AUR1xE4apvaMR1nq6IfxXq42MSbfBdP4hrKmfsR_T9WMB4LnIFl5ugaGiEIMqK3v9oo4FU_dZNuQsgdaQrOuzVb2s4nXmL5gGSZornK7oQkv69j0WRC4DA5L7sDSnEJs3O7CkSMt0gmMGjCBUFXuhRyywKBBcdDrcVzDRrZk0wQ4SzfgVA93g5TvVNN-aEEmp1nXRxvxK6X9G7LbH7ZyvA"
-    },
-    {
-      "id": "soon-SR0885628",
-      "name": "Voyager Cafe At Mershops",
-      "address": "303 Almaden Blvd",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-10-28",
-      "status": "coming-soon",
-      "sourceId": "SR0885628",
-      "blurb": "Cafe planned at Mershops on Almaden Boulevard in San Jose.",
-      "photoRef": "places/ChIJSxInvZrNj4ARmiGfPRj2mOI/photos/AV-0GLcUASzUNuPEZuOdo2GB9UasTQj9Tub1jXsmbiVR-9Xu_1V_Qsio-iLyimY-BrjQn1l1vVBEVluy18qpvACUfjjsGl4fXjYRQHc5i6trfF1a61WkbZDcDfRfIoluaY_fmti-wzQTVwuAH3sXDzNxRTHkqM2kFRL75LAQJPTrLWOPUSHys1UdkBvLd_qTuuKOm397csjegrS2QJiXg-EsuDBn-P9Fyv2ALs4w13dxj9YCITiGmcrMPnK_bbmUmBl-Ok_krOFN-AiU7e68yycpvXyOmX1u_utl1hXIGYIlltUxS1rg1oO9FJwJydVBbWc9elEuA4nTISQuK2MvNwcX-YbjtIuHsF62eMTuBaeD5JrtBgy7zPDBfDzMiX5NtCBEcnvDwbQvNSi93OYeLCh-mumuYEK6JI310KtaTEff22jEtg"
     }
   ]
 }
