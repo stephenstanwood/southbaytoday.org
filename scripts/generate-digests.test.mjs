@@ -452,9 +452,64 @@ test("refreshed planning copy identifies what the preschool hearing covered and 
   assert.equal(polishCivicCopy(summary, { cityId: "sunnyvale" }), reviewed);
   assert.equal(polishCivicCopy(reviewed, { cityId: "sunnyvale" }), reviewed);
   assert.equal(polishCivicModifiers(headline, { cityId: "santa-clara" }),
-    "Planning Commission agenda: 316 apartments at 400 Saratoga Avenue golf course");
+    "Planning Commission agenda lists 316 apartments at the 400 Saratoga Avenue golf course");
+  assert.equal(polishCivicModifiers("Planning Commission agenda: 316 apartments at 400 Saratoga Avenue golf course"),
+    "Planning Commission agenda lists 316 apartments at the 400 Saratoga Avenue golf course");
   assert.equal(polishCivicModifiers("400 Saratoga Avenue: 316-unit apartment building"),
     "400 Saratoga Avenue: 316-unit apartment building");
+});
+
+test("refreshed Santa Clara planning briefs keep the project sizes and permit language", () => {
+  assert.equal(polishCivicModifiers("Neighbor appeal of Rita Court home addition on Planning Commission agenda"),
+    "Planning Commission agenda lists neighbor's appeal of Rita Court home addition");
+  const cases = [
+    [
+      "The project would also reconfigure the existing nine-hole golf course and dedicate land for a public park, and an Environmental Impact Report was prepared for it.",
+      "The project would also reconfigure the existing nine-hole golf course and dedicate land for a public park. An Environmental Impact Report was prepared for the project.",
+    ],
+    [
+      "The agenda listed an appeal of the Development Review Officer's approval of a 517-square-foot first-floor and 1,000-square-foot second-floor addition to a single-story home at 2261 Rita Court, on a 6,272-square-foot lot.",
+      "The agenda listed an appeal of the Development Review Officer's approval of an addition at 2261 Rita Court. The proposal calls for adding 517 square feet on the first floor and 1,000 square feet on a new second floor. The existing single-story home sits on a 6,272-square-foot lot.",
+    ],
+    [
+      "It also covered architectural review to demolish the existing vacant structures completely, and a minor use permit for offsite parking.",
+      "It also listed an architectural review to allow complete demolition of the existing vacant structures and a minor use permit for off-site parking.",
+    ],
+  ];
+  for (const [before, after] of cases) {
+    assert.equal(polishCivicCopy(before, { cityId: "santa-clara" }), after);
+    assert.equal(polishCivicCopy(after, { cityId: "santa-clara" }), after);
+  }
+});
+
+test("refreshed council topics keep the reviewed parallel wording and preserve amounts", () => {
+  const cases = [
+    [
+      "The consent calendar also listed approval of bills and claims totaling $3,439,007.77 and second reading of Ordinance 26-2356.",
+      "The consent calendar also listed approval of bills and claims totaling $3,439,007.77 and the second reading of Ordinance 26-2356.",
+    ],
+    [
+      "Proposed contract with Lignum Mellis of San Francisco, for no more than $175,000 plus up to 12.5% contingency, to complete the Building B Park Expansion Project",
+      "Proposed contract with Lignum Mellis of San Francisco to complete the Building B Park Expansion Project for up to $175,000, plus a contingency of up to 12.5%",
+    ],
+    [
+      "Proposed $417,400 contract with ELECCO of Milpitas, plus up to 15% contingency, to replace the Police Department's back-up generator",
+      "Proposed $417,400 contract with ELECCO of Milpitas, plus a contingency of up to 15%, to replace the Police Department's back-up generator",
+    ],
+    [
+      "Cal Water presentation on water conservation measures, and a proposed Transit Signal Priority Policy on behalf of VTA",
+      "Cal Water presentation on water conservation measures and a proposed Transit Signal Priority Policy on behalf of VTA",
+    ],
+    [
+      "The agenda listed a $3,268,600 contract with S & H Construction, Inc. for the Plaza del Sol Phase II ReBid Project.",
+      "The agenda listed a $3,268,600 contract with S & H Construction, Inc., for the Plaza del Sol Phase II ReBid Project.",
+    ],
+  ];
+  for (const [before, after] of cases) {
+    assert.equal(polishCivicTopic(before), after);
+    assert.equal(polishCivicTopic(after), after);
+    assert.deepEqual(after.match(/\d[\d,.]*\d/g), before.match(/\d[\d,.]*\d/g));
+  }
 });
 
 test("refreshed Golden Oak Court copy identifies the site being divided", () => {

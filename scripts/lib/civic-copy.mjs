@@ -28,7 +28,10 @@ export function polishCivicModifiers(text, { cityId } = {}) {
       .replace(/\bCity Council sponsored special event\b/g, "City Council-sponsored special event")
       .replace(/\bHistoric-listed home\b/g, "Home listed as historic")
       .replace(/\bHistoric-listed Washington Street lot\b/g, "Washington Street lot listed as historic")
-      .replace(/^(Planning Commission agenda: )(\d[\d,]*)-unit apartments(?= at 400 Saratoga Avenue golf course$)/g, "$1$2 apartments")
+      .replace(/^Planning Commission agenda: (\d[\d,]*)(?:-unit)? apartments at 400 Saratoga Avenue golf course$/,
+        "Planning Commission agenda lists $1 apartments at the 400 Saratoga Avenue golf course")
+      .replace("Neighbor appeal of Rita Court home addition on Planning Commission agenda",
+        "Planning Commission agenda lists neighbor's appeal of Rita Court home addition")
       .replace("Nine townhomes proposed on Golden Oak Court single-family lot", "Nine townhomes proposed for a single-family lot on Golden Oak Court")
     : text;
 }
@@ -95,6 +98,12 @@ export function polishCivicCopy(text, { cityId } = {}) {
         "a public hearing on whether to recommend amending the General Plan and rezoning 400 Saratoga Avenue.")
       .replace("The proposal would build a five-story, 316-unit apartment building, reconfigure the existing nine-hole golf course, and dedicate land for a public park.",
         "The proposal calls for constructing a five-story, 316-unit apartment building, reconfiguring the existing nine-hole golf course, and dedicating land for a public park.")
+      .replace("The project would also reconfigure the existing nine-hole golf course and dedicate land for a public park, and an Environmental Impact Report was prepared for it.",
+        "The project would also reconfigure the existing nine-hole golf course and dedicate land for a public park. An Environmental Impact Report was prepared for the project.")
+      .replace(/of a ([\d,]+)-square-foot first-floor and ([\d,]+)-square-foot second-floor addition to a single-story home at (\d+ Rita Court), on a ([\d,]+)-square-foot lot\./g,
+        "of an addition at $3. The proposal calls for adding $1 square feet on the first floor and $2 square feet on a new second floor. The existing single-story home sits on a $4-square-foot lot.")
+      .replace(/It also covered architectural review to (?:demolish the existing vacant structures completely,|completely demolish the existing vacant structures) and a minor use permit for offsite parking\./g,
+        "It also listed an architectural review to allow complete demolition of the existing vacant structures and a minor use permit for off-site parking.")
       .replace("It also listed updates to Council Policy 030, on adding an item to the agenda, which had been deferred from June 1.",
         "It also listed updates to Council Policy 030, which governs how items are added to the agenda. Consideration of those updates had been deferred from June 1.")
       .replace("a 590-unit residential and 15,000 square-foot commercial mixed-use project at 2610 El Camino Real, which falls under SB 330.",
@@ -136,6 +145,17 @@ export function polishCivicCopy(text, { cityId } = {}) {
 
 export function polishCivicTopic(text, options) {
   let copy = polishCivicCopy(text, options);
+  if (typeof copy === "string") {
+    copy = copy.replace("and second reading of Ordinance 26-2356", "and the second reading of Ordinance 26-2356")
+      .replace(/^Proposed contract with Lignum Mellis of San Francisco, for no more than (\$[\d,]+) plus up to (\d+(?:\.\d+)?%) contingency, to complete the Building B Park Expansion Project\b/,
+        "Proposed contract with Lignum Mellis of San Francisco to complete the Building B Park Expansion Project for up to $1, plus a contingency of up to $2")
+      .replace(/^(Proposed \$[\d,]+ contract with ELECCO of Milpitas, plus )up to (\d+(?:\.\d+)?%) contingency,/,
+        "$1a contingency of up to $2,")
+      .replace("Cal Water presentation on water conservation measures, and a proposed Transit Signal Priority Policy",
+        "Cal Water presentation on water conservation measures and a proposed Transit Signal Priority Policy")
+      .replace("S & H Construction, Inc. for the Plaza del Sol Phase II ReBid Project",
+        "S & H Construction, Inc., for the Plaza del Sol Phase II ReBid Project");
+  }
   // The April 21 staff report names the curb, gutter and sidewalk project
   // whose abbreviated title came through the November 17 agenda extract.
   // https://meetings.municode.com/adaHtmlDocument/index?cc=LOSGATOS&ip=True&me=3423e578564544c4b346a056e5fd6d16

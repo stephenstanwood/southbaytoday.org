@@ -995,6 +995,10 @@ const EDITS = {
         "Children of all ages, along with their families or caregivers, can build early literacy skills through songs, rhymes, fingerplays, and movement.",
       ],
       [
+        "We host Vietnamese Storytime and Craft every Friday. Free, no registration is required.",
+        "We host Vietnamese Storytime and Craft every Friday. Free. No registration is required.",
+      ],
+      [
         "Bilingual Music and Movement in English and Vietnamese is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities through songs, rhymes, finger plays, and movement activities both in English and Vietnamese. " +
           "Music and Movement is a fun and interactive experience for the whole family that promotes the joys of learning for all ages. This program is geared for children of all ages and their parents/caregivers! " +
           "Following the Storytime, kids will learn to make a simple and creative craft to take home! We host Vietnamese Storytime and Craft every Friday. " +
@@ -1935,6 +1939,10 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        "Sing and move along to bilingual Vietnamese and English songs, rhymes, and a craft with the family.",
+        "Sing and move to songs and rhymes in Vietnamese and English, then make a craft together.",
+      ],
       [
         "Get one-on-one, hands-on help with 3D printing at Calabazas Library, with guided support aimed at beginners.",
         "Practice 3D printing with one-on-one help at Calabazas Library. The session is designed for beginners.",
