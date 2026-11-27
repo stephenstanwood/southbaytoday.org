@@ -576,12 +576,36 @@ const CORRECTIONS = [
     facts: (event) => ({ address: event.address || "77 Harrison Ave, Campbell, CA 95008" }),
     copyReplacements: [[/\bCinema Sundays take place on the fourth Sunday of every month\.\s*/i, ""]],
   },
-  // The February listing is on the third Sunday. Its description still
-  // carries the series' usual second-Sunday schedule.
+  // The library's Quiz Club pages repeat one schedule, yet their dated
+  // series includes February 21, the third Sunday. Keep the dated listings.
+  // https://paloalto.bibliocommons.com/v2/events/69adb99845f57dfccb1945ca
   {
-    date: "2027-02-21",
-    matches: event => /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/69adb99845f57dfccb1945ca\/?$/.test(event.url || ""),
-    copyReplacements: [[/\s+on the second Sunday of every month,(?=\s+at Mitchell Park Library\b)/i, ""]],
+    dateFrom: "2026-12-13",
+    dateThrough: "2027-05-09",
+    matches: event => /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/69adb99845f57dfccb1945c[89a-d]\/?$/.test(event.url || ""),
+    copyReplacements: [[/\s+on the second Sunday of every month,?(?=\s+at Mitchell Park Library\b)/i, ""]],
+  },
+  // Evergreen's December 1 session is dated independently of the copied
+  // fourth-Tuesday schedule in both languages.
+  // https://sjpl.bibliocommons.com/v2/events/6a6270e288e9bf280032dae3
+  {
+    date: "2026-12-01",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a6270e288e9bf280032dae3\/?$/.test(event.url || ""),
+    copyReplacements: [
+      [/, plus a special bilingual session on the fourth Tuesday of each month\.?/i, "."],
+      [/;\s*riêng thứ Ba tuần thứ tư hằng tháng sẽ có chương trình kể chuyện song ngữ đặc biệt\.?/iu, "."],
+    ],
+  },
+  // The December 4 Knit-Alongs program lists Room 201A under Location and
+  // Room 201B in its first-Friday instructions. Use the confirmed branch.
+  // https://sccl.bibliocommons.com/v2/events/69309193caa2e62f001e8bc8
+  {
+    date: "2026-12-04",
+    matches: event => /^https:\/\/sccl\.bibliocommons\.com\/(?:v2\/)?events\/69309193caa2e62f001e8bc8\/?$/.test(event.url || ""),
+    copyReplacements: [[
+      /\bCommunity Room 201A[.\s]+On the first Friday of each month we will meet in Room 201B\.?/i,
+      "Check with Cupertino Library for the meeting room.",
+    ]],
   },
   // The Civic's linked Ticketmaster event and AXS corroborate 7 PM.
   // Ticketmaster's 8 PM timestamp is the end of the general sale.

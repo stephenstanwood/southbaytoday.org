@@ -41,21 +41,63 @@ test("Santa Teresa's math club signup is for reminders and still honors availabi
   }
 });
 
-test("the February quiz listing keeps the dated occurrence's schedule", () => {
+test("Quiz Club listings keep their individual schedules when the series has an exception", () => {
+  const occurrences = [
+    ["2026-12-13", "8", "", ""],
+    ["2027-01-10", "9", "", ""],
+    ["2027-02-21", "a", ",", "v2/"],
+    ["2027-05-09", "d", ",", "v2/"],
+  ];
+  for (const [date, idSuffix, comma, urlPrefix] of occurrences) {
+    const event = {
+      date,
+      url: `https://paloalto.bibliocommons.com/${urlPrefix}events/69adb99845f57dfccb1945c${idSuffix}`,
+      time: "2:00 PM",
+      endTime: "6:00 PM",
+      description: `Our quizzes take place from 2 to 6 PM on the second Sunday of every month${comma} at Mitchell Park Library, Palo Alto.`,
+    };
+    const reviewed = {
+      ...event, description: "Our quizzes take place from 2 to 6 PM at Mitchell Park Library, Palo Alto.",
+    };
+    assert.deepEqual(applyVerifiedEventFacts(event), reviewed);
+    assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+    const unrelated = { ...event, url: "https://paloalto.bibliocommons.com/events/69484721571fb4d550be978c" };
+    assert.deepEqual(applyVerifiedEventFacts(unrelated), unrelated);
+  }
+});
+
+test("Evergreen's December 1 bilingual event keeps its date and separate Friday program", () => {
   const event = {
-    date: "2027-02-21",
-    url: "https://paloalto.bibliocommons.com/v2/events/69adb99845f57dfccb1945ca",
-    time: "2:00 PM",
-    endTime: "6:00 PM",
-    description: "Our quizzes take place from 2 to 6 PM on the second Sunday of every month, at Mitchell Park Library, Palo Alto.",
+    date: "2026-12-01",
+    time: "4:30 PM",
+    url: "https://sjpl.bibliocommons.com/events/6a6270e288e9bf280032dae3",
+    description: "We host Vietnamese Storytime and Craft every Friday, plus a special bilingual session on the fourth Tuesday of each month. Free. No registration is required. "
+      + "Thứ Sáu hằng tuần có hoạt động kể chuyện và thủ công tiếng Việt; riêng thứ Ba tuần thứ tư hằng tháng sẽ có chương trình kể chuyện song ngữ đặc biệt. Chương trình hoàn toàn miễn phí và không cần phải đăng ký trước.",
   };
   const reviewed = {
-    ...event, description: "Our quizzes take place from 2 to 6 PM at Mitchell Park Library, Palo Alto.",
+    ...event,
+    description: "We host Vietnamese Storytime and Craft every Friday. Free. No registration is required. "
+      + "Thứ Sáu hằng tuần có hoạt động kể chuyện và thủ công tiếng Việt. Chương trình hoàn toàn miễn phí và không cần phải đăng ký trước.",
   };
   assert.deepEqual(applyVerifiedEventFacts(event), reviewed);
   assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
-  const january = { ...event, date: "2027-01-10", url: "https://paloalto.bibliocommons.com/v2/events/69adb99845f57dfccb1945c9" };
-  assert.deepEqual(applyVerifiedEventFacts(january), january);
+});
+
+test("Cupertino Knit-Alongs leaves the conflicting December 4 room for the library to confirm", () => {
+  const event = {
+    date: "2026-12-04",
+    time: "2:30 PM",
+    venue: "Cupertino Library",
+    url: "https://sccl.bibliocommons.com/events/69309193caa2e62f001e8bc8",
+    description: "Community Room 201A. On the first Friday of each month we will meet in Room 201B. No registration or sign-up required.",
+  };
+  const reviewed = {
+    ...event, description: "Check with Cupertino Library for the meeting room. No registration or sign-up required.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(event), reviewed);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  const secondFriday = { ...event, date: "2026-12-11", url: "https://sccl.bibliocommons.com/events/69309193caa2e62f001e8bc9" };
+  assert.deepEqual(applyVerifiedEventFacts(secondFriday), secondFriday);
 });
 
 test("Small Business Saturday's timed listing describes the plaza giveaway", () => {
