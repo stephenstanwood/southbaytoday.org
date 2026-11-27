@@ -987,6 +987,15 @@ const EDITS = {
         "Children of all ages, along with their families or caregivers, can build early literacy skills through songs, rhymes, fingerplays, and movement.",
       ],
       [
+        "Bilingual Music and Movement in English and Vietnamese is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities through songs, rhymes, finger plays, and movement activities both in English and Vietnamese. " +
+          "Music and Movement is a fun and interactive experience for the whole family that promotes the joys of learning for all ages. This program is geared for children of all ages and their parents/caregivers! " +
+          "Following the Storytime, kids will learn to make a simple and creative craft to take home! We host Vietnamese Storytime and Craft every Friday. " +
+          "Free. No registration is required. Please note that this will be an indoor program. This program is developed to align with the Early Education Quality Standards.",
+        "Children of all ages and their families or caregivers can build early literacy skills through songs, rhymes, fingerplays, and movement in English and Vietnamese. " +
+          "After storytime, children learn to make a simple craft they can take home. This free indoor program requires no registration. " +
+          "It was designed to align with the Early Education Quality Standards. The library also hosts Vietnamese Storytime and Craft every Friday.",
+      ],
+      [
         /^Participating in the Reading to Children program is a great way for children to develop their imagination and spark a love for books, reading and learning\. Throughout this (\d+)-minute session, our trained volunteer or a staff member of the library will not only read to your kids but also engage with them using music, felts and finger plays\. As a result of participating in Reading to Children, your child will develop (?:their )?imagination and (?:a )?love of books and reading\./g,
         "In this $1-minute session, a trained volunteer or library staff member reads to children and leads activities with music, felt pieces, and fingerplays to help them develop their imaginations and a love of books, reading, and learning.",
       ],
@@ -2552,6 +2561,10 @@ const EDITS = {
         "$1, $2, in the Orchard Room at Los Altos Library. Open to kids ages $3 and their families. ",
       ],
       ["Cupertino Library Knit Alongs continue in", "Cupertino Library's Knit-Alongs continue in"],
+      [
+        "Starting Time: 2:30 pm; Ending Time: 4:00 pm; Check with Cupertino Library for the meeting room.",
+        "The group meets from 2:30 PM to 4:00 PM. Check with Cupertino Library for the meeting room.",
+      ],
       ...SCCLD_BOOK_DISCUSSION_EDITS,
       [
         "A Sheriff's Deputy will read books and share safety tips. Please arrive on time and seating is limited.",
@@ -3016,6 +3029,12 @@ const EDITS = {
       [
         /,? at Mitchell Park Library, Palo Alto\. It is free and open to everyone\./g,
         " at Mitchell Park Library in Palo Alto. The quizzes are free and open to everyone.",
+      ],
+      [
+        "Join the Bay Area Quiz Club for fun trivia and friendly competition! Bay Area Quiz Club (BAQC) is a volunteer-run organization. " +
+          "We aim to have fun and enjoy quizzing in a friendly, inclusive environment. The focus of the club is to build a community around in-person quizzing in the Bay Area. " +
+          "Our quizzes take place from ",
+        "The volunteer-run Bay Area Quiz Club (BAQC) brings people together for in-person trivia and friendly competition. Quizzes run from ",
       ],
       [
         "The group meets every 1st Saturday from 10 AM–6 PM.",
