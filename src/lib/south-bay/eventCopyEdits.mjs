@@ -968,6 +968,10 @@ const EDITS = {
         "Hooks, yarn, and other basic supplies are available while they last.",
       ],
       ["and why they would, or wouldn't, recommend it to others.", "and whether they'd recommend it to others and why."],
+      [
+        "Join our group and read in silence with others in our cozy fireplace/magazine area. Bring your own book and quiet snacks, or select one from our collection here at the Vineland Library. After an hour of quiet reading, everyone can share what they are reading with the group and whether they'd recommend it to others and why.",
+        "Read quietly with the group in the fireplace and magazine area. Bring your own book or pick one from Vineland Library's collection. Quiet snacks are welcome. After an hour of quiet reading, you can tell the group what you're reading, whether you'd recommend it, and why.",
+      ],
       ["at the program. E Newsletter Signup: Get the", "at the program. E-newsletter Signup: Get the"],
       ["for our monthly e Newsletter, highlighting the latest", "for our monthly e-newsletter, highlighting the latest"],
       ["This program is in-person at Educational Park", "This program is held in person at Educational Park"],
@@ -3121,6 +3125,10 @@ const EDITS = {
       ["Writers resumes for their fourth year on", "Writers resumes for its fourth year on"],
       ["performance with musician and storyteller, Kirk Waller!", "performance with musician and storyteller Kirk Waller!"],
       ["Come join teen-led group NeuroSphere!", "Come join the teen-led group NeuroSphere!"],
+      [
+        "This session will dive into the basics of brain function, fun activities to test your brainpower, and an introduction to future career opportunities.",
+        "Learn the basics of how the brain works, test your brainpower with hands-on activities, and hear about career opportunities.",
+      ],
       [/Questions\? Email neurosphereyouth@gmail\.com$/g, "Questions? Email neurosphereyouth@gmail.com."],
       ["the consequences of which continues to reverberate today.", "the consequences of which continue to reverberate today."],
       ["Many local affiliates of PBS have broadcast the film but national PBS, however, has refused", "Many local affiliates of PBS have broadcast the film, but national PBS has refused"],
