@@ -42,8 +42,9 @@ export interface TechCompany {
   ticker?: string;
   city: string;
   category: TechCategory;
-  // Estimated Santa Clara County jobs in thousands. Name the reporting city and period in trendNote when the source covers selected worksites.
-  sccEmployeesK: number;
+  // Dated local employment estimate in thousands. Cite the source and identify
+  // its period and geographic coverage. Omit this field without a local estimate.
+  sccEmployeesK?: number;
   trend: TechTrend;
   trendNote: string;
   highlights: string[];
@@ -51,6 +52,8 @@ export interface TechCompany {
   color: string; // brand-adjacent color for charts
   careersUrl?: string;
 }
+
+export type TechCompanyWithJobsEstimate = TechCompany & { sccEmployeesK: number };
 
 // Local layoff figures refer to positions in California EDD WARN notices.
 // Cite the effective dates so readers can distinguish past and scheduled cuts.
@@ -283,9 +286,10 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "NOW",
     city: "Santa Clara",
     category: "saas",
-    sccEmployeesK: 6,
     trend: "up",
-    trendNote: "About 6K local jobs. WARN notices cover 208 Lawson Lane positions in August and September 2026 and 39 scheduled for December 2026 and January 2027.",
+    // EDD WARN reports: 54 on Aug. 17, 154 on Sep. 28, 2 on Dec. 14, and 37 on Jan. 4.
+    // https://edd.ca.gov/en/jobs_and_training/layoff_services_warn/
+    trendNote: "WARN notices cover 208 Lawson Lane positions in August and September 2026 and 39 scheduled for December 2026 and January 2027.",
     highlights: [
       "Now Platform AI Agents automating enterprise IT, HR, and customer workflows at scale",
       "AI agents expanding across IT, HR, customer service, and other Now Platform workflows",
@@ -387,9 +391,9 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "PANW",
     city: "Santa Clara",
     category: "security",
-    sccEmployeesK: 4,
     trend: "up",
-    trendNote: "4K at Santa Clara HQ; growing with security platform consolidation wins",
+    // FY 2026 Form 10-K, Item 2: https://investors.paloaltonetworks.com/static-files/f2f15200-725b-44cc-9988-4fdacf624c98
+    trendNote: "Palo Alto Networks extended its Santa Clara headquarters leases through July 2040.",
     highlights: [
       "'Platformization' strategy winning large enterprise security consolidation deals from point-product vendors",
       "Precision AI features now embedded across the full security product portfolio",
@@ -406,9 +410,9 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "ZM",
     city: "San Jose",
     category: "saas",
-    sccEmployeesK: 2,
     trend: "flat",
-    trendNote: "2K at SJ HQ; revenue growth reaccelerated to 4.4% in FY26 as AI Companion adoption climbed",
+    // FY 2026 Form 10-K: https://investors.zoom.us/static-files/7370d7ce-5293-4f6f-b91e-6eb90c9a37b3
+    trendNote: "Zoom reported 4.4% year-over-year revenue growth in fiscal 2026.",
     highlights: [
       "Zoom Workplace platform adds AI Companion for meeting summaries and conversation intelligence",
       // Zoom's July 2026 Form 10-Q gives the closing date and cash price.
@@ -466,9 +470,12 @@ export const TECH_COMPANIES: TechCompany[] = [
   },
 ];
 
+export const RANKED_TECH_EMPLOYERS = TECH_COMPANIES
+  .filter((company): company is TechCompanyWithJobsEstimate => company.sccEmployeesK !== undefined)
+  .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK);
+
 // Top employers sorted for chart (top 10 by SCC employment)
-export const CHART_DATA = [...TECH_COMPANIES]
-  .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK)
+export const CHART_DATA = RANKED_TECH_EMPLOYERS
   .slice(0, 10)
   .map((c) => ({
     name: c.chartName,
@@ -3886,14 +3893,14 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
 // Pulse stats for the header strip. The third slot ("Raised in Q1–Q2 …") is
 // computed at render time in TechnologyView from RECENTLY_FUNDED, so it stays
 // accurate as new rounds land.
-const trackedJobsK = TECH_COMPANIES.reduce((total, company) => total + company.sccEmployeesK, 0);
+const trackedJobsK = RANKED_TECH_EMPLOYERS.reduce((total, company) => total + company.sccEmployeesK, 0);
 const leadingEmployers = CHART_DATA.slice(0, 2);
 
 export const TECH_PULSE = [
   {
     value: `~${Math.round(trackedJobsK)}K`,
-    label: "Jobs at tracked companies",
-    note: "Santa Clara County estimate",
+    label: "Jobs covered by estimates",
+    note: "Known worksites in Santa Clara County",
   },
   {
     value: leadingEmployers.map(({ name }) => name).join(" & "),

@@ -9,6 +9,7 @@ import { isTechEvent } from "../../../lib/south-bay/techEventFilter";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 import {
   TECH_COMPANIES,
+  RANKED_TECH_EMPLOYERS,
   TECH_PULSE,
   CATEGORY_LABELS,
   SCC_SPOTLIGHT,
@@ -16,6 +17,7 @@ import {
   TECH_MILESTONES,
   TECH_CONFERENCES,
   type TechCompany,
+  type TechCompanyWithJobsEstimate,
   type TechTrend,
   type SccTechSpotlight,
   type RecentlyFunded,
@@ -94,9 +96,7 @@ function TrendBadge({ trend }: { trend: TechTrend }) {
 // ── Top Employers Leaderboard (replaces recharts bar chart) ────────────────
 
 function TopEmployersLeaderboard() {
-  const top = [...TECH_COMPANIES]
-    .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK)
-    .slice(0, 12);
+  const top = RANKED_TECH_EMPLOYERS.slice(0, 12);
   const max = Math.max(...top.map((c) => c.sccEmployeesK));
 
   return (
@@ -171,7 +171,7 @@ function TopEmployersLeaderboard() {
 
 // ── Company card (All Companies grid) ─────────────────────────────────────
 
-function CompanyCard({ company }: { company: TechCompany }) {
+function CompanyCard({ company }: { company: TechCompanyWithJobsEstimate }) {
   return (
     <article className="tech-card">
       <header className="tech-card-header">
@@ -1537,34 +1537,29 @@ export default function TechnologyView({ buildDayPt }: { buildDayPt?: string }) 
   // Funding ages count from the build's day while hydrating, then from the
   // reader's (useTodayPT).
   const todayIso = useTodayPT(buildDayPt);
-  const topCompanies = [...TECH_COMPANIES]
-    .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK)
-    .slice(0, 8);
+  const topCompanies = RANKED_TECH_EMPLOYERS.slice(0, 8);
+  const hiringCompanies = [...TECH_COMPANIES].sort(
+    (a, b) => (b.sccEmployeesK ?? -1) - (a.sccEmployeesK ?? -1),
+  );
 
   const hiringGroups: HiringGroup[] = [
     {
       label: "Actively Hiring",
       note: "Growing headcount — AI hardware demand lifting chipmakers and server builders, with security and SaaS also expanding",
       trend: "up",
-      companies: TECH_COMPANIES.filter((c) => c.trend === "up").sort(
-        (a, b) => b.sccEmployeesK - a.sccEmployeesK
-      ),
+      companies: hiringCompanies.filter((c) => c.trend === "up"),
     },
     {
       label: "Selective Hiring",
       note: "Stable or post-restructuring — open roles but no broad expansion",
       trend: "flat",
-      companies: TECH_COMPANIES.filter((c) => c.trend === "flat").sort(
-        (a, b) => b.sccEmployeesK - a.sccEmployeesK
-      ),
+      companies: hiringCompanies.filter((c) => c.trend === "flat"),
     },
     {
       label: "Reduced Hiring",
       note: "Shrinking or restructuring locally — limited openings, cautious on headcount",
       trend: "down",
-      companies: TECH_COMPANIES.filter((c) => c.trend === "down").sort(
-        (a, b) => b.sccEmployeesK - a.sccEmployeesK
-      ),
+      companies: hiringCompanies.filter((c) => c.trend === "down"),
     },
   ];
   const pulseStats = [TECH_PULSE[0], TECH_PULSE[1], PULSE_RAISED_STAT, TECH_PULSE[2]];
