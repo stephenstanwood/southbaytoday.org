@@ -74,6 +74,7 @@ import { stripHtml } from "./lib/event-html.mjs";
 import { paloAltoPlayersTicketSource, paloAltoPlayersOccurrence } from "./lib/palo-alto-players-events.mjs";
 import { fetchMhpItems, MHP_CALENDAR_URL } from "./lib/mexican-heritage-plaza-events.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
+import { normalizeAbsoluteHttpUrl } from "../src/lib/south-bay/httpUrl.mjs";
 import { isTitleOnlyDescription } from "../src/lib/south-bay/eventCopyEdits.mjs";
 import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjDateRange, parseHistorySjLocation } from "./lib/history-sj.mjs";
 import { join, dirname } from "path";
@@ -4581,7 +4582,8 @@ async function fetchStanfordEvents() {
       const isoDay = (v) => (/^\d{4}-\d{2}-\d{2}$/.test(v || "") ? v : null);
       const seriesStartIso = isoDay(ev.first_date);
       const seriesEndIso = isoDay(ev.last_date);
-      const venue = cleanVenue(ev.location_name || "") || "Stanford University";
+      const namedVenue = cleanVenue(ev.location_name || "");
+      const venue = namedVenue || "Stanford University";
       const description = stripHtml(ev.description_text || ev.description || "");
       // Keep a published late walk-in window active. Stanford's bike sale
       // opens to walk-ins in its final 30 minutes, after the first appointment.
@@ -4728,8 +4730,8 @@ async function fetchStanfordEvents() {
       // generic Everyone audience omit. This verified Stanford instruction
       // requires a campus ID; it does not restrict an online-only occurrence.
       // Evidence: docs/qa/2026-10-26-0307-fact-check.md.
-      if (!isVirtual && /\bbring your Stanford ID card\/mobile ID to enter the building\b/i
-        .test(stripHtml(ev.room_number || ""))) return null;
+      const room = typeof ev.room_number === "string" ? stripHtml(ev.room_number).trim() : "";
+      if (!isVirtual && /\bbring your Stanford ID card\/mobile ID to enter the building\b/i.test(room)) return null;
       // University ownership does not place a satellite campus in Palo Alto.
       // Filter before the source cap so off-site rows cannot displace local
       // programs. Keep online-only events and locally organized field trips.
@@ -4799,7 +4801,22 @@ async function fetchStanfordEvents() {
         : conferenceMisreadAsArt || (["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture)
           ? "education" : inferredCategory;
       const creditAdmission = localistCreditAdmission(ev);
+      // Localist publishes the optional stream separately from the physical
+      // location. Keep both where the organizer supplies a hybrid address.
+      const onlineUrl = ev.experience === "hybrid" && !isVirtual
+        && typeof ev.address === "string" && ev.address.trim()
+        ? normalizeAbsoluteHttpUrl(ev.stream_url)
+        : null;
+      // Keep room codes in the attendance note. Venue matching uses the
+      // building name for eligibility, availability and location corrections.
+      const roomCode = room.match(/^(?:Room\s+)?([A-Z]?\d{1,4}[A-Z]?)$/i)?.[1];
+      const roomNote = !isVirtual && !locationRsvpRequirement && namedVenue && roomCode
+        && !new RegExp("\\b" + roomCode + "\\b", "i").test(namedVenue)
+        ? `Room ${roomCode}.`
+        : null;
       const attendanceNotes = [
+        ...(roomNote ? [roomNote] : []),
+        ...(onlineUrl ? ["Livestream available through the event page."] : []),
         ...(publicVirtualOnly ? ["Public attendance is online. In-person attendance is limited to Stanford affiliates."] : []),
         ...(publicZoomOnly ? [`Public attendance is via Zoom. ${restriction}`] : []),
         ...(cantorHours ? [`Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.`] : []),
@@ -4839,6 +4856,7 @@ async function fetchStanfordEvents() {
         venue: publishedVenue,
         address: isVirtual ? "" : ev.address || "",
         city: "palo-alto",
+        ...(onlineUrl ? { onlineUrl } : {}),
         ...(isVirtual ? { virtual: true } : {}),
         category,
         // Localist's `free` flag is opt-in and most Stanford posters never set

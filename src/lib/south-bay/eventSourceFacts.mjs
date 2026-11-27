@@ -624,6 +624,16 @@ const CORRECTIONS = [
       blurb: "Practice English conversation with a facilitator who speaks English and Mandarin. Adults who speak other languages are welcome, too.",
     },
   },
+  // Stanford lists Gunn Rotunda for this talk but omits the street address
+  // from the feed. The institute confirms the building address for this series.
+  // https://neuroscience.stanford.edu/initiatives-centers/center-mind-brain-computation-and-technology/mind-brain-computation-and-technology-mbct-seminar-series
+  {
+    date: "2026-11-30",
+    matches: (event) => event.url === "https://events.stanford.edu/event/juan-gallego"
+      && event.venue === "Stanford Neurosciences Building | Gunn Rotunda (E241)"
+      && !event.virtual && !event.address?.trim(),
+    facts: { address: "290 Jane Stanford Way, Stanford, CA 94305" },
+  },
   // The museum's occurrence page describes a housing-policy talk and names
   // the speakers. The calendar feed supplies the generic museum category.
   {

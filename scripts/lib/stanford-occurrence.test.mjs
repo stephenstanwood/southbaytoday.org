@@ -95,6 +95,39 @@ test("Stanford public Zoom access does not advertise a campus-only physical room
   assert.equal(rows[3].virtual, true, "an explicitly virtual occurrence does not require entry to the physical room");
 });
 
+test("Stanford preserves the published room and livestream for hybrid events", async () => {
+  const tomorrow = dayPT(1);
+  const hybrid = {
+    title: "Stanford Energy Seminar",
+    location_name: "Shriram Center",
+    room_number: "104",
+    address: "443 Via Ortega, Stanford, CA 94305",
+    experience: "hybrid",
+    stream_url: "https://stanford-pilot.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0d919272-45f3-46b5-b8d2-b4c201778cba",
+    instances: [{ start: atPT(tomorrow, "16:30:00") }],
+  };
+  const [event, namedRoom, onlineOnly, inPerson, noStream, noAddress] = await runWith([
+    localistEvent({ ...hybrid, id: 1 }),
+    localistEvent({ ...hybrid, id: 2, location_name: "Shriram Center, Room 104" }),
+    localistEvent({ ...hybrid, id: 3, experience: "virtual" }),
+    localistEvent({ ...hybrid, id: 4, experience: "inperson" }),
+    localistEvent({ ...hybrid, id: 5, stream_url: "TBA" }),
+    localistEvent({ ...hybrid, id: 6, address: "" }),
+  ]);
+
+  assert.equal(event.venue, "Shriram Center");
+  assert.equal(event.address, hybrid.address);
+  assert.equal(event.onlineUrl, hybrid.stream_url);
+  assert.equal(event.virtual, undefined);
+  assert.equal(event.attendanceNote, "Room 104. Livestream available through the event page.");
+  assert.equal(namedRoom.venue, "Shriram Center, Room 104");
+  assert.equal(namedRoom.attendanceNote, "Livestream available through the event page.");
+  assert.equal(onlineOnly.venue, "Online");
+  assert.equal(onlineOnly.address, "");
+  assert.equal(onlineOnly.virtual, true);
+  for (const row of [inPerson, noStream, noAddress]) assert.equal(row.onlineUrl, undefined);
+});
+
 test("conditional free admission never masks published paid Localist ticket tiers", async () => {
   const tomorrow = dayPT(1);
   const instances = [{ start: atPT(tomorrow, "07:30:00") }];

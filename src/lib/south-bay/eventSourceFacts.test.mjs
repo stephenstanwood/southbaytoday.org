@@ -1059,6 +1059,26 @@ test("SCU home games with official ticket pages retain their paid admission on r
   assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
 });
 
+test("Stanford's November 30 Gunn Rotunda talk has the institute's street address", () => {
+  const event = {
+    date: "2026-11-30",
+    url: "https://events.stanford.edu/event/juan-gallego",
+    venue: "Stanford Neurosciences Building | Gunn Rotunda (E241)",
+    address: "",
+  };
+  const corrected = { ...event, address: "290 Jane Stanford Way, Stanford, CA 94305" };
+
+  assert.deepEqual(applyVerifiedEventFacts(event), corrected);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+
+  for (const changed of [
+    { ...event, date: "2026-12-01" },
+    { ...event, virtual: true },
+    { ...event, venue: "Another room" },
+    { ...event, address: "Updated location from Stanford" },
+  ]) assert.deepEqual(applyVerifiedEventFacts(changed), changed);
+});
+
 test("the Los Altos museum housing-policy talk is listed under Education", () => {
   const incoming = {
     title: "A Local History of Housing",
