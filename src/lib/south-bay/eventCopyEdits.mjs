@@ -445,6 +445,14 @@ const EDITS = {
       ["Poetry Center San José 's", "Poetry Center San José's"],
       ["Story Time tickets required.", "Storytime tickets are required."],
       ["for those that weren't able to make it inside for this event.", "for those who couldn't get into this session."],
+      [
+        "Free, 50-person maximum. " +
+          "Storytime tickets are required. " +
+          "Another event, Music and Movement B, will start at 11:15 for those who couldn't get into this session.",
+        "This session is free and limited to 50 people. " +
+          "Storytime tickets are required. " +
+          "If you can't get a spot, Music and Movement B starts at 11:15.",
+      ],
       ["meets weekly at the library in the library's Community Room", "meets weekly in the library's Community Room"],
       ["high beginners to advanced level English language learners", "English learners at levels from high beginner to advanced"],
       ["Creación de Resume y Carta de Presentación", "Creación de un currículum y una carta de presentación"],
@@ -2580,6 +2588,14 @@ const EDITS = {
       [/^(Tuesday, December \d{1,2}), (\d{1,2} [AP]M) (Room \d+) Bel Canto Flutes is an all flute ensemble/g, "The concert is on $1 at $2 in $3. Bel Canto Flutes is an all-flute ensemble"],
       ["the beauty and flexibility of the flute performing repertoire", "the beauty and flexibility of the flute with repertoire"],
       ["antidotes about the music, composers and origins", "anecdotes about the music, its composers, and its origins"],
+      [
+        "Bel Canto Flutes is an all-flute ensemble featuring flutes of all shapes and sizes. " +
+          "Bel Canto Flutes enjoys showing off the beauty and flexibility of the flute with repertoire that spans the ages and genres. " +
+          "Our program for you will feature melodies both familiar and new with anecdotes about the music, its composers, and its origins. " +
+          "Come join us as we share our joy of music making with you.",
+        "Bel Canto Flutes plays familiar and new melodies from different eras and genres on flutes of many shapes and sizes. " +
+          "The musicians share stories about the music, its composers, and its origins.",
+      ],
       ["Adults join us for our Children's Literature for Adults Book Club to discuss, reminisce, or discover for the first time a beloved children's classic.", "Join our Children's Literature for Adults Book Club to discuss a beloved children's classic, revisit an old favorite, or discover it for the first time."],
       ["Children's Reference Desk where we will have a copy of the book available. Adults only please.", "Children's Reference Desk, where a copy of the book will be available. Adults only, please."],
       ["email us atask@sccl.org", "email us at ask@sccl.org"],
@@ -2614,6 +2630,14 @@ const EDITS = {
       [". *We can supply some knitting and crochet supplies,", ". We can supply some knitting and crochet supplies,"],
       ["For Kindergarten through", "For kindergarten through"],
       [/\bEach (\d+) minute session\b/g, "Each $1-minute session"],
+      [
+        "Children can buddy up with a furry friend and read one on one from a favorite book. " +
+          "For kindergarten through 5th grade. " +
+          "Each 20-minute session is with a specially trained therapy dog and volunteer. " +
+          "Reading session time may be shortened if needed to accommodate demand.",
+        "Children in kindergarten through 5th grade can read aloud from a favorite book to a specially trained therapy dog and a volunteer. " +
+          "Sessions last 20 minutes and may be shortened if demand is high.",
+      ],
       [/\b(\d+) teams (\d+) people each,/g, "$1 teams of $2 people each,"],
       [/\b(at the \d+) hour mark,/g, "$1-hour mark,"],
       ["the one with fewest remaining loose pieces.", "the one with the fewest remaining loose pieces."],
