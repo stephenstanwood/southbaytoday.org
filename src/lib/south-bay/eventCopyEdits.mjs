@@ -3295,6 +3295,7 @@ const EDITS = {
       ],
     ],
     description: [
+      ["visits Maples Pavilion in the Cardinal's December homestand.", "visits Maples Pavilion during Stanford's December homestand."],
       [
         /^Holiday-themed programming at Children's Discovery Museum running ([A-Z][a-z]+ \d{1,2} through [A-Z][a-z]+ \d{1,2})\. The newsletter gives no daily times or other details\.$/g,
         "The Children's Discovery Museum offers holiday-themed activities from $1.",
@@ -3551,6 +3552,7 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      ['Biology Seminar Series - Peter Walter, PhD "', 'Biology Seminar Series: Peter Walter, PhD — "'],
       [/^HAI Seminar the AI 100$/gi, "HAI Seminar: The AI 100"],
       ['Gregor Steinbrügge- "Coupled Thermal-Orbital Evolution of the Galilean Satellites"', 'Gregor Steinbrügge: "Coupled Thermal-Orbital Evolution of the Galilean Satellites"'],
       ['CMEMS: Esther von Stosch presents, "', 'CMEMS: Esther von Stosch presents "'],
