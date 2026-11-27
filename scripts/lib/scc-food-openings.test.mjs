@@ -41,6 +41,38 @@ test("Fourfold's bad county locality is corrected for the confirmed Campbell add
   });
 });
 
+test("city and restaurant sources correct two specific county inspection addresses", () => {
+  const cases = [
+    {
+      record: {
+        record_id: "SR0878962",
+        site_location: "132 SUNNYVALE SARATOGA RD., SUNNYVALE, CA 94087",
+        city: "SUNNYVALE",
+      },
+      expected: { address: "132 E El Camino Real", cityId: "sunnyvale", cityName: "SUNNYVALE" },
+    },
+    {
+      record: {
+        record_id: "SR0882351",
+        site_location: "2180 W BAYSHORE DR., #120, PALO ALTO, CA 94303",
+        city: "PALO ALTO",
+      },
+      expected: { address: "2180 W Bayshore Rd., #120", cityId: "palo-alto", cityName: "PALO ALTO" },
+    },
+  ];
+  for (const { record, expected } of cases) {
+    assert.deepEqual(permitLocation(record), expected);
+    assert.equal(
+      permitLocation({ ...record, record_id: "another-record" }).address,
+      cleanAddress(record.site_location),
+    );
+    assert.equal(
+      permitLocation({ ...record, site_location: "100 MAIN ST" }).address,
+      "100 Main St",
+    );
+  }
+});
+
 test("county business names retain meaningful trailing numbers", () => {
   // SCC record SR0881159, 735 Villa St, Mountain View. The name's 101 is
   // not the street number or a permit code.

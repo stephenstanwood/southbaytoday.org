@@ -171,6 +171,8 @@ const NAME_OVERRIDES = {
   "SR0886162": "Wagyu Factory", // https://wagyufactory.com/project/mountain-view/
   "SR0886085": "MIXT", // https://www.mixt.com/locations/
   "SR0886649": "Vegetarian House Vegan Go", // https://www.vegetarianhouse.com/sunnyvale
+  "SR0884003": "Wing So Good", // https://wingsogood.com/
+  "SR0882351": "Chef Zhao Kitchen", // https://chefzhaokitchen.com/
   // County permit says "Teriyaki City Cafe." The plaza directory names its tenant.
   // https://www.regencycenters.com/property/detail/90016/Snell-Branham-Plaza
   "SR0885067": "Teriyaki City Grill",
@@ -574,17 +576,35 @@ export function cleanAddress(raw) {
   return s || null;
 }
 
-export function permitLocation({ record_id: sourceId, site_location: siteLocation, city }) {
-  const address = cleanAddress(siteLocation);
-  // County plan check SR0886880 lists San José and ZIP 95006. Campbell's
-  // permit record identifies 90 N San Tomas Aquino Rd in San Tomas Plaza.
+// Apply a correction only to the specific county record and address it covers.
+const PERMIT_LOCATION_OVERRIDES = {
+  // Campbell's permit record identifies the site in San Tomas Plaza.
   // https://www.campbellca.gov/AgendaCenter/ViewFile/Minutes/173
-  if (sourceId === "SR0886880" && /^90 (?:N )?San Tomas Aquino Rd$/.test(address ?? "")) {
-    return { address: "90 N San Tomas Aquino Rd", cityId: "campbell", cityName: "CAMPBELL" };
-  }
+  SR0886880: {
+    countyAddress: /^90 (?:N )?San Tomas Aquino Rd$/,
+    address: "90 N San Tomas Aquino Rd",
+    cityName: "CAMPBELL",
+  },
+  // Sunnyvale permit BLDG-2024-4696 identifies Yafa Hummus on El Camino Real.
+  // https://www.sunnyvale.ca.gov/home/showpublisheddocument/3396/639110619128870000
+  SR0878962: {
+    countyAddress: /^132 Sunnyvale Saratoga Rd$/,
+    address: "132 E El Camino Real",
+  },
+  // Chef Zhao Kitchen lists West Bayshore Road.
+  // https://chefzhaokitchen.com/
+  SR0882351: {
+    countyAddress: /^2180 W Bayshore Dr\., #120$/,
+    address: "2180 W Bayshore Rd., #120",
+  },
+};
 
-  const cityName = (city ?? "").toUpperCase();
-  return { address, cityId: CITY_ID_MAP[cityName] ?? null, cityName };
+export function permitLocation({ record_id: sourceId, site_location: siteLocation, city }) {
+  const countyAddress = cleanAddress(siteLocation);
+  const override = PERMIT_LOCATION_OVERRIDES[sourceId];
+  const verified = override?.countyAddress?.test(countyAddress ?? "") ? override : null;
+  const cityName = verified?.cityName ?? (city ?? "").toUpperCase();
+  return { address: verified?.address ?? countyAddress, cityId: CITY_ID_MAP[cityName] ?? null, cityName };
 }
 
 /**
