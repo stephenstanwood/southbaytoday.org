@@ -87,9 +87,13 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "AAPL",
     city: "Cupertino",
     category: "hardware",
-    sccEmployeesK: 25,
+    // Caltrain's financing disclosure, Appendix B, p. B-9, gives the
+    // 2025 county estimate. The County's 25,000 figure refers to FY 2022–23.
+    // https://www.caltrain.com/media/36986/download
+    // https://files.santaclaracounty.gov/exjcpb1271/2025-05/fy-25-26-recommended_budget.pdf
+    sccEmployeesK: 10.9,
     trend: "flat",
-    trendNote: "About 25K local jobs. WARN notices cover 147 Cupertino and Sunnyvale positions effective Oct. 19, 2026.",
+    trendNote: "Caltrain's financing disclosure estimates 10,936 Apple jobs in Santa Clara County in 2025. WARN notices cover 147 Cupertino and Sunnyvale positions effective Oct. 19, 2026.",
     highlights: [
       "Apple Intelligence on-device AI rolling out across iPhone, Mac, and iPad",
       // https://www.apple.com/newsroom/2026/09/the-new-mac-mini-and-mac-studio-are-available-today/
@@ -446,9 +450,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "SMCI",
     city: "San Jose",
     category: "hardware",
-    sccEmployeesK: 3,
+    // Caltrain's financing disclosure, Appendix B, p. B-9: 2025 county estimate.
+    // https://www.caltrain.com/media/36986/download
+    sccEmployeesK: 3.1,
     trend: "up",
-    trendNote: "3K at SJ HQ; rapid growth from AI server demand, despite 2024 governance challenges",
+    trendNote: "Caltrain's financing disclosure estimates 3,073 Supermicro jobs in Santa Clara County in 2025.",
     highlights: [
       "Supplier of NVIDIA GPU server systems used for AI training and inference",
       "Revenue surged with AI infrastructure boom; resolved SEC filing delays and auditor issues in 2024-25",
@@ -935,10 +941,13 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   {
     id: "zscaler",
     name: "Zscaler",
-    city: "San Jose",
+    // The November 23, 2026 8-K lists the Santa Clara headquarters and
+    // confirms the pending CrowdStrike deal.
+    // https://ir.zscaler.com/static-files/bc663ba9-3b15-4da7-9fcc-6c3975abf2fd
+    city: "Santa Clara",
     category: "security",
     stage: "public",
-    tagline: "When your company replaces its VPN with 'Zscaler,' that's a San Jose company. Its Zero Trust Exchange serves over 50% of the Fortune 500 (FY 2026). Founded by Jay Chaudhry in 2007 from San Jose.",
+    tagline: "Cloud security platform for access to apps and data, headquartered in Santa Clara. In November 2026, Zscaler announced it had agreed to be acquired by CrowdStrike.",
     color: "#0061FF",
     url: "https://www.zscaler.com",
     // FY 2026 10-K: https://www.sec.gov/Archives/edgar/data/1713683/000171368326000157/zs-20260731.htm
