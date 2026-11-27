@@ -329,6 +329,7 @@ const EDITS = {
         /Designs must print in (\d+ hours?) (\d+ minutes?) - if you're not sure how long your design will take to print, email/g,
         "Designs must print in $1 and $2. If you're unsure how long your design will take to print, email",
       ],
+      [/Designs must print in (\d+ hours? and \d+ minutes?)\./g, "Designs must finish printing within $1."],
       ["All ages welcome to participate.", "All ages are welcome."],
       [
         /Free\. In-person\. No registration required\. Practice your English speaking and listening skills through our weekly conversation club! Each session is conducted in[- ]person by a library volunteer\./g,
@@ -349,6 +350,10 @@ const EDITS = {
       [
         /Until (\d{1,2}(?::\d{2})? [ap]m),? the storytime librarian and special toys will be on the Children's Room floor to keep the fun going\./gi,
         "The storytime librarian will be on the Children's Room floor with special toys until $1.",
+      ],
+      [
+        "The storytime librarian will be on the Children's Room floor with special toys",
+        "The storytime librarian will be in the Children's Room with special toys",
       ],
       ["Participants must be ages 10 and up.", "Participants must be at least 10 years old."],
       SJPL_FIRST_COME_MATERIALS_EDIT,
@@ -1237,6 +1242,10 @@ const EDITS = {
       [
         "Eliminate fines/fees related to lost or damaged items by being read to. Attend this program to have $5 deducted from juvenile accounts for every 15 minutes you are read to.",
         "You can use this program to reduce fines and fees for lost or damaged items. The library deducts $5 from juvenile accounts for every 15 minutes you are read to.",
+      ],
+      [
+        "The library deducts $5 from juvenile accounts for every 15 minutes you are read to.",
+        "The library applies a $5 credit to the child's account for every 15 minutes of reading.",
       ],
       [
         "Tell a story to a Furry Friend! Children are invited to practice reading to gentle, trained assistance dogs who love books! Practice reading skills while relaxing next to a cute Furry Friend.",
@@ -2737,6 +2746,7 @@ const EDITS = {
       ["Fauzia, Karim's beautiful studious girlfriend teaches", "Fauzia, Karim's beautiful, studious girlfriend, teaches"],
       ["on the third Thursday morning at 11 am, and on the third Thursday evening", "on the third Thursday morning at 11 am and on the third Thursday evening"],
       ["Walk-ins welcome as space allows.", "Walk-ins are welcome as space allows."],
+      ["Basic English knowledge recommended.", "A basic knowledge of English is recommended."],
       ["Registration is not required but space is limited.", "Registration is not required, but space is limited."],
       ["children who have completed Kindergarten through", "children who have completed kindergarten through"],
       ["The adult Non-Fiction book group", "The Adult Nonfiction Book Group"],
@@ -3256,6 +3266,10 @@ const EDITS = {
         "Explore holiday-themed activities at the Children's Discovery Museum.",
       ],
       [
+        "Watch Stanford host Virginia at Maples Pavilion for the ACC home opener, with faculty and staff recognized and ACC cups while supplies last.",
+        "Watch Stanford host Virginia at Maples Pavilion for the ACC home opener. Faculty and staff will be recognized, and ACC cups will be available while supplies last.",
+      ],
+      [
         "Stroll through the shops and restaurants of Historic Saratoga Village on a Friday evening wine walk, with tickets sold through Eventbrite.",
         "Take a Friday evening wine stroll through the shops and restaurants of Historic Saratoga Village. Tickets are sold through Eventbrite.",
       ],
@@ -3517,6 +3531,10 @@ const EDITS = {
     ],
     blurb: [
       ["Watch Shawn Chidiac perform stand-up comedy on his tour at the improv.", "Watch Shawn Chidiac perform stand-up on tour at the San Jose Improv."],
+      [
+        "See Uncle Lazer perform at San Jose Improv, a live comedy club show on a Sunday evening.",
+        "See Uncle Lazer's live comedy show at San Jose Improv on Sunday evening.",
+      ],
       ["Greedo, Kamaiyah and more, lineup subject to", "Greedo, Kamaiyah and more; lineup subject to"],
       ["Catch the Sharks host", "Watch the Sharks host"],
       ["Catch Demetri Martin's standup comedy set at", "Catch Demetri Martin's stand-up comedy set at"],
@@ -3602,6 +3620,10 @@ const EDITS = {
       [/^Ccrma Presents:/g, "CCRMA Presents:"],
       ["Silicon Valley Ip Forum", "Silicon Valley IP Forum"],
       ["Medical Humanites:", "Medical Humanities:"],
+      [
+        "Soft Materials for Hard Sustainability Challenges: Water production, Data center Sustainability, and High-Temperature Heat",
+        "Soft Materials for Hard Sustainability Challenges: Water Production, Data Center Sustainability, and High-Temperature Heat",
+      ],
       [/\bEn-Roads\b/gi, "En-ROADS"],
       ["Fossil Fuel Phase Out Scenarios", "Fossil Fuel Phase-Out Scenarios"],
       [/^Ent Experts Up Close:/g, "ENT Experts Up Close:"],
