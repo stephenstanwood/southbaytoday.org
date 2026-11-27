@@ -1149,6 +1149,8 @@ const EDITS = {
         "Join us on the first Wednesday of each month for Music & Movement. Children of all ages and their parents or caregivers " +
           "can build early literacy skills together through songs, rhymes, fingerplays, and movement.",
       ],
+      // Fix the source spelling before matching the longer King Library passage.
+      ["Music and Movement is a high energy Storytime", "Music and Movement is a high-energy storytime"],
       [
         "Music and Movement at the King Library Children's Room. Music and Movement is designed to accommodate a mix of ages; " +
           "we invite the entire family to participate in early literacy activities and develop motor skills through song and movement activities - " +
@@ -1211,7 +1213,6 @@ const EDITS = {
       ["Students in Kindergarten through 6th grade", "Students in kindergarten through 6th grade"],
       ["Join us at Evergreen library for LEGO fun.", "Join us at Evergreen Library for LEGO fun."],
       ["your child will develop imagination and love of books and reading.", "your child will develop their imagination and a love of books and reading."],
-      ["Music and Movement is a high energy Storytime", "Music and Movement is a high-energy storytime"],
       ["1st Wednesday: Cars 2nd Wednesday: Superhero Obstacle Course (ages 3-8) 3rd Wednesday: LEGO Duplo Blocks 4th Wednesday: Cars 5th Wednesday: LEGO Duplo Blocks Recommended", "1st Wednesday: Cars; 2nd Wednesday: Superhero Obstacle Course (ages 3-8); 3rd Wednesday: LEGO Duplo Blocks; 4th Wednesday: Cars; 5th Wednesday: LEGO Duplo Blocks. Recommended"],
       ["*Additional titles to be selected in November Free.", "Additional titles to be selected in November. Free."],
       ["Have your resume reviewed by a SJPL Works", "Have your resume reviewed by an SJPL Works"],
@@ -3011,6 +3012,10 @@ const EDITS = {
       [
         "Our quizzes take place from 2-6 PM",
         "Our quizzes take place from 2 to 6 PM",
+      ],
+      [
+        /,? at Mitchell Park Library, Palo Alto\. It is free and open to everyone\./g,
+        " at Mitchell Park Library in Palo Alto. The quizzes are free and open to everyone.",
       ],
       [
         "The group meets every 1st Saturday from 10 AM–6 PM.",
