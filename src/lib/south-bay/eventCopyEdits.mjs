@@ -133,6 +133,7 @@ const EDITS = {
         /Price: (\$\d+(?:\.\d{2})?) members, (\$\d+(?:\.\d{2})?) non-members General Admission not included, but required for entry\. Workshop ticket required for anyone entering\./gi,
         "Workshop tickets cost $1 for members and $2 for nonmembers. Each attendee needs a workshop ticket and separate museum admission.",
       ],
+      ["will receive the badge and Tech fun patch at the end of the session.", "will receive the badge and a Tech fun patch at the end of the session."],
       ["a bite-sized culinary adventure, in sphere form!", "a bite-sized culinary adventure in sphere form!"],
       [/\bImax\b/g, "IMAX"],
       ["share the one of a kind experience", "share the one-of-a-kind experience"],
@@ -2323,6 +2324,14 @@ const EDITS = {
       [/\bGg Orchestra\b/g, "GG Orchestra"],
     ],
   },
+  "Midpen Open Space": {
+    description: [
+      [
+        /^Why "wildcard"\? Because you and other participants will help choose the route together depending on the weather, trail conditions, and how you feel\. Here's one possibility: Will the creek have water\?$/g,
+        "Hikers will choose the route together based on the weather, trail conditions, and how the group feels.",
+      ],
+    ],
+  },
   "Gamble Garden": {
     description: [
       ["One of Gamble Garden's most beloved traditions, our Holiday Luncheons are", "Among Gamble Garden's most beloved traditions, our Holiday Luncheons are"],
@@ -2836,6 +2845,16 @@ const EDITS = {
         "Parents/caregivers must stay and participate with their children.",
         "Parents or caregivers must stay and participate with their children.",
       ],
+      [
+        "Join us for an hour of fun building with LEGOs. Children will use their creativity and engineering skills to free build anything they can imagine. " +
+          "This is a drop-in program. No registration needed. Space is limited and children will be asked to wait outside if capacity is reached. Younger siblings and parents are asked to wait outside.",
+        "Children can spend an hour using their creativity and engineering skills to build whatever they like with LEGO bricks. Drop in without registering. " +
+          "Space is limited. Children will be asked to wait outside if the room is full. Parents and younger siblings are asked to wait outside.",
+      ],
+      [
+        "Limited instruction is available but please note that this is not a class. No registration required. Materials not provided.",
+        "The circle is an informal group with limited instruction. Bring your own materials. No registration is required.",
+      ],
     ],
     blurb: [
       [
@@ -3307,6 +3326,10 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        'The Town\'s annual winter celebration, with balloon artists, pictures with Santa, and performances by Fisher Middle School Strings and Encore Choir and The Harker School\'s "Downbeat" Choir.',
+        "The town's annual winter celebration features balloon artists and pictures with Santa. Fisher Middle School's Chamber Strings and Encore will perform, along with The Harker School's Downbeat Show Choir.",
+      ],
       ["visits Maples Pavilion in the Cardinal's December homestand.", "visits Maples Pavilion during Stanford's December homestand."],
       [
         /^Holiday-themed programming at Children's Discovery Museum running ([A-Z][a-z]+ \d{1,2} through [A-Z][a-z]+ \d{1,2})\. The newsletter gives no daily times or other details\.$/g,
@@ -3752,6 +3775,10 @@ const EDITS = {
       [
         "Two major stars of norteño music come together to bring their music, talent, and career to every corner of the United States.",
         "Two major norteño acts come together to bring their music and talent to audiences across the United States.",
+      ],
+      [
+        /^For 29 years, sharing the joy of the holiday season through music has filled my heart\. What began as a simple idea has blossomed into a cherished tradition, and I'm honored to be part of it\.$/g,
+        "Dave Koz has celebrated the holidays through music for 29 years. His Christmas tour grew from a simple idea into a tradition.",
       ],
       ["Alex returns to the global stages with Allexcited", "Alex returns to stages around the world with Allexcited"],
       ['"Eterna Tour 2026".', '"Eterna Tour 2026."'],
