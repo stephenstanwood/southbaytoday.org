@@ -208,14 +208,21 @@ const CORRECTIONS = [
       description: "Stanford hosts Florida State at Maples Pavilion for Nerdball Night.",
       blurb: "Watch Stanford face Florida State on Nerdball Night at Maples Pavilion.",
     }],
-  ].map(([date, time, slug, promotion]) => ({
-    date,
-    matches: event => event.source === "City Newsletter" && event.venue === "Maples Pavilion"
-      && (event.time == null || event.time === time)
-      && event.url === `https://tickets.gostanford.com/events/mens-basketball-vs-${slug}`,
-    facts: { time, cost: "paid", address: "655 Campus Drive, Stanford, CA 94305", ...promotion },
-    copyReplacements: [[/\s*\bStart time not listed in the newsletter\./gi, ""]],
-  })),
+  ].map(([date, time, slug, promotion]) => {
+    const url = `https://tickets.gostanford.com/events/mens-basketball-vs-${slug}`;
+    return {
+      date,
+      matches: event => event.source === "City Newsletter" && event.venue === "Maples Pavilion"
+        && (event.time == null || event.time === time)
+        && (event.url === url || (
+          slug === "florida-state-hi4lxi"
+          && event.url === "https://gostanford.com/promotions/mens-basketball-promotions"
+          && /^(?:Nerdball (?:Day|Night): )?Stanford Men['’]s Basketball vs\. Florida State$/i.test(event.title || "")
+        )),
+      facts: { url, time, cost: "paid", address: "655 Campus Drive, Stanford, CA 94305", ...promotion },
+      copyReplacements: [[/\s*\bStart time not listed in the newsletter\./gi, ""]],
+    };
+  }),
   // The team's watch party page embeds the dated RSVP form. It confirms
   // that all ages are welcome and offers an RSVP without saying it is required.
   // https://sjearthquakes.formstack.com/forms/2026viewingparty
@@ -986,12 +993,6 @@ const CORRECTIONS = [
     appendAttendanceNote: attendanceNote,
     copyReplacements,
   })),
-  {
-    date: "2026-11-21",
-    matches: event => event.source === "City Newsletter" && event.city === "palo-alto"
-      && event.title === "Downtown Palo Alto Farmers' Market" && /Gilman Street between Hamilton and Forest/i.test(event.address || ""),
-    facts: event => ({ url: event.url || "https://www.pafarmersmarket.org/" }),
-  },
   // The supervisor's November 20 notice gives the Government Center address
   // and the 11 AM–2 PM window. The county's public map confirms the name.
   // https://files.santaclaracounty.gov/migrated/Main%20County%20ParkingMap.pdf
@@ -4468,16 +4469,36 @@ const CORRECTIONS = [
       blurb: "Join Sharan Grewal online for a talk about Tunisia's democratic transition and the risks of power-sharing.",
     },
   },
-  // The organizer confirms these 2026 occurrences, but its Book Now links
-  // open December 2023/2024 calendars. Use the current dated source instead.
-  // https://historysanjose.org/programs-events/ (verified November 3, 2026)
-  ...[
-    ["2026-12-11", /^Gingerbread Village Workshop$/i],
-    ["2026-12-19", /^History Park Heritage Holiday$/i],
-  ].map(([date, title]) => ({
-    date, title, venue: /^History Park(?:, Empire Firehouse)?$/i,
+  // SCORE confirms free admission and provides the registration link.
+  {
+    date: "2026-12-11",
+    url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114853/",
+    facts: {
+      url: "https://www.score.org/ca/silicon-valley/business-education/should-i-start-a-business-12-11-26/",
+      cost: "free",
+    },
+  },
+  // The box office confirms the December 11 gingerbread workshop and its hours.
+  // Visit San Jose supplies the workshop image and links to the same tickets.
+  // https://www.sanjose.org/events/gingerbread-village-workshop
+  {
+    date: "2026-12-11",
+    title: /^Gingerbread Village Workshop$/i,
+    venue: /^History Park(?:, Empire Firehouse)?$/i,
+    facts: {
+      url: "https://fareharbor.com/embeds/book/historysanjose/items/375330/calendar/2026/12/?flow=583745&full-items=yes",
+      image: "https://www.sanjose.org/sites/default/files/gingerbread-square_7E35C90A-98EF-40E4-2680651C991EA247_7e365362-9f92-661e-424f48f20fb2ab49.png",
+      description: "Decorate a gingerbread house at History Park's Empire Firehouse. Admission includes a house and decorating supplies. Light snacks and hot chocolate are served.",
+      blurb: "Decorate a gingerbread house at the Empire Firehouse, with supplies included.",
+    },
+  },
+  // The organizer's December 19 listing links to an older booking calendar.
+  {
+    date: "2026-12-19",
+    title: /^History Park Heritage Holiday$/i,
+    venue: /^History Park(?:, Empire Firehouse)?$/i,
     facts: { url: "https://historysanjose.org/programs-events/" },
-  })),
+  },
   // The authenticated November 2 city newsletter announces open registration;
   // it does not establish mandatory advance signup. Keep that distinction in
   // retained intake copies as well as future publication of these exact dates.
@@ -8102,6 +8123,13 @@ function thanksgivingExhibitClosure(event) {
 }
 
 export function applyVerifiedEventFacts(event) {
+  // The market's weekly email can arrive without a link to the operator.
+  // https://www.pafarmersmarket.org/
+  if (!event?.url && event?.source === "City Newsletter" && event.city === "palo-alto"
+      && /^Downtown Palo Alto Farmers['’] Market$/i.test(event.title || "")
+      && /\bGilman Street between Hamilton and Forest\b/i.test(event.address || "")) {
+    event = { ...event, url: "https://www.pafarmersmarket.org/" };
+  }
   // Ongoing ICA exhibition rows carry a date range. Use the museum's regular
   // hours to keep the range from implying that the gallery opens every day.
   // https://www.icasanjose.org/visit/

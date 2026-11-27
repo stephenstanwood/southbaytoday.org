@@ -5813,6 +5813,62 @@ test("October first-party links and registration conditions survive sparse newsl
   assert.equal(applyVerifiedEventFacts({ ...workshop, date: "2027-10-03", url: "" }).url, "");
 });
 
+test("both Stanford newsletter links use the verified Florida State promotion", () => {
+  const tickets = "https://tickets.gostanford.com/events/mens-basketball-vs-florida-state-hi4lxi";
+  const promotions = "https://gostanford.com/promotions/mens-basketball-promotions";
+  const listing = {
+    date: "2027-01-09", time: "2:30 PM", source: "City Newsletter", venue: "Maples Pavilion",
+    title: "Nerdball Day: Stanford Men's Basketball vs. Florida State",
+    description: "Themed men's basketball game against Florida State with a Nerdball hat giveaway.",
+    blurb: "Watch Stanford face Florida State on Nerdball Day, with a Nerdball hat giveaway.",
+  };
+  for (const url of [tickets, promotions]) {
+    const verified = applyVerifiedEventFacts({ ...listing, url });
+    assert.equal(verified.url, tickets);
+    assert.equal(verified.title, "Nerdball Night: Stanford Men's Basketball vs. Florida State");
+    assert.equal(verified.description, "Stanford hosts Florida State at Maples Pavilion for Nerdball Night.");
+    assert.doesNotMatch(verified.blurb, /hat|giveaway/i);
+    assert.equal(verified.address, "655 Campus Drive, Stanford, CA 94305");
+    assert.equal(verified.cost, "paid");
+    assert.deepEqual(applyVerifiedEventFacts(verified), verified);
+  }
+  const otherGame = { ...listing, url: promotions, title: "Stanford Men's Basketball vs. NC State" };
+  assert.deepEqual(applyVerifiedEventFacts(otherGame), otherGame);
+});
+
+test("the Downtown Palo Alto Farmers' Market keeps an operator link across newsletter dates", () => {
+  const listing = {
+    source: "City Newsletter", city: "palo-alto", url: "",
+    title: "Downtown Palo Alto Farmers' Market",
+    venue: "Gilman Street between Hamilton and Forest",
+    address: "Gilman Street between Hamilton and Forest, Palo Alto",
+  };
+  for (const date of ["2026-11-21", "2026-11-28", "2026-12-05"]) {
+    const event = { ...listing, date };
+    assert.deepEqual(applyVerifiedEventFacts(event), { ...event, url: "https://www.pafarmersmarket.org/" });
+  }
+  const linked = { ...listing, url: "https://www.pafarmersmarket.org/home" };
+  assert.deepEqual(applyVerifiedEventFacts(linked), linked);
+  const otherMarket = { ...listing, address: "California Avenue, Palo Alto" };
+  assert.deepEqual(applyVerifiedEventFacts(otherMarket), otherMarket);
+});
+
+test("the December gingerbread workshop keeps its dated booking link and event image", () => {
+  const event = {
+    date: "2026-12-11", title: "Gingerbread Village Workshop", source: "History San Jose",
+    venue: "History Park, Empire Firehouse", time: "7:00 PM", endTime: "9:00 PM",
+    url: "https://historysanjose.org/programs-events/",
+    image: "https://historysanjose.org/wp-content/uploads/2022/07/ComingOut_About.jpg",
+  };
+  const verified = applyVerifiedEventFacts(event);
+  assert.match(verified.url, /fareharbor\.com\/embeds\/book\/historysanjose\/items\/375330\/calendar\/2026\/12\//);
+  assert.match(verified.image, /^https:\/\/www\.sanjose\.org\/.*\/gingerbread-square_/);
+  assert.match(verified.blurb, /supplies included/);
+  assert.equal(verified.time, event.time);
+  assert.equal(verified.endTime, event.endTime);
+  assert.deepEqual(applyVerifiedEventFacts(verified), verified);
+});
+
 test("verified artist identity and performance copy survive sparse ingest and blurb resolution", async () => {
   const events = [
     { title: "Rihab Chaieb: Nomad—the Eternal Wanderer", date: "2027-02-24", venue: "Bing Concert Hall", description: "Tunisian violinist Rihab Chaieb", blurb: "Hear violinist Rihab Chaieb." },
