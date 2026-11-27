@@ -42,7 +42,8 @@ export interface TechCompany {
   ticker?: string;
   city: string;
   category: TechCategory;
-  sccEmployeesK: number; // Santa Clara County local jobs, in thousands (estimated)
+  // Estimated Santa Clara County jobs in thousands. Name the reporting city and period in trendNote when the source covers selected worksites.
+  sccEmployeesK: number;
   trend: TechTrend;
   trendNote: string;
   highlights: string[];
@@ -138,9 +139,14 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "CSCO",
     city: "San Jose",
     category: "network",
-    sccEmployeesK: 12,
+    // San José FY 2025 airport financial report, Schedule J. Milpitas
+    // FY 2024–25 financial report, Schedule 21, carries forward its prior count.
+    // https://www.sanjoseca.gov/home/showpublisheddocument/127017/639003723781700000
+    // https://www.milpitas.gov/ArchiveCenter/ViewFile/Item/1490
+    // https://edd.ca.gov/siteassets/files/jobs_and_training/warn/warn-report-for-7-1-25-to-6-30-26.pdf
+    sccEmployeesK: 11.1,
     trend: "down",
-    trendNote: "12K at SJ HQ + SCC offices; 547 local jobs cut on WARN filings since August 2025, and filings in 11 of the last 12 years",
+    trendNote: "San José listed 7,500 Cisco jobs for FY 2025. Milpitas carried forward 3,600 in its FY 2025 report. WARN notices cover 547 positions in those cities effective October 2025 and July 2026.",
     highlights: [
       "Splunk acquisition ($28B) transforms Cisco into a major security + observability platform",
       "A May 2026 restructuring cuts close to 4,000 roles globally — under 5% of staff — to move spending toward silicon, optics, security, and AI; 236 of the cuts hit the Tasman Drive headquarters",
@@ -179,9 +185,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "NVDA",
     city: "Santa Clara",
     category: "chip",
-    sccEmployeesK: 7,
+    // Santa Clara draft FY 2025–26 financial report, Table 18, p. 230.
+    // https://santaclara.legistar.com/View.ashx?GUID=0924F60F-11FB-4B12-93D6-75409FC8FC52&ID=16166429&M=F
+    sccEmployeesK: 2.5,
     trend: "up",
-    trendNote: "7K at Santa Clara HQ + SCC offices; growing with AI GPU demand",
+    trendNote: "Santa Clara’s draft FY 2025–26 financial report estimates 2,500 NVIDIA jobs in the city.",
     highlights: [
       "Blackwell GPUs now deployed across every major cloud; the next-generation Vera Rubin platform ramps through 2026, with Jensen Huang projecting $1 trillion in Blackwell and Rubin orders by 2027",
       // https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm
@@ -226,9 +234,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "PYPL",
     city: "San Jose",
     category: "fintech",
-    sccEmployeesK: 5,
+    // San José FY 2025 airport financial report, Schedule J, lists 2,748.
+    // https://www.sanjoseca.gov/home/showpublisheddocument/127017/639003723781700000
+    sccEmployeesK: 2.7,
     trend: "down",
-    trendNote: "About 5K local jobs. A WARN notice covers 251 positions at the San José headquarters effective Oct. 30, 2026.",
+    trendNote: "San José listed 2,748 PayPal employees for FY 2025. A WARN notice covers 251 positions at the San José headquarters effective Oct. 30, 2026.",
     highlights: [
       "Enrique Lores became CEO on March 1, 2026, succeeding Alex Chriss — the board moved after branded checkout, roughly half of PayPal's profit, grew just 1% in the fourth quarter",
       "Reorganized in April 2026 into three operating units, with Venmo carved out as a standalone business for the first time",
@@ -309,9 +319,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     chartName: "Juniper",
     city: "Sunnyvale",
     category: "network",
-    sccEmployeesK: 3,
+    // Sunnyvale’s December 2025 employer list gives 587 under Juniper Networks.
+    // https://www.sunnyvale.ca.gov/business-and-development/economic-development/community-and-business-profiles
+    sccEmployeesK: 0.6,
     trend: "flat",
-    trendNote: "3K at Sunnyvale HQ; now part of Hewlett Packard Enterprise after $14B acquisition",
+    trendNote: "Sunnyvale listed 587 jobs under Juniper Networks in December 2025, after Hewlett Packard Enterprise acquired the company in July.",
     highlights: [
       "HPE acquisition closed July 2025 after a DOJ antitrust settlement — Juniper now part of the HPE networking portfolio",
       "Mist AI-driven networking platform being integrated into HPE product suite",
@@ -328,9 +340,12 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "WDC",
     city: "San Jose",
     category: "hardware",
-    sccEmployeesK: 4,
+    // San José FY 2025 airport financial report, Schedule J, lists 2,221.
+    // https://www.sanjoseca.gov/home/showpublisheddocument/127017/639003723781700000
+    // https://edd.ca.gov/siteassets/files/jobs_and_training/warn/warn-report-for-7-1-25-to-6-30-26.pdf
+    sccEmployeesK: 2.2,
     trend: "flat",
-    trendNote: "4K at SJ HQ; 134 Great Oaks Parkway jobs cut in January 2026; local filings in eight of the last twelve years",
+    trendNote: "San José listed 2,221 Western Digital employees for FY 2025. WARN notices cover 134 Great Oaks Parkway positions effective January 2026.",
     highlights: [
       "SanDisk spin-off completed February 2025 — WD now a focused hard drive company",
       "Hard drive demand rising again with AI data center storage needs driving enterprise sales",
@@ -347,9 +362,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     ticker: "EBAY",
     city: "San Jose",
     category: "ecommerce",
-    sccEmployeesK: 3,
+    // San José FY 2025 airport financial report, Schedule J, lists 2,364.
+    // https://www.sanjoseca.gov/home/showpublisheddocument/127017/639003723781700000
+    sccEmployeesK: 2.4,
     trend: "down",
-    trendNote: "About 3K local jobs. WARN notices cover 243 San José headquarters positions in February 2026 and 229 more in October.",
+    trendNote: "San José listed 2,364 eBay employees for FY 2025. WARN notices cover 243 San José headquarters positions in February 2026 and 229 more in October.",
     highlights: [
       "Cut 800 jobs — 6% of the company — in February 2026, a week after agreeing to buy resale app Depop for $1.2B; 243 of those were at the San Jose headquarters",
       "Authenticity Guarantee expanding to more collectible and luxury product categories",
@@ -3861,6 +3878,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
 // computed at render time in TechnologyView from RECENTLY_FUNDED, so it stays
 // accurate as new rounds land.
 const trackedJobsK = TECH_COMPANIES.reduce((total, company) => total + company.sccEmployeesK, 0);
+const leadingEmployers = CHART_DATA.slice(0, 2);
 
 export const TECH_PULSE = [
   {
@@ -3869,9 +3887,9 @@ export const TECH_PULSE = [
     note: "Santa Clara County estimate",
   },
   {
-    value: "Google & Apple",
+    value: leadingEmployers.map(({ name }) => name).join(" & "),
     label: "Largest employers tracked",
-    note: "About 25K jobs each across Santa Clara County",
+    note: `About ${leadingEmployers.map(({ headcount }) => `${headcount.toLocaleString("en-US")}K`).join(" and ")} local jobs, respectively`,
   },
   {
     value: "Chip equipment",

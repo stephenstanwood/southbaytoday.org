@@ -163,7 +163,7 @@ function TopEmployersLeaderboard() {
         })}
       </ol>
       <p className="tech-leaderboard-footnote">
-        SCC local jobs only; global headcount is much larger. Bars are scaled to the top employer.
+        Estimates cover known worksites in Santa Clara County. Some figures cover a single city.
       </p>
     </div>
   );
