@@ -576,6 +576,13 @@ const CORRECTIONS = [
     facts: (event) => ({ address: event.address || "77 Harrison Ave, Campbell, CA 95008" }),
     copyReplacements: [[/\bCinema Sundays take place on the fourth Sunday of every month\.\s*/i, ""]],
   },
+  // The February listing is on the third Sunday. Its description still
+  // carries the series' usual second-Sunday schedule.
+  {
+    date: "2027-02-21",
+    matches: event => /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/69adb99845f57dfccb1945ca\/?$/.test(event.url || ""),
+    copyReplacements: [[/\s+on the second Sunday of every month,(?=\s+at Mitchell Park Library\b)/i, ""]],
+  },
   // The Civic's linked Ticketmaster event and AXS corroborate 7 PM.
   // Ticketmaster's 8 PM timestamp is the end of the general sale.
   // https://www.axs.com/events/1699549/natalia-jimenez-tickets
@@ -1300,6 +1307,18 @@ const CORRECTIONS = [
       && !/\b(?:registration (?:is )?(?:now )?(?:closed|full|required)|no walk-ins)\b/i.test(event.description || ""),
     facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
     appendAttendanceNote: "Online reservations are recommended. Walk-ins are welcome if space is available.",
+  },
+  // The library describes this form as an optional email reminder and
+  // welcomes walk-ins up to capacity. Keep any later full or closed state.
+  // https://sjpl.bibliocommons.com/v2/events/6a7faa735d8bc300315a6fe6
+  {
+    date: "2026-11-30",
+    matches: event => event.registration === REGISTRATION_REQUIRED
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a7faa735d8bc300315a6fe6\/?$/.test(event.url || "")
+      && /\bwalk-ins (?:are )?welcome until (?:program participant capacity (?:is )?reached|the session is full)\b/i.test(event.description || "")
+      && !/\b(?:registration (?:is )?required|must (?:register|reserve|book))\b/i.test(`${event.description || ""} ${event.attendanceNote || ""}`.replace(/\bno registration required\b/gi, "")),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+    appendAttendanceNote: "Online signup is optional and sends an email reminder.",
   },
   // These dated SJPL pages give conflicting signup instructions. The program
   // copy calls registration optional, while the signup panel labels it required.

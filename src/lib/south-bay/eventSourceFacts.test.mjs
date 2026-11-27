@@ -16,6 +16,48 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Santa Teresa's math club signup is for reminders and still honors availability", () => {
+  const event = {
+    date: "2026-11-30",
+    url: "https://sjpl.bibliocommons.com/events/6a7faa735d8bc300315a6fe6",
+    registration: "required",
+    registrationClosesBy: "2026-12-01T00:15:00.000Z",
+    description: "Free. Walk-ins are welcome until the session is full.",
+  };
+  for (const description of [event.description, "Free. No registration required. Walk-ins welcome until program participant capacity reached."]) {
+    const reviewed = applyVerifiedEventFacts({ ...event, description });
+    assert.equal(reviewed.registration, "none");
+    assert.equal(reviewed.registrationClosesBy, null);
+    assert.equal(reviewed.attendanceNote, "Online signup is optional and sends an email reminder.");
+    assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  }
+  for (const changed of [
+    { ...event, registration: "full" },
+    { ...event, registration: "closed" },
+    { ...event, date: "2026-12-07" },
+    { ...event, attendanceNote: "Advance registration is required." },
+  ]) {
+    assert.deepEqual(applyVerifiedEventFacts(changed), changed);
+  }
+});
+
+test("the February quiz listing keeps the dated occurrence's schedule", () => {
+  const event = {
+    date: "2027-02-21",
+    url: "https://paloalto.bibliocommons.com/v2/events/69adb99845f57dfccb1945ca",
+    time: "2:00 PM",
+    endTime: "6:00 PM",
+    description: "Our quizzes take place from 2 to 6 PM on the second Sunday of every month, at Mitchell Park Library, Palo Alto.",
+  };
+  const reviewed = {
+    ...event, description: "Our quizzes take place from 2 to 6 PM at Mitchell Park Library, Palo Alto.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(event), reviewed);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  const january = { ...event, date: "2027-01-10", url: "https://paloalto.bibliocommons.com/v2/events/69adb99845f57dfccb1945c9" };
+  assert.deepEqual(applyVerifiedEventFacts(january), january);
+});
+
 test("Small Business Saturday's timed listing describes the plaza giveaway", () => {
   const allDay = {
     title: "Small Business Saturday",
