@@ -90,14 +90,19 @@ export function deduplicateEventUrls(events) {
 
 /** Keep library records distinct even when the displayed names and times match. */
 export function deduplicateEventTitles(events) {
-  const seen = new Set();
-  return events.filter((event) => {
+  const winners = new Map();
+  for (const event of events) {
     const strippedTitle = event.title.replace(/\s+[—–-]+\s+.+$/, "").replace(/\s+at\s+[A-Z].+$/, "");
     const title = strippedTitle.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
       .toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 30);
     const key = JSON.stringify([title, event.date, eventClockKey(event.time), libraryOccurrenceKey(event.url)]);
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+    const current = winners.get(key);
+    // A venue-less repost can miss concrete-slot dedup. Keep the dated
+    // organizer record even when the repost comes first with more copy.
+    if (!current || compareDuplicateAuthority(event, current, {
+      occurrenceOnly: true,
+      includeRichness: false,
+    }) < 0) winners.set(key, event);
+  }
+  return [...winners.values()];
 }

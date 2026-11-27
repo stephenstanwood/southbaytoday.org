@@ -150,6 +150,72 @@ function gambleGardenAdmissionFacts(event, cost, costNote) {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // CMT and the Montgomery Theater calendar confirm the opening performance.
+  // Also resolve the earlier newsletter slug to the dated theater listing.
+  // https://www.cmtsj.org/come-from-away/
+  // https://www.sanjose.org/theaters/events/come-away
+  {
+    date: "2026-12-04",
+    matches: event => event.source === "City Newsletter" && event.city === "san-jose"
+      && event.time === "7:00 PM" && /^Come From Away at CMT San Jose$/i.test(event.title || "")
+      && event.url === "https://cmt.vbotickets.com/event/Come_From_Away/198526",
+    facts: {
+      title: "Come From Away", category: "arts", cost: "paid", kidFriendly: false,
+      venue: "Montgomery Theater", address: "271 South Market Street, San Jose, CA 95113",
+      url: "https://www.sanjose.org/theaters/events/come-away",
+      description: "Children's Musical Theater San Jose stages the musical about the passengers welcomed by Gander, Newfoundland, after their flights were diverted on September 11.",
+      blurb: "Watch Children's Musical Theater San Jose perform Come From Away at Montgomery Theater.",
+    },
+    appendAttendanceNote: "Children's Musical Theater rates this production for ages 10 and up in its student matinee guide.",
+  },
+  // The stadium's dated guide gives the kickoff, gates, parking and ticket policy.
+  // https://levisstadium.com/event/seahawks-vs-49ers-week-12-2026/
+  {
+    date: "2026-11-29",
+    matches: event => event.city === "santa-clara" && event.venue === "Levi's Stadium"
+      && event.time === "1:25 PM"
+      && ((event.source === "City Newsletter" && /^(?:San Francisco )?49ers vs\. (?:Seattle )?Seahawks$/i.test(event.title || "")
+        && /^https:\/\/levisstadium\.com\/(?:event\/seahawks-vs-49ers-week-12-2026\/)?$/.test(event.url || ""))
+      || (event.source === "Ticketmaster" && event.id === "tm-G5vYZ_k28Y04c")),
+    facts: {
+      title: "San Francisco 49ers vs. Seattle Seahawks",
+      url: "https://levisstadium.com/event/seahawks-vs-49ers-week-12-2026/",
+      address: "4900 Marie P. DeBartolo Way, Santa Clara, CA 95054",
+      cost: "paid",
+      description: "The 49ers host the Seahawks at Levi's Stadium. Parking opens at 9:55 AM and stadium gates open at 11:25 AM before the 1:25 PM kickoff.",
+      blurb: "Watch the 49ers host the Seahawks at Levi's Stadium.",
+      occurrenceEvidence: {
+        kind: "first-party-occurrence-page",
+        sourceUrl: "https://levisstadium.com/event/seahawks-vs-49ers-week-12-2026/",
+        date: "2026-11-29", time: "1:25 PM",
+      },
+    },
+  },
+  // Stanford's official single-game listings confirm paid entry and Maples
+  // Pavilion's address. The newsletter clock caveat predates those listings.
+  // https://tickets.gostanford.com/p/mens-basketball
+  // https://gostanford.com/promotions/mens-basketball-promotions
+  ...[
+    ["2026-12-14", "7:00 PM", "northern-colorado-n8ec45"],
+    ["2026-12-18", "7:00 PM", "san-jose-state-4od63v"],
+    ["2026-12-22", "5:00 PM", "saint-thomas-j5m8o2"],
+    ["2027-01-06", "6:00 PM", "virginia-iytikb", {
+      title: "Stanford Men's Basketball vs. Virginia (ACC Home Opener)",
+      description: "Stanford opens its ACC home schedule against Virginia and recognizes faculty and staff. An ACC basketball cup is available while supplies last.",
+    }],
+    ["2027-01-09", "2:30 PM", "florida-state-hi4lxi", {
+      title: "Nerdball Night: Stanford Men's Basketball vs. Florida State",
+      description: "Stanford hosts Florida State at Maples Pavilion for Nerdball Night.",
+      blurb: "Watch Stanford face Florida State on Nerdball Night at Maples Pavilion.",
+    }],
+  ].map(([date, time, slug, promotion]) => ({
+    date,
+    matches: event => event.source === "City Newsletter" && event.venue === "Maples Pavilion"
+      && (event.time == null || event.time === time)
+      && event.url === `https://tickets.gostanford.com/events/mens-basketball-vs-${slug}`,
+    facts: { time, cost: "paid", address: "655 Campus Drive, Stanford, CA 94305", ...promotion },
+    copyReplacements: [[/\s*\bStart time not listed in the newsletter\./gi, ""]],
+  })),
   // The team's watch party page embeds the dated RSVP form. It confirms
   // that all ages are welcome and offers an RSVP without saying it is required.
   // https://sjearthquakes.formstack.com/forms/2026viewingparty
@@ -2868,6 +2934,18 @@ const CORRECTIONS = [
     {
       date: "2027-02-04", time: "8:00 PM", venue: "San Jose Improv",
       url: "https://www.ticketweb.com/event/shawn-chidiac-laughing-in-translation-san-jose-improv-tickets/14839683",
+    },
+    // The venue's ticket calendar and the comedian's box office list both runs.
+    // https://www.ticketmaster.com/the-ritz-tickets-san-jose/venue/342544
+    // https://improv.com/sanjose/event/danny%2Bgonzalez%2B%26%2Bfriends/14294064/
+    {
+      date: "2027-02-06", time: "9:00 PM", venue: "The Ritz",
+      url: "https://www.ticketweb.com/event/shrek-rave-the-ritz-tickets/15059553",
+    },
+    {
+      date: "2027-02-06", time: "7:00 PM", venue: "San Jose Improv",
+      url: "https://www.ticketweb.com/event/danny-gonzalez-friends-san-jose-improv-tickets/14294064",
+      appendAttendanceNote: "Waitlist only when checked November 27. See San Jose Improv for current availability.",
     },
     ...[
       ["02", "7:30 PM", "1C00651FC9A068FC"],
