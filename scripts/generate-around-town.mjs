@@ -239,6 +239,7 @@ const HEDGE_PATTERNS = [
   /\bagenda\s+(?:didn'?t|did\s+not)\s+(?:provide|specify|include|detail)\b/i,
   /\b(?:exact|specific)\s+(?:nature|content|terms|impact)\s+(?:remains|is)\s+unclear\b/i,
   /\bdetails?\s+(?:remain|are)\s+unclear\b/i,
+  /\btitle\s+(?:alone\s+)?(?:points?\s+to|suggests?|implies?)\b/i,
   /\bstaff\s+contact\b/i,
   /\bproject\s+manager\s+(?:is|listing|listed)\b/i,
   /\bsponsoring\s+department\b/i,
