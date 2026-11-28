@@ -493,7 +493,9 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "TurboTax, QuickBooks, and Credit Karma. Major Mountain View campus.",
     color: "#236cff",
     url: "https://www.intuit.com",
-    employeesNote: "18K employees globally",
+    // FY 2026 Form 10-K, Human Capital.
+    // https://www.sec.gov/Archives/edgar/data/896878/000089687826000037/intu-20260731.htm
+    employeesNote: "~18,600 employees globally (Jul 2026)",
   },
   {
     id: "broadcom",
@@ -579,7 +581,9 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "Hybrid cloud infrastructure software. Hyperconverged infrastructure pioneer finding its post-VMware moment.",
     color: "#024DA1",
     url: "https://www.nutanix.com",
-    employeesNote: "7K employees globally",
+    // FY 2026 Form 10-K, Employees and Human Capital.
+    // https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm
+    employeesNote: "~8,350 employees globally (Jul 2026)",
   },
   {
     id: "intuitive-surgical",
@@ -629,13 +633,15 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   {
     id: "tenstorrent",
     name: "Tenstorrent",
-    city: "San Jose",
+    // The October 2026 financing announcement lists Santa Clara among its offices.
+    // https://tenstorrent.com/newsroom/tenstorrent-announces-series-e
+    city: "Santa Clara",
     category: "chip",
     stage: "growth",
     tagline: "RISC-V AI chips led by chip legend Jim Keller. Open-architecture play against NVIDIA.",
     color: "#6B21A8",
     url: "https://tenstorrent.com",
-    employeesNote: "300 employees",
+    employeesNote: "",
   },
   {
     id: "d-matrix",
@@ -646,7 +652,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "Its Corsair in-memory compute chip targets AI inference at the data center edge. Microsoft-backed; raised a $275M Series C in late 2025 at a $2B valuation (~$450M total) to take on NVIDIA on inference.",
     color: "#1E3A5F",
     url: "https://www.d-matrix.ai",
-    employeesNote: "200 employees",
+    // https://www.d-matrix.ai/announcements/d-matrix-raises-275-million-to-power-the-age-of-ai-inference/
+    employeesNote: "250+ employees globally (Nov 2025)",
   },
   {
     id: "odyssey",
@@ -757,7 +764,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "San Jose",
     category: "cloud",
     stage: "growth",
-    tagline: "Data management and backup platform with AI search across your stored data. Merged with Veritas in 2024 to become a major data protection player.",
+    // https://www.cohesity.com/blogs/open-letter-to-customers/
+    tagline: "Data management and backup platform with AI search across your stored data. Cohesity combined with Veritas’ enterprise data protection business in December 2024.",
     color: "#00875A",
     url: "https://www.cohesity.com",
     employeesNote: "~3,000 employees globally",
@@ -768,7 +776,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "Saratoga",
     category: "network",
     stage: "startup",
-    tagline: "Redesigns the AI data center network from scratch — one high-radix switch layer instead of three, cutting latency and power for hyperscale AI. Emerged from stealth March 2026 with $200M+ Series A.",
+    // https://eridu.ai/pr/eridu-emerges-from-stealth-with-over-200m-in-funding/
+    tagline: "Develops AI data center networking designed to use fewer switch tiers. Eridu emerged from stealth in March 2026 with more than $200M in total funding, including a new Series A.",
     color: "#0EA5E9",
     url: "https://eridu.ai",
     employeesNote: "~100 employees",
@@ -825,10 +834,12 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "Milpitas",
     category: "chip",
     stage: "public",
-    tagline: "Semiconductor yield management — the tools that catch defects on wafers before they become bad chips. Every advanced chip fab in the world uses KLA equipment. One of Milpitas' most important employers.",
+    tagline: "Semiconductor yield management — the tools that catch defects on wafers before they become bad chips.",
     color: "#0F766E",
     url: "https://www.kla.com",
-    employeesNote: "~16K employees globally",
+    // FY 2026 Form 10-K, Human Capital.
+    // https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm
+    employeesNote: "~17,000 regular full-time employees globally (Jun 2026)",
   },
   {
     id: "lightmatter",
@@ -1105,6 +1116,8 @@ export interface RecentlyFunded {
   city: string;
   category: TechCategory | "medtech" | "eda";
   round: string;
+  // Amount raised in the named round. Use "Undisclosed" when the source
+  // provides only cumulative funding, an offering target, or interim sales.
   amount: string;
   // Funding announcement date, not the coverage or correction date.
   // ISO YYYY-MM-DD; use YYYY-MM-01 when only the month is known.
@@ -3315,9 +3328,13 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     city: "Saratoga",
     category: "network",
     round: "Series A",
-    amount: "$200M+",
-    date: "2026-03-01",
-    tagline: "Redesigning the AI data center network from scratch — one high-radix switch layer instead of three, cutting latency and power for hyperscale AI. Emerged from stealth March 2026, led by John Doerr.",
+    // The March 10 release gives cumulative funding. The March 19 Form D
+    // records $187,486,789 sold out of a $200M offering at filing.
+    // https://eridu.ai/pr/eridu-emerges-from-stealth-with-over-200m-in-funding/
+    // https://www.sec.gov/Archives/edgar/data/2120907/000212090726000002/xslFormDX01/primary_doc.xml
+    amount: "Undisclosed",
+    date: "2026-03-10",
+    tagline: "The Saratoga company develops networking hardware for AI data centers. Its March launch disclosed more than $200M in total funding. Socratic Partners and John Doerr were among the new Series A’s five co-leads.",
     color: "#0EA5E9",
     url: "https://eridu.ai",
   },
