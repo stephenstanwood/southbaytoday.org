@@ -589,7 +589,15 @@ const EDITS = {
       ["interaction with Srushti who has been trained", "interaction with Srushti, who has been trained"],
       [/No registration required,$/g, "No registration required."],
       [/(closing on [A-Z][a-z]+ \d{1,2}, \d{4}) (?=The exhibit is brought to you\b)/g, "$1. "],
-      [/(Come and enjoy this exhibit),? which starts on ([A-Z][a-z]+ \d{1,2}, \d{4}), closing on ([A-Z][a-z]+ \d{1,2}, \d{4})\./g, "$1, which starts on $2, and closes on $3."],
+      [
+        /Come and enjoy this exhibit,? which starts on ([A-Z][a-z]+ \d{1,2}, \d{4}), (?:closing on|and closes on) ([A-Z][a-z]+ \d{1,2}, \d{4})\./g,
+        "The exhibit runs from $1, through $2.",
+      ],
+      ["Bhutan, India, Maldives, Nepal", "Bhutan, India, the Maldives, Nepal"],
+      [
+        "The exhibit is brought to you by the South Asians in Silicon Valley initiative at the SJSU King Library. Through this unique initiative, the SJSU King Library records, preserves, and shares",
+        "The South Asians in Silicon Valley initiative at the SJSU King Library presents the exhibit. The initiative records, preserves, and shares",
+      ],
       ["Vietnamese Language Learners are welcome to join us and practice your Vietnamese speaking skills.", "Vietnamese language learners are welcome to join us and practice their Vietnamese-speaking skills."],
       ["Please Bring Your Own Bags.", "Please bring your own bags."],
       ["Only Cash And Checks Are Accepted.", "Only cash and checks are accepted."],
@@ -3229,6 +3237,14 @@ const EDITS = {
       ],
     ],
   },
+  "City of Campbell": {
+    description: [
+      [
+        "You have never experienced a Winter quite like this!",
+        "You have never experienced a winter quite like this!",
+      ],
+    ],
+  },
   "City of Cupertino": {
     description: [
       [
@@ -3489,6 +3505,10 @@ const EDITS = {
     ],
     description: [
       [
+        "Join the Spartan Marching Band for their end-of-the-year concert on the field at CEFCU Stadium! The Spartan Marching Band is under the direction of Dr. Grant Knox.",
+        "The Spartan Marching Band gives its year-end concert on the field at CEFCU Stadium under the direction of Dr. Grant Knox.",
+      ],
+      [
         "Join the Steinbeck Center for our Fall 2026-2027 Fellow Reading starring Tracy Abeyta, Angela Frances Hui, and one of our past Fellows Rose Himber Howse. This is a free event.",
         "The Steinbeck Center's free fall reading features 2026–2027 fellows Tracy Abeyta and Angela Frances Hui, along with past fellow Rose Himber Howse.",
       ],
@@ -3515,6 +3535,10 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        "Hear the Spartan Marching Band, directed by Dr. Grant Knox, play its end-of-the-year concert on the field at CEFCU Stadium.",
+        "Hear the Spartan Marching Band, directed by Dr. Grant Knox, perform its year-end concert on the field at CEFCU Stadium.",
+      ],
       ["history, culture and artform of Mariachi music at SJSU's", "history, culture and art form of mariachi music at SJSU's"],
       ["Catch San Jose State's men's basketball team take on", "Watch San Jose State's men's basketball team take on"],
       [/\bat Provident Credit Union Event Center\b/g, "at the Provident Credit Union Event Center"],
