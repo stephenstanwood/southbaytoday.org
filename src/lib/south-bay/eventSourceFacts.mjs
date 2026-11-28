@@ -2919,7 +2919,7 @@ const CORRECTIONS = [
     },
     copyReplacements: [[
       /Tickets are \$40[-–]\$50 and sales end December 3 or when sold out\./i,
-      "Tickets are $40 for museum members and $50 for nonmembers from November 28. Sales end December 3 or when sold out.",
+      "Starting November 28, tickets cost $40 for museum members and $50 for nonmembers. Sales end December 3 or when tickets sell out.",
     ]],
   },
   {
