@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-27T04:19:36.580Z",
+  "generatedAt": "2026-11-28T05:46:25.726Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-27T04:19:36.579Z",
-    "updatedAt": "2026-11-26T14:31:32.000Z",
+    "checkedAt": "2026-11-28T05:46:25.726Z",
+    "updatedAt": "2026-11-27T14:37:01.000Z",
     "ageDays": 0,
-    "newestRawInspection": "2026-11-24",
+    "newestRawInspection": "2026-11-25",
     "newestEligibleInspection": "2026-11-24",
     "eligibleStatus": "recent"
   },
@@ -41,7 +41,7 @@
       "inspectionDate": "2026-11-24",
       "sourceId": "SR0884003",
       "status": "inspection-complete",
-      "blurb": "Food business on San Antonio Rd in Mountain View.",
+      "blurb": "Wing-focused food business on San Antonio Rd in Mountain View.",
       "photoRef": "places/ChIJ7bP7KF2xj4ARMaNXyffXJ6Q/photos/Ab43m-tqPihPd3Z8Y7-W0ML4EBHcoiJfMC6wmWKqVwqmV4MmvZTvjQmoifwaFM18u-6N9CVECvV6gCes9ck-RS5c7DjVV8O3m1Bwg3z5eWmju1NOVWZGWzDH_AEv60FA8EQ_S2VEn_11XMxsk3XQOXqol272TtdXZholUZyOJyf1h11usrvNhlM4rXwpeMATR3pDmZoti1NbV95FMiQwsuFK6_cyAVjmKhlV53EwZ1kq4Q7HQ9hxVFm1LyX0OR1AubxEJ7XUkdCf87ZRG15nrGPLVC1x1rOrgnx6_NY7fyY1EgG40A"
     },
     {
@@ -57,6 +57,18 @@
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0878962-450.webp"
     },
     {
+      "id": "inspection-SR0884418",
+      "name": "Nothing Bundt Cakes",
+      "address": "3933 Rivermark Pkwy",
+      "cityId": "santa-clara",
+      "cityName": "SANTA CLARA",
+      "inspectionDate": "2026-11-20",
+      "sourceId": "SR0884418",
+      "status": "inspection-complete",
+      "blurb": "Bundt cake shop on Rivermark Pkwy in Santa Clara.",
+      "photoRef": "places/ChIJ9dytoPO2j4ARgn3nQjo7a7A/photos/AV-0GLf-cGRsvBKy5b3jlit89PzwOOI8XMeLMNkJRm0faIjOhMLZ5YyxREWK1FE95Ch0LA5oivmVVkFt8j0gYw9nn6lzq_-C1WGsmOxo-lkumSGL4NuZDyHzS_lx0cbdoQGG4WcXmo_XziSj1cSNnKIG6DCW7IUDCMhK564Iz5ivTlU90mDf3hOzdif_Af77bjo2MhbO9gd0YJ5jL5Brwf_WuR94StFQm0dxl1oMuIpWAGXHuh4PD3SxUgUhvRBBun0WB5IprOOUm04hGMZO6UJpf05AQaY_SRiVdhbvr20WeYlYiROW2oudgzIraASQUEPnx2U5bfkhGrGXzyUhPEbABymbI80msk4fVF1l-JUfA_NvgtEFjayBjLVh6NXUj_nLBAVGu44J7crA4y9cQ9NDyWm37xKY_wE"
+    },
+    {
       "id": "inspection-SR0886625",
       "name": "Restaurante Yoschimy",
       "address": "82 E Santa Clara St",
@@ -67,18 +79,6 @@
       "status": "inspection-complete",
       "blurb": null,
       "photoRef": "places/ChIJTZH-mS3Nj4ARnJNXOQZGqFw/photos/AV-0GLeQ8K6bN96WMjpI7Q53PPUpyzkYyiHW-HpJDBj1nfEF9Yp07NEu_MtbOUdmJcrtAesO-TYN-T7_34P2nKpGesSqCtHdFOEfBNIKG_2vOIAOOo6v_R0uRKGPYXUsoZD4v1s21P-cIxVKpqJrI3Aw1lRIVBoVIhM_Iowc7CxzciQoOLm3xeQbmlH6EWJpvv-AfyPoCPhNy1YN0cTY-rEScUz3C1yLwO8uYwHHqgNWUZoedHF5aLifc4vNkuweI1qwFNZ_sbi-ldVHtD2MuZsmsCIfTkc9F-q-cYEX2z2LeNW8gacSXLmpNH4stJuWhS7K0-FxBpH3jHBON9-9AJLisSJmrgWQoVaYfL-qd7MGhw_4zGElV14ERQYgQGyWYQufcYRXlUjw4gbe0SI5vKGFGDVW104HXUo"
-    },
-    {
-      "id": "inspection-SR0884418",
-      "name": "Nothing Bundt Cakes",
-      "address": "3933 Rivermark Pkwy",
-      "cityId": "santa-clara",
-      "cityName": "SANTA CLARA",
-      "inspectionDate": "2026-11-20",
-      "sourceId": "SR0884418",
-      "status": "inspection-complete",
-      "blurb": "Bundt cake business on Rivermark Pkwy in Santa Clara.",
-      "photoRef": "places/ChIJ9dytoPO2j4ARgn3nQjo7a7A/photos/AV-0GLf-cGRsvBKy5b3jlit89PzwOOI8XMeLMNkJRm0faIjOhMLZ5YyxREWK1FE95Ch0LA5oivmVVkFt8j0gYw9nn6lzq_-C1WGsmOxo-lkumSGL4NuZDyHzS_lx0cbdoQGG4WcXmo_XziSj1cSNnKIG6DCW7IUDCMhK564Iz5ivTlU90mDf3hOzdif_Af77bjo2MhbO9gd0YJ5jL5Brwf_WuR94StFQm0dxl1oMuIpWAGXHuh4PD3SxUgUhvRBBun0WB5IprOOUm04hGMZO6UJpf05AQaY_SRiVdhbvr20WeYlYiROW2oudgzIraASQUEPnx2U5bfkhGrGXzyUhPEbABymbI80msk4fVF1l-JUfA_NvgtEFjayBjLVh6NXUj_nLBAVGu44J7crA4y9cQ9NDyWm37xKY_wE"
     },
     {
       "id": "inspection-SR0886629",
@@ -125,7 +125,7 @@
       "inspectionDate": "2026-11-12",
       "sourceId": "SR0882351",
       "status": "inspection-complete",
-      "blurb": "Kitchen business on West Bayshore Road in Palo Alto.",
+      "blurb": null,
       "photoRef": "places/ChIJTamC_qi7j4ARMAC_ZB2hHMI/photos/AV-0GLf4IxYllB1Ih1qr0KKvDooNZFUWmjPO4BDf0A-HpfpPUKACX4feZcOTQVLq65KNEig48eU-yn5eS76XeaDfTpbnxGCGKEP3avh0TCXmi5JV3dKFaHciafBKMJtEza2x8Wp-Zrv7E5_tlQMXUdNCE43Kqy440GcykuPlw0-eQLcqh9ts8v0aFnKfVGSg7jIU-m6Eedc4MpP-haroSLuUDcmhBjmzTbAcoOmBhBs-7ftnedmYU-HOhyWSk68IribWi0A4v6au-ndNs_HJL2QhJwoXn8ivzV9VdxseJOQJxRDryFVdsagtlPSuDekTeiD4n2JijQzW8BvIC1Qfk-xTbQKqfzoy3QvrNiWTEHhEvku6q79d5g6WnNLrixZj0htbPhxwfJP_6pjZTxW-dBHvhUI2lBn_Unw"
     },
     {
@@ -153,18 +153,6 @@
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0885856-450.webp"
     },
     {
-      "id": "inspection-SR0881373",
-      "name": "Peet's Coffee",
-      "address": "2035 Camden Ave",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "inspectionDate": "2026-11-06",
-      "sourceId": "SR0881373",
-      "status": "inspection-complete",
-      "blurb": "Coffee business on Camden Ave in San Jose.",
-      "photoRef": "places/ChIJP38g_WO2j4AR5kDEzKWc1VU/photos/AV-0GLc3PO1R5qvGe67QhsDC090AUXFNXVI5yqZJAQZigZ_GIfLSKsUMi5QF099x71V5JyfAlDwOQWxgeLEQ3YZmymLQuS2CsV9xNyIYFkGZflJ6aG36EsvWbqSznB84GSxQwlsYHWdGoabD39kkOfE0MuBYHdOoeuWYrjPLxl3inqVF4NE3oyOVZZg5eh1TRO8x667dWGbyB-o1cHlG1GwtPSoHuGCms01nXYJNk82rrl-RA9X6PtR-vRFNbNCY_vFQprSB7U8wO-MQCqAOycMKuMNt2SZIo-XQWOl2Ny4HYmMR0NQ177ZUqhCYmHPAi57Fq8UwdlvDcYe3z9rU6C8wUo27PmXGCnPXEetGhDWT_1HRc-Ekd-aiwT9YX3c3NRRdrGo0GWRfomLUzsp9b2dpJk6kdBo"
-    },
-    {
       "id": "inspection-SR0878199",
       "name": "Jin Jin Gourmet",
       "address": "927 E Arques Ave # 141",
@@ -175,9 +163,45 @@
       "status": "inspection-complete",
       "blurb": "Food business on East Arques Ave in Sunnyvale.",
       "photoRef": "places/ChIJeWd8gD22j4ARAhzHtIe-rKY/photos/AVoNoXSia--f7CwEIYU1f_I-MpAK_z45FS4VLuUIrTdCjdf-YgWmfHX8hxVJus8A8XfXIsZAXl38qg0Zjbppty7PQBoQTsCGdZmTbFBeC93e2N7t9Ky9wwcU5eNyOzOpDSmajaywGerouKpmMZWkQXjwtUMcs6k6VKpJqe8ncuSIwh0VVgKZ2qNxvRy8kbdrOI3PZsNrUnYsFwgC_c6DgPEtDxVauvyKYndhsNX327znhERgakWCErU9aSIeQpcpCkOO_otZvMrJr8hlYVKzpPGt1rXg155zcTG07XR4COZuIfIaafVJ42bwjIz5oWa1y9izQyiRPxa3PmRUtRcdHre9tFitIISXa6XAtqid3fGut7t8kOA4MQZkzD1SYw_d69i_PSlP1z0IXRPjJZ1kEnd5KQer70ziTDAYqDuTyyzTBsxWsho"
+    },
+    {
+      "id": "inspection-SR0881373",
+      "name": "Peet's Coffee",
+      "address": "2035 Camden Ave",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-06",
+      "sourceId": "SR0881373",
+      "status": "inspection-complete",
+      "blurb": "Coffee business on Camden Ave in San Jose.",
+      "photoRef": "places/ChIJP38g_WO2j4AR5kDEzKWc1VU/photos/AV-0GLc3PO1R5qvGe67QhsDC090AUXFNXVI5yqZJAQZigZ_GIfLSKsUMi5QF099x71V5JyfAlDwOQWxgeLEQ3YZmymLQuS2CsV9xNyIYFkGZflJ6aG36EsvWbqSznB84GSxQwlsYHWdGoabD39kkOfE0MuBYHdOoeuWYrjPLxl3inqVF4NE3oyOVZZg5eh1TRO8x667dWGbyB-o1cHlG1GwtPSoHuGCms01nXYJNk82rrl-RA9X6PtR-vRFNbNCY_vFQprSB7U8wO-MQCqAOycMKuMNt2SZIo-XQWOl2Ny4HYmMR0NQ177ZUqhCYmHPAi57Fq8UwdlvDcYe3z9rU6C8wUo27PmXGCnPXEetGhDWT_1HRc-Ekd-aiwT9YX3c3NRRdrGo0GWRfomLUzsp9b2dpJk6kdBo"
     }
   ],
   "comingSoon": [
+    {
+      "id": "soon-SR0884416",
+      "name": "Caffe Rework",
+      "address": "4 Infinite Loop",
+      "cityId": "cupertino",
+      "cityName": "CUPERTINO",
+      "date": "2026-11-25",
+      "status": "coming-soon",
+      "sourceId": "SR0884416",
+      "blurb": null,
+      "photoRef": "places/ChIJvQPIOfW1j4ARVT_DNdp5Uk8/photos/Ab43m-vGys-aGsizvKETYgUqu3-bGrq7C46OaMDkvr7rh8TlKc2bmBiOWu1JmpLyeTC148i5FYphASmEAT3oEr99C5heB7kIgt90koJvfvRx63wxq9ahAw-ptmzwAllDoEbUIwQh9TIz0vVjXzlKdSrGK2o16Hts9Fm0HdigHT9iJPV8yVYlfB-OvDnrhNGxkHEbuogjU4UuMlsMaVPO5bTGjpZI7HDO5Qb9WlTOLlTd1na8ovPnvwZ8vjKMPDgLdeOAlhTSJNSFRw1zkws7C3HVL42qxODhDidBig5dFcrXUfwY08MJxFDdqOz9Z_cjHUOE9jGcYpIypnfA1aXtdNKYDMcxgdc76QNUfuQhu9jHR99zn1FgYBnMULNGdZ15zQsGXm9PwHWneDlM2nGnAyyEZqtf33eraBQKXnVayQ12VugAcw"
+    },
+    {
+      "id": "soon-SR0886460",
+      "name": "Diner Los Gatos",
+      "address": "235 Los Gatos-Saratoga Rd",
+      "cityId": "los-gatos",
+      "cityName": "LOS GATOS",
+      "date": "2026-11-25",
+      "status": "coming-soon",
+      "sourceId": "SR0886460",
+      "blurb": "Diner planned on Los Gatos-Saratoga Road in Los Gatos.",
+      "photoRef": "places/ChIJkaFw8fE1joARXInZrmKN5OY/photos/AV-0GLeU6P9mIPE8OoYgrTvqrid1vUYiqmdanCOLpDUb6-xYOLV2K2kpCTy8IJ-5eTEJ7NCz6Ounc9xFgsyTaXFTYi7HdaeJS54pV7pXrTuk6IsVp9GZKt1r912LUORXRsyN36-YbB12fpurZEfX36RBa217qUShV-O_ANTB31zXY-ySbABnA6xnI1eYtxr84Sbh3mOME1qU_SUreYSSEihCVUiBlZVvlLKIbapjsoEMG3V0hMDEVt-u5boyaU--WlXr28FF8y1L58J7wwcfobx94g7oCtyAMABwE_mj4-JyXCJ9d1FcTO7ijJsVC3gHEc7BA3gN6SvbJz1R4CKU-G_vNJJrNQGr4v9fmaWkG6qucrifopMryRzcfkmDc0YwQ9uNKn6Vzh8ZHDguFCneDjFO76Lybh-tr4U"
+    },
     {
       "id": "soon-SR0886880",
       "name": "Fourfold Campbell",
@@ -297,18 +321,6 @@
       "sourceId": "SR0886360",
       "blurb": "Food business planned on East Brokaw Road in San Jose.",
       "photoRef": "places/ChIJE46t_57Lj4ARq6YTDs6y0_0/photos/AV-0GLelmxffWtYX22TV1STrrO9XBTcWetP6na8b3o8TR2B2NM9h8lHtfO46lXh9djaLz5y9HSuKVM-ugXnCOsLMMdWmUXXw1lxhG_vRw6jfofZCqJvOvxxbJNgEpRlSIP9Z27vGPmfjkI86mpPYTEZdhUv_-Lx6cNYkbcfQwE8kjDqBZo-_iCBJjqm97ApQpcCbVBod9UIKrjm9WRrbZ1-sXO54Nz7XtBNxcoV36e9rdP4e1mfoJ_1uKkAG2EvkOx_erradEnQDTLth_T5Nfcz_CeAQ3WJS_GaLlQYyrbofOEsD17FbFcEnbT_LeEOKJesHFVfh_F2LA-u-LJFQuZP_ZznejuqII1Rz1cNV9_hmBi2JrpT3bZ4ts5EqPr2SrYN0yIh5-eNvZDKCRMPh6ZoGRInR_JE"
-    },
-    {
-      "id": "soon-SR0886411",
-      "name": "King Kong Japan",
-      "address": "1430 Monterey Rd., Unit 10",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-10-30",
-      "status": "coming-soon",
-      "sourceId": "SR0886411",
-      "blurb": "Food business planned on Monterey Road in San Jose.",
-      "photoRef": "places/ChIJ_ymLOQAxjoARjSFwGH68a1s/photos/AV-0GLca8YeP2Xs8zBf5GR7I0qYnYtmVHBj8a1j3JxcsCfkL_jq_jJLvXtozMq5QTXq7Q4M2QbI0Yt5iWe5KLvSJws77yKc4vyCOPP7wvIrGT998bMPUA5xe6Rp94Js2crO9lJXMWov-KNcNMG0ekE6lthpe9aaCE10Xr3yuoOBnc20oMoR_DtjehbIAnrMbtsllVUmYxvCW6ZmytOJDW4KXTc2-AUR1xE4apvaMR1nq6IfxXq42MSbfBdP4hrKmfsR_T9WMB4LnIFl5ugaGiEIMqK3v9oo4FU_dZNuQsgdaQrOuzVb2s4nXmL5gGSZornK7oQkv69j0WRC4DA5L7sDSnEJs3O7CkSMt0gmMGjCBUFXuhRyywKBBcdDrcVzDRrZk0wQ4SzfgVA93g5TvVNN-aEEmp1nXRxvxK6X9G7LbH7ZyvA"
     }
   ]
 }
