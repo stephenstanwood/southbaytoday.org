@@ -704,16 +704,30 @@ test("East Asia Library exhibit identifies both visitor entry and Thanksgiving c
 
 test("library exhibits skip Thanksgiving weekend when their rooms are closed", () => {
   const exhibits = [
-    ["https://events.sjsu.edu/event/something-sensational", "2026-11-30", "Mon, Nov 30", /Monday through Wednesday/],
-    ["https://events.stanford.edu/event/emergent-properties", "2026-12-02", "Wed, Dec 2", /December 2 from 1 to 5 PM/],
+    [
+      "https://events.sjsu.edu/event/something-sensational", "2026-11-30", "Mon, Nov 30",
+      "The Special Collections reading room is open to the public Monday through Wednesday, noon to 5 PM, and by appointment.",
+      "The Special Collections reading room has no drop-in hours November 26 through 29.",
+      "There are no drop-in hours November 26 through 29.",
+      "Visits resume Monday, November 30.",
+    ],
+    [
+      "https://events.stanford.edu/event/emergent-properties", "2026-12-02", "Wed, Dec 2",
+      "The Map Center's drop-in hours are usually Wednesday through Friday and vary by week. Visitors need a government-issued photo ID to register at Green Library.",
+      "The Map Center's next drop-in hours are December 2 from 1 to 5 PM.",
+      "The next drop-in hours are December 2 from 1 to 5 PM.",
+    ],
   ];
-  for (const [url, date, displayDate, note] of exhibits) {
+  for (const [url, date, displayDate, regularHours, previousNote, note, resumption] of exhibits) {
     const event = { url, date: "2026-11-28", ongoing: true, time: null };
     const fixed = applyVerifiedEventFacts(event);
+    const expectedNote = [regularHours, note, resumption].filter(Boolean).join(" ");
     assert.equal(fixed.date, date);
     assert.equal(fixed.displayDate, displayDate);
-    assert.match(fixed.attendanceNote, note);
+    assert.equal(fixed.attendanceNote, expectedNote);
     assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const retainedNote = [regularHours, previousNote, resumption].filter(Boolean).join(" ");
+    assert.deepEqual(applyVerifiedEventFacts({ ...fixed, attendanceNote: retainedNote }), fixed);
   }
 });
 
