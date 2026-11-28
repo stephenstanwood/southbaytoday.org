@@ -50,19 +50,39 @@ test("Stanford's November 30 talks keep source-confirmed admission and attendanc
   assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
 });
 
-test("SCORE's December 11 workshop keeps free admission after resolving the city calendar link", () => {
+test("SCORE's December 11 workshop keeps verified check-in details through refresh", () => {
   const organizerUrl = "https://www.score.org/ca/silicon-valley/business-education/should-i-start-a-business-12-11-26/";
   const sourceEvent = {
     date: "2026-12-11",
     url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114853/",
+    address: "Central Park Library - Board Room, 2635 Homestead Rd., Santa Clara, CA 95051",
     cost: null,
   };
-  const reviewed = { ...sourceEvent, url: organizerUrl, cost: "free" };
+  const reviewed = {
+    ...sourceEvent,
+    url: organizerUrl,
+    cost: "free",
+    address: "2635 Homestead Rd., Santa Clara, CA 95051",
+    attendanceNote: "SCORE asks attendees to bring their registration confirmation email for check-in.",
+  };
   assert.deepEqual(applyVerifiedEventFacts(sourceEvent), reviewed);
   assert.deepEqual(applyVerifiedEventFacts({ ...sourceEvent, url: organizerUrl }), reviewed);
   assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
-  const paid = { ...reviewed, cost: "paid" };
-  assert.deepEqual(applyVerifiedEventFacts(paid), paid);
+
+  const changed = {
+    ...sourceEvent,
+    address: "275 Saratoga Avenue, Santa Clara, CA 95050",
+    cost: "paid",
+    registration: "closed",
+    attendanceNote: "Registration is closed.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(changed), {
+    ...changed,
+    url: organizerUrl,
+    attendanceNote: `Registration is closed. ${reviewed.attendanceNote}`,
+  });
+  const otherDate = { ...sourceEvent, date: "2026-12-12" };
+  assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
 });
 
 test("Santa Clara's hybrid outreach meeting uses only the street address for directions", () => {

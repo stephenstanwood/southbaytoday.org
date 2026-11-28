@@ -4502,8 +4502,8 @@ const CORRECTIONS = [
       blurb: "Join Sharan Grewal online for a talk about Tunisia's democratic transition and the risks of power-sharing.",
     },
   },
-  // SCORE confirms free admission and provides the registration link. Match
-  // both links because the newsletter adapter can already resolve the city URL.
+  // SCORE gives the boardroom location and asks attendees to bring their
+  // confirmation email. Match both links because intake may resolve the city URL.
   {
     date: "2026-12-11",
     url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114853/",
@@ -4511,7 +4511,10 @@ const CORRECTIONS = [
     facts: event => ({
       url: "https://www.score.org/ca/silicon-valley/business-education/should-i-start-a-business-12-11-26/",
       cost: event.cost ?? "free",
+      ...(event.address === "Central Park Library - Board Room, 2635 Homestead Rd., Santa Clara, CA 95051"
+        ? { address: "2635 Homestead Rd., Santa Clara, CA 95051" } : {}),
     }),
+    appendAttendanceNote: "SCORE asks attendees to bring their registration confirmation email for check-in.",
   },
   // The box office confirms the December 11 gingerbread workshop and its hours.
   // Visit San Jose supplies the workshop image and links to the same tickets.
