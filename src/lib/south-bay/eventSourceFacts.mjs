@@ -634,6 +634,29 @@ const CORRECTIONS = [
       && !event.virtual && !event.address?.trim(),
     facts: { address: "290 Jane Stanford Way, Stanford, CA 94305" },
   },
+  // Stanford's event page specifies free admission and Oshman Hall. The
+  // calendar feed supplies only the building and a shortened description.
+  {
+    date: "2026-11-30",
+    url: "https://events.stanford.edu/event/faculty-candidate-talk-the-acoustics-of-accented-labor-genevieve-nnaji-and-industrial-authorship-in-lionheart-2018-rejoice-abutsa-doctoral-candidate-cornell-university",
+    facts: event => ({
+      cost: event.cost ?? "free",
+      ...(event.venue === "McMurtry Building" && !event.attendanceNote ? { attendanceNote: "Oshman Hall." } : {}),
+    }),
+  },
+  // The campus calendar says the talk is free. The organizer links to
+  // separate in-person and Zoom registration forms.
+  // https://digitaleconomy.stanford.edu/event/richard-socher-del-seminar-series/
+  {
+    date: "2026-11-30",
+    url: "https://events.stanford.edu/event/richard-socher-the-eureka-machine-why-ai-is-the-key-to-unlocking-a-new-era-of-scientific-discoveries",
+    facts: event => ({
+      cost: event.cost ?? "free",
+      registration: REGISTRATION_REQUIRED,
+      onlineUrl: event.onlineUrl || "https://stanford.zoom.us/webinar/register/WN__uUQ_ENnQtq-4pzBPEduQw",
+    }),
+    appendAttendanceNote: "Register through Stanford's event page to attend in person or on Zoom.",
+  },
   // The museum's occurrence page describes a housing-policy talk and names
   // the speakers. The calendar feed supplies the generic museum category.
   {
@@ -4479,14 +4502,16 @@ const CORRECTIONS = [
       blurb: "Join Sharan Grewal online for a talk about Tunisia's democratic transition and the risks of power-sharing.",
     },
   },
-  // SCORE confirms free admission and provides the registration link.
+  // SCORE confirms free admission and provides the registration link. Match
+  // both links because the newsletter adapter can already resolve the city URL.
   {
     date: "2026-12-11",
     url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114853/",
-    facts: {
+    aliasUrls: ["https://www.score.org/ca/silicon-valley/business-education/should-i-start-a-business-12-11-26/"],
+    facts: event => ({
       url: "https://www.score.org/ca/silicon-valley/business-education/should-i-start-a-business-12-11-26/",
-      cost: "free",
-    },
+      cost: event.cost ?? "free",
+    }),
   },
   // The box office confirms the December 11 gingerbread workshop and its hours.
   // Visit San Jose supplies the workshop image and links to the same tickets.

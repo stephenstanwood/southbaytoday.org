@@ -16,6 +16,55 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Stanford's November 30 talks keep source-confirmed admission and attendance details", () => {
+  const abutsa = {
+    date: "2026-11-30",
+    url: "https://events.stanford.edu/event/faculty-candidate-talk-the-acoustics-of-accented-labor-genevieve-nnaji-and-industrial-authorship-in-lionheart-2018-rejoice-abutsa-doctoral-candidate-cornell-university",
+    venue: "McMurtry Building",
+    cost: null,
+  };
+  const reviewedAbutsa = { ...abutsa, cost: "free", attendanceNote: "Oshman Hall." };
+  assert.deepEqual(applyVerifiedEventFacts(abutsa), reviewedAbutsa);
+  assert.deepEqual(applyVerifiedEventFacts(reviewedAbutsa), reviewedAbutsa);
+  const relocated = { ...abutsa, venue: "Another Building", attendanceNote: "Room 102." };
+  assert.deepEqual(applyVerifiedEventFacts(relocated), { ...relocated, cost: "free" });
+
+  const socher = {
+    date: "2026-11-30",
+    url: "https://events.stanford.edu/event/richard-socher-the-eureka-machine-why-ai-is-the-key-to-unlocking-a-new-era-of-scientific-discoveries",
+    attendanceNote: "Room 119.",
+    cost: null,
+  };
+  const reviewedSocher = {
+    ...socher,
+    cost: "free",
+    registration: "required",
+    onlineUrl: "https://stanford.zoom.us/webinar/register/WN__uUQ_ENnQtq-4pzBPEduQw",
+    attendanceNote: "Room 119. Register through Stanford's event page to attend in person or on Zoom.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(socher), reviewedSocher);
+  assert.deepEqual(applyVerifiedEventFacts(reviewedSocher), reviewedSocher);
+  const closed = { ...socher, registration: "closed", onlineUrl: "https://example.org/updated-webinar" };
+  assert.deepEqual(applyVerifiedEventFacts(closed), { ...reviewedSocher, registration: closed.registration, onlineUrl: closed.onlineUrl });
+  const otherDate = { ...socher, date: "2026-12-07" };
+  assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
+test("SCORE's December 11 workshop keeps free admission after resolving the city calendar link", () => {
+  const organizerUrl = "https://www.score.org/ca/silicon-valley/business-education/should-i-start-a-business-12-11-26/";
+  const sourceEvent = {
+    date: "2026-12-11",
+    url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114853/",
+    cost: null,
+  };
+  const reviewed = { ...sourceEvent, url: organizerUrl, cost: "free" };
+  assert.deepEqual(applyVerifiedEventFacts(sourceEvent), reviewed);
+  assert.deepEqual(applyVerifiedEventFacts({ ...sourceEvent, url: organizerUrl }), reviewed);
+  assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  const paid = { ...reviewed, cost: "paid" };
+  assert.deepEqual(applyVerifiedEventFacts(paid), paid);
+});
+
 test("Santa Clara's hybrid outreach meeting uses only the street address for directions", () => {
   const event = {
     date: "2026-12-09",
