@@ -252,6 +252,7 @@ export const LOGO_SITE_OVERRIDES = {
   naive: "https://usenaive.ai", // card links the WebWire release
   primemas: "https://www.primemas.com/", // card links counsel’s financing announcement
   "overlord-labs": "https://overlord-labs.com", // card links the PR Newswire release
+  "sonire-therapeutics": "https://www.sonire-therapeutics.com/en/", // card links the Series A announcement
   "sima-ai-series-c": "https://sima.ai", // card links the SiliconANGLE write-up
 };
 

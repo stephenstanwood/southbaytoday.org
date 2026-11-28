@@ -3683,9 +3683,9 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     round: "Series A",
     amount: "$18M",
     date: "2026-04-15",
-    tagline: "Non-invasive HIFU therapy system for pancreatic cancer ablation — treating tumors with focused ultrasound, no incisions, outpatient. FDA Breakthrough Device Designation in 2024. Series A led by Santé Ventures with Japanese co-investors.",
+    tagline: "Sonire's Palo Alto subsidiary is developing an investigational focused ultrasound device for pancreatic cancer. The device received FDA Breakthrough Device Designation in 2024. Santé Ventures led the Series A with Japanese co-investors.",
     color: "#0369a1",
-    url: "https://www.sonire-therapeutics.com/en/",
+    url: "https://www.prnewswire.com/news-releases/sonire-therapeutics-closes-18-million-series-a-financing-to-advance-breakthrough-hifu-therapy-for-pancreatic-cancer-expands-us-clinical-development-302741988.html",
   },
   {
     id: "neocognition",
