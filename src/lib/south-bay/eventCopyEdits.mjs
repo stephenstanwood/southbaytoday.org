@@ -214,6 +214,7 @@ const EDITS = {
   },
   "San Jose Public Library": {
     title: [
+      [/^Wacky Wednesdays: Train craft$/gi, "Wacky Wednesdays: Train Craft"],
       [/^Pok[eé]mon TCG \(Trading Card Game\)$/gi, "Pokémon TCG (Trading Card Game)"],
       // The library's full bilingual title ends in “Anh-Việt và Thủ công”.
       [
@@ -296,6 +297,11 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        /^Our library volunteer and experienced stamp collector from San Jose Stamp Club invites you to attend a meeting to learn about the fun and educational opportunities with collecting stamps\./g,
+        "A library volunteer and experienced collector from the San Jose Stamp Club invites you to a meeting to learn about stamp collecting.",
+      ],
+      [/\b([A-Z][a-z]+ \d{1,2})\s*[-–—]\s*Train craft\.?(?=$| Free\.)/gi, "On $1, make a train craft."],
       [
         "This program meets every other Monday from 8/24 - 11/30 from 4:15 PM-5:15 PM",
         "This program meets every other Monday from 8/24 to 11/30. Sessions run from 4:15 PM to 5:15 PM",
@@ -1972,6 +1978,14 @@ const EDITS = {
         "Seal the Deal: Closing Statements in Job Interviews takes place immediately before this workshop. Presented in partnership with the SJSU Department of Communication Studies. Free.",
       ],
       [
+        /^Wanna seal the deal\? Join us for a workshop on what to do and what to avoid in a job interview's closing statement\./g,
+        "This workshop covers what to say and what to avoid in your closing statement at a job interview.",
+      ],
+      [
+        /^Have you ever experienced the challenge of managing a difficult conversation at work\? Learn to communicate/g,
+        "Learn to communicate",
+      ],
+      [
         "Would you like to connect with other members in your community? Join us in-person. We will provide a welcoming and respectful gathering space for members of the community to talk, and build positive community member relationships.",
         "Join us in person for a welcoming, respectful gathering where neighbors can talk and get to know one another.",
       ],
@@ -2013,6 +2027,14 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        "Sing songs, hear stories, and do rhymes, fingerplays, and movement activities with your whole family at a storytime for mixed ages.",
+        "Bring the whole family to storytime for songs, stories, rhymes, fingerplays, and movement. Children of all ages are welcome.",
+      ],
+      [
+        "Make a train craft at the library's weekly Wednesday art session, with supplies provided while they last and no registration required.",
+        "Make a train craft at the library's weekly Wednesday art session. Supplies are available while they last. Drop in without registering.",
+      ],
       [
         "Sing and move along to bilingual Vietnamese and English songs, rhymes, and a craft with the family.",
         "Sing and move to songs and rhymes in Vietnamese and English, then make a craft together.",
@@ -2400,6 +2422,7 @@ const EDITS = {
   },
   "Santa Clara County Library": {
     title: [
+      [/^Crafter Dark: DIY eco[ -]friendly wrapping paper$/gi, "Crafter Dark: DIY Eco-Friendly Wrapping Paper"],
       [/^Hand Embroidered Cards$/g, "Hand-Embroidered Cards"],
       [/^Lego Club$/g, "LEGO Club"],
       ["Intermediate Mass Black Holes", "Intermediate-Mass Black Holes"],
@@ -2431,6 +2454,10 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
     ],
     description: [
+      [
+        "This month we are focusing on eco friendly options for wrapping paper.",
+        "This month, we're focusing on eco-friendly options for wrapping paper.",
+      ],
       [
         "Monday, Tuesday, Wednesday and Thursday from 4 p.m. - 5:30 p.m.",
         "Monday, Tuesday, Wednesday and Thursday from 4 p.m. to 5:30 p.m.",
@@ -2896,6 +2923,10 @@ const EDITS = {
     ],
     blurb: [
       [
+        "Make eco friendly wrapping paper with paper, paint, and pens at Crafter Dark, and come ready to get a little messy.",
+        "Use paper, paint, and pens to make eco-friendly wrapping paper at Crafter Dark. Come ready to get a little messy.",
+      ],
+      [
         "Bring your non-walking baby to sing, move, and play with caregivers at Los Altos Library.",
         "Babies who aren't walking yet and their caregivers can enjoy songs, movement, and playtime at Los Altos Library.",
       ],
@@ -3294,6 +3325,14 @@ const EDITS = {
     ],
     blurb: [
       [
+        "Spend a Friday evening at SJMA's After Hours program, Maximalist, which is free to attend.",
+        "Spend a Friday evening at Maximalist, a free After Hours program at the San José Museum of Art.",
+      ],
+      [
+        "Tour the museum's galleries with your family on a walk led from a naturalist's perspective, free with museum admission.",
+        "Explore the museum's galleries from a naturalist's perspective on a family tour, free with museum admission.",
+      ],
+      [
         "Browse Saturday-morning stalls of produce, bread, prepared foods and coffee, and catch live music from Tallulah starting at 9:30.",
         "Shop for produce, bread, prepared foods, and coffee on Saturday morning. Live music from Tallulah starts at 9:30 that morning.",
       ],
@@ -3384,6 +3423,18 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        "SJMA's After Hours evening program, titled Maximalist. Free.",
+        "Maximalist is a free After Hours program at the San José Museum of Art.",
+      ],
+      [
+        "A family tour of the museum's galleries led with a naturalist's perspective. Free with Museum admission.",
+        "See the museum's galleries from a naturalist's perspective on a guided family tour. The tour is free with museum admission.",
+      ],
+      [
+        "Live holiday harp music at the museum. Free with Museum admission.",
+        "Hear live holiday harp music at the museum. The concert is free with museum admission.",
+      ],
       [
         'The Town\'s annual winter celebration, with balloon artists, pictures with Santa, and performances by Fisher Middle School Strings and Encore Choir and The Harker School\'s "Downbeat" Choir.',
         "The town's annual winter celebration features balloon artists and pictures with Santa. Fisher Middle School's Chamber Strings and Encore will perform, along with The Harker School's Downbeat Show Choir.",
@@ -3734,6 +3785,10 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        /^What is Co ?Co\? Consent is present in all relationships, interactions, and situations\./gi,
+        "The workshop explores how consent applies in all relationships, interactions, and situations.",
+      ],
       ["Abstract Future society needs a sustainable energy supply", "Future society needs a sustainable energy supply"],
       [
         /Grab a donut and meet the folks from the Office for Military-Affiliated Communities\s*[-–—]\s*no agendas, just conversation\./g,
