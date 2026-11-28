@@ -73,7 +73,7 @@ import {
 import { stripHtml } from "./lib/event-html.mjs";
 import { paloAltoPlayersTicketSource, paloAltoPlayersOccurrence } from "./lib/palo-alto-players-events.mjs";
 import { fetchMhpItems, MHP_CALENDAR_URL } from "./lib/mexican-heritage-plaza-events.mjs";
-import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
+import { applyVerifiedEventFacts, isVerifiedExhibitReopening } from "../src/lib/south-bay/eventSourceFacts.mjs";
 import { normalizeAbsoluteHttpUrl } from "../src/lib/south-bay/httpUrl.mjs";
 import { isTitleOnlyDescription } from "../src/lib/south-bay/eventCopyEdits.mjs";
 import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjDateRange, parseHistorySjLocation } from "./lib/history-sj.mjs";
@@ -11091,7 +11091,7 @@ export function deduplicateSameDaySports(events) {
   });
 }
 
-export function capUpcomingEventSources(events) {
+export function capUpcomingEventSources(events, today = todayPT()) {
   // Count the same Ticketmaster copies the final feed will keep. Timed-entry
   // listings can share one date, title and booking URL across dozens of API
   // rows. Counting those copies before dedup erased later shows and games.
@@ -11112,7 +11112,10 @@ export function capUpcomingEventSources(events) {
     if (source === "Ticketmaster" && hasVerifiedEventShowtime(event)) return true;
     const count = (sourceCounts.get(source) ?? 0) + 1;
     sourceCounts.set(source, count);
-    return count <= (caps[source] ?? 200);
+    if (count <= (caps[source] ?? 200)) return true;
+    // Stanford's ongoing exhibits ordinarily sort with today's listings.
+    // Keep a verified next visiting date when a closure moves it past the cap.
+    return source === "Stanford Events" && isVerifiedExhibitReopening(event, today);
   });
 }
 
@@ -11670,7 +11673,7 @@ async function main() {
   // instead. Left as-is pending Stephen's call — the fix changes the Events
   // tab's editorial mix (full 14-day SJPL coverage is ~745 events, ~38% of
   // the corpus), which is not an autonomous decision.
-  const capped = capUpcomingEventSources(valid);
+  const capped = capUpcomingEventSources(valid, today);
 
   // Deduplicate by normalized title + date
   // Sports events: deduplicate same-day venue aliases with a verified-time exception.

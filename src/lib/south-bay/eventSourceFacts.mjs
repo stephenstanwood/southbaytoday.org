@@ -8189,6 +8189,11 @@ function thanksgivingExhibitClosure(event) {
   return null;
 }
 
+export function isVerifiedExhibitReopening(event, today) {
+  if (!event?.ongoing || !event.date || event.date <= today) return false;
+  return thanksgivingExhibitClosure({ ...event, date: today })?.nextVisit?.date === event.date;
+}
+
 export function applyVerifiedEventFacts(event) {
   // The market's weekly email can arrive without a link to the operator.
   // https://www.pafarmersmarket.org/

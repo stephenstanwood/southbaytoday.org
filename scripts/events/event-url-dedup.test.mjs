@@ -118,6 +118,22 @@ test("reposted newsletters leave room for a later occurrence under the source ca
   ]);
 });
 
+test("Stanford's source cap keeps an exhibit moved to its verified reopening date", () => {
+  const today = "2026-11-28";
+  const earlier = Array.from({ length: 30 }, (_, index) => ({
+    source: "Stanford Events", date: today, time: "2:00 PM", id: `stanford-${index}`,
+  }));
+  const exhibit = applyVerifiedEventFacts({
+    source: "Stanford Events", date: today, ongoing: true, time: null,
+    url: "https://events.stanford.edu/event/emergent-properties",
+  });
+  assert.equal(exhibit.date, "2026-12-02");
+  const other = { ...exhibit, url: "https://events.stanford.edu/event/another-exhibit" };
+  const entries = [...earlier, other, exhibit];
+  assert.deepEqual(capUpcomingEventSources(entries, today), [...earlier, exhibit]);
+  assert.deepEqual(capUpcomingEventSources(entries, "2026-11-25"), earlier);
+});
+
 test("duplicate ticket listings with different links count as one venue slot", () => {
   const listing = { source: "Ticketmaster", date: "2027-01-27", time: "7:30 PM" };
   const earlier = Array.from({ length: 199 }, (_, i) => ({
