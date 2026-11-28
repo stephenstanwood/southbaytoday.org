@@ -572,7 +572,16 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
           eventId,
         }))
         .filter((c) => c.body);
-      if (others.length === 0) return relabelIfOtherBodyMatches([], recordText);
+      if (others.length === 0) {
+        const verified = relabelIfOtherBodyMatches([], recordText);
+        // Keep a direct citation for a single verified council sitting. A
+        // calendar fallback must not replace a source URL the caller has.
+        if (verified.councilMet && named.length === 1
+            && named[0].sourceUrl !== legistarMeetingUrl(client, dateIso)) {
+          return { ...verified, sourceUrl: named[0].sourceUrl };
+        }
+        return verified;
+      }
       // Name tokens first, then the agenda-item match for records that never
       // name their body; both must beat every rival outright or the council
       // label stands.

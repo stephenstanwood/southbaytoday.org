@@ -875,6 +875,26 @@ test("Legistar verifier separates councilMet:true from an unanswerable check", a
   assert.equal(unreachable, null);
 });
 
+test("Legistar retains the direct agenda when it verifies a single council sitting", async () => {
+  const sourceUrl = "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=4894&GID=693";
+  const council = { EventBodyName: "City Council and Authorities Concurrent", EventId: 4894, EventInSiteURL: sourceUrl };
+  await withStubbedFetch(async () => jsonResponse([council]), async () => {
+    assert.deepEqual(await verifyLegistarBodyOnDate("santaclara", "2026-11-17", "Electric rates"), {
+      body: null, sourceUrl, councilMet: true,
+    });
+    assert.deepEqual(await verifyLegistarBodyOnDate("santaclara", "2026-11-17", "Possible recommendation to the City Council"), {
+      body: null, sourceUrl: null, councilMet: false,
+    });
+  });
+  await withStubbedFetch(async () => jsonResponse([council, {
+    ...council, EventId: 4895, EventInSiteURL: "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=4895&GID=693",
+  }]), async () => {
+    assert.deepEqual(await verifyLegistarBodyOnDate("santaclara", "2026-11-17", "Electric rates"), {
+      body: null, sourceUrl: null, councilMet: true,
+    });
+  });
+});
+
 const fixture = JSON.parse(readFileSync(new URL("./fixtures/san-jose-2026-09-09.json", import.meta.url)));
 
 function stubCalendar(t, eventItems = fixture.eventItems) {
