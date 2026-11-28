@@ -3820,6 +3820,10 @@ const EDITS = {
       ["Day of the Dead Celebrations | Intimate Conversation w/ Rubí Tsanda Huerta.", ""],
       ["Biology Seminar Series", ""],
       [/^Event is in Persian\.$/g, "The talk is in Persian."],
+      [
+        "In 2026 the David Rumsey Map Center celebrates its tenth year—a moment to reflect on how the Center has added value to scholarship on campus and around the world.",
+        "In 2026, the David Rumsey Map Center marks its tenth year by looking back at how it has supported scholarship on campus and around the world.",
+      ],
     ],
     blurb: [
       [
@@ -3858,6 +3862,10 @@ const EDITS = {
       [
         /^Sit in weekly meditation with the Buddhist Community at Stanford, open to all experience levels\.$/g,
         "Join the Buddhist Community at Stanford for a weekly meditation session open to all experience levels.",
+      ],
+      [
+        "Browse the David Rumsey Map Center's decennial exhibit reflecting on ten years of its collections.",
+        "See highlights from the David Rumsey Map Center's collections in a tenth-anniversary exhibit.",
       ],
     ],
   },
