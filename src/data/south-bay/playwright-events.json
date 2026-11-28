@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-28T17:08:00.138Z",
+    "generatedAt": "2026-11-28T18:36:37.786Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 192,
+    "eventCount": 194,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (8)",
@@ -15,7 +15,7 @@
       "Mountain Winery (1)",
       "Children's Discovery Museum (5)",
       "Guadalupe River Park Conservancy (3)",
-      "Santana Row (4)",
+      "Santana Row (6)",
       "City of Cupertino (39)",
       "Opera San José (6)",
       "TheatreWorks Silicon Valley (65)",
@@ -198,8 +198,8 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 4,
-        "liveCount": 4,
+        "count": 6,
+        "liveCount": 6,
         "error": null,
         "sources": [
           "Santana Row"
@@ -996,7 +996,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "DECEMBER 1, 2026  Get in the Spirit of The Row sponsored by Lindeza! Join us for the first 3 Tuesdays in December from 6pm-8pm leading up to Christmas, for a live holiday show featuring local arts and community groups, Snow Showers in Park Valencia, free photos with Santa, balloons, and more.Spirit of The Row Entertainment Line-Up:Tuesday, December 1• San Jose Dance Theater• Greg Farbizio’s Vocal School• Volare Studio• Santa Clara Elite Dance Team• Archbishop Mitty High School• West Valley Dance Company• AoDai Festival• Children’s Musical TheaterTuesday, December 8• The New Ballet• Harker School• The Dance Company of Los Gatos• SheNova x Tingna kpop Dance Group• Sreenidhi Mudigonda• Almaden Spirit Athletics• Grupo Folklorico Los Laureles• Dancyn Studio• Dance Expressions• St Francis High School Dance TeamsTuesday, December 15• Fantasy Dance• Presentation High School Dance Team• NorCal Dance• San Francisco Dance Company• Fusion Dance Company• Greg Farbizio’s Vocal School• Natalie Ramskov",
+      "description": "Get in the Spirit of The Row sponsored by Lindeza! Join us for the first 3 Tuesdays in December from 6pm-8pm leading up to Christmas, for a live holiday show featuring local arts and community groups, Snow Showers in Park Valencia, free photos with Santa, balloons, and more.Spirit of The Row Entertainment Line-Up:Tuesday, December 1• San Jose Dance Theater• Greg Farbizio’s Vocal School• Volare Studio• Santa Clara Elite Dance Team• Archbishop Mitty High School• West Valley Dance Company• AoDai Festival• Children’s Musical TheaterTuesday, December 8• The New Ballet• Harker School• The Dance Company of Los Gatos• SheNova x Tingna kpop Dance Group• Sreenidhi Mudigonda• Almaden Spirit Athletics• Grupo Folklorico Los Laureles• Dancyn Studio• Dance Expressions• St Francis High School Dance TeamsTuesday, December 15• Fantasy Dance• Presentation High School Dance Team• NorCal Dance• San Francisco Dance Company• Fusion Dance Company• Greg Farbizio’s Vocal School• Natalie Ramskov",
       "url": "https://santanarow.com/event/spirit-of-the-row/",
       "source": "Santana Row",
       "kidFriendly": true,
@@ -1004,7 +1004,53 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-28T17:06:54.560Z"
+        "checkedAt": "2026-11-28T18:35:16.234Z"
+      }
+    },
+    {
+      "id": "c5dca7929791",
+      "title": "Spirit of The Row",
+      "date": "2026-12-08",
+      "displayDate": "Tue, Dec 8",
+      "time": "6:00 PM",
+      "endTime": "8:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "Get in the Spirit of The Row sponsored by Lindeza! Join us for the first 3 Tuesdays in December from 6pm-8pm leading up to Christmas, for a live holiday show featuring local arts and community groups, Snow Showers in Park Valencia, free photos with Santa, balloons, and more.Spirit of The Row Entertainment Line-Up:Tuesday, December 1• San Jose Dance Theater• Greg Farbizio’s Vocal School• Volare Studio• Santa Clara Elite Dance Team• Archbishop Mitty High School• West Valley Dance Company• AoDai Festival• Children’s Musical TheaterTuesday, December 8• The New Ballet• Harker School• The Dance Company of Los Gatos• SheNova x Tingna kpop Dance Group• Sreenidhi Mudigonda• Almaden Spirit Athletics• Grupo Folklorico Los Laureles• Dancyn Studio• Dance Expressions• St Francis High School Dance TeamsTuesday, December 15• Fantasy Dance• Presentation High School Dance Team• NorCal Dance• San Francisco Dance Company• Fusion Dance Company• Greg Farbizio’s Vocal School• Natalie Ramskov",
+      "url": "https://santanarow.com/event/spirit-of-the-row/",
+      "source": "Santana Row",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-12-08",
+        "checkedAt": "2026-11-28T18:35:16.235Z"
+      }
+    },
+    {
+      "id": "08501729ca98",
+      "title": "Spirit of The Row",
+      "date": "2026-12-15",
+      "displayDate": "Tue, Dec 15",
+      "time": "6:00 PM",
+      "endTime": "8:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "Get in the Spirit of The Row sponsored by Lindeza! Join us for the first 3 Tuesdays in December from 6pm-8pm leading up to Christmas, for a live holiday show featuring local arts and community groups, Snow Showers in Park Valencia, free photos with Santa, balloons, and more.Spirit of The Row Entertainment Line-Up:Tuesday, December 1• San Jose Dance Theater• Greg Farbizio’s Vocal School• Volare Studio• Santa Clara Elite Dance Team• Archbishop Mitty High School• West Valley Dance Company• AoDai Festival• Children’s Musical TheaterTuesday, December 8• The New Ballet• Harker School• The Dance Company of Los Gatos• SheNova x Tingna kpop Dance Group• Sreenidhi Mudigonda• Almaden Spirit Athletics• Grupo Folklorico Los Laureles• Dancyn Studio• Dance Expressions• St Francis High School Dance TeamsTuesday, December 15• Fantasy Dance• Presentation High School Dance Team• NorCal Dance• San Francisco Dance Company• Fusion Dance Company• Greg Farbizio’s Vocal School• Natalie Ramskov",
+      "url": "https://santanarow.com/event/spirit-of-the-row/",
+      "source": "Santana Row",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-12-15",
+        "checkedAt": "2026-11-28T18:35:16.235Z"
       }
     },
     {
@@ -1027,7 +1073,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-28T17:06:54.561Z"
+        "checkedAt": "2026-11-28T18:35:16.235Z"
       }
     },
     {
@@ -1050,7 +1096,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-28T17:06:54.562Z"
+        "checkedAt": "2026-11-28T18:35:16.237Z"
       }
     },
     {
@@ -1073,7 +1119,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-28T17:06:54.563Z"
+        "checkedAt": "2026-11-28T18:35:16.237Z"
       }
     },
     {
@@ -1795,7 +1841,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1812,7 +1858,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic-6",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1829,7 +1875,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1846,7 +1892,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic-7",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3011,7 +3057,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.326Z"
+        "checkedAt": "2026-11-28T18:35:55.035Z"
       }
     },
     {
@@ -3052,7 +3098,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.326Z"
+        "checkedAt": "2026-11-28T18:35:55.035Z"
       }
     },
     {
@@ -3076,7 +3122,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.326Z"
+        "checkedAt": "2026-11-28T18:35:55.036Z"
       }
     },
     {
@@ -3100,7 +3146,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.327Z"
+        "checkedAt": "2026-11-28T18:35:55.036Z"
       }
     },
     {
@@ -3124,7 +3170,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.328Z"
+        "checkedAt": "2026-11-28T18:35:55.037Z"
       }
     },
     {
@@ -3148,7 +3194,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.328Z"
+        "checkedAt": "2026-11-28T18:35:55.037Z"
       }
     },
     {
@@ -3172,7 +3218,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.328Z"
+        "checkedAt": "2026-11-28T18:35:55.038Z"
       }
     },
     {
@@ -3196,7 +3242,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-2",
         "date": "2026-12-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.328Z"
+        "checkedAt": "2026-11-28T18:35:55.038Z"
       }
     },
     {
@@ -3220,7 +3266,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-3",
         "date": "2026-12-30",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.328Z"
+        "checkedAt": "2026-11-28T18:35:55.038Z"
       }
     },
     {
@@ -3244,7 +3290,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-30",
         "date": "2027-01-01",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.328Z"
+        "checkedAt": "2026-11-28T18:35:55.038Z"
       }
     },
     {
@@ -3268,7 +3314,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-31",
         "date": "2027-01-02",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-28T17:07:29.328Z"
+        "checkedAt": "2026-11-28T18:35:55.038Z"
       }
     },
     {
