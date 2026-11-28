@@ -104,6 +104,32 @@ test("Campbell enriches sparse RSS rows from the official occurrence page", asyn
   assert.equal(events[0].occurrenceEvidence.date, date);
 });
 
+test("Campbell classifies the ballet as arts and preserves its online-only fee", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-28T12:00:00Z") });
+  const eventUrl = "https://www.campbellca.gov/Calendar.aspx?EID=4022";
+  const rssUrl = "https://www.campbellca.gov/RSSFeed.aspx?ModID=58&CID=14-Community-Event-Calendar";
+  const rss = `
+    <rss><channel><item>
+      <title>Academy of Classical Ballet - CA presents A Winter Wonderland</title>
+      <link>${eventUrl}</link>
+      <description>You have never experienced a Winter quite like this!</description>
+      <calendarEvent:EventDates>December 12, 2026</calendarEvent:EventDates>
+      <calendarEvent:EventTimes>07:00 PM - 09:00 PM</calendarEvent:EventTimes>
+      <calendarEvent:Location>Heritage Theatre</calendarEvent:Location>
+    </item></channel></rss>
+  `;
+  const detail = `
+    <span itemprop="startDate">2026-12-12T19:00:00</span>
+    <div itemprop="price">$45<br>A $5 internet processing fee is applied to all tickets purchased online.</div>
+  `;
+
+  const events = await withFetchRoutes({ [rssUrl]: rss, [eventUrl]: detail }, () => fetchCampbellEvents());
+  assert.equal(events.length, 1);
+  assert.equal(events[0].category, "arts");
+  assert.equal(events[0].cost, "paid");
+  assert.equal(events[0].costNote, "$45 + $5 online fee");
+});
+
 test("Los Altos History Museum prices open tours and drops closed sessions before truncation", async () => {
   const openDate = dayPT(10);
   const closedDate = dayPT(11);

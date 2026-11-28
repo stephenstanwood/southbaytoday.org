@@ -477,9 +477,12 @@ export function parseCivicPlusEventCost(value) {
     return { cost: null, costNote: null };
   }
   const formatted = Number.isInteger(dollars) ? String(dollars) : dollars.toFixed(2);
+  // A single ticket price followed by an online fee is not a price tier.
+  const onlineFee = /^\$\s*\d+(?:\.\d{1,2})?\.?\s+A\s+\$\s*(\d+(?:\.\d{1,2})?)\s+internet processing fee is applied to all tickets purchased online\.?$/i
+    .exec(text)?.[1];
   return {
     cost: dollars < 25 ? "low" : "paid",
-    costNote: `From $${formatted}`,
+    costNote: onlineFee ? `$${formatted} + $${onlineFee} online fee` : `From $${formatted}`,
   };
 }
 

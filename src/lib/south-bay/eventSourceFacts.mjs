@@ -5606,6 +5606,19 @@ const CORRECTIONS = [
       blurb: "Hear Mozart and Beethoven on violin and fortepiano at this noon concert, followed by coffee and an open house.",
     }),
   },
+  // Campbell publishes the ticket price and online-only fee for both
+  // performances. The theatre's own occurrence pages can omit pricing.
+  // https://campbellca.gov/m/calendar/event/detail/4022
+  // https://campbellca.gov/m/calendar/event/detail/4023
+  ...[
+    ["2026-12-12", "19-00"],
+    ["2026-12-13", "15-00"],
+  ].map(([date, time]) => ({
+    date,
+    url: `https://www.heritagetheatre.org/events/academy-of-classical-ballet-ca-a-winter-wonderland-${date}-${time}`,
+    facts: (event) => event.cost == null && event.costNote == null
+      ? { cost: "paid", costNote: "$45 + $5 online fee" } : {},
+  })),
   // The School of Music lists this as a concert.
   {
     date: "2026-12-02",
@@ -8094,14 +8107,18 @@ function staleEventCopyFor(event) {
   return null;
 }
 
-const stanfordThanksgivingReopening = {
+const thanksgivingMondayVisit = {
   date: "2026-11-30",
   displayDate: "Mon, Nov 30",
 };
+const rumseyDecemberVisit = {
+  date: "2026-12-02",
+  displayDate: "Wed, Dec 2",
+};
 const greenLibraryThanksgivingClosure = ["2026-11-27", "Green Library is closed November 26 and 27 for Thanksgiving."];
 const thompsonGalleryThanksgivingClosure = ["2026-11-27", "Thompson Gallery is closed November 25 through 27."];
-// The optional third field is the start of a closure with a verified November
-// 30 reopening. Include regular weekend closures when choosing the next date.
+// The optional third field marks closures with a verified next visiting date.
+// The fourth field supplies that date when the venue reopens after November 30.
 const EXHIBIT_THANKSGIVING_CLOSURES = new Map([
   // https://www.cdm.org/hours-pricing/
   ["https://www.cdm.org/event/iceless-skating-rink/2026-11-21/",
@@ -8115,9 +8132,14 @@ const EXHIBIT_THANKSGIVING_CLOSURES = new Map([
   ["https://events.stanford.edu/event/electric-contrasts-the-art-of-the-detail-7315",
     ["2026-11-29", "Bowes Art & Architecture Library is closed November 26 through 29.", "2026-11-26"]],
   ["https://events.stanford.edu/event/korean-indigenous-futures",
-    ["2026-11-29", "East Asia Library is closed November 26 through 29."]],
+    ["2026-11-29", "East Asia Library is closed November 26 through 29.", "2026-11-26"]],
+  // https://library-hours.stanford.edu/libraries.json?from=2026-11-26&to=2026-12-05
   ["https://events.stanford.edu/event/emergent-properties",
-    ["2026-11-27", "The Map Center has drop-in hours November 25 from 1 to 5 PM and is closed November 26 and 27."]],
+    ["2026-12-01", "The Map Center's next drop-in hours are December 2 from 1 to 5 PM.", "2026-11-26", rumseyDecemberVisit]],
+  // https://library.sjsu.edu/sjsu-special-collections
+  // https://library.sjsu.edu/library-hours/library-hours
+  ["https://events.sjsu.edu/event/something-sensational",
+    ["2026-11-29", "The Special Collections reading room has no drop-in hours November 26 through 29.", "2026-11-26"]],
   ["https://events.stanford.edu/event/text-machines-scarlet-thread-of-the-digital-order-1883-2026", greenLibraryThanksgivingClosure],
   ["https://events.stanford.edu/event/a-vision-of-paris-the-roxane-debuisson-collection-at-stanford", greenLibraryThanksgivingClosure],
   ["https://events.stanford.edu/event/branner-library-book-map-exhibit-water",
@@ -8137,11 +8159,11 @@ function thanksgivingExhibitClosure(event) {
 
   const closure = EXHIBIT_THANKSGIVING_CLOSURES.get(event.url);
   if (closure) {
-    const [through, note, closedFrom] = closure;
+    const [through, note, closedFrom, nextVisit = thanksgivingMondayVisit] = closure;
     // Ongoing rows often use the refresh date. A known closure must also
     // change the date that day plans and weekend filters use.
-    if (closedFrom && event.date >= closedFrom && event.date <= stanfordThanksgivingReopening.date) {
-      return { note, nextVisit: stanfordThanksgivingReopening };
+    if (closedFrom && event.date >= closedFrom && event.date <= nextVisit.date) {
+      return { note, nextVisit };
     }
     return event.date >= "2026-11-24" && event.date <= through ? { note } : null;
   }
@@ -8437,7 +8459,7 @@ export function applyVerifiedEventFacts(event) {
   // replace a later sold-out, closed or organizer-confirmation message.
   for (const note of [
     correction?.appendAttendanceNote, closure?.note,
-    closure?.nextVisit ? "Visits resume Monday, November 30." : null,
+    closure?.nextVisit === thanksgivingMondayVisit ? "Visits resume Monday, November 30." : null,
   ]) {
     if (!note || corrected.attendanceNote?.includes(note)) continue;
     // Replace a saved copy with curly apostrophes before checking for duplicates.

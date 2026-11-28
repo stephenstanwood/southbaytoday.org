@@ -691,11 +691,45 @@ test("East Asia Library exhibit identifies both visitor entry and Thanksgiving c
   const reviewed = applyVerifiedEventFacts(exhibit);
   assert.equal(reviewed.attendanceNote, `${access} ${closure}`);
   assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
-  assert.equal(applyVerifiedEventFacts({ ...exhibit, date: "2026-11-29" }).attendanceNote, `${access} ${closure}`);
-  assert.equal(applyVerifiedEventFacts({ ...exhibit, date: "2026-11-30" }).attendanceNote, access);
+  const reopened = applyVerifiedEventFacts({ ...exhibit, date: "2026-11-29" });
+  assert.equal(reopened.date, "2026-11-30");
+  assert.equal(reopened.displayDate, "Mon, Nov 30");
+  assert.equal(reopened.attendanceNote, `${access} ${closure} Visits resume Monday, November 30.`);
+  assert.deepEqual(applyVerifiedEventFacts(reopened), reopened);
+  assert.equal(applyVerifiedEventFacts({ ...exhibit, date: "2026-12-01" }).attendanceNote, access);
   for (const other of [{ ...exhibit, virtual: true }, { ...exhibit, date: "2026-12-12" }]) {
     assert.deepEqual(applyVerifiedEventFacts(other), other);
   }
+});
+
+test("library exhibits skip Thanksgiving weekend when their rooms are closed", () => {
+  const exhibits = [
+    ["https://events.sjsu.edu/event/something-sensational", "2026-11-30", "Mon, Nov 30", /Monday through Wednesday/],
+    ["https://events.stanford.edu/event/emergent-properties", "2026-12-02", "Wed, Dec 2", /December 2 from 1 to 5 PM/],
+  ];
+  for (const [url, date, displayDate, note] of exhibits) {
+    const event = { url, date: "2026-11-28", ongoing: true, time: null };
+    const fixed = applyVerifiedEventFacts(event);
+    assert.equal(fixed.date, date);
+    assert.equal(fixed.displayDate, displayDate);
+    assert.match(fixed.attendanceNote, note);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  }
+});
+
+test("Campbell's ballet price fills a missing theatre offer and preserves a published price", () => {
+  const event = {
+    date: "2026-12-13",
+    url: "https://www.heritagetheatre.org/events/academy-of-classical-ballet-ca-a-winter-wonderland-2026-12-13-15-00",
+    cost: null,
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.deepEqual(fixed, { ...event, cost: "paid", costNote: "$45 + $5 online fee" });
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const updated = { ...event, cost: "paid", costNote: "From $49" };
+  assert.deepEqual(applyVerifiedEventFacts(updated), updated);
+  const other = { ...event, date: "2026-12-14" };
+  assert.deepEqual(applyVerifiedEventFacts(other), other);
 });
 
 test("California Current and Patty Chang use the museums' free admission", () => {

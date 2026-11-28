@@ -3763,7 +3763,7 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (/^holiday\s+(?:market(?:place)?|bazaar)(?:\s*[-–—:]\s*(?:indoor\s+)?(?:handmade\s+)?craft fair)?$/.test(titleLower.trim())) return "market";
   // A ballet company's production remains performing arts even when its
   // title or score contains "symphony" (Nutcracker: Symphony of Lights).
-  if (/\bballet\s+(?:presents|performs)\b/.test(titleLower)) return "arts";
+  if (/\bballet(?:\s*[-–—]\s*ca)?\s+(?:presents|performs)\b/.test(titleLower)) return "arts";
   // A play can mention kids or childhood without being children's programming.
   // Preserve explicitly named children's theater productions as family events.
   if (/\bstaged\s+reading\b/.test(titleLower)
