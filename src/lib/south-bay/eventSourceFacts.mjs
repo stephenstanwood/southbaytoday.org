@@ -2902,7 +2902,7 @@ const CORRECTIONS = [
     } : {},
   },
   {
-    // The museum lists paid tickets and separates check-in from painting.
+    // The museum lists $40 member admission and $50 nonmember admission beginning November 28.
     date: "2026-12-04",
     url: "https://www.tritonmuseum.org/courses/create-with-the-curator-paint-night-at-the-triton",
     aliasUrls: [
@@ -2914,9 +2914,13 @@ const CORRECTIONS = [
       venue: "Triton Museum of Art",
       address: "1505 Warburton Avenue, Santa Clara, CA 95050",
       cost: "paid",
-      costNote: "$40–$50",
+      costNote: "$40 members · $50 nonmembers after Nov 27",
       registration: REGISTRATION_REQUIRED,
     },
+    copyReplacements: [[
+      /Tickets are \$40[-–]\$50 and sales end December 3 or when sold out\./i,
+      "Tickets are $40 for museum members and $50 for nonmembers from November 28. Sales end December 3 or when sold out.",
+    ]],
   },
   {
     // Stanford's game-specific ticket page confirms paid admission and the venue address.
