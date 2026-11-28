@@ -338,7 +338,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     kidFriendly: true,
     description:
       "Outdoor farmers' market on Santana Row every Wednesday evening with organic produce, local cheeses, breads, flowers, and prepared foods.",
-    url: "https://santanarow.com/event/farmers-market/",
+    url: "https://www.cafarmersmkts.com/santanarow-farmers-market",
     emoji: "🥬",
   },
   {
