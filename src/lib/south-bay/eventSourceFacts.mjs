@@ -7963,6 +7963,33 @@ const CORRECTIONS = [
       blurb: "Make bug headbands at this week's drop-in craft session; supplies are limited, first come, first served.",
     },
   },
+  // The museum's December calendar supplies the missing admission and tour
+  // terms. Keep the corrected link even when the original newsletter reruns.
+  {
+    date: "2026-12-09",
+    url: "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist",
+    aliasUrls: ["https://sjmusart.org/walk-naturalist-december-2026"],
+    facts: (event) => ({
+      ...(event.title === "Walk with a Naturalist Family Tour" ? { title: "Walk with a Naturalist" } : {}),
+      ...(event.time === "12:30 PM" && event.endTime == null ? { endTime: "1:30 PM" } : {}),
+      ...(event.cost == null ? { cost: "paid", costNote: "Tour included with museum admission" } : {}),
+    }),
+    appendAttendanceNote: "Meet in the first-floor lobby. Advance registration is recommended. Walk-ins are welcome if space is available. The tour is limited to 20 people.",
+  },
+  {
+    date: "2026-12-18",
+    url: "https://sjmusart.org/event/after-hours-maximalist",
+    facts: (event) => event.cost == null ? { cost: "free" } : {},
+  },
+  {
+    date: "2026-12-19",
+    url: "https://sjmusart.org/event/holiday-harp-concert-2026",
+    aliasUrls: ["https://sjmusart.org/event/holiday-harps-2026"],
+    facts: (event) => ({
+      url: "https://sjmusart.org/event/holiday-harp-concert-2026",
+      ...(event.cost == null ? { cost: "paid", costNote: "Concert included with museum admission" } : {}),
+    }),
+  },
   // October 2 growth review: the SJMA browser snapshot put calendar dates in
   // `time` and defaulted every listing to paid. The direct adapter remains
   // retired; these bounded corrections use the museum's published detail

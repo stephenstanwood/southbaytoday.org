@@ -289,6 +289,48 @@ test("King Library Music and Movement uses the published program finish", () => 
   assert.equal(applyVerifiedEventFacts(changedSlot), changedSlot);
 });
 
+test("December museum listings preserve verified admission, the tour finish, and the harp concert link", () => {
+  const tour = {
+    date: "2026-12-09",
+    title: "Walk with a Naturalist Family Tour",
+    url: "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist",
+    time: "12:30 PM",
+    endTime: null,
+    cost: null,
+  };
+  const maximalist = {
+    date: "2026-12-18",
+    url: "https://sjmusart.org/event/after-hours-maximalist",
+    cost: null,
+  };
+  const concert = {
+    date: "2026-12-19",
+    url: "https://sjmusart.org/event/holiday-harps-2026",
+    time: "2:00 PM",
+    cost: null,
+  };
+
+  const reviewedTour = applyVerifiedEventFacts(tour);
+  assert.equal(reviewedTour.title, "Walk with a Naturalist");
+  assert.equal(reviewedTour.endTime, "1:30 PM");
+  assert.equal(reviewedTour.cost, "paid");
+  assert.match(reviewedTour.attendanceNote, /Walk-ins are welcome if space is available/);
+  assert.equal(applyVerifiedEventFacts({ ...tour, endTime: "1:45 PM" }).endTime, "1:45 PM");
+  assert.equal(applyVerifiedEventFacts(maximalist).cost, "free");
+  assert.equal(applyVerifiedEventFacts({ ...maximalist, cost: "paid" }).cost, "paid");
+
+  const reviewedConcert = applyVerifiedEventFacts(concert);
+  assert.equal(reviewedConcert.url, "https://sjmusart.org/event/holiday-harp-concert-2026");
+  assert.equal(reviewedConcert.time, "2:00 PM");
+  assert.equal(reviewedConcert.cost, "paid");
+  for (const event of [tour, maximalist, concert]) {
+    const reviewed = applyVerifiedEventFacts(event);
+    assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+    const otherDate = { ...event, date: "2027-01-13" };
+    assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+  }
+});
+
 test("Joseph uses the production page while keeping both dated Saturday performances", () => {
   const base = {
     title: "Joseph",
