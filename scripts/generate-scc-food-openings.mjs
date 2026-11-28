@@ -255,6 +255,12 @@ const BLURB_OVERRIDES = {
 const SOURCE_ID_SKIP = new Set([
   // Tenant improvements at operating businesses. Match the permit IDs so a
   // separate opening at another branch remains eligible.
+  // County inspections show the diner was already operating at this address.
+  // https://eservices.sccgov.org/FacilityInspection/Home/ShowDetail/PR0303560
+  "SR0886460",
+  // County records identify this café rework address as Apple IL-4.
+  // https://data.sccgov.org/resource/skd7-7ix3.json?record_id=SR0845400
+  "SR0884416",
   "SR0885671", // https://www.bcmidtown.com/location/the-breakfast-club-at-midtown-san-jose/
   "SR0885984", // https://www.umetea.com/en/stores (2215 The Alameda)
   "SR0886043", // https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DAI7XMYNU.pdf
