@@ -260,6 +260,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-27-library-and-event-wording.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-27-library-activity-copy.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-27-girl-scout-activities.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-27-doctor-atomic.json", import.meta.url))));
 
 test("library copy repairs preserve revised contacts and publisher scope", () => {
   for (const row of november24LibraryFixture.cases) {
@@ -651,7 +652,7 @@ test("November 15 evening copy repairs preserve source updates and publisher sco
     };
     const untouched = structuredClone(original);
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) });
+    assert.deepEqual(next, { ...original, [row.field]: revise(latestReviewedCopy(row)) });
     assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
     assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
     assert.deepEqual(polishReviewedEventCopy(next), next);
@@ -666,15 +667,17 @@ test("November 15 evening copy repairs preserve source updates and publisher sco
 test("Doctor Atomic drops its clipped preview sentence but preserves an expanded source", () => {
   const row = november15EveningFixture.cases.find(candidate => candidate.source === "Opera San José");
   const raw = november15EveningFixture.operaPreview;
+  const reviewed = latestReviewedCopy(row);
   const publish = description => polishReviewedEventCopy({ source: row.source, description: polishDescription(description) }).description;
-  assert.equal(publish(raw), row.reviewed);
-  assert.equal(publish(row.refreshed), row.reviewed);
+  assert.equal(publish(raw), reviewed);
+  assert.equal(publish(row.refreshed), reviewed);
   const complete = raw.replace("unprecedented destructive […]", "unprecedented destructive power.");
   const normalized = polishDescription(complete);
   assert.match(normalized, /J\. Robert Oppenheimer and his team/);
-  assert.equal(publish(complete), normalized);
+  assert.equal(publish(complete), normalized.replace(row.reviewed, reviewed));
   const laterInstructions = `${row.refreshed} Tickets $45; register at https://example.org/updated.`;
-  assert.equal(polishReviewedEventCopy({ source: row.source, description: laterInstructions }).description, laterInstructions);
+  assert.equal(polishReviewedEventCopy({ source: row.source, description: laterInstructions }).description,
+    laterInstructions.replace(row.reviewed, reviewed));
 });
 
 test("November 14 night copy repairs preserve revised source facts and publisher scope", () => {

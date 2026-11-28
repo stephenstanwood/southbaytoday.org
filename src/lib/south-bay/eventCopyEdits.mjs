@@ -3984,6 +3984,10 @@ const EDITS = {
       // cleanup strands its preceding initial; remove only that unfinished
       // suffix, leaving complete or newly expanded source wording intact.
       [/(\.) Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high[\u00ad-]?stakes days when J\.$/g, "$1"],
+      [
+        "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey.",
+        "General Director Shawna Lucey leads a new production of John Adams's Doctor Atomic at the California Theatre.",
+      ],
     ],
     blurb: [
       ["Watch Opera San Jose's production of Fiddler on the Roof", "Watch Opera San José's production of Fiddler on the Roof"],
