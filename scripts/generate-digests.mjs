@@ -114,8 +114,8 @@ const CITIES = [
       date: "2026-11-23",
       body: "Stevens Creek Corridor Steering Committee",
       sourceUrl: "https://santaclara.legistar.com/MeetingDetail.aspx?GUID=FBD5E81A-9346-48DB-A993-408148C523D4&ID=1462004&Options=info%7C&Search=",
-      summary: "The November 23 agenda listed the meeting in the Council Chambers at San José City Hall (200 E Santa Clara St.) " +
-        "and offered a Zoom webinar for remote participation with advance registration. " +
+      summary: "The November 23 agenda listed the Council Chambers at San José City Hall (200 E Santa Clara St.) as the meeting location. " +
+        "Remote attendees needed to register in advance to join the Zoom webinar. " +
         "The committee oversees a joint transportation study by San José, Santa Clara, Cupertino, Santa Clara County, and VTA.",
     } },
   // Milpitas + Palo Alto digests stall when Stoa lacks full agenda text: recent

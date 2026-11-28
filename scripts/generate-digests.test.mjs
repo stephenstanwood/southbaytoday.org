@@ -224,7 +224,7 @@ test("Santa Clara regeneration preserves the November 23 venue and remote option
   assert.equal(card.body, "Stevens Creek Corridor Steering Committee");
   assert.equal(card.carriedForward, undefined);
   assert.match(card.summary, /Council Chambers at San José City Hall \(200 E Santa Clara St\.\)/);
-  assert.match(card.summary, /Zoom webinar for remote participation with advance registration/);
+  assert.match(card.summary, /Remote attendees needed to register in advance to join the Zoom webinar/);
   assert.doesNotMatch(card.summary, /held over a Zoom webinar/);
   assert.equal(new URL(card.sourceUrl).searchParams.get("ID"), "1462004");
   assert.match(log, /digest-cache.+santa-clara.+reused result/);

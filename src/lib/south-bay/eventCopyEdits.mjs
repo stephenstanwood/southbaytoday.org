@@ -128,6 +128,18 @@ const EDITS = {
       ["Lasers: Kpop Demon Hunters", "Lasers: K-Pop Demon Hunters"],
     ],
     description: [
+      [
+        "Then they explore properties of density and use them to blow up a balloon without breath and make their own lava lamp.",
+        "Then they explore density. They inflate a balloon without blowing into it and make their own lava lamp.",
+      ],
+      [
+        "Finally, Brownies will learn how science can be used to make toys and make their very own silly putty!",
+        "Finally, Brownies learn how science can be used to make toys. They also make their own silly putty.",
+      ],
+      [
+        "Next, they learn about & practice codes and fingerprinting.",
+        "Next, they learn how codes and fingerprinting work, then practice using codes and taking fingerprints.",
+      ],
       ["Don't just dream of a winter wonderland, create your own.", "Don't just dream of a winter wonderland. Create your own."],
       [
         /Price: (\$\d+(?:\.\d{2})?) members, (\$\d+(?:\.\d{2})?) non-members General Admission not included, but required for entry\. Workshop ticket required for anyone entering\./gi,
@@ -145,6 +157,10 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        "Sketch a \"suspect\" from a key witness's description, then practice forensic drawing, codes, and fingerprinting as a Junior or Cadette Girl Scout.",
+        "Sketch a \"suspect\" from a key witness's description. Then use codes and take fingerprints in this workshop for Junior and Cadette Girl Scouts.",
+      ],
       [
         "Taste a bite-sized, sphere-shaped take on holiday feast leftovers at a hands-on food science session built for friends and family.",
         "Use molecular gastronomy to turn holiday-inspired flavors into bite-sized spheres in a hands-on workshop for friends and family.",
