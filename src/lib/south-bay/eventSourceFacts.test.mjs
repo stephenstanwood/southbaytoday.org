@@ -289,6 +289,49 @@ test("King Library Music and Movement uses the published program finish", () => 
   assert.equal(applyVerifiedEventFacts(changedSlot), changedSlot);
 });
 
+test("verified signup instructions survive event refresh without overriding current booking states", () => {
+  const workshop = {
+    date: "2026-11-30",
+    url: "https://events.stanford.edu/event/learn-about-consent-communication-coco-free-boba",
+  };
+  const studio = {
+    date: "2026-12-02",
+    url: "https://sjpl.bibliocommons.com/events/6927797a0886c5530056c25c",
+    description: "In-person sign-up starts at 3:45 p.m. on the day of the event. The first five teens are guaranteed a spot.",
+  };
+  const craft = {
+    date: "2026-12-16",
+    url: "https://sccl.bibliocommons.com/events/6b0b12b6be13a7003363d0d4",
+    venue: "Campbell Library",
+    address: "",
+    registration: "required",
+    registrationClosesBy: "2026-12-17T02:30:00.000Z",
+  };
+  const reviewedWorkshop = applyVerifiedEventFacts(workshop);
+  assert.match(reviewedWorkshop.attendanceNote, /RSVP is optional.*if space is available/);
+  const closedWorkshop = { ...workshop, registration: "closed" };
+  assert.equal(applyVerifiedEventFacts(closedWorkshop), closedWorkshop);
+
+  const reviewedStudio = applyVerifiedEventFacts(studio);
+  assert.equal(reviewedStudio.attendanceNote, studio.description);
+  const updatedStudio = { ...studio, description: studio.description.replace("3:45", "4:00") };
+  assert.equal(applyVerifiedEventFacts(updatedStudio), updatedStudio);
+
+  const reviewedCraft = applyVerifiedEventFacts(craft);
+  assert.equal(reviewedCraft.address, "77 Harrison Ave, Campbell, CA 95008");
+  assert.match(reviewedCraft.attendanceNote, /opens December 2 at 6:30 PM/);
+  assert.equal(reviewedCraft.registrationClosesBy, craft.registrationClosesBy);
+  const closedCraft = { ...craft, registration: "full", address: "Address supplied by organizer" };
+  assert.equal(applyVerifiedEventFacts(closedCraft).registration, closedCraft.registration);
+  assert.equal(applyVerifiedEventFacts(closedCraft).address, closedCraft.address);
+
+  for (const reviewed of [reviewedWorkshop, reviewedStudio, reviewedCraft]) {
+    assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+    const otherDate = { ...reviewed, date: "2027-01-13", attendanceNote: undefined };
+    assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+  }
+});
+
 test("December museum listings preserve verified admission, the tour finish, and the harp concert link", () => {
   const tour = {
     date: "2026-12-09",

@@ -7963,6 +7963,32 @@ const CORRECTIONS = [
       blurb: "Make bug headbands at this week's drop-in craft session; supplies are limited, first come, first served.",
     },
   },
+  // Stanford's public RSVP says all are welcome and drop-ins depend on space.
+  // https://events.stanford.edu/event/learn-about-consent-communication-coco-free-boba
+  {
+    date: "2026-11-30",
+    matches: event => event.url === "https://events.stanford.edu/event/learn-about-consent-communication-coco-free-boba"
+      && (event.registration == null || event.registration === REGISTRATION_NONE),
+    appendAttendanceNote: "RSVP is optional. Drop-ins are welcome if space is available.",
+  },
+  // The library's exact TeenHQ listing gives an earlier, in-person sign-up.
+  // https://sjpl.bibliocommons.com/v2/events/6927797a0886c5530056c25c
+  {
+    date: "2026-12-02",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6927797a0886c5530056c25c\/?$/.test(event.url || "")
+      && /\bin-person sign[- ]up starts at 3:45 p\.m\./i.test(event.description || "")
+      && /\bthe first five teens are guaranteed a spot\b/i.test(event.description || ""),
+    appendAttendanceNote: "In-person sign-up starts at 3:45 p.m. on the day of the event. The first five teens are guaranteed a spot.",
+  },
+  // The dated SCCLD event page supplies the signup opening and branch address.
+  {
+    date: "2026-12-16",
+    url: "https://sccl.bibliocommons.com/v2/events/6b0b12b6be13a7003363d0d4",
+    aliasUrls: ["https://sccl.bibliocommons.com/events/6b0b12b6be13a7003363d0d4"],
+    facts: event => !event.address && event.venue === "Campbell Library"
+      ? { address: "77 Harrison Ave, Campbell, CA 95008" } : {},
+    appendAttendanceNote: "Registration opens December 2 at 6:30 PM.",
+  },
   // The museum's December calendar supplies the missing admission and tour
   // terms. Keep the corrected link even when the original newsletter reruns.
   {
