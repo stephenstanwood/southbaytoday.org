@@ -57,14 +57,14 @@ function formatAddress(raw) {
 export function cleanDescription(raw, workType, subtype) {
   if (!raw) return workType ?? "";
   let s = raw.trim();
-  // Strip the below-market-rate flag San José appends to affordable filings.
-  // The feed has used BEMP, BEPM, and the shortened BEM spelling for this
-  // below-market-rate flag. Keep all three out of reader-facing project names.
-  s = s.replace(/\((?:BEMP|BEPM|BEM)\s*\d+%\)\s*/gi, "");
+  // Omit the city's plan-review codes from reader-facing project names.
+  s = s.replace(/\((?:BEMP|BEPM|BEM|BEP)\s*\d+%\)\s*/gi, "");
   // Strip "(STAR)" flag
   s = s.replace(/\(STAR\)\s*/gi, "");
   // Strip "(B)" or "(E)" standalone flags
   s = s.replace(/^\([A-Z]\)\s*/, "");
+  // SRP identifies San José's Streamlined Restaurant Program.
+  if (subtype?.trim().toLowerCase() === "restaurant") s = s.replace(/^SRP\b\s*/i, "");
   // Strip "UNOCCUPIED" standalone
   s = s.replace(/^UNOCCUPIED\s*/i, "");
   // San Jose sometimes truncates the redundant "Finish Interior" work-type
@@ -89,7 +89,7 @@ export function cleanDescription(raw, workType, subtype) {
     // the same shape as ADU/SFR and just as unreadable title-cased ("Mf ADU
     // Unit 10", "Comm Hill 3.2 New Sfd").
     .replace(/\b(Adu|Adus|Jadu|Ti|Sfr|Sfd|Mf|Du|Hvac|Pld)\b/g, (m) => m.toUpperCase())
-    .replace(/\bAdu's\b/g, "ADU's")
+    .replace(/(?<=\p{L})(['’])S\b/gu, "$1s")
     // Restore the single-letter block/phase/building designation the small-word
     // rule above downcases. "Block A Family Affordable Apts" is a phase name,
     // not an article, and "Block a Family…" reads as a verb phrase.
@@ -97,6 +97,7 @@ export function cleanDescription(raw, workType, subtype) {
     // KB Home files hundreds of San José tract permits under its own name; the
     // generic title-case turns the brand into "Kb Home".
     .replace(/\bKb Home\b/g, "KB Home")
+    .replace(/\bLattice Semi-Conductor Corp\b/g, "Lattice Semiconductor Corp")
     .replace(/^(\w)/, (c) => c.toUpperCase());
 }
 

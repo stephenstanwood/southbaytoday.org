@@ -193,6 +193,14 @@ test("permit descriptions strip feed flags and keep permit acronyms", () => {
   assert.equal(cleanPermitDescription("(BEPM100%) Example", "New Construction", "Apartments"), "Example");
   assert.equal(cleanPermitDescription("(BEM100%) Teresa Attorney Office FI", "Finish Interior", "Office"), "Teresa Attorney Office");
   assert.equal(cleanPermitDescription("JADU", "New Construction", "ADU"), "JADU");
+  assert.equal(
+    cleanPermitDescription("SRP (BEP100%) MARIANNE'S ICE CREAM", "Tenant Improvement", "Restaurant"),
+    "Marianne's Ice Cream",
+  );
+  assert.equal(
+    cleanPermitDescription("LATTICE SEMI-CONDUCTOR CORP (BEPM 100%) TENANT IMPROVEMENT", "Tenant Improvement", "Office"),
+    "Lattice Semiconductor Corp Tenant Improvement",
+  );
 });
 
 // ---------------------------------------------------------------------------
