@@ -170,7 +170,7 @@ test("a sole proprietor's own name and a multiplex concession never become a res
   }
 });
 
-test("permits for operating food businesses and the Bothaus robotics space stay off the openings feed", () => {
+test("permits for operating food businesses and private facilities stay off the openings feed", () => {
   const records = [
     { record_id: "SR0885671", business_name: "RTI BREAKFAST CLUB AT MIDTOWN", site_location: "1432 W SAN CARLOS STE 80", city: "SAN JOSE" },
     { record_id: "SR0885984", business_name: "RTI UME TEA", site_location: "2215 THE ALAMEDA", city: "SANTA CLARA" },
@@ -182,6 +182,8 @@ test("permits for operating food businesses and the Bothaus robotics space stay 
     { record_id: "SR0886386", business_name: "RTI HL PENINSULA RESTAURANT", site_location: "136 RANCH RD", city: "MILPITAS" },
     { record_id: "SR0886326", business_name: "RTI VARAHI INDIAN CUISINE", site_location: "2095 N CAPITOL AVE SUITE # E", city: "SAN JOSE" },
     { record_id: "SR0884388", business_name: "E-BOTHAUS", site_location: "278 CASTRO ST", city: "MOUNTAIN VIEW" },
+    { record_id: "SR0886460", business_name: "RTI DINER LOS GATOS", site_location: "235 LOS GATOS-SARATOGA RD.", city: "LOS GATOS" },
+    { record_id: "SR0884416", business_name: "E-CAFFE REWORK", site_location: "4 INFINITE LOOP", city: "CUPERTINO" },
   ];
   for (const record of records) assert.equal(shouldSkip(record), true, record.record_id);
   assert.equal(shouldSkip({
