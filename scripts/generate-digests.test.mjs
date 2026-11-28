@@ -377,6 +377,15 @@ test("civic modifiers keep numbers, identifiers, headline dates, and standalone 
   }
 });
 
+test("Saratoga housing appeal keeps reviewed wording when its cached topic returns", () => {
+  const cached = "Public hearing on an appeal of the Planning Commission's denial of a 69-unit project at 14076 Quito Road (55 townhome/condominium units plus 14 attached affordable accessory dwelling units on a 3.85-acre site split into 14 lots); staff recommended upholding the appeal and conditionally approving the project";
+  const reviewed = "The agenda listed a public hearing on the appeal of the Planning Commission's denial of a 69-unit project at 14076 Quito Road. The project would split the 3.85-acre site into 14 lots and add 55 townhome or condominium units and 14 attached affordable accessory dwelling units. Staff recommended upholding the appeal and conditionally approving the project.";
+  const options = { cityId: "saratoga" };
+  assert.equal(polishCivicTopic(cached, options), reviewed);
+  assert.equal(polishCivicTopic(reviewed, options), reviewed);
+  assert.equal(polishCivicTopic(cached.replace("69-unit", "70-unit"), options), cached.replace("69-unit", "70-unit"));
+});
+
 test("Los Gatos digest restores the official name of the 2026 curb maintenance project", () => {
   const topic = "The agenda listed a request to authorize a Certificate of Acceptance and Notice of Completion for the 2026 Annual Curb project.";
   const corrected = polishCivicTopic(topic, { cityId: "los-gatos" });

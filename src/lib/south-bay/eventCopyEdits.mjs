@@ -3278,6 +3278,10 @@ const EDITS = {
     ],
     blurb: [
       [
+        "Browse Saturday-morning stalls of produce, bread, prepared foods and coffee, and catch live music from Tallulah starting at 9:30.",
+        "Shop for produce, bread, prepared foods, and coffee on Saturday morning. Live music from Tallulah starts at 9:30 that morning.",
+      ],
+      [
         "Chant the rhythmic words of Bill Martin Jr.'s book, make animal sounds, and act out the zoo animals at this weekly all-ages storytime.",
         "At this all-ages storytime, chant the rhythmic words of Bill Martin Jr.'s book, make animal sounds, and pretend to be the zoo animals.",
       ],
@@ -3539,6 +3543,14 @@ const EDITS = {
     ],
     description: [
       [
+        "San Jose Open Mic: When is the Open Mic? Second Wednesday of the month with a few exceptions. Please check our website to confirm.",
+        "San Jose Improv usually holds its open mic on the second Wednesday of the month. Check the venue's website to confirm the date.",
+      ],
+      [
+        "By purchasing, you are sharing your contact info and ticket sales data with the NHL and the San Jose Sharks.",
+        "When you buy a ticket, you share your contact information and ticket sales data with the NHL and the San Jose Sharks.",
+      ],
+      [
         /^This event is (\d+) and over\. Any ticket holder unable to present valid identification indicating that they are at least \1 years of age will not be admitted to this event\./g,
         "You must be $1 or older and show valid ID that proves your age to get in.",
       ],
@@ -3554,6 +3566,26 @@ const EDITS = {
       [/\. DO NOT…$/g, "."],
     ],
     blurb: [
+      [
+        "Catch the San Jose Improv open mic on a Wednesday evening; it usually runs the second Wednesday, so check the website first.",
+        "Catch the San Jose Improv open mic, usually held on the second Wednesday evening of the month. Check the venue's website to confirm the date.",
+      ],
+      [
+        "See the San Jose Sharks face the Chicago Blackhawks in NHL hockey at SAP Center.",
+        "See the San Jose Sharks face the Chicago Blackhawks in an NHL game at SAP Center.",
+      ],
+      [
+        "See Lili Michelle perform at San Jose Improv on a Thursday night, with the show starting at 8:00.",
+        "Lili Michelle performs at San Jose Improv on Thursday at 8:00 PM.",
+      ],
+      [
+        "Watch the San Jose Barracuda play the Henderson Silver Knights at Tech CU Arena on a Friday night, starting at 7:00.",
+        "The San Jose Barracuda play the Henderson Silver Knights at Tech CU Arena on Friday at 7:00 PM.",
+      ],
+      [
+        "See Jiaoying Summers perform at San Jose Improv on Friday evening, part of the venue's arts lineup.",
+        "See Jiaoying Summers perform at San Jose Improv on Friday evening.",
+      ],
       ["Watch Shawn Chidiac perform stand-up comedy on his tour at the improv.", "Watch Shawn Chidiac perform stand-up on tour at the San Jose Improv."],
       [
         "See Uncle Lazer perform at San Jose Improv, a live comedy club show on a Sunday evening.",

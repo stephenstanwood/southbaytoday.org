@@ -33,6 +33,10 @@ export function polishCivicModifiers(text, { cityId } = {}) {
       .replace("Neighbor appeal of Rita Court home addition on Planning Commission agenda",
         "Planning Commission agenda lists neighbor's appeal of Rita Court home addition")
       .replace("Nine townhomes proposed on Golden Oak Court single-family lot", "Nine townhomes proposed for a single-family lot on Golden Oak Court")
+      .replace("543-apartment Moffett Park project with 187 affordable units on Humboldt Ct.",
+        "543 apartments proposed on Humboldt Court in Moffett Park, including 187 affordable units")
+      .replace("Cupertino council closed session listed two lawsuits against the city",
+        "Cupertino council agenda lists closed session on two lawsuits against the city")
     : text;
 }
 
@@ -56,6 +60,10 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace("along the western and part of the southern property lines.",
         "along the western property line and part of the southern property line.")
       .replace("E. Homestead Road It would replace", "E. Homestead Road. It would replace")
+      .replace("The November 23 Planning Commission agenda listed, as continued from November 9, a proposal to demolish a vacant commercial building at 855 E. Homestead Road and build a 16,000-square-foot, two-story childcare and preschool for up to 192 children.",
+        "The November 23 Planning Commission agenda listed a proposal carried over from November 9. It calls for demolishing a vacant commercial building at 855 E. Homestead Road and building a 16,000-square-foot, two-story child care and preschool center for up to 192 children.")
+      .replace("The November 17 City Council agenda listed an action to defer consideration of a vesting tentative subdivision map and development agreement for a 590-unit residential project with 15,000 square feet of commercial mixed-use space at 2610 El Camino Real.",
+        "The November 17 City Council agenda listed an item to postpone consideration of a vesting tentative subdivision map and development agreement for a mixed-use project at 2610 El Camino Real. It includes 590 homes and 15,000 square feet of commercial space.")
       .replace("is zoned medium density residential (R-3), and the project would be subdivided into three lots including a common lot.",
         "is zoned medium-density residential (R-3). The proposal would divide the site into three lots, including a common lot.")
       .replace("on a General Plan amendment and rezone for a", "on a General Plan amendment and rezoning for a")
@@ -157,6 +165,9 @@ export function polishCivicTopic(text, options) {
         "Cal Water presentation on water conservation measures and a proposed Transit Signal Priority Policy")
       .replace("S & H Construction, Inc. for the Plaza del Sol Phase II ReBid Project",
         "S & H Construction, Inc., for the Plaza del Sol Phase II ReBid Project");
+  }
+  if (options?.cityId === "saratoga" && copy === "Public hearing on an appeal of the Planning Commission's denial of a 69-unit project at 14076 Quito Road (55 townhome/condominium units plus 14 attached affordable accessory dwelling units on a 3.85-acre site split into 14 lots); staff recommended upholding the appeal and conditionally approving the project") {
+    copy = "The agenda listed a public hearing on the appeal of the Planning Commission's denial of a 69-unit project at 14076 Quito Road. The project would split the 3.85-acre site into 14 lots and add 55 townhome or condominium units and 14 attached affordable accessory dwelling units. Staff recommended upholding the appeal and conditionally approving the project.";
   }
   // The April 21 staff report names the curb, gutter and sidewalk project
   // whose abbreviated title came through the November 17 agenda extract.
