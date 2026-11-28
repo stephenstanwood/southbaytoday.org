@@ -3855,6 +3855,10 @@ const EDITS = {
         "Walk through the indoor and outdoor galleries to see Rodin's sculptures with a guide.",
         "See Rodin's work in the galleries and sculpture garden on a guided tour of Cantor Arts Center.",
       ],
+      [
+        /^Sit in weekly meditation with the Buddhist Community at Stanford, open to all experience levels\.$/g,
+        "Join the Buddhist Community at Stanford for a weekly meditation session open to all experience levels.",
+      ],
     ],
   },
   "NHL": {
