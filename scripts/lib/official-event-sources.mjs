@@ -146,7 +146,7 @@ function normalizeClock(value) {
 /**
  * Santana Row's card date can describe a whole festival, while its body lists
  * different hours for each day. Keep those dated hours together; never give
- * Saturday Friday's first clock or project a range without daily schedules.
+ * Saturday Friday's first clock or project a range without dated schedules.
  */
 export function parseSantanaRowOccurrences(dateText, bodyText) {
   const header = plainText(dateText);
@@ -164,8 +164,10 @@ export function parseSantanaRowOccurrences(dateText, bodyText) {
   // A shared suffix in "5:00–9:00 pm" belongs to both clocks. Matching
   // only fully written clocks used to turn the closing time into the start.
   const startPattern = String.raw`(?:${clockPattern}|\d{1,2}(?::\d{2})?(?=\s*(?:[-–—]|to)\s*${clockPattern}))`;
+  const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const weekdayPattern = weekdays.join("|");
   const schedulePattern = new RegExp(
-    String.raw`\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+(${monthPattern})\s+(\d{1,2})(?:st|nd|rd|th)?(?:,\s*(20\d{2}))?\s*(?:from|at|[|:])?\s*(${startPattern})(?:\s*(?:[-–—]|to)\s*(${clockPattern}))?`,
+    String.raw`\b(${weekdayPattern}),?\s+(${monthPattern})\s+(\d{1,2})(?:st|nd|rd|th)?(?:,\s*(20\d{2}))?\s*(?:from|at|[|:])?\s*(${startPattern})(?:\s*(?:[-–—]|to)\s*(${clockPattern}))?`,
     "gi",
   );
   const matches = [...text.matchAll(schedulePattern)];
@@ -196,7 +198,6 @@ export function parseSantanaRowOccurrences(dateText, bodyText) {
   };
 
   if (matches.length) {
-    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return matches.flatMap((match) => {
       const date = isoDate(Number(match[4] || year), match[2], Number(match[3]));
       if (!date || !validDate(date)) return [];
@@ -212,6 +213,31 @@ export function parseSantanaRowOccurrences(dateText, bodyText) {
   const dateMatch = header.match(new RegExp(String.raw`^(${monthPattern})\s+(\d{1,2})(?:st|nd|rd|th)?\b`, "i"));
   const date = dateMatch ? isoDate(year, dateMatch[1], Number(dateMatch[2])) : null;
   if (!date || !validDate(date)) return [];
+
+  // Some series cards show only the opening date and give shared hours in
+  // prose. Require a dated lineup for each occurrence before using those hours.
+  const sharedSchedule = text.match(new RegExp(
+    String.raw`\bfirst\s+([2-5])\s+(${weekdayPattern})s\s+in\s+(${monthPattern})\s+from\s+(${startPattern})\s*(?:[-–—]|to)\s*(${clockPattern})\b`,
+    "i",
+  ));
+  if (sharedSchedule) {
+    const [, count, weekday, month, start, end] = sharedSchedule;
+    const firstDay = Number(dateMatch[2]);
+    const headerWeekday = weekdays[new Date(`${date}T12:00:00Z`).getUTCDay()];
+    const times = occurrenceClocks(start, end);
+    if (firstDay <= 7 && headerWeekday.toLowerCase() === weekday.toLowerCase()
+        && isoDate(year, month, firstDay) === date && times?.endTime) {
+      // The calendar can join the previous performer's name to the heading.
+      const heading = new RegExp(String.raw`${weekday},\s+${month}\s+(\d{1,2})(?:st|nd|rd|th)?\s*[•:]`, "gi");
+      const listedDays = new Set([...text.matchAll(heading)].map((match) => Number(match[1])));
+      const days = Array.from({ length: Number(count) }, (_, index) => firstDay + index * 7);
+      const dates = days.map((day) => isoDate(year, month, day));
+      if (days.every((day) => listedDays.has(day)) && dates.every(validDate)) {
+        return dates.map((date) => ({ date, ...times }));
+      }
+    }
+  }
+
   const clocks = [...text.matchAll(new RegExp(
     String.raw`\b(${startPattern})(?:\s*(?:[-–—]|to)\s*(${clockPattern}))?\b`, "gi",
   ))];

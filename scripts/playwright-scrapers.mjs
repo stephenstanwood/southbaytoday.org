@@ -1829,7 +1829,7 @@ export async function scrapeGuadalupeRiverPark(page, { today = TODAY } = {}) {
   return correctedEvents;
 }
 
-export async function scrapeSantanaRow(page) {
+export async function scrapeSantanaRow(page, { today = TODAY } = {}) {
   await page.goto("https://www.santanarow.com/events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
   const raw = await page.evaluate(() => {
@@ -1840,15 +1840,19 @@ export async function scrapeSantanaRow(page) {
       const title = a.querySelector("h1,h2,h3,.title")?.textContent?.replace(/\s+/g, " ").trim();
       const date = a.querySelector(".date")?.textContent?.replace(/\s+/g, " ").trim();
       if (!title || !date) continue;
-      out.push({ title, date, link: a.href, text });
+      const excerpt = a.querySelector(".excerpt")?.innerText?.replace(/\s+/g, " ").trim();
+      out.push({ title, date, link: a.href, text, excerpt });
     }
     return out;
   });
   return raw.flatMap((r) => {
     if (!isUsefulTitle(r.title) || /work on the row/i.test(r.title)) return [];
-    const description = r.text.replace(r.date, "").replace(r.title, "").replace(/\s*Learn More\s*$/i, "").trim();
-    return parseSantanaRowOccurrences(r.date, r.text)
-      .filter((occurrence) => occurrence.date >= TODAY)
+    const occurrences = parseSantanaRowOccurrences(r.date, r.text);
+    const description = occurrences.length > 1 && r.excerpt
+      ? r.excerpt
+      : r.text.replace(r.date, "").replace(r.title, "").replace(/\s*Learn More\s*$/i, "").trim();
+    return occurrences
+      .filter((occurrence) => occurrence.date >= today)
       .map((occurrence) => ({
         title: r.title,
         ...occurrence,
